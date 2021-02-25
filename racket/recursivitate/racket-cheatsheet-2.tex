@@ -1,0 +1,351 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% MatPlotLib and Random Cheat Sheet
+%
+% Edited by Michelle Cristina de Sousa Baltazar
+%
+% http://matplotlib.org/api/pyplot_summary.html
+% http://matplotlib.org/users/pyplot_tutorial.html
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\documentclass[a4paper]{article}
+\usepackage[landscape]{geometry}
+\usepackage{url}
+\usepackage{multicol}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{tikz}
+\usetikzlibrary{decorations.pathmorphing}
+\usepackage{amsmath,amssymb}
+\usepackage{hyperref}
+
+\usepackage{colortbl}
+\usepackage{xcolor}
+\usepackage{mathtools}
+\usepackage{amsmath,amssymb}
+\usepackage{enumitem}
+
+% Mihnea
+\usepackage{textcomp} % \textquotesingle: Racket: '(1 2 3)
+\usepackage{couriers}
+\usepackage{listings}
+\lstset{
+	numbers			= left,
+	numberstyle		= \tiny,
+    numbersep       = 5pt,
+	captionpos		= b,
+	breaklines		= true,
+	basicstyle		= \ttfamily\footnotesize, 
+	tabsize			= 4,
+	escapeinside	= {~}{~},
+}
+\lstdefinelanguage{Racket}{
+  morekeywords=[1]{define, define-syntax, define-macro, lambda, define-stream, stream-lambda},
+  morekeywords=[2]{begin, call-with-current-continuation, call/cc,
+    call-with-input-file, call-with-output-file, case, cond,
+    do, else, for-each, if,
+    let*, let, let-syntax, letrec, letrec-syntax,
+    let-values, let*-values,
+    and, or, not, delay, force,
+    quasiquote, quote, unquote, unquote-splicing,
+    map, fold, syntax, syntax-rules, eval, environment },
+  morekeywords=[3]{import, export},
+  alsodigit=!\$\%&*+-./:<=>?@^_~,
+  sensitive=true,
+  morecomment=[l]{;},
+  morecomment=[s]{\#|}{|\#},
+  morestring=[b]",
+  basicstyle=\footnotesize\ttfamily,
+  keywordstyle=\color[rgb]{0,.3,.7},
+  commentstyle=\color[rgb]{0.133,0.545,0.133},
+  stringstyle={\color[rgb]{0.75,0.49,0.07}},
+  upquote=true,
+  breaklines=true,
+  breakatwhitespace=true,
+  literate=*{`}{{`}}{1}
+}
+
+\title{Racket-2}
+\usepackage[brazilian]{babel}
+\usepackage[utf8]{inputenc}
+
+\advance\topmargin-1.0in
+\advance\textheight3in
+\advance\textwidth3in
+\advance\oddsidemargin-1.5in
+\advance\evensidemargin-1.5in
+\parindent0pt
+\parskip1pt
+\newcommand{\hr}{\centerline{\rule{3.5in}{1pt}}}
+%\colorbox[HTML]{e4e4e4}{\makebox[\textwidth-2\fboxsep][l]{texto}
+\begin{document}
+
+\begin{center}{\huge{\textbf{Racket CheatSheet}}}\\
+{\large Laborator 2}
+\end{center}
+\begin{multicols*}{3}
+
+\tikzstyle{mybox} = [draw=black, fill=white, very thick,
+    rectangle, rounded corners, inner sep=10pt, inner ysep=10pt]
+\tikzstyle{fancytitle} =[fill=black, text=white, font=\bfseries]
+
+% Mihnea
+\tikzstyle{mybox_code} = [mybox, draw = orange, fill=sandybrown]
+\tikzstyle{fancytitle_code} = [fancytitle, fill = orange]
+
+\definecolor{almond}{rgb}{0.94, 0.87, 0.8}
+\definecolor{apricot}{rgb}{0.98, 0.81, 0.69}
+\definecolor{atomictangerine}{rgb}{1.0, 0.6, 0.4}
+\definecolor{sandybrown}{rgb}{0.96, 0.64, 0.38}
+\definecolor{buff}{rgb}{0.94, 0.86, 0.51}
+
+\definecolor{persianred}{rgb}{0.8, 0.2, 0.2}
+\definecolor{papayawhip}{rgb}{1.0, 0.94, 0.84}
+\tikzstyle{mybox_persianred} = [mybox, draw = persianred, fill=papayawhip]
+\tikzstyle{fancytitle_persianred} = [fancytitle, fill = persianred]
+
+\definecolor{whitesmoke}{rgb}{0.96, 0.96, 0.96}
+\definecolor{wenge}{rgb}{0.39, 0.33, 0.32}
+\tikzstyle{mybox_blue} = [mybox, draw = wenge, fill=whitesmoke]
+\tikzstyle{fancytitle_blue} = [fancytitle, fill = wenge]
+
+\definecolor{cerise}{rgb}{0.87, 0.19, 0.39}
+\definecolor{mistyrose}{rgb}{1.0, 0.89, 0.88}
+\tikzstyle{mybox_cerise} = [mybox, draw = cerise, fill=mistyrose]
+\tikzstyle{fancytitle_cerise} = [fancytitle, fill = cerise]
+
+\definecolor{pinegreen}{rgb}{0.0, 0.47, 0.44}
+\definecolor{bubbles}{rgb}{0.91, 1.0, 1.0}
+\tikzstyle{mybox_pinegreen} = [mybox, draw = pinegreen, fill=bubbles]
+\tikzstyle{fancytitle_pinegreen} = [fancytitle, fill = pinegreen]
+
+\definecolor{cream}{rgb}{1.0, 0.99, 0.82}
+\definecolor{mikadoyellow}{rgb}{1.0, 0.77, 0.05}
+\tikzstyle{mybox_mikadoyellow} = [mybox, draw = mikadoyellow, fill=cream]
+\tikzstyle{fancytitle_mikadoyellow} = [fancytitle, fill = mikadoyellow]
+
+\definecolor{cornsilk}{rgb}{1.0, 0.97, 0.86}
+\tikzstyle{mybox_orange} = [mybox, draw = orange, fill=cornsilk]
+\tikzstyle{fancytitle_orange} = [fancytitle, fill = orange]
+
+\definecolor{aliceblue}{rgb}{0.94, 0.97, 1.0}
+\definecolor{seagreen}{rgb}{0.18, 0.55, 0.34}
+\tikzstyle{mybox_seagreen} = [mybox, draw = seagreen, fill=aliceblue]
+\tikzstyle{fancytitle_seagreen} = [fancytitle, fill = seagreen]
+
+\definecolor{jazzberryjam}{rgb}{0.65, 0.04, 0.37}
+\definecolor{almond}{rgb}{0.94, 0.87, 0.8}
+\tikzstyle{mybox_jazzberryjam} = [mybox, draw = jazzberryjam, fill=almond]
+\tikzstyle{fancytitle_jazzberryjam} = [fancytitle, fill = jazzberryjam]
+
+\definecolor{amaranth}{rgb}{0.9, 0.17, 0.31}
+\definecolor{bisque}{rgb}{1.0, 0.89, 0.77}
+\tikzstyle{mybox_amaranth} = [mybox, draw = amaranth, fill=bisque]
+\tikzstyle{fancytitle_amaranth} = [fancytitle, fill = amaranth]
+
+\definecolor{carminered}{rgb}{1.0, 0.0, 0.22}
+\definecolor{blanchedalmond}{rgb}{1.0, 0.92, 0.8}
+\tikzstyle{mybox_carminered} = [mybox, draw = amaranth, fill=blanchedalmond]
+\tikzstyle{fancytitle_carminered} = [fancytitle, fill = carminered]
+
+\definecolor{midnightgreen}{rgb}{0.0, 0.29, 0.33}
+\definecolor{lavendermist}{rgb}{0.9, 0.9, 0.98}
+\tikzstyle{mybox_midnightgreen} = [mybox, draw = midnightgreen, fill=lavendermist]
+\tikzstyle{fancytitle_midnightgreen} = [fancytitle, fill = midnightgreen]
+
+\definecolor{indigo}{rgb}{0.29, 0.0, 0.51}
+\definecolor{isabelline}{rgb}{0.96, 0.94, 0.93}
+\tikzstyle{mybox_indigo} = [mybox, draw = indigo, fill=isabelline]
+\tikzstyle{fancytitle_indigo} = [fancytitle, fill = indigo]
+
+\definecolor{russet}{rgb}{0.5, 0.27, 0.11}
+\definecolor{ivory}{rgb}{1.0, 1.0, 0.94}
+\tikzstyle{mybox_russet} = [mybox, draw = russet, fill=ivory]
+\tikzstyle{fancytitle_russet} = [fancytitle, fill = russet]
+
+\definecolor{neongreen}{rgb}{0.22, 0.88, 0.08}
+\definecolor{splashedwhite}{rgb}{1.0, 0.99, 1.0}
+\tikzstyle{mybox_neongreen} = [mybox, draw = neongreen, fill=splashedwhite]
+\tikzstyle{fancytitle_neongreen} = [fancytitle, fill = neongreen]
+
+\tikzstyle{mybox_skyblue} = [mybox, draw = blue!60, fill=splashedwhite]
+\tikzstyle{fancytitle_skyblue} = [fancytitle, fill = blue!60]
+
+
+
+%-----------------------------------------------------------------------------
+\begin{tikzpicture}
+\node [mybox_cerise] (box){%
+    \begin{minipage}{0.3\textwidth}
+		\begin{lstlisting}[language=Racket]
+; ~suma elementelor unei liste~
+(define (sum-list L)  
+
+
+; ~aici nu avem nevoie de funcție auxiliară~
+
+
+  (if (null? L)
+      0    ; ~la sfârșit creăm valoarea inițială~
+      (+ (car L) (sum-list (cdr L))) 
+     ; ^ ~construim rezultatul pe revenire~
+     ;  ~(după întoarcerea din recursivitate)~
+      ))
+; ~fiecare apel recursiv întoarce rezultatul corespunzător argumentelor~
+      
+      
+      
+      
+; ~concatenarea a două liste~
+(define (app L1 L2)
+  
+  
+  
+  
+  
+  (if (null? L1)
+      L2  ; ~când L1 este vidă, întoarcem L2~
+      (cons (car L1) (app (cdr L1) L2))
+      ; ^ ~construim rezultatul pe revenire
+      ))
+        \end{lstlisting}
+        \begin{itemize}\itemsep.2ex
+        	\item fiecare apel recursiv se pune pe stivă
+            \item complexitate spațială O(n)
+        	\item scriere mai simplă
+        \end{itemize}
+    \end{minipage}
+};
+\node[fancytitle_cerise, right=10pt] at (box.north west) {Recursivitate pe stivă};
+\end{tikzpicture}
+
+\vskip50ex % pentru a trece la următoarea coloană
+
+%-----------------------------------------------------------------------------
+\begin{tikzpicture}
+\node [mybox_seagreen] (box){%
+    \begin{minipage}{0.3\textwidth}
+		\begin{lstlisting}[language=Racket]
+; ~suma elementelor unei liste~
+(define (sum-list L)
+  (sum-list-tail 0 L))  ; <-- ~funcție ajutătoare~
+               ; ^ ~valoarea inițială pentru sumă~
+
+                 ; ~în sum construim rezultatul~
+(define (sum-list-tail sum L)
+  (if (null? L)
+      sum        ; ~la sfârșit avem rezultatul gata~
+      (sum-list-tail
+        (+ sum (car L))
+       ; ^ ~construim rezultatul pe avans~
+       ;  ~(pe măsură ce intrăm în recursivitate)~
+        (cdr L))))
+  ; ~funcția întoarce direct rezultatul apelului recursiv -- toate apelurile recursive întorc același rezultat, pe cel final~
+
+
+; ~concatenarea a două liste~
+(define (app A B)
+  (app-iter B (reverse A)))
+  ; ~nevoie de funcție ajutătoare~
+  ; ~rezultatul este construit în ordine inversă~
+
+(define (app-iter B Result)
+  (if (null? B) ; ~la sfârșit rezultatul e complet~
+      (reverse Result) ; ~inversăm rezultatul~
+      (app-iter (cdr B) (cons (car B) Result))))
+		; ~construim rezultatul pe avans~
+		\end{lstlisting}
+        
+        \begin{itemize}\itemsep.5ex
+        	\item apelurile recursive nu consumă spațiu pe stivă -- execuția este optimizată știind că rezultatul apelului recursiv este întors direct, fără operații suplimentare.
+            \item complexitatea spațială este dată doar de spațiul necesar pentru acumulator -- de exemplu la \texttt{sum-list-tail} complexitatea spațială este O(1).
+            \item scriere mai complexă, necesită de multe ori funcție auxiliară pentru a avea un parametru suplimentar pentru construcția rezultatului (rol de acumulator), mai ales dacă tipul natural de recursivitate al funcției este pe stivă.
+            \vspace*{-1.5ex}
+            \begin{itemize}
+            	\item \textbf{Atenție:} uneori, rolul acumulatorului poate fi preluat de unul dintre parametri, caz în care nu este nevoie nici de funcția suplimentară.
+            \end{itemize}
+            \item rezultatul este construit în ordine inversă
+        \end{itemize}
+    \end{minipage}
+};
+\node[fancytitle_seagreen, right=10pt] at (box.north west) {Recursivitate pe coadă};
+\end{tikzpicture}
+
+\vskip50ex % pentru a trece la următoarea coloană
+
+
+
+
+
+
+
+
+
+
+
+%-----------------------------------------------------------------------------
+\begin{tikzpicture}
+\node [mybox_persianred] (box){%
+    \begin{minipage}{0.3\textwidth}
+    	{\centering\bf\color{persianred} (nume\_functie arg1 arg2 ...) \\}
+		\begin{lstlisting}[language=Racket]
+(max 2 3)               3
+(+ 2 3)                 5
+        \end{lstlisting}
+    \end{minipage}
+};
+\node[fancytitle_persianred, right=10pt] at (box.north west) {Sintaxa Racket};
+\end{tikzpicture}
+
+%-----------------------------------------------------------------------------
+\begin{tikzpicture}
+\node [mybox_persianred] (box){%
+    \begin{minipage}{0.3\textwidth}\centering
+%     	{\centering\bf\color{persianred}
+		\begin{lstlisting}[language=Racket]
+DA: (cons x L)        NU: (append (list x) L)
+	                  NU: (append (cons x '()) L)
+DA: (if c vt vf)      NU: (if (equal? c #t) vt vf)
+DA: (null? L)         NU: (= (length L) 0)
+DA: (zero? x)         NU: (equal? x 0)
+DA: test              NU: (if test #t #f)
+DA: (or ceva1 ceva2)  NU: (if ceva1 #t ceva2)
+DA: (and ceva1 ceva2) NU: (if ceva1 ceva2 #f)
+        \end{lstlisting}
+    \end{minipage}
+};
+\node[fancytitle_persianred, right=10pt] at (box.north west) {AȘA  DA / AȘA NU};
+\end{tikzpicture}
+
+%-----------------------------------------------------------------------------
+\begin{tikzpicture}
+\node [mybox_skyblue] (box){%
+    \begin{minipage}{0.3\textwidth}\centering
+{\centering\bf\color{blue!60} image-height, overlay, flip-vertical \\}
+\begin{lstlisting}[language=Racket,escapeinside=||]
+(overlay |\includegraphics[scale=0.5]{imgs/fig1.png}|) ; => |\includegraphics[scale=0.5]{imgs/fig2.png}|
+(flip-vertical |\includegraphics[scale=0.5]{imgs/fig3.png}|) ; => |\includegraphics[scale=0.5]{imgs/fig4.png}|
+(image-height (circle 20 "solid" "red")) ; => 40
+(image-height |\includegraphics[scale=0.5]{imgs/fig0.png}|) ; => 60
+\end{lstlisting}
+    \end{minipage}
+};
+\node[fancytitle_skyblue, right=10pt] at (box.north west) {Imagini în Racket};
+\end{tikzpicture}
+
+
+%-----------------------------------------------------------------------------
+\begin{tikzpicture}
+\node [mybox_neongreen] (box){%
+    \begin{minipage}{0.3\textwidth}\centering
+\href{http://docs.racket-lang.org/}{http://docs.racket-lang.org/}
+    \end{minipage}
+};
+\node[fancytitle_neongreen, right=10pt] at (box.north west) {Folosiți cu încredere!};
+\end{tikzpicture}
+
+
+\end{multicols*}
+\end{document}
+Contact GitHub API Training Shop Blog About
+© 2016 GitHub, Inc. Terms Privacy Security Status Help

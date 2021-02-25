@@ -1,0 +1,441 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% MatPlotLib and Random Cheat Sheet
+%
+% Edited by Michelle Cristina de Sousa Baltazar
+%
+% http://matplotlib.org/api/pyplot_summary.html
+% http://matplotlib.org/users/pyplot_tutorial.html
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\documentclass[a3paper]{article}
+\usepackage[landscape]{geometry}
+\usepackage{url}
+\usepackage{multicol}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{tikz}
+\usetikzlibrary{decorations.pathmorphing}
+\usepackage{amsmath,amssymb}
+\usepackage{hyperref}
+
+\usepackage{colortbl}
+\usepackage{xcolor}
+\usepackage{mathtools}
+\usepackage{amsmath,amssymb}
+\usepackage{enumitem}
+
+% Mihnea
+\usepackage{textcomp} % \textquotesingle: Racket: '(1 2 3)
+\usepackage{couriers}
+\usepackage{listings}
+\lstset{
+	numbers			= left,
+	numberstyle		= \tiny,
+    numbersep       = 5pt,
+	captionpos		= b,
+	breaklines		= true,
+	basicstyle		= \ttfamily\footnotesize, 
+	tabsize			= 4,
+	escapeinside	= {~}{~},
+}
+\lstdefinelanguage{Racket}{
+  morekeywords=[1]{define, define-syntax, define-macro, lambda, define-stream, stream-lambda},
+  morekeywords=[2]{begin, call-with-current-continuation, call/cc,
+    call-with-input-file, call-with-output-file, case, cond,
+    do, else, for-each, if,
+    let*, let, let-syntax, letrec, letrec-syntax,
+    let-values, let*-values,
+    and, or, not, delay, force,
+    quasiquote, quote, unquote, unquote-splicing,
+    map, fold, syntax, syntax-rules, eval, environment },
+  morekeywords=[3]{import, export},
+  alsodigit=!\$\%&*+-./:<=>?@^_~,
+  sensitive=true,
+  morecomment=[l]{;},
+  morecomment=[s]{\#|}{|\#},
+  morestring=[b]",
+  basicstyle=\footnotesize\ttfamily,
+  keywordstyle=\color[rgb]{0,.3,.7},
+  commentstyle=\color[rgb]{0.133,0.545,0.133},
+  stringstyle={\color[rgb]{0.75,0.49,0.07}},
+  upquote=true,
+  breaklines=true,
+  breakatwhitespace=true,
+  literate=*{`}{{`}}{1}
+}
+
+\title{Prolog Cheatsheet}
+\usepackage[brazilian]{babel}
+\usepackage[utf8]{inputenc}
+
+\advance\topmargin-1.0in
+\advance\textheight3in
+\advance\textwidth3in
+\advance\oddsidemargin-1.5in
+\advance\evensidemargin-1.5in
+\parindent0pt
+\parskip1pt
+\newcommand{\hr}{\centerline{\rule{3.5in}{1pt}}}
+%\colorbox[HTML]{e4e4e4}{\makebox[\textwidth-2\fboxsep][l]{texto}
+\begin{document}
+
+\begin{center}{\huge{\textbf{Prolog CheatSheet}}}\\
+{\large Laborator 10}
+\end{center}
+
+\begin{multicols*}{3}
+
+\tikzstyle{mybox} = [draw=black, fill=white, very thick,
+    rectangle, rounded corners, inner sep=10pt, inner ysep=10pt]
+\tikzstyle{fancytitle} =[fill=black, text=white, font=\bfseries]
+
+% Mihnea
+\tikzstyle{mybox_code} = [mybox, draw = orange, fill=sandybrown]
+\tikzstyle{fancytitle_code} = [fancytitle, fill = orange]
+
+\definecolor{almond}{rgb}{0.94, 0.87, 0.8}
+\definecolor{apricot}{rgb}{0.98, 0.81, 0.69}
+\definecolor{atomictangerine}{rgb}{1.0, 0.6, 0.4}
+\definecolor{sandybrown}{rgb}{0.96, 0.64, 0.38}
+\definecolor{buff}{rgb}{0.94, 0.86, 0.51}
+
+\definecolor{persianred}{rgb}{0.8, 0.2, 0.2}
+\definecolor{papayawhip}{rgb}{1.0, 0.94, 0.84}
+\tikzstyle{mybox_persianred} = [mybox, draw = persianred, fill=papayawhip]
+\tikzstyle{fancytitle_persianred} = [fancytitle, fill = persianred]
+
+\definecolor{whitesmoke}{rgb}{0.96, 0.96, 0.96}
+\definecolor{wenge}{rgb}{0.39, 0.33, 0.32}
+\tikzstyle{mybox_blue} = [mybox, draw = wenge, fill=whitesmoke]
+\tikzstyle{fancytitle_blue} = [fancytitle, fill = wenge]
+
+\definecolor{cerise}{rgb}{0.87, 0.19, 0.39}
+\definecolor{mistyrose}{rgb}{1.0, 0.89, 0.88}
+\tikzstyle{mybox_cerise} = [mybox, draw = cerise, fill=mistyrose]
+\tikzstyle{fancytitle_cerise} = [fancytitle, fill = cerise]
+
+\definecolor{pinegreen}{rgb}{0.0, 0.47, 0.44}
+\definecolor{bubbles}{rgb}{0.91, 1.0, 1.0}
+\tikzstyle{mybox_pinegreen} = [mybox, draw = pinegreen, fill=bubbles]
+\tikzstyle{fancytitle_pinegreen} = [fancytitle, fill = pinegreen]
+
+\definecolor{cream}{rgb}{1.0, 0.99, 0.82}
+\definecolor{mikadoyellow}{rgb}{1.0, 0.77, 0.05}
+\tikzstyle{mybox_mikadoyellow} = [mybox, draw = mikadoyellow, fill=cream]
+\tikzstyle{fancytitle_mikadoyellow} = [fancytitle, fill = mikadoyellow]
+
+\definecolor{cornsilk}{rgb}{1.0, 0.97, 0.86}
+\tikzstyle{mybox_orange} = [mybox, draw = orange, fill=cornsilk]
+\tikzstyle{fancytitle_orange} = [fancytitle, fill = orange]
+
+\definecolor{aliceblue}{rgb}{0.94, 0.97, 1.0}
+\definecolor{seagreen}{rgb}{0.18, 0.55, 0.34}
+\tikzstyle{mybox_seagreen} = [mybox, draw = seagreen, fill=aliceblue]
+\tikzstyle{fancytitle_seagreen} = [fancytitle, fill = seagreen]
+
+\definecolor{jazzberryjam}{rgb}{0.65, 0.04, 0.37}
+\definecolor{almond}{rgb}{0.94, 0.87, 0.8}
+\tikzstyle{mybox_jazzberryjam} = [mybox, draw = jazzberryjam, fill=almond]
+\tikzstyle{fancytitle_jazzberryjam} = [fancytitle, fill = jazzberryjam]
+
+\definecolor{amaranth}{rgb}{0.9, 0.17, 0.31}
+\definecolor{bisque}{rgb}{1.0, 0.89, 0.77}
+\tikzstyle{mybox_amaranth} = [mybox, draw = amaranth, fill=bisque]
+\tikzstyle{fancytitle_amaranth} = [fancytitle, fill = amaranth]
+
+\definecolor{carminered}{rgb}{1.0, 0.0, 0.22}
+\definecolor{blanchedalmond}{rgb}{1.0, 0.92, 0.8}
+\tikzstyle{mybox_carminered} = [mybox, draw = amaranth, fill=blanchedalmond]
+\tikzstyle{fancytitle_carminered} = [fancytitle, fill = carminered]
+
+\definecolor{midnightgreen}{rgb}{0.0, 0.29, 0.33}
+\definecolor{lavendermist}{rgb}{0.9, 0.9, 0.98}
+\tikzstyle{mybox_midnightgreen} = [mybox, draw = midnightgreen, fill=lavendermist]
+\tikzstyle{fancytitle_midnightgreen} = [fancytitle, fill = midnightgreen]
+
+\definecolor{indigo}{rgb}{0.29, 0.0, 0.51}
+\definecolor{isabelline}{rgb}{0.96, 0.94, 0.93}
+\tikzstyle{mybox_indigo} = [mybox, draw = indigo, fill=isabelline]
+\tikzstyle{fancytitle_indigo} = [fancytitle, fill = indigo]
+
+\definecolor{russet}{rgb}{0.5, 0.27, 0.11}
+\definecolor{ivory}{rgb}{1.0, 1.0, 0.94}
+\tikzstyle{mybox_russet} = [mybox, draw = russet, fill=ivory]
+\tikzstyle{fancytitle_russet} = [fancytitle, fill = russet]
+
+\definecolor{neongreen}{rgb}{0.12, 0.58, 0.02}
+\definecolor{splashedwhite}{rgb}{0.9, 0.99, 0.9}
+\tikzstyle{mybox_neongreen} = [mybox, draw = neongreen, fill=splashedwhite]
+\tikzstyle{fancytitle_neongreen} = [fancytitle, fill = neongreen]
+
+%---------------------------------------------------------------------------------
+
+\begin{tikzpicture}
+\node [mybox_persianred] (box){%
+    \begin{minipage}{0.3\textwidth}
+    
+\begin{lstlisting}[language=Prolog, numbers=none]
+papagal(coco). 
+iubeste(mihai, maria).
+iubeste(mihai, ana).
+deplaseaza(scaun, camera1, camera2).
+are(ion,carte(aventuri,2002)).
+merge(ion,facultate(upb)).
+\end{lstlisting}
+\begin{small}Faptele sunt \textbf{predicate de ordinul întâi} de aritate n, considerate adevărate. Structurile sunt înlănțuiri de fapte.
+
+Obținerea primei soluții este de obicei numită satisfacerea scopului iar obținerea altor soluții, resatisfacerea scopului.
+
+Dacă în satisfacerea scopului s-au găsit alternative încă neexplorate pentru satisfacerea unor predicate, se poate cere resatisfacerea scopului tastând \textbf{;}. Dacă utilizatorul nu este interesat de resatisfacere poate apăsa tasta \textbf{.} sau \textbf{Enter}.
+\end{small}
+\begin{lstlisting}[language=Prolog, numbers=none]
+?- iubeste(mihai, X).
+X = maria;	% ~mai există soluții, utilizatorul poate tasta ;~
+X = ana. % ~nu mai există alte soluții, Prolog nu va mai cere input de la utilizator.~
+\end{lstlisting}
+
+\end{minipage}
+};
+\node[fancytitle_persianred, right=10pt] at (box.north west) {Fapte și Structuri};
+\end{tikzpicture}
+
+\begin{tikzpicture}
+\node [mybox_seagreen] (box){%
+    \begin{minipage}{0.3\textwidth}
+%     	{\centering\bf\small\color{seagreen} :t \\}
+
+\begin{lstlisting}[language=Prolog, numbers=none]
+?- papagal(coco).
+true.
+?- papagal(CineEste).
+CineEste = coco.
+?- deplaseaza(_, DeUnde, Unde).
+DeUnde = camera1, Unde = camera2
+\end{lstlisting}
+\begin{small}
+Numele argumentelor variabile începe cu literă mare iar numele constantelor simbolice începe cu literă mică.
+
+O variabilă poate fi instanțiată (\textbf{legată}) dacă există un obiect asociat acestei variabile, sau neinstanțiată (\textbf{liberă}) dacă nu se știe încă ce obiect va desemna variabila.
+\newline Wildcard '\textbf{\_}' poate fi orice.
+\end{small}
+\end{minipage}
+};
+
+\node[fancytitle_seagreen, right=10pt] at (box.north west) {Variabile};
+\end{tikzpicture}
+
+\begin{tikzpicture}
+\node [mybox_jazzberryjam] (box){%
+    \begin{minipage}{0.3\textwidth}
+\begin{lstlisting}[language=Prolog, numbers=none]
+frumoasa(ana).           %1
+bun(vlad).               %2
+cunoaste(vlad, maria).   %3
+cunoaste(vlad, ana).     %4
+iubeste(mihai, maria).   %5
+iubeste(X, Y):- bun(X),  %6
+				cunoaste(X, Y),
+                frumoasa(Y). 
+\end{lstlisting}
+\begin{small}
+Regula 'iubește(X,Y)' se poate traduce: "X iubește pe Y dacă X e bun și dacă X cunoaște pe Y și dacă Y este frumoasă".
+
+O \textbf{regulă} Prolog exprimă un fapt care depinde de alte \textbf{fapte}.
+
+Faptele se pot înlănțui folosind virgula(, - \textbf{și} logic) și punct și virgula(; - \textbf{sau} logic)
+\end{small}
+\end{minipage}
+};
+
+\node[fancytitle_jazzberryjam, right=10pt] at (box.north west) {Reguli};
+\end{tikzpicture}
+
+
+%---------------------------------------------------------------------------------
+
+\begin{tikzpicture}
+\node [mybox_pinegreen] (box){%
+\begin{minipage}{0.3\textwidth}
+    
+\textbf{Prolog este optimist:} atunci când Prolog primește o interogare, Prolog încearcă să demonstreze că interogarea este adevărată.
+
+\textbf{Prolog este perseverent:} dacă interogarea conține variabile sau wildcards, încercă să găsească valori pentru elementele neinstanțiate (în domenii care pot fi desprinse din program) în așa fel încât să poată demonstra că interogarea este adevărată.
+
+\textbf{Prolog face backtracking:} în timp ce încearcă demonstrarea unui scop, anumite predicate pot avea mai multe variante de demonstrare (e.g. mai multe reguli, sau folosesc operatori sau). Astfel se creează alternative, care vor fi explorate de Prolog prin backtracking pentru satisfacerea / resatisfacerea scopului.
+
+\end{minipage}
+};
+\node[fancytitle_pinegreen, right=10pt] at (box.north west) {Evaluare în Prolog};
+\end{tikzpicture}
+
+
+\begin{tikzpicture}
+\node [mybox_orange] (box){%
+    \begin{minipage}{0.3\textwidth}
+
+\begin{lstlisting}[language=Prolog, numbers=none]
+Aritmetici: + - * /
+Relationali: = \= < > =< >= =:= == =\=
+Logici: \+ sau not
+
+?- 1 + 2 =:= 2 + 1.
+true.
+?- 1 + 2 = 2 + 1.
+false. % ~nu au aceeași formă (nu se evaluează)~
+?- 2 + 1 = 2 + 1.
+true. % ~au aceeași formă (nu se evaluează)~
+?- X = 2 + 1.
+X = 2+1.
+?- X is 2 + 1.
+X = 3.
+?- X =:= 2 + 1.
+ERROR: =:=/2: Arguments are not sufficiently instantiated
+
+\end{lstlisting}
+\begin{small}\begin{itemize}
+\item \textbf{\textbackslash+} echivalent cu \textbf{not}, și întoarce true dacă scopul care urmează după nu poate fi satisfăcut în niciun fel (nu se poate demonstra că scopul este adevărat). 
+\item \textbf{=} unifică partea din stânga cu partea din dreapta (dacă este posibil), realizând toate legările necesare. De exemplu: X-Y:Z = 5-[a, b, c]:y  unifică astfel X = 5, Y = [a, b, c], Z = y (observați că nu realizează nicio evaluare).
+\item \textbf{\textbackslash=} este opusul lui \textbf{=}, și este adevărat dacă partea din stânga nu unifică cu partea din dreapta. Ex: A \textbackslash= B este echivalent cu (\textbackslash+ (A = B))
+\item \textbf{==} verifică dacă partea din stânga și partea din dreapta sunt legate la aceeași valoare.
+\item \textbf{=:=} evaluează \textbf{numeric} expresiile din stânga și dreapta și verifică dacă rezultatele au aceeași valoare numerică. Ambele părți trebuie să fie complet instanțiate.
+\item \textbf{=\textbackslash=} evaluează \textbf{numeric} expresiile din stânga și dreapta și returnează true dacă valorile sunt diferite. Ambele părți trebuie să fie complet instanțiate.
+\item \textbf{is} evaluează numeric partea dreaptă (care trebuie să fie complet instanțiată, și:
+	\begin{itemize}
+    \item dacă partea stângă este instanțiată și este o valoare, verifică egalitatea valorilor.
+    \item dacă partea stângă este o variabilă, leagă variabila la valoarea din dreapta.
+    \item altfel, false.
+    \end{itemize}
+\end{itemize}\end{small}
+\end{minipage}
+};
+
+\node[fancytitle_orange, right=10pt] at (box.north west) {Operatori};
+\end{tikzpicture}
+
+% \begin{tikzpicture}
+% \node [mybox_blue] (box){%
+%     \begin{minipage}{0.3\textwidth}
+% 	{\centering\bf\small\color{wenge} length elem reverse\\}
+% 		\begin{lstlisting}[language=Haskell, numbers=none]
+% length [1, 2, 3, 4]                  4
+
+% elem 3 [1, 2, 3, 4]                  True
+% elem 5 [1, 2, 3, 4]                  False
+
+% reverse [1, 2, 3, 4]                 [4, 3, 2, 1]
+%         \end{lstlisting}
+%     \end{minipage}
+% };
+
+% \node[fancytitle_blue, right=10pt] at (box.north west) {Alte operații};
+% \end{tikzpicture}
+
+%---------------------------------------------------------------------------------
+
+\begin{tikzpicture}
+\node [mybox_amaranth] (box){%
+    \begin{minipage}{0.3\textwidth}
+
+\begin{lstlisting}[language=Prolog, numbers=none]
+[]                  - lista vida
+[a,b,c]             - elementele a, b, c
+[Prim|Rest]         - element concatenat la rest
+[X1,X2,...,XN|Rest] - n elemente concatenate la restul listei
+\end{lstlisting}
+
+    \end{minipage}
+};
+
+\node[fancytitle_amaranth, right=10pt] at (box.north west) {Liste};
+\end{tikzpicture}
+
+
+
+
+\begin{tikzpicture}
+\node [mybox_amaranth] (box){%
+    \begin{minipage}{0.3\textwidth}
+
+\begin{lstlisting}[language=Prolog, numbers=none]
+Haskell:
+sum []     = 0             %1
+sum (x:xs) = x + sum xs    %2
+
+Prolog: (pentru predicatul sum(+L, -Sum)
+sum([], 0).       % ~dacă primul argument este lista vidă, al doilea argument trebuie să fie / este legat la 0~
+?- sum([H|T], S) :- sum(T, ST), S is ST + H. % ~dacă primul argument este o listă construită prin adăugarea unui element H la începutul unei liste T, și dacă suma listei T este ST, S este ST plus H.~
+
+\end{lstlisting}
+\begin{small}
+În \textbf{Haskell} se realizează pattern matching intr-o singură direcție: odata legate variabilele, se produce acțiunea descrisă în dreapta. \newline
+În \textbf{Prolog} pattern matching se efectuează în ambele direcții: folosirea variabilelor pentru a executa regulile și produce un raspuns \textbf{true} sau \textbf{false}, sau se pot căuta atât variabile care satisfac regulile scrise. \newline
+
+\end{small}
+    \end{minipage}
+};
+
+\node[fancytitle_amaranth, right=10pt] at (box.north west) {Pattern matching
+};
+\end{tikzpicture}
+
+
+
+\begin{tikzpicture}
+\node [mybox_amaranth] (box){%
+    \begin{minipage}{0.3\textwidth}\small
+
+\begin{lstlisting}[language=Prolog, numbers=none]
+my_length1([],0).									 
+my_length1([H|L],N) :- my_length1(L,N1), N1 is N - 1.
+
+?- my_length([a, b, c])
+Error: Arguments are not sufficiently instantiated
+\end{lstlisting}
+N nu are o valoare instanțiată pentru a putea scădea 1 și a da valoarea lui N1. N1 va primi valoarea 0 din apelul my\_length2([], 0), iar N trebuie calculat în funcție de N1 existent.
+
+\begin{lstlisting}[language=Prolog, numbers=none]
+my_length2([],0).                                   
+my_length2([H|L],N) :- my_length2(L,N1), N is N1 + 1.
+
+Warning: Singleton Variables: [H]
+\end{lstlisting}
+O variabilă singleton este o variabilă care apare o singură dată într-o regulă. Dacă variabila nu apare de mai multe ori în regulă, înseamnă că numele respectiv nu este folosit pentru a transmite o legare dintr-o parte în alta, deci este inutil.
+
+\begin{lstlisting}[language=Prolog, numbers=none]
+Correct:
+my_length3([],0).                                     
+my_length3([_|L],N) :- my_length3(L,N1), N is N1 + 1. 
+\end{lstlisting}
+\end{minipage}
+};
+
+\node[fancytitle_amaranth, right=10pt] at (box.north west) {Errors/Warnings
+};
+\end{tikzpicture}
+
+
+\begin{tikzpicture}
+\node [mybox_midnightgreen] (box){%
+    \begin{minipage}{0.3\textwidth}
+
+\begin{lstlisting}[language=Prolog, numbers=none]
+predicat/nrArgumente
+predicat(+Arg1, -Arg2, ?Arg3, ..., +ArgN)
+\end{lstlisting}
+\begin{small}
+Pentru a diferenția intrările \textbf{(+)} de ieșiri \textbf{(-)}, se prefixează argumentele cu indicatori. Acele argumente care pot fi fie intrări, fie ieșiri se prefixează cu \textbf{(?)}
+\newline
+Unele predicate nu au parametrii\newline
+Ex: Predicatul \textbf{fail/0} care se va evalua mereu la \textbf{false}.
+\end{small}
+
+\end{minipage}
+};
+
+\node[fancytitle_midnightgreen, right=10pt] at (box.north west) {Documentarea predicatelor și a argumentelor};
+\end{tikzpicture}
+\end{multicols*}
+\end{document}
+Contact GitHub API Training Shop Blog About
+© 2016 GitHub, Inc. Terms Privacy Security Status Help

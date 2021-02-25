@@ -1,0 +1,221 @@
+; ignorați următoarele linii de cod.
+(define count-magic 0)
+(define (magic-number) (set! count-magic (+ count-magic 1)) 42)
+(define (magic-segment) (set! count-magic (+ count-magic 1)) (cons '(2 . 2)  '(6 . 7)))
+(define (sum numbers) (foldr + 0 numbers))
+(define (get-start-point x) (set! count-magic (+ count-magic 1)) (car x))
+(define (get-end-point x) (set! count-magic (+ count-magic 1)) (cdr x))
+(define show-defaults 2) ; câte exerciții la care s-au întors rezultate default să fie arătate detaliat
+(define prepend #f) (define name-ex '(testul . testele)) ; variante: '(exercițiul . exercițiile) sau '(testul . testele) sau '(task . taskurile)
+(define default-results '(your-code-here ())) ; ce rezultate default sunt întoarse în exerciții
+(define : 'separator) (define punct 'string) (define puncte 'string) (define BONUS 'string) (define total 0) (define all '()) (define n-ex 0) (define p-ex 0) (define defaults '())
+(define (ex n sep p . s) (set! n-ex n) (set! p-ex p) (set! all (cons (list n p) all))) (define exercițiul ex) (define (p L) (map (λ (e) (display e) (display " ")) L) (newline))
+(define (check-exp given expected) (check-exp-part "" 1 given expected)) (define (check-exp-part part percent given expected) (if (not (equal? given expected)) (and
+                                                                                                                                                                 (when (member given default-results) (set! defaults (cons (if (< percent 1) (cons n-ex part) n-ex) defaults))) (when (or (not (member given default-results))
+                                                                                                                                                                                                                                                                                          (<= (length defaults) show-defaults)) (p `(NU: la ,(car name-ex) ,(if (< percent 1) (cons n-ex part) n-ex) rezultatul ,given diferă de cel așteptat: ,expected))))
+                                                                                                                                  (let ((pts (* p-ex percent))) (and (if prepend (printf "+~v: " pts) (printf "OK: "))
+                                                                                                                                                                     (p `(,(car name-ex) ,(if (< percent 1) (cons n-ex part) n-ex) trecut + ,pts ,(if (= pts 1) 'punct 'puncte))) (set! total (+ total pts))))))(define (sumar) (when (and (not (null? defaults)) (< show-defaults (length defaults))) (p `(... rezultatul implicit dat la ,(cdr name-ex) ,(reverse defaults)))) (p `(total: ,total puncte)))
+(define (mark-helper) (printf "----------~nEx  puncte    Total până aici~n") (foldr (λ (e-p t) (p `(,(car e-p) : ,(cadr e-p) puncte. total 1 - ,(car e-p) : ,(+ t (cadr e-p)))) (+ t (cadr e-p))) 0 all))
+
+
+;; Intro
+
+
+(exercițiul 1 : 1 puncte)
+;; Functia compute-square-area primește ca valoare o funcție
+;; ce returnează un număr, reprezentând latura unui patrat,
+;; compute-square-area trebuie să calculeze aria acelui pătrat.
+;; Atentie: Aveți voie sa aplicațî get-length o singură dată.
+;;          Nu puteți folosi `exp`/`expt`
+(define (compute-square-area get-length)
+  (let ([len (get-length)])
+    (* len len)))
+
+(let ([num-of-calls ((lambda () (compute-square-area magic-number) count-magic))])
+  (check-exp-part 'a (/ 1. 4) num-of-calls 1)
+  (when (= num-of-calls 1)
+        (check-exp-part 'b (/ 1. 4) (compute-square-area (lambda () 3932)) 15460624)
+        (check-exp-part 'c (/ 1. 4) (compute-square-area (lambda () 2788)) 7772944)
+        (check-exp-part 'd (/ 1. 4) (compute-square-area (lambda () 198.2522)) 39303.93480483999)))
+(set! count-magic 0)
+
+
+(exercițiul 2 : 1 puncte)
+;; Functia compute-length primește ca valoare 3 funcții:
+;;  - get-line-segment => intoarce un segment de dreaptă.
+;;  - get-start-point => primeste un segment de linie si
+;;                       intoarce punctul din care segmentul incepe.
+;;  - get-end-point => primeste un segment de linie si
+;;                       intoarce punctul in care segmentul se termină.
+;;
+;; Un punct este reprezentat printr-o pereche de numere.
+;; Un segment de dreaptă este reprezentat printr-o pereche de puncte.
+;;
+;; compute-length trebuie să calculeze lungimea segmentului de dreaptă.
+;; (distanța dintre punctul de început și punctul de sfârșit)
+;; Atentie: Fiecare functie primită drept argument trebuie aplicată o singura dată.
+(define (compute-length get-line-segment get-start-point get-end-point)
+  (let* ([line-segment (get-line-segment)]
+        [start-point (get-start-point line-segment)]
+        [end-point (get-end-point line-segment)]
+        [xs (car start-point)]
+        [ys (cdr start-point)]
+        [xf (car end-point)]
+        [yf (cdr end-point)])
+    (sqrt (+ (expt (- xf xs) 2) (expt (- yf ys) 2)))))
+
+
+(let ([num-of-calls ((lambda () (compute-length magic-segment get-start-point get-end-point) count-magic))])
+  (check-exp-part 'a (/ 1. 5) num-of-calls 3)
+  (when (= num-of-calls 3)
+    (let ([fn-binding (lambda (x) (compute-length (lambda () x) get-start-point get-end-point))])
+      (check-exp-part 'b (/ 1. 5) (fn-binding (cons '(9 . 12)  '(12 . 16))) 5)
+      (check-exp-part 'c (/ 1. 5) (fn-binding (cons '(10 . 10)  '(94 . 197))) 205)
+      (check-exp-part 'd (/ 1. 5) (fn-binding (cons '(23 . 54)  '(7632 . 5457))) 9332.164272021791)
+      (check-exp-part 'e (/ 1. 5) (fn-binding (cons '(658 . 665)  '(32343 . 31246))) 44035.63086864999)
+    )))
+(set! count-magic 0)
+
+(exercițiul 3 : 1 puncte)
+
+;; Definiți funcția distance care calculează distanța
+;; dintre două puncte bazându-se pe functia compute-length.
+;; Identificați închiderea functională si arați-o
+;; asistentului pentru a vă puncta acest exercițiu.
+(define (distance x y)
+  (compute-length (lambda () (cons x y)) car cdr))
+
+(check-exp-part 'a 1 (distance '(9 . 12)  '(12 . 16)) 5)
+
+
+(exercițiul 4 : 1 puncte)
+;; Fie f(x) o functie oarecare,
+;; Calculați valorile funcției f(x), a < x < b cu pasul step.
+;; Atenție: `compute-f-with-step` nu poate fi recurivă.
+;;          Nu aveți voie să folosiți letrec.
+;;          Nu aveți voie să folosiți range/map/fold.
+(define (compute-f-with-step f a b step)
+  (let iter ((b b) (result '()))
+    (if (> a b)
+      result
+      (iter (- b step) (cons (f b) result)))))
+
+(check-exp-part 'a (/ 1. 2)  (compute-f-with-step (lambda (x) (* x x)) 0 4 1) '(0 1 4 9 16))
+(check-exp-part 'b (/ 1. 2)  (compute-f-with-step (lambda (x) (+ (* 2 x) 1)) 0 4 1) '(1 3 5 7 9))
+
+(exercițiul 5 : 1 puncte)
+;; Functia num-concat primteste doua numere si le concateneaza.
+;; ex:
+;;   > (num-concat 33 22)
+;;   3322
+;; Suprascrieți procedura `+` doar in contextul local pentru
+;; a realiza concatenarea dintre doua numere.
+;; Hint: `string-append` concatenează două string-uri
+;; Hint: Puteți folosi funcțiile `number->string` si `string->number`
+(define (num-concat x y)
+  (let ([+ (lambda (x y)
+    (string->number (string-append (number->string x) (number->string y)))
+  )])
+  (+ x y))) ;; nu aveți voie să stergeți această linie;
+
+(check-exp-part 'a (/ 1. 2) (num-concat 1 2) 12)
+(check-exp-part 'b (/ 1. 2) (num-concat 33 674) 33674)
+
+
+(exercițiul 6 : 3 puncte)
+
+;; Definiți funcția compute-perimeter care primește un poligon reprezentat
+;; printr-o lista de puncte și calculează perimetrul acestuia.
+;; Atenție: Nu aveți voie să definiți funcții ajutatoare în exteriorul funcției compute-perimeter.
+;;          Nu aveți voie să folosiți fold
+;; Hint: Folosiți-vă de funcția distance
+(define (compute-perimeter points)
+  (letrec (
+    [first-point (car points)]
+    [compute-perimeter-helper (lambda (points last-point perimeter)
+      (if (null? points)
+        perimeter
+        (compute-perimeter-helper (cdr points) (car points) (+ perimeter (distance last-point (car points)))))
+    )])
+  (compute-perimeter-helper (append (cdr points) (list first-point)) first-point 0)))
+
+
+
+(check-exp-part 'a (/ 1. 4) (compute-perimeter (list '(1 . 0) '(0 . 0) '(0 . 1) '(1 . 1))) 4)
+(check-exp-part 'b (/ 1. 4) (compute-perimeter (list '(2 . 0) '(0 . 0) '(0 . 2) '(2 . 2))) 8)
+(check-exp-part 'c (/ 1. 4) (compute-perimeter (list '(2 . 5) '(5 . 43) '(43 . 43))) 132.01993654258658)
+(check-exp-part 'd (/ 1. 4) (compute-perimeter (list '(2 . 2) '(4 . 5) '(0 . 3) '(4 . 3) '(3 . 1))) 15.727968770336455)
+
+
+(exercițiul 7 : 2 puncte)
+
+;; Se dau 3 secvente separate printr-un separator.
+;; Definiți funcția `3-sequance-max` dar găsește
+;; suma secvenței maxime.
+;; ex:
+;; (1 2 3 0 3 5 4 0 5 200) => secventa de suma maxima este 205
+;; si aparține ultimei secvențe.
+;; Atentie: Nu aveți voie sa folosiți fold
+;; Hint:: Uitați-vă peste splitf-at.
+(define (3-sequance-max numbers separator)
+  (let ([pred (lambda (x) (not (equal? x separator)))])
+    (let*-values ([(left rest) (splitf-at numbers pred)]
+                    [(mid right) (splitf-at (cdr rest) pred)])
+      (max (sum left) (sum mid) (sum right)))))
+
+(check-exp-part 'a (/ 1. 2) (3-sequance-max '(1 0 2 0 3) 0) 3)
+(check-exp-part 'b (/ 1. 2) (3-sequance-max '(2 3 4 0 4 105 6 0 54 5) 0) 115)
+
+(exercițiul 8 : 1 puncte BONUS)
+
+;; Redefiniți funcția num-concat pentru a functiona pe concatena oricate numere.
+;; Atenție: Trebuie sa definiți local funcția concat
+;;          Nu puteți folosi `num-concat`
+;;          Folosiți fold si map.
+;; Ințelegeți cum va poate ajuta programarea functională?
+;; Cum ar arata o suprascriere echivalentă într-un limbaj procedural?
+;; Care implementare este mai straightforward, este mai usor de înteles
+;; și lasă loc pentru mai puține erori?
+(define (list-num-concat numbers)
+  (let ([concat (lambda (numbers)
+    (string->number (foldr string-append "" (map number->string numbers)))
+  )])
+  (concat numbers)))
+
+
+(check-exp-part 'a (/ 1. 2) (list-num-concat '(1 2 3 5)) 1235)
+(check-exp-part 'b (/ 1. 2) (list-num-concat '(33 674 776 43)) 3367477643)
+
+
+
+(exercițiul 9 : 2 puncte BONUS)
+;; Automatele finite sunt un formalism matematic, utile pentru a descrie
+;; in mod abstract (matematic) procese, sunt folosite des in computer science
+;; si le veți intâlni (le-ați înâlnit) la CN, LFA si alte materii.
+;; In acest execitiu vom reprezenta un automat finit prin 3 elemente:
+;;    initial-state => o stare inițială din care automatul pornește
+;;    final-state => o stare finală in care automatul se termină
+;;    next => o functie care primește o stare si decide care e urmatoarea stare.
+;; Atenție: Trebuie sa folosiți named let.
+(define (run initial-state final-state next)
+  (let run-helper ((state initial-state) (result '()))
+    (if (equal? state final-state)
+      (reverse (cons final-state result))
+      (run-helper (next state) (cons state result)))))
+
+
+(exercițiul 10 : 2 puncte BONUS)
+;; Folosindu-vă de exerciţiile anterioare generati numarul de lungime k
+;; pentru care orice cifră de pe poziția i se poate obiține
+;; folosind formula i*k+x.
+;; Atenție: Folosiți let.
+(define (generate-number k x)
+  (let ([sequance (run x (+ ((expt (sub1 k) 2)) x) (lambda (x) (+ k x)))])
+    (list-num-concat sequance)))
+
+
+(check-exp-part 'a (/ 1. 2) (list-num-concat '(1 2 3 5)) 1235)
+(check-exp-part 'b (/ 1. 2) (list-num-concat '(33 674 776 43)) 3367477643)
+
+
+(sumar)

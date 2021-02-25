@@ -1,0 +1,389 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% MatPlotLib and Random Cheat Sheet
+%
+% Edited by Michelle Cristina de Sousa Baltazar
+%
+% http://matplotlib.org/api/pyplot_summary.html
+% http://matplotlib.org/users/pyplot_tutorial.html
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\documentclass[a4paper]{article}
+\usepackage[landscape]{geometry}
+\usepackage{url}
+\usepackage{multicol}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{tikz}
+\usetikzlibrary{decorations.pathmorphing}
+\usepackage{amsmath,amssymb}
+\usepackage{hyperref}
+
+\usepackage{colortbl}
+\usepackage{xcolor}
+\usepackage{mathtools}
+\usepackage{amsmath,amssymb}
+\usepackage{enumitem}
+
+% Mihnea
+\usepackage{textcomp} % \textquotesingle: Racket: '(1 2 3)
+\usepackage{couriers}
+\usepackage{listings}
+\lstset{
+	numbers			= left,
+	numberstyle		= \tiny,
+    numbersep       = 5pt,
+	captionpos		= b,
+	breaklines		= true,
+	basicstyle		= \ttfamily\footnotesize, 
+	tabsize			= 4,
+	escapeinside	= {~}{~},
+}
+\lstdefinelanguage{Racket}{
+  morekeywords=[1]{define, define-syntax, define-macro, lambda, define-stream, stream-lambda},
+  morekeywords=[2]{begin, call-with-current-continuation, call/cc,
+    call-with-input-file, call-with-output-file, case, cond,
+    do, else, for-each, if,
+    let*, let, let-syntax, letrec, letrec-syntax,
+    let-values, let*-values,
+    and, or, not, delay, force,
+    quasiquote, quote, unquote, unquote-splicing,
+    map, fold, syntax, syntax-rules, eval, environment },
+  morekeywords=[3]{import, export},
+  alsodigit=!\$\%&*+-./:<=>?@^_~,
+  sensitive=true,
+  morecomment=[l]{;},
+  morecomment=[s]{\#|}{|\#},
+  morestring=[b]",
+  basicstyle=\footnotesize\ttfamily,
+  keywordstyle=\color[rgb]{0,.3,.7},
+  commentstyle=\color[rgb]{0.133,0.545,0.133},
+  stringstyle={\color[rgb]{0.75,0.49,0.07}},
+  upquote=true,
+  breaklines=true,
+  breakatwhitespace=true,
+  literate=*{`}{{`}}{1}
+}
+
+\title{Racket - fluxuri}
+\usepackage[brazilian]{babel}
+\usepackage[utf8]{inputenc}
+
+\advance\topmargin-1.0in
+\advance\textheight3in
+\advance\textwidth3in
+\advance\oddsidemargin-1.5in
+\advance\evensidemargin-1.5in
+\parindent0pt
+\parskip1pt
+\newcommand{\hr}{\centerline{\rule{3.5in}{1pt}}}
+%\colorbox[HTML]{e4e4e4}{\makebox[\textwidth-2\fboxsep][l]{texto}
+\begin{document}
+
+\begin{center}{\huge{\textbf{Racket CheatSheet}}}\\
+{\large Laborator5}
+\end{center}
+\begin{multicols*}{3}
+
+\tikzstyle{mybox} = [draw=black, fill=white, very thick,
+    rectangle, rounded corners, inner sep=10pt, inner ysep=10pt]
+\tikzstyle{fancytitle} =[fill=black, text=white, font=\bfseries]
+
+% Mihnea
+\tikzstyle{mybox_code} = [mybox, draw = orange, fill=sandybrown]
+\tikzstyle{fancytitle_code} = [fancytitle, fill = orange]
+
+\definecolor{almond}{rgb}{0.94, 0.87, 0.8}
+\definecolor{apricot}{rgb}{0.98, 0.81, 0.69}
+\definecolor{atomictangerine}{rgb}{1.0, 0.6, 0.4}
+\definecolor{sandybrown}{rgb}{0.96, 0.64, 0.38}
+\definecolor{buff}{rgb}{0.94, 0.86, 0.51}
+
+\definecolor{persianred}{rgb}{0.8, 0.2, 0.2}
+\definecolor{papayawhip}{rgb}{1.0, 0.94, 0.84}
+\tikzstyle{mybox_persianred} = [mybox, draw = persianred, fill=papayawhip]
+\tikzstyle{fancytitle_persianred} = [fancytitle, fill = persianred]
+
+\definecolor{lavenderblue}{rgb}{0.9, 0.9, 1.0}
+\definecolor{blue}{rgb}{0.01, 0.31, 0.59}
+\tikzstyle{mybox_blue} = [mybox, draw = blue, fill=lavenderblue]
+\tikzstyle{fancytitle_blue} = [fancytitle, fill = blue]
+
+\definecolor{cerise}{rgb}{0.87, 0.19, 0.39}
+\definecolor{mistyrose}{rgb}{1.0, 0.89, 0.88}
+\tikzstyle{mybox_cerise} = [mybox, draw = cerise, fill=mistyrose]
+\tikzstyle{fancytitle_cerise} = [fancytitle, fill = cerise]
+
+\definecolor{pinegreen}{rgb}{0.0, 0.47, 0.44}
+\definecolor{bubbles}{rgb}{0.91, 1.0, 1.0}
+\tikzstyle{mybox_pinegreen} = [mybox, draw = pinegreen, fill=bubbles]
+\tikzstyle{fancytitle_pinegreen} = [fancytitle, fill = pinegreen]
+
+\definecolor{cream}{rgb}{1.0, 0.99, 0.82}
+\definecolor{mikadoyellow}{rgb}{1.0, 0.77, 0.05}
+\tikzstyle{mybox_mikadoyellow} = [mybox, draw = mikadoyellow, fill=cream]
+\tikzstyle{fancytitle_mikadoyellow} = [fancytitle, fill = mikadoyellow]
+
+\definecolor{cornsilk}{rgb}{1.0, 0.97, 0.86}
+\tikzstyle{mybox_orange} = [mybox, draw = orange, fill=cornsilk]
+\tikzstyle{fancytitle_orange} = [fancytitle, fill = orange]
+
+\definecolor{aliceblue}{rgb}{0.94, 0.97, 1.0}
+\definecolor{seagreen}{rgb}{0.18, 0.55, 0.34}
+\tikzstyle{mybox_seagreen} = [mybox, draw = seagreen, fill=aliceblue]
+\tikzstyle{fancytitle_seagreen} = [fancytitle, fill = seagreen]
+
+\definecolor{jazzberryjam}{rgb}{0.65, 0.04, 0.37}
+\definecolor{almond}{rgb}{0.94, 0.87, 0.8}
+\tikzstyle{mybox_jazzberryjam} = [mybox, draw = jazzberryjam, fill=almond]
+\tikzstyle{fancytitle_jazzberryjam} = [fancytitle, fill = jazzberryjam]
+
+\definecolor{amaranth}{rgb}{0.9, 0.17, 0.31}
+\definecolor{bisque}{rgb}{1.0, 0.89, 0.77}
+\tikzstyle{mybox_amaranth} = [mybox, draw = amaranth, fill=bisque]
+\tikzstyle{fancytitle_amaranth} = [fancytitle, fill = amaranth]
+
+\definecolor{carminered}{rgb}{1.0, 0.0, 0.22}
+\definecolor{blanchedalmond}{rgb}{1.0, 0.92, 0.8}
+\tikzstyle{mybox_carminered} = [mybox, draw = amaranth, fill=blanchedalmond]
+\tikzstyle{fancytitle_carminered} = [fancytitle, fill = carminered]
+
+\definecolor{midnightgreen}{rgb}{0.0, 0.29, 0.33}
+\definecolor{lavendermist}{rgb}{0.9, 0.9, 0.98}
+\tikzstyle{mybox_midnightgreen} = [mybox, draw = midnightgreen, fill=lavendermist]
+\tikzstyle{fancytitle_midnightgreen} = [fancytitle, fill = midnightgreen]
+
+\definecolor{indigo}{rgb}{0.29, 0.0, 0.51}
+\definecolor{isabelline}{rgb}{0.96, 0.94, 0.93}
+\tikzstyle{mybox_indigo} = [mybox, draw = indigo, fill=isabelline]
+\tikzstyle{fancytitle_indigo} = [fancytitle, fill = indigo]
+
+\definecolor{russet}{rgb}{0.5, 0.27, 0.11}
+\definecolor{ivory}{rgb}{1.0, 1.0, 0.94}
+\tikzstyle{mybox_russet} = [mybox, draw = russet, fill=ivory]
+\tikzstyle{fancytitle_russet} = [fancytitle, fill = russet]
+
+\definecolor{neongreen}{rgb}{0.22, 0.88, 0.08}
+\definecolor{splashedwhite}{rgb}{1.0, 0.99, 1.0}
+\tikzstyle{mybox_neongreen} = [mybox, draw = neongreen, fill=splashedwhite]
+\tikzstyle{fancytitle_neongreen} = [fancytitle, fill = neongreen]
+
+\definecolor{amber}{rgb}{1.0, 0.75, 0.0}
+\definecolor{mybeige}{rgb}{1.0, 1.0, 0.95}
+\tikzstyle{mybox_amber} = [mybox, draw = amber, fill=mybeige]
+\tikzstyle{fancytitle_amber} = [fancytitle, fill = amber]
+%---------------------------------------------------------------------------------
+\begin{tikzpicture}
+\node [mybox_indigo] (box){%
+    \begin{minipage}{0.3\textwidth}
+    {\centering\bf\small\color{indigo} delay force\\}
+		\begin{lstlisting}[language=Racket]
+(define p (delay (+ 1 2)))
+p                                   #<promise:p>
+
+;; force forteaza evaluarea
+(force p)                                      3
+
+;; un force subsecvent ia rezultatul din cache
+(force p)                                      3
+\end{lstlisting}
+    \end{minipage}
+};
+
+\node[fancytitle_indigo, right=10pt] at (box.north west) {Promisiuni};
+\end{tikzpicture}
+
+%---------------------------------------------------------------------------------
+
+\begin{tikzpicture}
+\node [mybox_amber] (box){%
+    \begin{minipage}{0.3\textwidth}
+    	{\centering\bf\small\color{amber} empty-stream stream-cons\\}
+		\begin{lstlisting}[language=Racket]
+empty-stream						   #<stream>
+(stream-cons 1 empty-stream)           #<stream>
+
+(define ones (stream-cons 1 ones))   fluxul de 1
+
+;; fluxul numerelor naturale
+(define naturals                         
+  (let loop ((n 0))
+     (stream-cons n (loop (add1 n))))) 
+        \end{lstlisting}
+    \end{minipage}
+};
+
+\node[fancytitle_amber, right=10pt] at (box.north west) {Constructori fluxuri};
+\end{tikzpicture}
+
+%---------------------------------------------------------------------------------
+
+
+\begin{tikzpicture}
+\node [mybox_pinegreen] (box){%
+    \begin{minipage}{0.3\textwidth}
+    	{\centering\bf\small\color{pinegreen} stream-first stream-rest stream-empty? \\}
+		\begin{lstlisting}[language=Racket]
+(stream-first naturals)                        0
+(stream-rest (stream-cons 2 ones))   fluxul de 1          
+
+(stream-empty? empty-stream)                  #t 
+(stream-empty? ones)                          #f
+
+		\end{lstlisting}
+    \end{minipage}
+};
+
+\node[fancytitle_pinegreen, right=10pt] at (box.north west) {Operatori pe fluxuri};
+\end{tikzpicture}
+%---------------------------------------------------------------------------------
+
+\begin{tikzpicture}
+\node [mybox_cerise] (box){%
+    \begin{minipage}{0.3\textwidth}
+        	{\centering\bf\small\color{cerise} stream-map stream-filter \\}
+		\begin{lstlisting}[language=Racket]
+;; stream-map merge numai cu functii unare
+(stream-map sqr naturals)       fluxul 0, 1, 4..
+
+(stream-filter even? naturals)    fluxul nr pare
+        \end{lstlisting}
+    \end{minipage}
+};
+
+\node[fancytitle_cerise, right=10pt] at (box.north west) {Funcționale pe fluxuri};
+\end{tikzpicture}
+
+%---------------------------------------------------------------------------------
+
+\begin{tikzpicture}
+\node [mybox_blue] (box){%
+    \begin{minipage}{0.3\textwidth}
+    {\centering\bf\small\color{blue} Generator recursiv \color{black} cu oricâți parametri\\}
+    {\centering\bf\small definit în mod uzual cu \color{blue} named let\\}
+		\begin{lstlisting}[language=Racket]
+;; fluxul puterilor lui 2
+(define powers-of-2
+  (let loop ((n 1))
+    (stream-cons n (loop (* n 2)))))
+    
+;; fluxul Fibonacci
+(define fibonacci
+  (let loop ((n1 0) (n2 1))
+    (stream-cons n1 (loop n2 (+ n1 n2)))))
+    
+;; fluxul 1/(n!) 
+;; (cu care putem aproxima constanta lui Euler)
+(define rev-factorials
+  (let loop ((term 1) (n 1))
+    (stream-cons term (loop (/ term n) (add1 n)))))
+    
+;; testare: stream-take este definita de noi
+;; in laborator, nu exista in Racket
+
+;; rezultat '(1 2 4 8 16 32 64 128 256 512)
+(stream-take powers-of-2 10)
+
+;; rezultat '(0 1 1 2 3 5 8 13 21 34)
+(stream-take fibonacci 10)
+
+;; rezultat 2.7182815255731922
+(apply + 0.0 (stream-take rev-factorials 10))
+        \end{lstlisting}
+    \end{minipage}
+};
+
+\node[fancytitle_blue, right=10pt] at (box.north west) {Fluxuri definite explicit};
+\end{tikzpicture}
+
+%---------------------------------------------------------------------------------
+
+\begin{tikzpicture}
+\node [mybox_persianred] (box){%
+    \begin{minipage}{0.3\textwidth}
+    {\centering\bf\small Folosiți \color{persianred} interfața Racket \color{black} pentru fluxuri!\\}
+    \centering
+%     	{\centering\bf\color{persianred}
+		\begin{lstlisting}[language=Racket]
+DA: (stream-cons x S) NU: (cons x (lambda () S))
+                      NU: (cons x (delay S))
+DA: (stream-rest S)   NU: ((cdr S))
+                      NU: (force (cdr S))
+        \end{lstlisting}
+    \end{minipage}
+};
+
+\node[fancytitle_persianred, right=10pt] at (box.north west) {AȘA  DA / AȘA NU};
+\end{tikzpicture}
+
+%---------------------------------------------------------------------------------
+\begin{tikzpicture}
+\node [mybox_orange] (box){%
+    \begin{minipage}{0.3\textwidth}
+    {\centering\bf\small\color{orange} Fără generator explicit\\}
+    \medskip
+    {\centering\bf\small\color{orange} Dă explicit primii 1-2 termeni\color{black}, apoi inițiază\\} 
+    {\centering\bf\small o prelucrare folosind (de obicei)\\} 
+    {\centering\bf\small\color{orange}funcționale pe fluxuri\\}
+    \begin{lstlisting}[language=Racket]
+;; stream-zip-with este definita de voi
+;; in laborator, nu exista in Racket
+
+;; fluxul puterilor lui 2    
+(define powers-of-2-a
+  (stream-cons
+   1
+   (stream-zip-with +
+                    powers-of-2-a
+                    powers-of-2-a)))
+                    
+(define powers-of-2-b
+  (stream-cons
+   1
+   (stream-map (lambda (x) (* x 2))
+               powers-of-2-b)))                    
+ 
+;; fluxul Fibonacci
+(define fibonacci
+  (stream-cons
+   0
+   (stream-cons
+    1
+    (stream-zip-with +
+                     fibonacci
+                     (stream-rest fibonacci)))))
+    
+;; fluxul 1/(n!) 
+(define rev-factorials
+  (stream-cons
+   1
+   (stream-zip-with /
+                    rev-factorials
+                    (stream-rest naturals))))
+                    
+
+        \end{lstlisting}
+    \end{minipage}
+};
+\node[fancytitle_orange, right=10pt] at (box.north west) {Fluxuri definite implicit};
+\end{tikzpicture}
+
+%---------------------------------------------------------------------------------
+\begin{tikzpicture}
+\node [mybox_neongreen] (box){%
+    \begin{minipage}{0.3\textwidth}\centering
+\href{http://docs.racket-lang.org/}{http://docs.racket-lang.org/}
+    \end{minipage}
+};
+
+\node[fancytitle_neongreen, right=10pt] at (box.north west) {Folositi cu incredere!};
+\end{tikzpicture}
+
+
+
+%---------------------------------------------------------------------------------
+
+
+
+\end{multicols*}
+\end{document}
