@@ -48,7 +48,6 @@ Una dintre principalele diferențe aduse de programarea funcțională este absen
 
 ```haskell
 insertion_sort [] = [] insertion_sort (x:xs) = insert x (insertion_sort xs)
-
 insert y [] = [y] insert y (x:xs) = if y < x then (y:x:xs) else x:(insert y xs)
 ```
 
