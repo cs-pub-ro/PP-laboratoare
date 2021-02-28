@@ -355,9 +355,9 @@ Trecem axiomele în cod Racket:
 
 ## Resurse
 
-  - {{ intro-ex.zip |Exerciții}}
-  - {{ intro-sol.zip |Soluții}}
-  - {{ intro-cheatsheet.pdf |Cheatsheet}}
+  - [Schelet](archives/intro-skel.zip)
+  - [Soluții](archives/intro-sol.zip)
+  - [Cheatsheet](https://github.com/cs-pub-ro/PP-laboratoare/raw/master/racket/intro/racket-cheatsheet-1.pdf)
 
 ## Referinţe
 
