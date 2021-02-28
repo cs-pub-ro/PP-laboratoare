@@ -1,8 +1,7 @@
 # Racket: Introducere
 
-  - Responsabil: [Mihnea Muraru](mmihnea@gmail.com "wikilink")
-  - Data publicării: 14.02.2020
-  - Data ultimei modificări: 14.02.2020
+  - Data publicării: 29.02.2021
+  - Data ultimei modificări: 29.02.2021
 
 ## Obiective
 
