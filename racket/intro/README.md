@@ -47,11 +47,9 @@ Programarea orientată obiect mută centrul de interes de la procedură (secven�
 Una dintre principalele diferențe aduse de programarea funcțională este absența **efectelor laterale**, și se datorează faptului că programarea funcțională este atemporală. Nu există atribuiri, nu există secvență de comenzi, o anumită expresie are o singură valoare pe tot parcursul programului. Elementul central este **funcția** (văzută însă nu în sens procedural, ci mai degrabă în sens matematic). Programele constau în compuneri și aplicări de funcții. Exemplu (limbajul *Haskell*):
 
 ```haskell
-insertion_sort [] = [] insertion_sort (x:xs) =
-insert x (insertion_sort xs)
+insertion_sort [] = [] insertion_sort (x:xs) = insert x (insertion_sort xs)
 
-insert y [] = [y] insert y (x:xs) = if y < x then (y:x:xs) else
-x:(insert y xs) </code>
+insert y [] = [y] insert y (x:xs) = if y < x then (y:x:xs) else x:(insert y xs)
 ```
 
 Observați asemănarea izbitoare între codul Haskell și **definirea axiomelor unui TDA**, studiată la cursul de *Analiza Algoritmilor* funcțiile sunt definite pe cazurile de aplicare și folosesc recursivitatea pentru a referi un caz deja implementat.

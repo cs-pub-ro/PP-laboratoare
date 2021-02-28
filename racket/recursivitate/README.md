@@ -36,7 +36,7 @@ O funcție este recursivă **pe stivă** dacă apelul recursiv este parte a unei
 
 #### Exemplu
 
-```racket
+```lisp
 (define (factorial n)
      (if (= n 0)
          1
@@ -57,7 +57,7 @@ transformare a recursivității în iterație). Metoda de transformare prezentat
 
 #### Exemplu
 
-```racket
+```lisp
 (define (tail-recursion n acc)
  (if (= n 0)
      acc
@@ -74,7 +74,7 @@ rezultatul**, respectiv **capacitatea** funcțiilor recursive **pe coadă** de a
 
 #### Exemplu
 
-```racket
+```lisp
 (define (member x L) ;; O posibilă implementare a funcției member
 
  (if (null? L) #f  ;; Caz de bază, lista vidă nu conține elemente`
@@ -89,7 +89,7 @@ Recursivitatea arborescentă apare în cazul funcțiilor care conțin, în imple
 
 #### Exemplu
 
-```racket
+```lisp
 (define (fib n)
  (cond ((= n 0) 0)
        ((= n 1) 1)  
