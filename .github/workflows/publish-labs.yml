@@ -15,9 +15,10 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
         with:
-          - fetch-depth: 1
-
-      - name: Archive labs
+          - fetch-depth: 2
+      - uses: actions/setup-python@v2
+        with:
+          python-version: '3.8'
+      - name: Update labs
         run: |
           ./scripts/update-ocw.sh
-        uses: docker://pandoc/core:2.9
