@@ -59,6 +59,18 @@
 ;; (rev L) întoarce '(12 (7 (h (9 10) 11)) (3 d (5 f)) b 1)
 ;; (deep-rev L) ->  '(12 ((11 (10 9) h) 7) ((f 5) d 3) b 1)
 
+; cazul 1) - cazul de bază
+;; deep-rev([ ]) = [ ]
+
+; cazul 2) - când elementul curent NU este o listă, se procedează la fel ca la funcția rev de mai sus
+;; deep-rev(x:l) = deep-rev(l) ++ [x]
+
+; cazul 3) - se procedează similar ca la cazul 2),
+; însă aici avem cazul cand elementul curent este, de asemenea o listă,
+; acesta trebuie inversat la rândul lui,
+; astfel, trebuie apelat deep-rev atât pe elementul curent, cât și pe restul listei
+;; deep-rev((x:xl):l) = deep-rev(l) ++ [deep-rev(x:xl)]
+
 ;; Restricții:
 ;; - se va implementa obligatoriu recursiv, după modelul implementării lui rev
 ;; - folosiți cond
