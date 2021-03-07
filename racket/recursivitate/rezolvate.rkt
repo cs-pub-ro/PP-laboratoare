@@ -150,3 +150,37 @@
 ;; că folosim cons drept constructor de liste, care adaugă doar la
 ;; început. Soluția uzuală este folosirea funcției reverse
 ;; pentru inversarea rezultatului înainte de return.
+
+;; Exercițiul 6 - Prefixul comun a două liste, folosind recursivitate pe stivă
+
+(define (common-prefix L1 L2)
+  (cond
+    ((or (null? L1) (null? L2)) '())
+    ((equal? (first L1) (first L2)) (cons (first L1) (common-prefix (rest L1) (rest L2))))
+    (else '())))
+
+;(common-prefix '(1 2 3 4 5 6 7) '(1 2 3 9 10 12 5 6))
+
+
+;; Exercițiul 7 - Sufixul comun a două liste
+;; Observație: (drop L n) - elimină primele n elemente din lista L 
+
+(define (common-suffix L1 L2)
+  (if (<= (length L1) (length L2))
+      (common-suffix-helper L1 (drop L2 (- (length L2) (length L1))) '())
+      (common-suffix L2 L1)))
+
+; primește liste de aceeași lungime (sufixul nu poate fi mai lung decât lista mai scurtă)
+(define (common-suffix-helper L1 L2 acc)
+  (cond
+    ((null? L1) (reverse acc))
+    ; dacă primele elemente din listă sunt egale, le adaug în acumulator(acc) și
+    ; verific recursiv restul elementelor din listă
+    ((equal? (first L1) (first L2)) (common-suffix-helper (rest L1) (rest L2) (cons (first L1) acc)))
+    ; dacă primele elemente din listă nu sunt egale, resetez acumulatorul(acc) și
+    ; verific recursiv restul elementelor din listă
+    (else (common-suffix-helper (rest L1) (rest L2) '()))))
+      
+    
+ ;(common-suffix '(1 2 3 4 5 6 7) '(1 2 3 9 10 12 5 6))
+ ;(common-suffix '(1 2 3 4 5 6 7) '(1 2 3 9 10 12 5 6 7))
