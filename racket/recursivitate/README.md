@@ -1,8 +1,7 @@
 # Racket: Recursivitate
 
-  - Responsabil: [Bogdan Popa](popabogdan97@gmail.com "wikilink")
-  - Data publicării: 24.02.2020
-  - Data ultimei modificări: 24.02.2020
+  - Data publicării: 08.03.2021
+  - Data ultimei modificări: 08.03.2021
 
 ## Obiective
 
@@ -108,10 +107,12 @@ necesare pentru revenirea din recursivitate).
 
 Citiți exercițiile **rezolvate**; apoi, rezolvați exercițiile **propuse**.
 
-  - {{ :20:laboratoare:racket:recursive-images-sol.zip | Soluții}}
 
-  - {{ :20:laboratoare:racket:recursivitate-cheatsheet.pdf |Cheatsheet}}
-  - (Nu uitați și de {{ :20:laboratoare:racket:intro-cheatsheet.pdf |cheatsheet}}-ul de la primul laborator)
+  - [Schelet](https://ocw.cs.pub.ro/courses/_media/pp/21/laboratoare/racket/recursivitate-skel.zip)
+  - [Exerciții rezolvate](https://ocw.cs.pub.ro/courses/_media/pp/21/laboratoare/racket/recursivitate-resurse.zip)
+  - [Soluții](https://ocw.cs.pub.ro/courses/_media/pp/21/laboratoare/racket/recursivitate-sol.zip)
+  - [Cheatsheet Laboratorul 1](https://github.com/cs-pub-ro/PP-laboratoare/raw/master/racket/intro/racket-cheatsheet-1.pdf)
+  - [Cheatsheet Laboratorul 2](https://github.com/cs-pub-ro/PP-laboratoare/raw/master/racket/recursivitate/racket-cheatsheet-2.pdf)
 
 ## Referințe
 
