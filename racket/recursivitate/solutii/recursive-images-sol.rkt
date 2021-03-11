@@ -9,7 +9,7 @@
 
             http://racket-lang.org/
 |#
- 31 7 #"wxtext\0"
+ 34 7 #"wxtext\0"
 3 1 6 #"wxtab\0"
 1 1 8 #"wximage\0"
 2 0 8 #"wxmedia\0"
@@ -50,7 +50,10 @@
 0 0 26 #"drracket:spacer-snipclass\0"
 0 0 57
 #"(lib \"hrule-snip.rkt\" \"macro-debugger\" \"syntax-browser\")\0"
-1 0 55 #"(lib \"vertical-separator-snip.ss\" \"stepper\" \"private\")\0"
+1 0 26 #"drscheme:pict-value-snip%\0"
+0 0 45 #"(lib \"image-snipr.ss\" \"slideshow\" \"private\")\0"
+1 0 38 #"(lib \"pict-snipclass.ss\" \"slideshow\")\0"
+2 0 55 #"(lib \"vertical-separator-snip.ss\" \"stepper\" \"private\")\0"
 1 0 18 #"drscheme:xml-snip\0"
 1 0 31 #"(lib \"xml-snipclass.ss\" \"xml\")\0"
 1 0 21 #"drscheme:scheme-snip\0"
@@ -60,10 +63,10 @@
 1 0 1 6 #"wxloc\0"
           0 0 720 0 1 #"\0"
 0 75 1 #"\0"
-0 12 90 -1 90 -1 3 -1 0 1 0 1 0 0 0 0 0 0 0 0 0 0 0 255 255 255 1 -1 0 9
+0 10 90 -1 90 -1 3 -1 0 1 0 1 0 0 0 0 0 0 0 0 0 0 0 255 255 255 1 -1 0 9
 #"Standard\0"
-0 75 10 #"Monospace\0"
-0 14 90 -1 90 -1 3 -1 0 1 0 1 0 0 0 0 0 0 0 0 0 0 0 255 255 255 1 -1 2 1
+0 75 12 #"Courier New\0"
+0 10 90 -1 90 -1 3 -1 0 1 0 1 0 0 0 0 0 0 0 0 0 0 0 255 255 255 1 -1 2 1
 #"\0"
 0 -1 1 #"\0"
 1 0 -1 -1 -1 -1 -1 -1 0 0 0 0 0 0 1 1 1 1 1 1 0 0 0 0 0 0 -1 -1 2 24
@@ -186,7 +189,16 @@
 1 0 -1 -1 -1 93 -1 -1 0 1 0 0 0 0 0 0 0 1 1 1 139 142 28 0 0 0 -1 -1 2
 49 #"drracket:check-syntax:both-obligation-style-pref\0"
 0 -1 1 #"\0"
-1 0 -1 -1 -1 93 -1 -1 0 1 0 0 0 0 0 0 0 1 1 1 139 142 28 0 0 0 -1 -1 4 1
+1 0 -1 -1 -1 93 -1 -1 0 1 0 0 0 0 0 0 0 1 1 1 139 142 28 0 0 0 -1 -1 2
+26 #"plt:htdp:test-coverage-on\0"
+0 -1 1 #"\0"
+1 0 -1 -1 -1 93 -1 -1 0 1 0 0 0 0 0 0 0 1 1 1 0 0 0 0 0 0 -1 -1 2 1
+#"\0"
+0 -1 1 #"\0"
+1 0 -1 -1 -1 93 -1 -1 0 1 0 0 0 1 0 0 0 0 0 0 255 165 0 0 0 0 -1 -1 2 27
+#"plt:htdp:test-coverage-off\0"
+0 -1 1 #"\0"
+1 0 -1 -1 -1 93 -1 -1 0 1 0 0 0 1 0 0 0 0 0 0 255 165 0 0 0 0 -1 -1 4 1
 #"\0"
 0 70 1 #"\0"
 1.0 0 -1 -1 -1 -1 -1 -1 0 0 0 0 0 0 1.0 1.0 1.0 1.0 1.0 1.0 0 0 0 0 0 0
@@ -195,10 +207,7 @@
 1.0 0 -1 -1 -1 -1 -1 -1 0 0 0 0 0 0 1.0 1.0 1.0 1.0 1.0 1.0 0 0 0 0 0 0
 -1 -1 2 37 #"plt:module-language:test-coverage-on\0"
 0 -1 1 #"\0"
-1 0 -1 -1 -1 93 -1 -1 0 1 0 0 0 0 0 0 0 1 1 1 0 0 0 0 0 0 -1 -1 2 1
-#"\0"
-0 -1 1 #"\0"
-1 0 -1 -1 -1 93 -1 -1 0 1 0 0 0 1 0 0 0 0 0 0 255 165 0 0 0 0 -1 -1 2 38
+1 0 -1 -1 -1 93 -1 -1 0 1 0 0 0 0 0 0 0 1 1 1 0 0 0 0 0 0 -1 -1 2 38
 #"plt:module-language:test-coverage-off\0"
 0 -1 1 #"\0"
 1 0 -1 -1 -1 93 -1 -1 0 1 0 0 0 1 0 0 0 0 0 0 255 165 0 0 0 0 -1 -1 0 36
@@ -208,7 +217,31 @@
 -1 0 42 #"mrlib/syntax-browser:focused-syntax-color\0"
 0 -1 1 #"\0"
 1 0 -1 -1 -1 -1 -1 -1 0 0 0 0 0 1 0 0 0 0 0 0 34 139 34 255 255 255 -1
+-1 4 1 #"\0"
+0 71 1 #"\0"
+1.0 0 -1 -1 -1 -1 -1 -1 0 0 0 0 0 0 1.0 1.0 1.0 1.0 1.0 1.0 0 0 0 0 0 0
+-1 -1 4 1 #"\0"
+0 -1 1 #"\0"
+1.0 0 -1 -1 -1 -1 -1 -1 1 0 0 0 0 0 0 0 0 1.0 1.0 1.0 0 0 255 0 0 0 -1
+-1 4 1 #"\0"
+0 71 1 #"\0"
+1.0 0 -1 -1 -1 -1 -1 -1 1 0 0 0 0 0 0 0 0 1.0 1.0 1.0 0 0 255 0 0 0 -1
+-1 4 1 #"\0"
+0 71 1 #"\0"
+1.0 0 -1 -1 -1 -1 -1 -1 0 0 0 0 0 0 0 0 0 1.0 1.0 1.0 0 100 0 0 0 0 -1
+-1 4 1 #"\0"
+0 71 1 #"\0"
+1.0 0 -1 -1 93 -1 -1 -1 0 0 0 0 0 0 0 0 0 1.0 1.0 1.0 255 0 0 0 0 0 -1
+-1 2 1 #"\0"
+0 70 1 #"\0"
+1.0 0 -1 -1 93 -1 -1 -1 0 0 0 0 0 0 0 0 0 1.0 1.0 1.0 148 0 211 0 0 0 -1
+-1 2 1 #"\0"
+0 -1 1 #"\0"
+1.0 0 -1 -1 -1 -1 -1 -1 1 0 0 0 0 0 0 0 0 1.0 1.0 1.0 0 0 255 0 0 0 -1
 -1 0 1 #"\0"
+0 75 1 #"\0"
+0.0 12 90 -1 90 -1 3 -1 0 1 0 1 0 0 0.0 0.0 0.0 0.0 0.0 0.0 0 0 0 255
+255 255 1 -1 0 1 #"\0"
 0 75 10 #"Monospace\0"
 0.0 14 90 -1 90 -1 3 -1 0 1 0 1 0 0 0.0 0.0 0.0 0.0 0.0 0.0 0 0 0 255
 255 255 1 -1 2 1 #"\0"
@@ -229,40 +262,10 @@
 255 255 255 -1 -1 0 1 #"\0"
 0 -1 1 #"\0"
 1.0 0 -1 -1 -1 -1 -1 -1 0 0 0 0 0 1 0.0 0.0 0.0 0.0 0.0 0.0 34 139 34
-255 255 255 -1 -1 4 1 #"\0"
-0 71 1 #"\0"
-1.0 0 -1 -1 -1 -1 -1 -1 0 0 0 0 0 0 1.0 1.0 1.0 1.0 1.0 1.0 0 0 0 0 0 0
--1 -1 4 1 #"\0"
-0 -1 1 #"\0"
-1.0 0 -1 -1 -1 -1 -1 -1 1 0 0 0 0 0 0.0 0.0 0.0 1.0 1.0 1.0 0 0 255 0 0
-0 -1 -1 4 1 #"\0"
-0 71 1 #"\0"
-1.0 0 -1 -1 -1 -1 -1 -1 1 0 0 0 0 0 0.0 0.0 0.0 1.0 1.0 1.0 0 0 255 0 0
-0 -1 -1 4 1 #"\0"
-0 71 1 #"\0"
-1.0 0 -1 -1 -1 -1 -1 -1 0 0 0 0 0 0 0.0 0.0 0.0 1.0 1.0 1.0 0 100 0 0 0
-0 -1 -1 0 1 #"\0"
-0 75 1 #"\0"
-0.0 10 90 -1 90 -1 3 -1 0 1 0 1 0 0 0.0 0.0 0.0 0.0 0.0 0.0 0 0 0 255
-255 255 1 -1 0 1 #"\0"
+255 255 255 -1 -1 0 1 #"\0"
 0 75 12 #"Courier New\0"
 0.0 10 90 -1 90 -1 3 -1 0 1 0 1 0 0 0.0 0.0 0.0 0.0 0.0 0.0 0 0 0 255
-255 255 1 -1 2 26 #"plt:htdp:test-coverage-on\0"
-0 -1 1 #"\0"
-1 0 -1 -1 -1 93 -1 -1 0 1 0 0 0 0 0 0 0 1 1 1 0 0 0 0 0 0 -1 -1 2 27
-#"plt:htdp:test-coverage-off\0"
-0 -1 1 #"\0"
-1 0 -1 -1 -1 93 -1 -1 0 1 0 0 0 1 0 0 0 0 0 0 255 165 0 0 0 0 -1 -1 4 1
-#"\0"
-0 71 1 #"\0"
-1.0 0 -1 -1 93 -1 -1 -1 0 0 0 0 0 0 0.0 0.0 0.0 1.0 1.0 1.0 255 0 0 0 0
-0 -1 -1 2 1 #"\0"
-0 70 1 #"\0"
-1.0 0 -1 -1 93 -1 -1 -1 0 0 0 0 0 0 0.0 0.0 0.0 1.0 1.0 1.0 148 0 211 0
-0 0 -1 -1 2 1 #"\0"
-0 -1 1 #"\0"
-1.0 0 -1 -1 -1 -1 -1 -1 1 0 0 0 0 0 0.0 0.0 0.0 1.0 1.0 1.0 0 0 255 0 0
-0 -1 -1 0 1 #"\0"
+255 255 1 -1 0 1 #"\0"
 0 75 12 #"Courier New\0"
 0.0 13 90 -1 90 -1 3 -1 0 1 0 1 0 0 0.0 0.0 0.0 0.0 0.0 0.0 0 0 0 255
 255 255 1 -1 2 1 #"\0"
@@ -1628,10 +1631,10 @@
 0 0 -1 -1 0 1 #"\0"
 0 70 1 #"\0"
 0.0 10 90 -1 90 -1 3 -1 0 1 0 1 0 0 0.0 0.0 0.0 0.0 0.0 0.0 0 0 0 255
-255 255 1 -1 64 1 #"\0"
+255 255 1 -1 44 1 #"\0"
 0 -1 1 #"\0"
 1.0 0 -1 -1 -1 -1 -1 -1 0 0 0 0 1 0 0.0 0.0 0.0 0.0 0.0 0.0 0 0 0 255
-255 255 -1 -1 65 1 #"\0"
+255 255 -1 -1 46 1 #"\0"
 0 -1 1 #"\0"
 1.0 0 -1 -1 -1 -1 -1 -1 0 0 0 0 1 0 0.0 0.0 0.0 0.0 0.0 0.0 0 0 0 255
 255 255 -1 -1 2 1 #"\0"
@@ -1667,7 +1670,7 @@
 -1 -1 2 1 #"\0"
 0 -1 1 #"\0"
 0.0 15 -1 -1 -1 -1 -1 -1 0 0 1 0 0 0 1.0 1.0 1.0 1.0 1.0 1.0 0 0 0 0 0 0
--1 -1 45 1 #"\0"
+-1 -1 48 1 #"\0"
 0 -1 1 #"\0"
 1.0 0 -1 -1 -1 -1 -1 -1 0 0 0 0 0 0 1.0 1.0 1.0 1.0 1.0 1.0 0 0 0 0 0 0
 -1 -1 0 1 #"\0"
@@ -2216,7 +2219,7 @@
 255 255 -1 -1 4 1 #"\0"
 0 -1 1 #"\0"
 1.0 0 92 -1 -1 -1 -1 -1 0 0 0 0 0 0 0.0 0.0 0.0 1.0 1.0 1.0 0 0 0 0 0 0
--1 -1           0 4045 0 28 3 16 #"#lang racket/gui"
+-1 -1           0 4048 0 28 3 16 #"#lang racket/gui"
 0 0 24 29 1 #"\n"
 0 0 24 29 1 #"\n"
 0 0 17 3 40 #"; ignora\310\233i urm\304\203toarele linii de cod..."
@@ -6090,8 +6093,7 @@
 0 0 17 3 1 #" "
 0 0 17 3 11 #"determinat "
 0 0 17 3 2 #"de"
-0 0 17 3 1 #" "
-0 0 17 3 50 #"unul din unghiurile triunghiului si segmentul care"
+0 0 17 3 51 #" unul din unghiurile triunghiului si segmentul care"
 0 0 24 29 1 #"\n"
 0 0 17 3 53 #";; uneste mijloacele laturilor care formeaza unghiul."
 0 0 24 29 1 #"\n"
@@ -6125,24 +6127,34 @@
  #";; - Pentru lipirea a doua imagini pe verticala puteti folosi functia"
  #" above: (above upper_image lower_image)"
 ) 0 0 24 29 1 #"\n"
-0 0 17 3 110
+0 0 17 3 22 #";; - Pentru lipirea a "
+0 0 17 3 1 #"d"
+0 0 17 3 87
 (91
- #";; - Pentru lipirea a doua imagini pe orizontala puteti folosi functi"
- #"a beside: (beside left_image right_image)"
+ #"oua imagini pe orizontala puteti folosi functia beside: (beside left_"
+ #"image right_image)"
 ) 0 0 24 29 1 #"\n"
 0 0 17 3 112
 (92
  #";; - Pentru obtinerea triunghiului puteti folosi: (above triunghi_sus"
  #" (beside triunghi_stange triunghi_dreapta))"
 ) 0 0 24 29 1 #"\n"
-0 0 17 3 84
+0 0 17 3 106
 (93
+ #";;  - Pentru a desena un triunghi echilateral verde de latura 20 veti"
+ #" folosi urmatoarea comanda: (triangle"
+) 0 0 17 3 4 #" 20 "
+0 0 17 3 7 #"\"solid\""
+0 0 17 3 9 #" \"green\")"
+0 0 24 29 1 #"\n"
+0 0 17 3 84
+(94
  #";; Exemplu: L = 50; colors = [\"green\", \"cyan\", \"purple\", \"yell"
  #"ow\", \"orange\", \"pink\"]"
 ) 0 0 24 29 1 #"\n"
 0 0 17 3 12 #";; n = 0 -> "
 0 6           4 17 273
-(94
+(95
  #"(#(struct:translate -0.0 25.98076211353316 #(struct:polygon (#(struct"
  #":pulled-point 0 0 0 0 0 0) #(struct:pulled-point 0 0 30 0 0 0) #(stru"
  #"ct:pulled-point 0 0 15.000000000000007 -25.98076211353316 0 0)) 255 "
@@ -6150,7 +6162,7 @@
 ) 0 0 24 29 1 #"\n"
 0 0 17 3 12 #";; n = 1 -> "
 0 6           4 17 858
-(95
+(96
  #"(#(struct:overlay #(struct:translate 7.5 0 #(struct:translate -0.0 12"
  #".99038105676658 #(struct:polygon (#(struct:pulled-point 0 0 0 0 0 0) "
  #"#(struct:pulled-point 0 0 15 0 0 0) #(struct:pulled-point 0 0 7.50000"
@@ -6167,7 +6179,7 @@
 ) 0 0 24 29 1 #"\n"
 0 0 17 3 12 #";; n = 2 -> "
 0 6           4 17 2614
-(96
+(97
  #"(#(struct:overlay #(struct:translate 7.5 0 #(struct:overlay #(struct:"
  #"translate 3.75 0 #(struct:translate -0.0 6.49519052838329 #(struct:po"
  #"lygon (#(struct:pulled-point 0 0 0 0 0 0) #(struct:pulled-point 0 0 1"
@@ -6248,13 +6260,13 @@
 0 0 24 29 1 #"\n"
 0 0 24 3 6 #"      "
 0 0 17 3 79
-(97
+(98
  #";; genereaza triunghiul de sus, de latura L/2, folosind prima culoare"
  #" din lista"
 ) 0 0 24 29 1 #"\n"
 0 0 24 3 6 #"      "
 0 0 17 3 118
-(98
+(99
  #";; above este folosit pentru a lipi imaginea formata din triunghiul d"
  #"e sus, de cea formata din celelalte 2 triunghiuri"
 ) 0 0 24 29 1 #"\n"
@@ -6280,13 +6292,13 @@
 0 0 24 29 1 #"\n"
 0 0 24 3 13 #"             "
 0 0 17 3 122
-(99
+(100
  #";; beside este folosit pentru a lipi imaginea formata din triunghiul "
  #"din stange, de cea formata din triunghiul din dreapta"
 ) 0 0 24 29 1 #"\n"
 0 0 24 3 13 #"             "
 0 0 17 3 84
-(100
+(101
  #";; genereaza triunghiul din stanga, de latura L/2, folosind a doua cu"
  #"loare din lista"
 ) 0 0 24 29 1 #"\n"
@@ -6322,7 +6334,7 @@
 0 0 24 29 1 #"\n"
 0 0 24 3 22 #"                      "
 0 0 17 3 86
-(101
+(102
  #";; genereaza triunghiul din dreapta, de latura L/2, folosind a treia "
  #"culoare din lista"
 ) 0 0 24 29 1 #"\n"
@@ -6390,7 +6402,7 @@
 0 0 14 3 2 #"is"
 0 0 24 3 1 #" "
 0 6           4 21 7995
-(102
+(103
  #"(#(struct:overlay #(struct:translate 25.0 0 #(struct:overlay #(struct"
  #":translate 12.5 0 #(struct:overlay #(struct:translate 6.25 0 #(struct"
  #":translate -0.0 10.825317547305485 #(struct:polygon (#(struct:pulled-"
@@ -6534,7 +6546,7 @@
 0 0 14 3 2 #"is"
 0 0 24 3 1 #" "
 0 6           4 21 23831
-(103
+(104
  #"(#(struct:overlay #(struct:translate 25.0 0 #(struct:overlay #(struct"
  #":translate 12.5 0 #(struct:overlay #(struct:translate 6.25 0 #(struct"
  #":overlay #(struct:translate 3.125 0 #(struct:translate -0.0 5.4126587"
@@ -6911,7 +6923,7 @@
 0 0 14 3 2 #"is"
 0 0 24 3 1 #" "
 0 6           4 21 71864
-(104
+(105
  #"(#(struct:overlay #(struct:translate 25.0 0 #(struct:overlay #(struct"
  #":translate 12.5 0 #(struct:overlay #(struct:translate 6.25 0 #(struct"
  #":overlay #(struct:translate 3.125 0 #(struct:overlay #(struct:transla"
@@ -7990,7 +8002,7 @@
 0 0 14 3 2 #"is"
 0 0 24 3 1 #" "
 0 6           4 21 217121
-(105
+(106
  #"(#(struct:overlay #(struct:translate 30.0 0 #(struct:overlay #(struct"
  #":translate 15.0 0 #(struct:overlay #(struct:translate 7.5 0 #(struct:"
  #"overlay #(struct:translate 3.75 0 #(struct:overlay #(struct:translate"
@@ -11179,19 +11191,19 @@
 0 0 24 3 1 #")"
 0 0 24 29 1 #"\n"
 0 0 17 3 81
-(106
+(107
  #";; Pornind de la o list\xC4\x83 de imagini, \xC8\x99i de la o imagine"
  #" ini\xC8\x9Bial\xC4\x83, construi\xC8\x9Bi"
 ) 0 0 24 29 1 #"\n"
 0 0 17 3 81
-(107
+(108
  #";; o unic\xC4\x83 imagine, rezultat\xC4\x83 prin suprapunerea tuturor"
  #" imaginilor, \xC3\xAEn maniera"
 ) 0 0 24 29 1 #"\n"
 0 0 17 3 14 #";; urm\304\203toare:"
 0 0 24 29 1 #"\n"
 0 0 17 3 57
-(108
+(109
  #";; * prima imagine din list\xC4\x83 deasupra imaginii ini\xC8\x9Biale"
 ) 0 0 24 29 1 #"\n"
 0 0 17 3 52
@@ -11203,7 +11215,7 @@
 #";; * ultima imagine din list\304\203 deasupra rezultatului."
 0 0 24 29 1 #"\n"
 0 0 17 3 74
-(109
+(110
  #";; Numele func\xC8\x9Biei este 'overlay->', pentru a indica sensul de"
  #" parcurgere"
 ) 0 0 24 29 1 #"\n"
@@ -11214,12 +11226,12 @@
 0 0 17 3 15 #";; Restric\310\233ii:"
 0 0 24 29 1 #"\n"
 0 0 17 3 72
-(110
+(111
  #";; - se va folosi  func\xC8\x9Bia predefinit\xC4\x83 (overlay <deasup"
  #"ra> <dedesubt>)"
 ) 0 0 24 29 1 #"\n"
 0 0 17 3 73
-(111
+(112
  #";; - dac\xC4\x83 lista de imagini este vid\xC4\x83, se va returna ima"
  #"ginea ini\xC8\x9Bial\xC4\x83"
 ) 0 0 24 29 1 #"\n"
@@ -11275,7 +11287,7 @@
 0 0 14 3 2 #"is"
 0 0 24 3 1 #" "
 0 6           4 21 5590
-(112
+(113
  #"(#(struct:overlay #(struct:translate 42.6393202250021 44.223164628247"
  #"46 #(struct:translate 22.360679774997905 61.55367074350507 #(struct:p"
  #"olygon (#(struct:pulled-point 0 0 0 0 0 0) #(struct:pulled-point 0 0 "
@@ -11376,12 +11388,12 @@
 0 0 24 3 1 #")"
 0 0 24 29 1 #"\n"
 0 0 17 3 71
-(113
+(114
  #";; Implementa\xC8\x9Bi sortarea prin interclasare (merge sort) pentru"
  #" imagini"
 ) 0 0 24 29 1 #"\n"
 0 0 17 3 78
-(114
+(115
  #";; Sortarea trebuie s\xC4\x83 fie \xC3\xAEn ordine descresc\xC4\x83to"
  #"are, cu func\xC8\x9Bia de ordine:"
 ) 0 0 24 29 1 #"\n"
@@ -11389,7 +11401,7 @@
 #";; img1 < img2 = (image-height img1) < (image-height img2)"
 0 0 24 29 1 #"\n"
 0 0 17 3 103
-(115
+(116
  #";; \xC3\x8En cazul \xC3\xAEn care \xC3\xAEn\xC4\x83l\xC8\x9Bimile ima"
  #"ginilor sunt egale, se va compara l\xC4\x83\xC8\x9Bimea folosind imag"
  #"e-width"
@@ -11397,27 +11409,27 @@
 0 0 17 3 20 #";; Axiome mergesort:"
 0 0 24 29 1 #"\n"
 0 0 17 3 67
-(116
+(117
  #";; mergesort [x] = [x]  - o list\xC4\x83 cu un element este deja sort"
  #"at\xC4\x83"
 ) 0 0 24 29 1 #"\n"
 0 0 17 3 101
-(117
+(118
  #";; mergesort L = merge ;; mergesort L = merge (mergesort (fst-half L)"
  #") (mergesort (snd-half L)) unde:"
 ) 0 0 24 29 1 #"\n"
 0 0 17 3 82
-(118
+(119
  #";; - merge = func\xC8\x9Bie de interclasare a dou\xC4\x83 liste (prim"
  #"e\xC8\x99te dou\xC4\x83 liste sortate"
 ) 0 0 24 29 1 #"\n"
 0 0 17 3 83
-(119
+(120
  #";;           \xC8\x99i \xC3\xAEntoarce o list\xC4\x83 sortat\xC4\x83 "
  #"compus\xC4\x83 din cele dou\xC4\x83 liste primite)"
 ) 0 0 24 29 1 #"\n"
 0 0 17 3 77
-(120
+(121
  #";; - fst-half / snd-half = func\xC8\x9Bii ce \xC3\xAEmpart o list\xC4"
  #"\x83 \xC3\xAEn dou\xC4\x83 jum\xC4\x83t\xC4\x83\xC8\x9Bi"
 ) 0 0 24 29 1 #"\n"
@@ -11425,23 +11437,23 @@
 0 0 17 3 12 #";; Sugestii:"
 0 0 24 29 1 #"\n"
 0 0 17 3 88
-(121
+(122
  #";; - v\xC4\x83 pute\xC8\x9Bi defini o func\xC8\x9Bie auxiliar\xC4\x83"
  #" pentru compara\xC8\x9Bii (opera\xC8\x9Bia img1 < img2)"
 ) 0 0 24 29 1 #"\n"
 0 0 17 3 68
-(122
+(123
  #";; - v\xC4\x83 pute\xC8\x9Bi defini o func\xC8\x9Bie auxiliar\xC4\x83"
  #" pentru logica de merge"
 ) 0 0 24 29 1 #"\n"
 0 0 17 3 114
-(123
+(124
  #";; - dac\xC4\x83 ave\xC8\x9Bi nevoie de un parametru \xC3\xAEn plus l"
  #"a o func\xC8\x9Bie si valoarea ini\xC8\x9Bial\xC4\x83 a acestuia este"
  #" cunoscut\xC4\x83,"
 ) 0 0 24 29 1 #"\n"
 0 0 17 3 64
-(124
+(125
  #";; pute\xC8\x9Bi defini o func\xC8\x9Bie auxiliar\xC4\x83 cu un param"
  #"etru \xC3\xAEn plus"
 ) 0 0 24 29 1 #"\n"
@@ -11505,7 +11517,7 @@
 0 0 21 3 1 #"2"
 0 0 24 3 4 #"))  "
 0 0 17 3 47
-(125
+(126
  #";; \xC3\x8Emp\xC4\x83r\xC8\x9Bim lista \xC3\xAEn dou\xC4\x83 \xC8\x99"
  #"i interclas\xC4\x83m"
 ) 0 0 24 29 1 #"\n"
@@ -11568,7 +11580,7 @@
 0 0 14 3 2 #"L2"
 0 0 24 3 3 #"]  "
 0 0 17 3 71
-(126
+(127
  #";; Dac\xC4\x83 o list\xC4\x83 devine goal\xC4\x83, ad\xC4\x83ug\xC4"
  #"\x83m la sfar\xC8\x99it cealalt\xC4\x83 list\xC4\x83"
 ) 0 0 24 29 1 #"\n"
@@ -11694,7 +11706,7 @@
 0 0 21 3 1 #"'"
 0 0 24 3 1 #"("
 0 6           4 21 438
-(127
+(128
  #"(#(struct:translate 2.4721359549995796 12.310734148701014 #(struct:po"
  #"lygon (#(struct:pulled-point 0 0 0 0 0 0) #(struct:pulled-point 0 0 1"
  #"0.47213595499958 -7.608452130361228 0 0) #(struct:pulled-point 0 0 -2"
@@ -11704,7 +11716,7 @@
  #"14 12.310734148701014) #f)"
 ) 0 0 24 3 2 #"  "
 0 6           4 21 427
-(128
+(129
  #"(#(struct:translate 8.034441853748636 40.009885983278295 #(struct:pol"
  #"ygon (#(struct:pulled-point 0 0 0 0 0 0) #(struct:pulled-point 0 0 34"
  #".03444185374863 -24.72746942367399 0 0) #(struct:pulled-point 0 0 -8."
@@ -11714,7 +11726,7 @@
  #"5983278295) #f)"
 ) 0 0 24 3 1 #" "
 0 6           4 21 443
-(129
+(130
  #"(#(struct:translate 4.3262379212492625 21.543784760226774 #(struct:po"
  #"lygon (#(struct:pulled-point 0 0 0 0 0 0) #(struct:pulled-point 0 0 1"
  #"8.326237921249266 -13.31479122813215 0 0) #(struct:pulled-point 0 0 -"
@@ -11723,7 +11735,7 @@
  #"226774 0 0)) 255 \"pink\")) #(struct:bb 22.65247584249853 21.54378476"
  #"0226774 21.543784760226774) #f)"
 ) 0 6           4 21 439
-(130
+(131
  #"(#(struct:translate 6.798373876248842 33.85451890892779 #(struct:poly"
  #"gon (#(struct:pulled-point 0 0 0 0 0 0) #(struct:pulled-point 0 0 28."
  #"798373876248846 -20.923243358493377 0 0) #(struct:pulled-point 0 0 -6"
@@ -11732,7 +11744,7 @@
  #"79 0 0)) 255 \"orange\")) #(struct:bb 35.59674775249769 33.8545189089"
  #"2779 33.85451890892779) #f)"
 ) 0 6           4 21 438
-(131
+(132
  #"(#(struct:translate 9.888543819998318 49.24293659480406 #(struct:poly"
  #"gon (#(struct:pulled-point 0 0 0 0 0 0) #(struct:pulled-point 0 0 41."
  #"88854381999832 -30.433808521444913 0 0) #(struct:pulled-point 0 0 -9."
@@ -11742,7 +11754,7 @@
  #"406 49.24293659480406) #f)"
 ) 0 0 24 3 2 #"  "
 0 6           4 21 441
-(132
+(133
  #"(#(struct:translate 5.253288904374108 26.160310065989655 #(struct:pol"
  #"ygon (#(struct:pulled-point 0 0 0 0 0 0) #(struct:pulled-point 0 0 22"
  #".253288904374106 -16.16796077701761 0 0) #(struct:pulled-point 0 0 -5"
@@ -11752,7 +11764,7 @@
  #"89655 26.160310065989655) #f)"
 ) 0 0 24 3 1 #" "
 0 6           4 21 443
-(133
+(134
  #"(#(struct:translate 3.399186938124421 16.927259454463893 #(struct:pol"
  #"ygon (#(struct:pulled-point 0 0 0 0 0 0) #(struct:pulled-point 0 0 14"
  #".399186938124423 -10.461621679246688 0 0) #(struct:pulled-point 0 0 -"
@@ -11762,7 +11774,7 @@
  #"4463893 16.927259454463893) #f)"
 ) 0 0 24 3 1 #" "
 0 6           4 21 429
-(134
+(135
  #"(#(struct:translate 1.8541019662496847 9.23305061152576 #(struct:poly"
  #"gon (#(struct:pulled-point 0 0 0 0 0 0) #(struct:pulled-point 0 0 7.8"
  #"54101966249685 -5.706339097770921 0 0) #(struct:pulled-point 0 0 -1.8"
@@ -11775,14 +11787,14 @@
 0 0 24 3 1 #" "
 0 0 21 3 1 #"'"
 0 0 24 3 1 #"("
-0 6           4 21 438 131 0 0 24 3 1 #" "
-0 6           4 21 427 128 0 0 24 3 1 #" "
-0 6           4 21 439 130 0 0 24 3 1 #" "
-0 6           4 21 441 132 0 0 24 3 1 #" "
-0 6           4 21 443 129 0 0 24 3 1 #" "
-0 6           4 21 443 133 0 0 24 3 1 #" "
-0 6           4 21 438 127 0 0 24 3 1 #" "
-0 6           4 21 429 134 0 0 24 3 2 #"))"
+0 6           4 21 438 132 0 0 24 3 1 #" "
+0 6           4 21 427 129 0 0 24 3 1 #" "
+0 6           4 21 439 131 0 0 24 3 1 #" "
+0 6           4 21 441 133 0 0 24 3 1 #" "
+0 6           4 21 443 130 0 0 24 3 1 #" "
+0 6           4 21 443 134 0 0 24 3 1 #" "
+0 6           4 21 438 128 0 0 24 3 1 #" "
+0 6           4 21 429 135 0 0 24 3 2 #"))"
 0 0 24 29 1 #"\n"
 0 0 24 3 1 #"("
 0 0 14 3 6 #"check%"
@@ -11800,36 +11812,36 @@
 0 6           4 21 91 48 0 0 24 3 1 #" "
 0 6           4 21 93 67 0 0 24 3 1 #" "
 0 6           4 21 106
-(135
+(136
  #"(#(struct:translate 7.5 7.5 #(struct:ellipse 15.0 15.0 0 255 \"yellow"
  #"\" #f)) #(struct:bb 15.0 15.0 15.0) #f)"
 ) 0 0 24 3 1 #" "
 0 6           4 21 224
-(136
+(137
  #"(#(struct:translate 0 0 #(struct:polygon (#(struct:pulled-point 0 0 0"
  #" 0 0 0) #(struct:pulled-point 0 0 12 0 0 0) #(struct:pulled-point 0 0"
  #" 12 20 0 0) #(struct:pulled-point 0 0 0 20 0 0)) 255 \"red\")) #(stru"
  #"ct:bb 12 20 20) #f)"
 ) 0 0 24 3 1 #" "
 0 6           4 21 92
-(137
+(138
  #"(#(struct:translate 25 25 #(struct:ellipse 50 50 0 255 \"cyan\" #f)) "
  #"#(struct:bb 50 50 50) #f)"
 ) 0 0 24 3 1 #" "
 0 6           4 21 94
-(138
+(139
  #"(#(struct:translate 15 15 #(struct:ellipse 30 30 0 255 \"orange\" #f)"
  #") #(struct:bb 30 30 30) #f)"
 ) 0 0 24 3 1 #" "
 0 6           4 21 226
-(139
+(140
  #"(#(struct:translate 0 0 #(struct:polygon (#(struct:pulled-point 0 0 0"
  #" 0 0 0) #(struct:pulled-point 0 0 80 0 0 0) #(struct:pulled-point 0 0"
  #" 80 60 0 0) #(struct:pulled-point 0 0 0 60 0 0)) 255 \"green\")) #(st"
  #"ruct:bb 80 60 60) #f)"
 ) 0 0 24 3 1 #" "
 0 6           4 21 95
-(140
+(141
  #"(#(struct:translate 20 20 #(struct:ellipse 40 40 0 255 \"magenta\" #f"
  #")) #(struct:bb 40 40 40) #f)"
 ) 0 0 24 3 3 #")) "
@@ -11837,14 +11849,14 @@
 0 0 24 3 1 #" "
 0 0 21 3 1 #"'"
 0 0 24 3 1 #"("
-0 6           4 21 226 139 0 0 24 3 1 #" "
+0 6           4 21 226 140 0 0 24 3 1 #" "
 0 6           4 21 93 67 0 0 24 3 1 #" "
-0 6           4 21 92 137 0 0 24 3 1 #" "
-0 6           4 21 95 140 0 0 24 3 1 #" "
-0 6           4 21 94 138 0 0 24 3 1 #" "
+0 6           4 21 92 138 0 0 24 3 1 #" "
+0 6           4 21 95 141 0 0 24 3 1 #" "
+0 6           4 21 94 139 0 0 24 3 1 #" "
 0 6           4 21 91 48 0 0 24 3 1 #" "
-0 6           4 21 224 136 0 0 24 3 1 #" "
-0 6           4 21 106 135 0 0 24 3 1 #" "
+0 6           4 21 224 137 0 0 24 3 1 #" "
+0 6           4 21 106 136 0 0 24 3 1 #" "
 0 6           4 21 90 50 0 0 24 3 2 #"))"
 0 0 24 29 1 #"\n"
 0 0 24 29 1 #"\n"
@@ -11864,23 +11876,23 @@
 0 0 24 3 1 #")"
 0 0 24 29 1 #"\n"
 0 0 17 3 144
-(141
+(142
  #";; Se d\xC4\x83 o list\xC4\x83 cu n imagini \xC8\x99i un num\xC4\x83r"
  #" natural k mai mic sau egal cu dimensiunea listei. S\xC4\x83 se gener"
  #"eze o noua list\xC4\x83 cu imagini astfel:"
 ) 0 0 24 29 1 #"\n"
 0 0 17 3 73
-(142
+(143
  #";; - se genereaz\xC4\x83 toate submul\xC8\x9Bimile de dimensiune k al"
  #"e listei primite"
 ) 0 0 24 29 1 #"\n"
 0 0 17 3 60
-(143
+(144
  #";; - se sorteaza \xC3\xAEn ordine cresc\xC4\x83toare fiecare submul"
  #"\xC8\x9Bime"
 ) 0 0 24 29 1 #"\n"
 0 0 17 3 142
-(144
+(145
  #";; - se suprapun imaginile din fiecare submul\xC8\x9Bime astfel \xC3"
  #"\xAEnc\xC3\xA2t prima imagine s\xC4\x83 fie cea mai din spate, iar ul"
  #"tima imagine s\xC4\x83 fie imaginea"
@@ -11888,7 +11900,7 @@
 0 0 17 3 13 #";; din fa\310\233\304\203"
 0 0 24 29 1 #"\n"
 0 0 17 3 107
-(145
+(146
  #";; - lista de imagini cerut\xC4\x83 este lista format\xC4\x83 din ima"
  #"ginile suprapuse din fiecare submul\xC8\x9Bime generat\xC4\x83"
 ) 0 0 24 29 1 #"\n"
@@ -11931,14 +11943,13 @@
 0 0 17 3 5 #"dorim"
 0 0 17 3 1 #" "
 0 0 17 3 3 #"s\304\203"
-0 0 17 3 1 #" "
-0 0 17 3 26 #"cre\304\203m toate submul\310\233imile"
+0 0 17 3 27 #" cre\304\203m toate submul\310\233imile"
 0 0 24 29 1 #"\n"
 0 0 17 3 48
 #";; trebuie s\304\203 lu\304\203m \303\256n calcul ambele variante."
 0 0 24 29 1 #"\n"
 0 0 17 3 113
-(146
+(147
  #";; - \xC3\xAEn cadrul unui apel de func\xC8\x9Bie, prima dat\xC4\x83 "
  #"sunt evalua\xC8\x9Bi parametrii, apoi func\xC8\x9Bia propriu zis\xC4"
  #"\x83! Astfel"
@@ -11946,8 +11957,7 @@
 0 0 17 3 1 #" "
 0 0 17 3 10 #"rezultatul"
 0 0 17 3 1 #" "
-0 0 17 3 4 #"unui"
-0 0 17 3 14 #" apel recursiv"
+0 0 17 3 18 #"unui apel recursiv"
 0 0 24 29 1 #"\n"
 0 0 17 3 8 #";; poate"
 0 0 17 3 1 #" "
@@ -11959,19 +11969,18 @@
 0 0 17 3 21 #" rezultat intermediar"
 0 0 17 3 1 #" "
 0 0 17 3 6 #"pentru"
-0 0 17 3 1 #" "
-0 0 17 3 12 #"un alt apel."
+0 0 17 3 13 #" un alt apel."
 0 0 24 29 1 #"\n"
 0 0 17 3 2 #";;"
 0 0 24 29 1 #"\n"
 0 0 17 3 144
-(147
+(148
  #";; Pentru verificarea rezultatelor (\xC3\xAEn caz ca ave\xC8\x9Bi un "
  #"rezultat gre\xC8\x99it) listele cu imaginile ce trebuie s\xC4\x83 rez"
  #"ulte se gasesc \xC3\xAEn variabilele"
 ) 0 0 24 29 1 #"\n"
 0 0 17 3 131
-(148
+(149
  #";; BONUS-IMAGES-RESULT1/2. Rezultatul vostru \xC3\xAEl pute\xC8\x9Bi "
  #"ob\xC8\x9Bine prin rularea apelului image-subsets din cele dou\xC4"
  #"\x83 apeluri check%."
@@ -12036,7 +12045,7 @@
 0 0 14 3 6 #"result"
 0 0 24 3 4 #")]  "
 0 0 17 3 53
-(149
+(150
  #";; Dac\xC4\x83 avem k elemente \xC3\xAEn submul\xC8\x9Bime, o ad\xC4"
  #"\x83ug\xC4\x83m"
 ) 0 0 24 29 1 #"\n"
@@ -12048,7 +12057,7 @@
 0 0 14 3 6 #"result"
 0 0 24 3 2 #"] "
 0 0 17 3 58
-(150
+(151
  #";; Dac\xC4\x83 lista este goal\xC4\x83 \xC3\xAEntoarcem lista de subm"
  #"ul\xC8\x9Bimi"
 ) 0 0 24 29 1 #"\n"
@@ -12068,7 +12077,7 @@
 0 0 21 3 1 #"1"
 0 0 24 3 3 #")  "
 0 0 17 3 76
-(151
+(152
  #";; Altfel trecem la urm\xC4\x83torul element din list\xC4\x83. Elemen"
  #"tul curent poate fi"
 ) 0 0 24 29 1 #"\n"
@@ -12082,7 +12091,7 @@
 0 0 14 3 6 #"subset"
 0 0 24 3 3 #")  "
 0 0 17 3 83
-(152
+(153
  #";; ad\xC4\x83ugat sau nu la submul\xC8\x9Bimea curent\xC4\x83, ne asi"
  #"gur\xC4\x83m c\xC4\x83 lu\xC4\x83m \xC3\xAEn considerare"
 ) 0 0 24 29 1 #"\n"
@@ -12119,9 +12128,9 @@
 0 0 24 3 1 #" "
 0 0 21 3 1 #"'"
 0 0 24 3 1 #"("
-0 6           4 21 92 137 0 0 24 3 1 #" "
+0 6           4 21 92 138 0 0 24 3 1 #" "
 0 6           4 21 91
-(153
+(154
  #"(#(struct:translate 17 17 #(struct:ellipse 34 34 0 255 \"red\" #f)) #"
  #"(struct:bb 34 34 34) #f)"
 ) 0 0 24 3 1 #" "
@@ -12148,10 +12157,10 @@
 0 0 24 3 1 #" "
 0 0 21 3 1 #"'"
 0 0 24 3 1 #"("
-0 6           4 21 92 137 0 0 24 3 1 #" "
+0 6           4 21 92 138 0 0 24 3 1 #" "
 0 6           4 21 94 49 0 0 24 3 1 #" "
-0 6           4 21 439 130 0 6           4 21 463
-(154
+0 6           4 21 439 131 0 6           4 21 463
+(155
  #"(#(struct:scale 0.8 0.8 #(struct:translate 9.888543819998318 49.24293"
  #"659480406 #(struct:polygon (#(struct:pulled-point 0 0 0 0 0 0) #(stru"
  #"ct:pulled-point 0 0 41.88854381999832 -30.433808521444913 0 0) #(stru"
@@ -12160,9 +12169,9 @@
  #"00004 -49.24293659480406 0 0)) 255 \"violet\"))) #(struct:bb 41.42167"
  #"0111997315 39.39434927584325 39.39434927584325) #f)"
 ) 0 0 24 3 2 #"  "
-0 6           4 21 441 132 0 0 24 3 1 #" "
-0 6           4 21 438 127 0 0 24 3 1 #" "
-0 6           4 21 429 134 0 0 24 3 2 #") "
+0 6           4 21 441 133 0 0 24 3 1 #" "
+0 6           4 21 438 128 0 0 24 3 1 #" "
+0 6           4 21 429 135 0 0 24 3 2 #") "
 0 0 21 3 1 #"5"
 0 0 24 3 3 #")) "
 0 0 14 3 2 #"is"
