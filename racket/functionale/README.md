@@ -27,7 +27,7 @@ ele pot fi manipulate ca orice altă valoare, de exemplu:
 
 O funcție care își primește toți parametrii deodată se numește funcție
 **uncurry**. Până acum ați folosit doar funcții uncurry.
-```scheme
+```racket
 (define add-uncurry
   (lambda (x y)
     (+ x y)))
@@ -47,8 +47,10 @@ La aplicarea unei funcții pe mai puține argumente, rezultatul este o
 funcție care așteaptă restul argumentelor.
 
 Funcțiile curry facilitează reutilizarea de cod, permițând obținerea
-unor funcții particulare din funcții mai generale: `(define inc-curry
-(add-curry 1))`
+unor funcții particulare din funcții mai generale:
+```racket
+(define inc-curry (add-curry 1))
+```
 
 ## Reutilizare de cod
 
