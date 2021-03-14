@@ -2315,7 +2315,7 @@
 255 255 255 -1 -1 0 1 #"\0"
 0 -1 1 #"\0"
 1.0 0 -1 -1 -1 -1 -1 -1 0 0 0 0 0 1 0.0 0.0 0.0 0.0 0.0 0.0 34 139 34
-255 255 255 -1 -1           0 3043 0 28 3 16 #"#lang racket/gui"
+255 255 255 -1 -1           0 3027 0 28 3 16 #"#lang racket/gui"
 0 0 24 29 1 #"\n"
 0 0 24 29 1 #"\n"
 0 0 24 3 1 #"("
@@ -4274,45 +4274,29 @@
  #";; func\xC8\x9Bie curry, \xC3\xAEns\xC4\x83 este important \xC3\xAEn "
  #"momentul \xC3\xAEn care ne g\xC3\xA2ndim"
 ) 0 0 24 29 1 #"\n"
-0 0 17 3 65
-(30
- #";; la func\xC8\x9Bii ca valori. Astfel, func\xC8\x9Bia ((uncurry->cur"
- #"ry +) 2)"
-) 0 0 24 29 1 #"\n"
-0 0 17 3 68
-(31
- #";; reprezinta o func\xC8\x9Bie cu un singur argument, pe care \xC3"
- #"\xAEl va aduna"
-) 0 0 24 29 1 #"\n"
 0 0 17 3 69
-(32
- #";; cu 2. Aceasta func\xC8\x9Bie poate fi folosit\xC4\x83, de exemplu,"
- #" ca argument"
+(30
+ #";; la func\xC8\x9Bii ca valori. Func\xC8\x9Bia ((uncurry->curry +) 2)"
+ #" reprezint\xC4\x83"
 ) 0 0 24 29 1 #"\n"
-0 0 17 3 24 #";; al func\310\233ionalei map:"
+0 0 17 3 72
+(31
+ #";; o func\xC8\x9Bie cu un singur argument, un numar pe care \xC3\xAEl"
+ #" va aduna cu 2."
+) 0 0 24 29 1 #"\n"
+0 0 17 3 70
+(32
+ #";; Astfel, aceasta poate fi folosit\xC4\x83 ca argument pentru func"
+ #"\xC8\x9Bionala "
+) 0 0 17 3 4 #"map:"
 0 0 24 29 1 #"\n"
-0 0 17 3 4 #";; ("
-0 0 17 3 3 #"map"
-0 0 17 3 3 #" (("
+0 0 17 3 10 #";; (map (("
 0 0 17 3 14 #"uncurry->curry"
 0 0 17 3 1 #" "
 0 0 17 3 1 #"+"
-0 0 17 3 2 #") "
-0 0 17 3 1 #"2"
-0 0 17 3 2 #") "
+0 0 17 3 18 #") 2) '(1 2 3)) -> "
 0 0 17 3 1 #"'"
-0 0 17 3 1 #"("
-0 0 17 3 1 #"1"
-0 0 17 3 1 #" "
-0 0 17 3 1 #"2"
-0 0 17 3 1 #" "
-0 0 17 3 1 #"3"
-0 0 17 3 6 #")) -> "
-0 0 17 3 1 #"'"
-0 0 17 3 1 #"("
-0 0 17 3 2 #"3 "
-0 0 17 3 1 #"4"
-0 0 17 3 3 #" 5)"
+0 0 17 3 7 #"(3 4 5)"
 0 0 24 29 1 #"\n"
 0 0 24 29 1 #"\n"
 0 0 24 3 1 #"("
@@ -5839,12 +5823,12 @@
  #";; Implementa\xC8\x9Bi func\xC8\x9Bia curry-n ce converte\xC8\x99te o"
  #" func\xC8\x9Bie uncurry \xC3\xAEntr-o func\xC8\x9Bie"
 ) 0 0 24 29 1 #"\n"
-0 0 17 3 49
-#";; curry ce prime\310\231te parametrii unul c\303\242te unul."
+0 0 17 3 48
+#";; curry ce prime\310\231te parametri unul c\303\242te unul."
 0 0 24 29 1 #"\n"
-0 0 17 3 85
+0 0 17 3 84
 (87
- #";; Func\xC8\x9Bia va primi doi parametrii: func\xC8\x9Bia uncurry f, "
+ #";; Func\xC8\x9Bia va primi doi parametri: func\xC8\x9Bia uncurry f, "
  #"\xC8\x99i num\xC4\x83rul parametrilor n."
 ) 0 0 24 29 1 #"\n"
 0 0 17 3 80
@@ -5852,9 +5836,9 @@
  #";; HINTS -> Cum ar trebui gestiona\xC8\x9Bi parametrii pe care func"
  #"\xC8\x9Bia \xC3\xAEi prime\xC8\x99te?"
 ) 0 0 24 29 1 #"\n"
-0 0 17 3 64
+0 0 17 3 65
 (89
- #";;       -> C\xC3\xA2nd \xC8\x99i cum ar trebui aplic\xC8\x9Bi ace"
+ #";;       -> C\xC3\xA2nd \xC8\x99i cum ar trebui aplica\xC8\x9Bi ace"
  #"\xC8\x99ti parametrii?"
 ) 0 0 24 29 1 #"\n"
 0 0 17 3 88
@@ -5862,10 +5846,10 @@
  #";; Pute\xC8\x9Bi \xC3\xAEmbina recursivitatea cu utilizarea func\xC8"
  #"\x9Bionalelor. De asemenea, nu uita\xC8\x9Bi"
 ) 0 0 24 29 1 #"\n"
-0 0 17 3 57
+0 0 17 3 64
 (91
- #";; c\xC4\x83 oric\xC3\xA2nd pute\xC8\x9Bi s\xC4\x83 folosi\xC8\x9Bi f"
- #"unc\xC8\x9Bii auxiliare."
+ #";; faptul c\xC4\x83 oric\xC3\xA2nd pute\xC8\x9Bi s\xC4\x83 folosi\xC8"
+ #"\x9Bi func\xC8\x9Bii auxiliare."
 ) 0 0 24 29 1 #"\n"
 0 0 24 29 1 #"\n"
 0 0 24 3 1 #"("
