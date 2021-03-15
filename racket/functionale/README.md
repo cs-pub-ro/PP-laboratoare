@@ -27,7 +27,7 @@ ele pot fi manipulate ca orice altă valoare, de exemplu:
 
 O funcție care își primește toți parametrii deodată se numește funcție
 **uncurry**. Până acum ați folosit doar funcții uncurry.
-```racket
+```lisp
 (define add-uncurry
   (lambda (x y)
     (+ x y)))
@@ -36,7 +36,7 @@ O funcție care își primește toți parametrii deodată se numește funcție
 O funcție care returnează o nouă funcție atunci când este aplicată pe
 mai puține argumente decât îi sunt necesare se numește funcție
 **curry**.
-```racket
+```lisp
 (define add-curry
   (lambda (x)
     (lambda (y)  
@@ -48,7 +48,7 @@ funcție care așteaptă restul argumentelor.
 
 Funcțiile curry facilitează reutilizarea de cod, permițând obținerea
 unor funcții particulare din funcții mai generale:
-```racket
+```lisp
 (define inc-curry (add-curry 1))
 ```
 
@@ -58,7 +58,7 @@ unor funcții particulare din funcții mai generale:
 funcție obține pătratele elementelor unei liste, iar a doua funcție
 obține cuburile elementelor listei.
 
-```racket
+```lisp
 (define (sq x) (\* x x))
 (define (cub x) (\* x x x))
 
@@ -78,7 +78,7 @@ obține cuburile elementelor listei.
 
 După cum se poate observa, ambele funcții folosesc același pattern:
 
-```racket
+```lisp
 (define (?nume L)
   (if (null? L)
       L
@@ -92,7 +92,7 @@ fiecare element al listei (?functie).
 Prin urmare, pentru a nu scrie de două ori același cod putem defini o
 altă funcție mai generală:
 
-```racket
+```lisp
 (define (general-func f L)
   (if (null? L)
       L
@@ -102,7 +102,7 @@ altă funcție mai generală:
 Această funcție poate fi apoi folosită pentru a implementa sq-every și
 cub-every:
 
-```racket
+```lisp
 (define (sq-every L) (general-func sq L))
 (define (cub-every L) (general-func cub L))
 ```
@@ -115,7 +115,7 @@ poate fi particularizată prin pasarea diverselor funcții ca parametru
 Deoarece funcțiile sq si cub sunt folosite o singură dată, acestea pot
 fi scrise in-place ca funcții anonime:
 
-```racket
+```lisp
 (define (sq-every-in-place L) (general-func (lambda (x) (\* x x)) L))
 (define (cub-every-in-place L) (general-func (lambda (x) (\* x x x)) L))
 ```
@@ -124,7 +124,7 @@ Dacă dorim să scriem încă o funcție care să adune 2 la fiecare element
 al unei liste de numere, tot ce trebuie să facem este să folosim funcția
 general-func:
 
-```racket
+```lisp
 (define (+2-every L) (general-func (lambda (x) (+ 2 x)) L))
 ```
 
@@ -133,7 +133,7 @@ definim o nouă funcție pentru adunarea cu 2 a unui număr, ci ne putem
 folosi de funcția de adunare deja definită, pe care o aplicăm pe un
 singur parametru:
 
-```racket
+```lisp
 (define (+2-every L) (general-func (add-curry 2) L))
 ```
 
@@ -160,11 +160,11 @@ pattern des întâlnit în programarea funcțională și este deja implementat
     n parametrii, fiecare din câte o listă. Listele trebuie să aibă
     aceeași lungime]
 
-```racket
+```lisp
 (map f L)
 ```
 Mai jos se pot observa câteva exemple folosind map:
-```racket
+```lisp
 (map add1 '(1 4 7 10)) ; întoarce '(2 5 8 11)
 (map sqr '(1 2 3 4)) ; întoarce '(1 4 9 16)
 (map + '(1 2 3) '(4 8 16) '(2 4 6)) ; întoarce '(7 14 25)
@@ -175,11 +175,11 @@ Alte exemple de funcționale des întâlnite:
   - `filter`: returnează lista elementelor dintr-o listă care satisfac
     un predicat p.
 
-```racket
+```lisp
 (filter p L)
 ```
 Mai jos se pot observa câteva exemple folosind filter:
-```racket
+```lisp
 (filter even? '(1 3 4 7 8)) ; întoarce '(4 8)
 (filter positive? '(1 -2 3 4 -5)) ; întoarce '(1 3 4)
 (filter (lambda (x) (>= x 5)) '(1 5 3 4 10 11)) ; întoarce '(5 10 11)
@@ -192,11 +192,11 @@ Mai jos se pot observa câteva exemple folosind filter:
     ultimul este acumulatorul. Listele trebuie să aibă același număr de
     elemente]
 
-```racket
+```lisp
 (foldl f init L)
 ```
 Mai jos se pot observa câteva exemple folosind foldl:
-```racket
+```lisp
 (foldl cons null '(1 2 3 4)) ; întoarce '(4 3 2 1)
 (foldl (lambda (x y result) (* result (+ x y))) 1 '(4 7 2) '(-6 3 -1)) ; întoarce -20
 ```
@@ -205,11 +205,11 @@ Mai jos se pot observa câteva exemple folosind foldl:
     este că foldr ia elementele de la dreapta spre stânga și că are
     nevoie de un spațiu proporțional cu lungimea listei.
 
-```racket
+```lisp
 (foldr f init L)
 ```
 Mai jos se pot observa câteva exemple folosind foldr:
-```racket
+```lisp
 (foldr cons null '(1 2 3 4)) ; întoarce '(1 2 3 4)
 (foldr (lambda (x acc) (cons (* x 2) acc)) null '(1 2 3 4)) ; întoarce '(2 4 6 8)
 ```
@@ -217,11 +217,11 @@ Mai jos se pot observa câteva exemple folosind foldr:
   - `apply`: returnează rezultatul aplicării unei funcții f cu argumente
     elementele din lista L
 
-```racket
+```lisp
 (apply f L)
 ```
 Mai jos se pot observa câteva exemple folosind apply:
-```racket
+```lisp
 (apply + '(1 2 3 4)) ; întoarce 10
 (apply * 1 2 '(3 4)) ; întoarce 24
 (apply cons '(1 2))  ; întoarce perechea '(1 . 2)
@@ -240,7 +240,7 @@ mai restrâns dar și mult mai clar și ușor de urmărit.
 De multe ori, funcționalele `map` și `apply` sunt încurcate. Pentru a
 înțelege mai bine diferența dintre acestea, urmăriți rezultatele
 exemplelor de mai jos.
-```racket
+```lisp
 (map list '(1 2 3)) ; întoarce'((1) (2) (3))
 (apply list '(1 2 3)) ; întoarce '(1 2 3)
 (map list '(1 2 3 4) '(5 6 7 8)) ; întoarce '((1 5) (2 6) (3 7) (4 8))
@@ -249,7 +249,7 @@ exemplelor de mai jos.
 
 O altă greșeală întâlnită frecvent apare atunci când funcțiile primite
 ca argument de către funcționale sunt plasate între paranteze.
-```racket
+```lisp
 (filter (odd?) '(1 2 3 4 5)) ; odd?: arity mismatch; (GREȘIT)
 (filter odd? '(1 2 3 4 5)) ; întoarce '(1 3 5) (CORECT)
 (foldr (+) 0 '(8 9 10)) ; GREȘIT
