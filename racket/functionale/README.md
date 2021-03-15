@@ -262,9 +262,9 @@ ca argument de către funcționale sunt plasate între paranteze.
 
 Citiți exercițiile **rezolvate**; apoi, rezolvați exercițiile **propuse**.
 
-  - [Exerciții rezolvate și propuse](TODO)
-  - [Soluții](TODO)
-  - [Cheatsheet Laboratorul 3](TODO)
+  - [Exerciții rezolvate și propuse](https://ocw.cs.pub.ro/courses/_media/pp/21/laboratoare/racket/functionale-skel.zip)
+  - [Soluții](https://ocw.cs.pub.ro/courses/_media/pp/21/laboratoare/racket/functionale-sol.zip)
+  - [Cheatsheet Laboratorul 3](https://github.com/cs-pub-ro/PP-laboratoare/raw/master/racket/functionale/functionale-cheatsheet.pdf)
 
 ## Referințe
 
