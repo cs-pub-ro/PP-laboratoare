@@ -63,7 +63,7 @@ obține cuburile elementelor listei.
 (define (cub x) (\* x x x))
 
 (define (sq-every L)
-  (if (null? L) 
+  (if (null? L)
       L
       (cons (sq (car L)) (sq-every (cdr L)))))
 
@@ -81,7 +81,7 @@ După cum se poate observa, ambele funcții folosesc același pattern:
 ```racket
 (define (?nume L)
   (if (null? L)
-      L 
+      L
       (cons (?functie (car L)) (?nume (cdr L)))))
 ```
 
@@ -95,7 +95,7 @@ altă funcție mai generală:
 ```racket
 (define (general-func f L)
   (if (null? L)
-      L 
+      L
       (cons (f (car L)) (general-func f (cdr L)))))
 ```
 
@@ -267,6 +267,5 @@ Citiți exercițiile **rezolvate**; apoi, rezolvați exercițiile **propuse**.
   - [Cheatsheet Laboratorul 3](https://github.com/cs-pub-ro/PP-laboratoare/raw/master/racket/functionale/functionale-cheatsheet.pdf)
 
 ## Referințe
-
   - [Structure and Interpretation of Computer Programs](https://web.mit.edu/alexmv/6.037/sicp.pdf "wikilink"), până la pagina 84, înainte de paragraful „Using let to create local variables”
   - [Mai multe funcționale](http://docs.racket-lang.org/reference/pairs.html#%28part._.List_.Iteration%29 "wikilink")
