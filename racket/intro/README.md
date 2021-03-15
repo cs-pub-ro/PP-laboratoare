@@ -380,4 +380,4 @@ Trecem axiomele în cod Racket:
   - [Evaluare
     aplicativă](https://en.wikipedia.org/wiki/Eager_evaluation "wikilink")
   - [Scheme coding
-    style](https://www.gnu.org/software/mit-scheme/documentation/mit-scheme-user/Coding-style.html "wikilink")
+    style](https://www.gnu.org/software/mit-scheme/documentation/stable/mit-scheme-user/Coding-style.html "wikilink")
