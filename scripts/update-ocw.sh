@@ -5,5 +5,5 @@ python -m pip install pypandoc
 
 python -c "from pypandoc.pandoc_download import download_pandoc;download_pandoc(version='2.5')"
 
-files=`git diff --name-only HEAD HEAD~1 | grep README.md`
+files=`git diff --name-only HEAD~1 HEAD | grep README.md`
 python scripts/publish.py --username $USERNAME --password $PASSWORD --files $files
