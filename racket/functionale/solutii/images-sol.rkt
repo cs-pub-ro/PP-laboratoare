@@ -2315,7 +2315,7 @@
 30 3 0 -1 -1 4 1 #"\0"
 0 -1 1 #"\0"
 1.0 0 -1 -1 -1 -1 -1 -1 0 0 0 0 0 1 0.0 0.0 0.0 0.0 0.0 0.0 255 255 255
-0 31 31 -1 -1           0 3067 0 28 3 16 #"#lang racket/gui"
+0 31 31 -1 -1           0 3083 0 28 3 16 #"#lang racket/gui"
 0 0 24 29 1 #"\n"
 0 0 24 29 1 #"\n"
 0 0 24 3 1 #"("
@@ -4293,8 +4293,7 @@
 0 0 17 3 14 #"uncurry->curry"
 0 0 17 3 1 #" "
 0 0 17 3 1 #"+"
-0 0 17 3 18 #") 2) '(1 2 3)) -> "
-0 0 17 3 8 #"'(3 4 5)"
+0 0 17 3 26 #") 2) '(1 2 3)) -> '(3 4 5)"
 0 0 24 29 1 #"\n"
 0 0 24 29 1 #"\n"
 0 0 24 3 1 #"("
@@ -4466,7 +4465,7 @@
 0 0 24 3 2 #" ("
 0 0 14 3 1 #"x"
 0 0 24 3 1 #" "
-0 0 14 3 1 #"L"
+0 0 14 3 3 #"acc"
 0 0 24 3 1 #")"
 0 0 24 29 1 #"\n"
 0 0 24 3 21 #"                    ("
@@ -4476,16 +4475,16 @@
 0 0 24 3 1 #" "
 0 0 14 3 1 #"x"
 0 0 24 3 1 #" "
-0 0 14 3 1 #"L"
+0 0 14 3 3 #"acc"
 0 0 24 3 2 #") "
-0 0 14 3 1 #"L"
+0 0 14 3 3 #"acc"
 0 0 24 29 1 #"\n"
 0 0 24 3 25 #"                        ("
 0 0 14 3 4 #"cons"
 0 0 24 3 1 #" "
 0 0 14 3 1 #"x"
 0 0 24 3 1 #" "
-0 0 14 3 1 #"L"
+0 0 14 3 3 #"acc"
 0 0 24 3 3 #")))"
 0 0 24 29 1 #"\n"
 0 0 24 3 18 #"                  "
@@ -4544,7 +4543,7 @@
 0 0 24 3 2 #" ("
 0 0 14 3 1 #"x"
 0 0 24 3 1 #" "
-0 0 14 3 1 #"L"
+0 0 14 3 3 #"acc"
 0 0 24 3 1 #")"
 0 0 24 29 1 #"\n"
 0 0 24 3 12 #"           ("
@@ -4554,16 +4553,16 @@
 0 0 24 3 1 #" "
 0 0 14 3 1 #"x"
 0 0 24 3 1 #" "
-0 0 14 3 1 #"L"
+0 0 14 3 3 #"acc"
 0 0 24 3 2 #") "
-0 0 14 3 1 #"L"
+0 0 14 3 3 #"acc"
 0 0 24 29 1 #"\n"
 0 0 24 3 16 #"               ("
 0 0 14 3 4 #"cons"
 0 0 24 3 1 #" "
 0 0 14 3 1 #"x"
 0 0 24 3 1 #" "
-0 0 14 3 1 #"L"
+0 0 14 3 3 #"acc"
 0 0 24 3 3 #")))"
 0 0 24 29 1 #"\n"
 0 0 24 3 9 #"         "
@@ -4606,6 +4605,25 @@
  #";; Suprapune\xC8\x9Bi imaginile de la st\xC3\xA2nga la dreapta, \xC3"
  #"\xAEncep\xC3\xA2nd cu imaginea initial"
 ) 0 0 24 29 1 #"\n"
+0 0 17 3 77
+(40
+ #";; Pentru suprapunerea a dou\xC4\x83 imagini, pute\xC8\x9Bi sa folosi"
+ #"\xC8\x9Bi func\xC8\x9Bia overlay"
+) 0 0 24 29 1 #"\n"
+0 0 17 3 16 #";; Ex: (overlay "
+0 6           4 17 392 12 0 0 17 3 1 #" "
+0 6           4 17 92 14 0 0 17 3 5 #") -> "
+0 6           4 17 545
+(41
+ #"(#(struct:overlay #(struct:translate 10.000000000000005 0 #(struct:tr"
+ #"anslate 14.999999999999993 -0.0 #(struct:polygon (#(struct:pulled-poi"
+ #"nt 0 0 0 0 0 0) #(struct:pulled-point 0 0 14.999999999999996 25.98076"
+ #"211353316 0 0) #(struct:pulled-point 0 0 3.552713678800501e-15 51.961"
+ #"52422706632 0 0) #(struct:pulled-point 0 0 -14.999999999999993 25.980"
+ #"76211353316 0 0)) 255 \"magenta\"))) #(struct:translate 0 0.980762113"
+ #"5331601 #(struct:translate 25 25 #(struct:ellipse 50 50 0 255 \"blue"
+ #"\" #f)))) #(struct:bb 50.0 51.96152422706632 51.96152422706632) #f)"
+) 0 0 24 29 1 #"\n"
 0 0 24 3 1 #"("
 0 0 15 3 6 #"define"
 0 0 24 3 2 #" ("
@@ -4645,7 +4663,7 @@
 0 0 14 3 2 #"is"
 0 0 24 3 1 #" "
 0 6           4 21 5590
-(40
+(42
  #"(#(struct:overlay #(struct:translate 42.6393202250021 44.223164628247"
  #"46 #(struct:translate 22.360679774997905 61.55367074350507 #(struct:p"
  #"olygon (#(struct:pulled-point 0 0 0 0 0 0) #(struct:pulled-point 0 0 "
@@ -4732,7 +4750,7 @@
 0 0 24 29 1 #"\n"
 0 0 24 29 1 #"\n"
 0 0 17 3 82
-(41
+(43
  #";; Suprapune\xC8\x9Bi imaginile de la dreapta la st\xC3\xA2nga, \xC3"
  #"\xAEncep\xC3\xA2nd cu imaginea initial"
 ) 0 0 24 29 1 #"\n"
@@ -4774,7 +4792,7 @@
 0 0 14 3 2 #"is"
 0 0 24 3 1 #" "
 0 6           4 21 5590
-(42
+(44
  #"(#(struct:overlay #(struct:translate 50.0 50.0 #(struct:translate 25 "
  #"25 #(struct:ellipse 50 50 0 255 \"yellow\" #f))) #(struct:translate 0"
  #" 0 #(struct:overlay #(struct:translate 50.0 53.34936490538903 #(struc"
@@ -4868,19 +4886,19 @@
 0 0 21 3 1 #"'"
 0 0 24 3 3 #"( ("
 0 6           4 21 93
-(43
+(45
  #"(#(struct:translate 25 25 #(struct:ellipse 50 50 0 255 \"green\" #f))"
  #" #(struct:bb 50 50 50) #f)"
 ) 0 0 24 3 1 #" "
 0 6           4 21 224
-(44
+(46
  #"(#(struct:translate 0 0 #(struct:polygon (#(struct:pulled-point 0 0 0"
  #" 0 0 0) #(struct:pulled-point 0 0 40 0 0 0) #(struct:pulled-point 0 0"
  #" 40 40 0 0) #(struct:pulled-point 0 0 0 40 0 0)) 255 \"red\")) #(stru"
  #"ct:bb 40 40 40) #f)"
 ) 0 0 24 3 1 #" "
 0 6           4 21 271
-(45
+(47
  #"(#(struct:translate -0.0 43.30127018922194 #(struct:polygon (#(struct"
  #":pulled-point 0 0 0 0 0 0) #(struct:pulled-point 0 0 50 0 0 0) #(stru"
  #"ct:pulled-point 0 0 25.00000000000001 -43.30127018922194 0 0)) 255 \""
@@ -4888,9 +4906,9 @@
 ) 0 0 24 3 1 #")"
 0 0 24 29 1 #"\n"
 0 0 24 3 19 #"                  ("
-0 6           4 21 224 44 0 0 24 3 2 #"  "
+0 6           4 21 224 46 0 0 24 3 2 #"  "
 0 6           4 21 767
-(46
+(48
  #"(#(struct:translate 22.360679774997905 61.55367074350507 #(struct:pol"
  #"ygon (#(struct:pulled-point 0 0 0 0 0 0) #(struct:pulled-point 0 0 42"
  #".36067977499789 -30.776835371752533 0 0) #(struct:pulled-point 0 0 0."
@@ -4905,7 +4923,7 @@
  #"50507) #f)"
 ) 0 0 24 3 1 #" "
 0 6           4 21 463
-(47
+(49
  #"(#(struct:translate 6.180339887498949 30.776835371752533 #(struct:pol"
  #"ygon (#(struct:pulled-point 0 0 0 0 0 0) #(struct:pulled-point 0 0 20"
  #" 0 0 0) #(struct:pulled-point 0 0 26.18033988749895 -19.0211303259030"
@@ -4917,7 +4935,7 @@
 0 0 24 29 1 #"\n"
 0 0 24 3 19 #"                  ("
 0 6           4 21 442
-(48
+(50
  #"(#(struct:translate 12.360679774997898 61.553670743505066 #(struct:po"
  #"lygon (#(struct:pulled-point 0 0 0 0 0 0) #(struct:pulled-point 0 0 5"
  #"2.3606797749979 -38.04226065180614 0 0) #(struct:pulled-point 0 0 -12"
@@ -4926,8 +4944,8 @@
  #"5066 0 0)) 255 \"yellow\")) #(struct:bb 64.7213595499958 61.553670743"
  #"505066 61.553670743505066) #f)"
 ) 0 0 24 3 1 #" "
-0 6           4 21 271 45 0 0 24 3 1 #" "
-0 6           4 21 93 43 0 0 24 3 3 #")))"
+0 6           4 21 271 47 0 0 24 3 1 #" "
+0 6           4 21 93 45 0 0 24 3 3 #")))"
 0 0 24 29 1 #"\n"
 0 0 24 29 1 #"\n"
 0 0 24 3 1 #"("
@@ -4943,18 +4961,33 @@
 0 0 24 3 1 #")"
 0 0 24 29 1 #"\n"
 0 0 17 3 106
-(49
+(51
  #";; Implementa\xC8\x9Bi func\xC8\x9Bia mirror care ob\xC8\x9Bine matri"
  #"cea ini\xC8\x9Bial\xC4\x83 dat\xC4\x83 ca parametru vazut\xC4\x83 "
  #"\xC3\xAEn oglind\xC4\x83."
 ) 0 0 24 29 1 #"\n"
 0 0 17 3 73
-(50
+(52
  #";; Func\xC8\x9Bia trebuie implementat\xC4\x83 f\xC4\x83r\xC4\x83 a fo"
  #"losi recursivitate explicit,"
 ) 0 0 24 29 1 #"\n"
 0 0 17 3 35 #";; ci utiliz\303\242nd doar func\310\233ionale."
 0 0 24 29 1 #"\n"
+0 0 17 3 95
+(53
+ #";; \xC3\x8En cadrul laboratorului, matricile vor fi definite ca o lis"
+ #"ta ce con\xC8\x9Bine liniile matricii."
+) 0 0 24 29 1 #"\n"
+0 0 17 3 80
+(54
+ #";; Liniile vor fi, la r\xC3\xA2ndul lor, liste de elemente (\xC3\xAEn"
+ #" cazul nostru imagini)."
+) 0 0 24 29 1 #"\n"
+0 0 17 3 73
+(55
+ #";; Ca exemplu, pute\xC8\x9Bi s\xC4\x83 v\xC4\x83 uita\xC8\x9Bi la def"
+ #"ini\xC8\x9Bia de mai sus (MATRIX)."
+) 0 0 24 29 1 #"\n"
 0 0 24 29 1 #"\n"
 0 0 24 3 1 #"("
 0 0 15 3 6 #"define"
@@ -5003,19 +5036,19 @@
 0 0 24 3 1 #" "
 0 0 21 3 1 #"'"
 0 0 24 3 3 #"( ("
-0 6           4 21 271 45 0 0 24 3 1 #" "
-0 6           4 21 224 44 0 0 24 3 1 #" "
-0 6           4 21 93 43 0 0 24 3 1 #")"
+0 6           4 21 271 47 0 0 24 3 1 #" "
+0 6           4 21 224 46 0 0 24 3 1 #" "
+0 6           4 21 93 45 0 0 24 3 1 #")"
 0 0 24 29 1 #"\n"
 0 0 24 3 26 #"                         ("
-0 6           4 21 463 47 0 0 24 3 1 #" "
-0 6           4 21 767 46 0 0 24 3 1 #" "
-0 6           4 21 224 44 0 0 24 3 1 #")"
+0 6           4 21 463 49 0 0 24 3 1 #" "
+0 6           4 21 767 48 0 0 24 3 1 #" "
+0 6           4 21 224 46 0 0 24 3 1 #")"
 0 0 24 29 1 #"\n"
 0 0 24 3 26 #"                         ("
-0 6           4 21 93 43 0 0 24 3 1 #" "
-0 6           4 21 271 45 0 0 24 3 1 #" "
-0 6           4 21 442 48 0 0 24 3 3 #")))"
+0 6           4 21 93 45 0 0 24 3 1 #" "
+0 6           4 21 271 47 0 0 24 3 1 #" "
+0 6           4 21 442 50 0 0 24 3 3 #")))"
 0 0 24 29 1 #"\n"
 0 0 24 3 1 #"("
 0 0 14 3 5 #"check"
@@ -5043,25 +5076,30 @@
 0 0 24 3 2 #") "
 0 0 24 29 1 #"\n"
 0 0 17 3 71
-(51
+(56
  #";; Implementa\xC8\x9Bi func\xC8\x9Bia slim-horizontal care prime\xC8"
  #"\x99te ca parametru o"
 ) 0 0 24 29 1 #"\n"
 0 0 17 3 81
-(52
+(57
  #";; matrice de imagini \xC8\x99i \xC3\xAEntoarce o list\xC4\x83 \xC3"
  #"\xAEn care fiecare element reprezint\xC4\x83"
 ) 0 0 24 29 1 #"\n"
 0 0 17 3 58
 #";; imaginile suprapuse (st\303\242nga -> dreapta) de pe o linie."
 0 0 24 29 1 #"\n"
-0 0 17 3 73 50 0 0 24 29 1 #"\n"
+0 0 17 3 73 52 0 0 24 29 1 #"\n"
 0 0 17 3 35 #";; ci utiliz\303\242nd doar func\310\233ionale."
 0 0 24 29 1 #"\n"
-0 0 17 3 65
-(53
- #";; Hint: Folosi\xC8\x9Bi func\xC8\x9Bia overlay-> \xC8\x99i func\xC8"
- #"\x9Bia uncurry->curry"
+0 0 17 3 68
+(58
+ #";; Hints: - Folosi\xC8\x9Bi func\xC8\x9Bia overlay-> \xC8\x99i func"
+ #"\xC8\x9Bia uncurry->curry"
+) 0 0 24 29 1 #"\n"
+0 0 17 3 72
+(59
+ #";;        - Pentru fundalul imaginilor pute\xC8\x9Bi s\xC4\x83 folosi"
+ #"\xC8\x9Bi empty-image"
 ) 0 0 24 29 1 #"\n"
 0 0 24 29 1 #"\n"
 0 0 24 3 1 #"("
@@ -5097,7 +5135,7 @@
 0 0 21 3 1 #"'"
 0 0 24 3 1 #"("
 0 6           4 21 924
-(54
+(60
  #"(#(struct:overlay #(struct:translate 0 3.349364905389031 #(struct:tra"
  #"nslate -0.0 43.30127018922194 #(struct:polygon (#(struct:pulled-point"
  #" 0 0 0 0 0 0) #(struct:pulled-point 0 0 50 0 0 0) #(struct:pulled-poi"
@@ -5114,7 +5152,7 @@
  #"))) #(struct:bb 50.0 50.0 50.0) #f)"
 ) 0 0 24 3 1 #" "
 0 6           4 21 1818
-(55
+(61
  #"(#(struct:overlay #(struct:translate 16.18033988749895 15.38841768587"
  #"627 #(struct:translate 6.180339887498949 30.776835371752533 #(struct:"
  #"polygon (#(struct:pulled-point 0 0 0 0 0 0) #(struct:pulled-point 0 0"
@@ -5144,7 +5182,7 @@
  #"4350507 61.55367074350507) #f)"
 ) 0 0 24 3 1 #" "
 0 6           4 21 1212
-(56
+(62
  #"(#(struct:overlay #(struct:translate 7.360679774997898 5.776835371752"
  #"533 #(struct:translate 25 25 #(struct:ellipse 50 50 0 255 \"green\" #"
  #"f))) #(struct:translate 0 0 #(struct:overlay #(struct:translate 7.360"
@@ -5180,14 +5218,14 @@
 0 0 24 3 2 #") "
 0 0 24 29 1 #"\n"
 0 0 17 3 73
-(57
+(63
  #";; Implementa\xC8\x9Bi func\xC8\x9Bia transpose care ob\xC8\x9Bine tr"
  #"anspusa matricei dat\xC4\x83"
 ) 0 0 24 29 1 #"\n"
 0 0 17 3 16 #";; ca parametru."
 0 0 24 29 1 #"\n"
 0 0 17 3 70
-(58
+(64
  #";; Func\xC8\x9Bia trebuie implementat\xC4\x83 folosind cel pu\xC8\x9B"
  #"in o func\xC8\x9Bional\xC4\x83."
 ) 0 0 24 29 1 #"\n"
@@ -5217,15 +5255,15 @@
 0 0 24 3 1 #" "
 0 0 21 3 1 #"'"
 0 0 24 3 3 #"( ("
-0 6           4 21 93 43 0 0 24 3 1 #" "
+0 6           4 21 93 45 0 0 24 3 1 #" "
 0 6           4 21 200
-(59
+(65
  #"(#(struct:polygon (#(struct:pulled-point 0 0 0 0 0 0) #(struct:pulled"
  #"-point 0 0 40 0 0 0) #(struct:pulled-point 0 0 40 40 0 0) #(struct:pu"
  #"lled-point 0 0 0 40 0 0)) 255 \"red\") #(struct:bb 40 40 40) #f)"
 ) 0 0 24 3 1 #" "
 0 6           4 21 415
-(60
+(66
  #"(#(struct:polygon (#(struct:pulled-point 0 0 12.360679774997898 61.55"
  #"3670743505066 0 0) #(struct:pulled-point 0 0 64.7213595499958 23.5114"
  #"10091698927 0 0) #(struct:pulled-point 0 0 0.0 23.51141009169892 0 0)"
@@ -5236,9 +5274,9 @@
 ) 0 0 24 3 1 #")"
 0 0 24 29 1 #"\n"
 0 0 24 3 29 #"                            ("
-0 6           4 21 200 59 0 0 24 3 1 #" "
+0 6           4 21 200 65 0 0 24 3 1 #" "
 0 6           4 21 743
-(61
+(67
  #"(#(struct:polygon (#(struct:pulled-point 0 0 22.360679774997905 61.55"
  #"367074350507 0 0) #(struct:pulled-point 0 0 64.7213595499958 30.77683"
  #"537175254 0 0) #(struct:pulled-point 0 0 22.360679774997905 0.0 0 0) "
@@ -5252,7 +5290,7 @@
  #".7213595499958 61.55367074350507 61.55367074350507) #f)"
 ) 0 0 24 3 1 #" "
 0 6           4 21 250
-(62
+(68
  #"(#(struct:polygon (#(struct:pulled-point 0 0 -0.0 43.30127018922194 0"
  #" 0) #(struct:pulled-point 0 0 50.0 43.30127018922194 0 0) #(struct:pu"
  #"lled-point 0 0 25.00000000000001 0.0 0 0)) 255 \"blue\") #(struct:bb "
@@ -5260,9 +5298,9 @@
 ) 0 0 24 3 1 #")"
 0 0 24 29 1 #"\n"
 0 0 24 3 29 #"                            ("
-0 6           4 21 250 62 0 0 24 3 1 #" "
+0 6           4 21 250 68 0 0 24 3 1 #" "
 0 6           4 21 437
-(63
+(69
  #"(#(struct:polygon (#(struct:pulled-point 0 0 6.180339887498949 30.776"
  #"835371752533 0 0) #(struct:pulled-point 0 0 26.18033988749895 30.7768"
  #"35371752533 0 0) #(struct:pulled-point 0 0 32.3606797749979 11.755705"
@@ -5271,7 +5309,7 @@
  #"lor 150 50 255 255)) #(struct:bb 32.3606797749979 30.776835371752533 "
  #"30.776835371752533) #f)"
 ) 0 0 24 3 1 #" "
-0 6           4 21 93 43 0 0 24 3 3 #")))"
+0 6           4 21 93 45 0 0 24 3 3 #")))"
 0 0 24 29 1 #"\n"
 0 0 24 3 1 #"("
 0 0 14 3 5 #"check"
@@ -5300,15 +5338,15 @@
 0 0 24 3 1 #")"
 0 0 24 29 1 #"\n"
 0 0 17 3 69
-(64
+(70
  #";; Implementa\xC8\x9Bi func\xC8\x9Bia slim-vertical care prime\xC8"
  #"\x99te ca parametru o"
 ) 0 0 24 29 1 #"\n"
-0 0 17 3 81 52 0 0 24 29 1 #"\n"
+0 0 17 3 81 57 0 0 24 29 1 #"\n"
 0 0 17 3 53
 #";; imaginile suprapuse (jos -> sus) de pe o coloan\304\203."
 0 0 24 29 1 #"\n"
-0 0 17 3 73 50 0 0 24 29 1 #"\n"
+0 0 17 3 73 52 0 0 24 29 1 #"\n"
 0 0 17 3 35 #";; ci utiliz\303\242nd doar func\310\233ionale."
 0 0 24 29 1 #"\n"
 0 0 24 29 1 #"\n"
@@ -5343,7 +5381,7 @@
 0 0 21 3 1 #"'"
 0 0 24 3 1 #"("
 0 6           4 21 1199
-(65
+(71
  #"(#(struct:overlay #(struct:translate 7.360679774997898 5.776835371752"
  #"533 #(struct:translate 25 25 #(struct:ellipse 50 50 0 255 \"green\" #"
  #"f))) #(struct:translate 0 0 #(struct:overlay #(struct:translate 12.36"
@@ -5364,7 +5402,7 @@
  #"0743505066 61.553670743505066) #f)"
 ) 0 0 24 3 1 #" "
 0 6           4 21 1657
-(66
+(72
  #"(#(struct:overlay #(struct:translate 12.360679774997898 10.7768353717"
  #"52536 #(struct:translate 0 0 #(struct:polygon (#(struct:pulled-point "
  #"0 0 0 0 0 0) #(struct:pulled-point 0 0 40 0 0 0) #(struct:pulled-poin"
@@ -5392,7 +5430,7 @@
  #"0507) #f)"
 ) 0 0 24 3 1 #" "
 0 6           4 21 1149
-(67
+(73
  #"(#(struct:overlay #(struct:translate 0 3.349364905389031 #(struct:tra"
  #"nslate -0.0 43.30127018922194 #(struct:polygon (#(struct:pulled-point"
  #" 0 0 0 0 0 0) #(struct:pulled-point 0 0 50 0 0 0) #(struct:pulled-poi"
@@ -5427,33 +5465,33 @@
 0 0 24 3 1 #")"
 0 0 24 29 1 #"\n"
 0 0 17 3 77
-(68
+(74
  #";; Implementa\xC8\x9Bi func\xC8\x9Bia matrix-to-image care prime\xC8"
  #"\x99te o matrice de imagini"
 ) 0 0 24 29 1 #"\n"
 0 0 17 3 72
-(69
+(75
  #";; \xC8\x99i \xC3\xAEntoarce reprezentarea sub form\xC4\x83 de imagin"
  #"e a acesteia folosind"
 ) 0 0 24 29 1 #"\n"
 0 0 17 3 75
-(70
+(76
  #";; func\xC8\x9Biile beside (reune\xC8\x99te imaginile date ca paramet"
  #"ri pe orizontal\xC4\x83)"
 ) 0 0 24 29 1 #"\n"
 0 0 17 3 67
-(71
+(77
  #";; \xC8\x99i above (reune\xC8\x99te imaginile date ca parametri pe ve"
  #"rtical\xC4\x83)."
 ) 0 0 24 29 1 #"\n"
-0 0 17 3 73 50 0 0 24 29 1 #"\n"
+0 0 17 3 73 52 0 0 24 29 1 #"\n"
 0 0 17 3 35 #";; ci utiliz\303\242nd doar func\310\233ionale."
 0 0 24 29 1 #"\n"
 0 0 17 3 14 #";; Ex: (above "
-0 6           4 17 93 43 0 0 17 3 1 #" "
-0 6           4 17 200 59 0 0 17 3 5 #") -> "
+0 6           4 17 93 45 0 0 17 3 1 #" "
+0 6           4 17 200 65 0 0 17 3 5 #") -> "
 0 6           4 17 334
-(72
+(78
  #"(#(struct:overlay #(struct:translate 0 0 #(struct:translate 25 25 #(s"
  #"truct:ellipse 50 50 0 255 \"green\" #f))) #(struct:translate 5 50 #(s"
  #"truct:polygon (#(struct:pulled-point 0 0 0 0 0 0) #(struct:pulled-poi"
@@ -5461,11 +5499,11 @@
  #"-point 0 0 0 40 0 0)) 255 \"red\"))) #(struct:bb 50 90 90) #f)"
 ) 0 0 17 3 9 #";       ("
 0 0 17 3 6 #"above "
-0 6           4 17 93 43 0 0 17 3 1 #" "
-0 6           4 17 200 59 0 0 17 3 1 #" "
-0 6           4 17 250 62 0 0 17 3 5 #") -> "
+0 6           4 17 93 45 0 0 17 3 1 #" "
+0 6           4 17 200 65 0 0 17 3 1 #" "
+0 6           4 17 250 68 0 0 17 3 5 #") -> "
 0 6           4 17 629
-(73
+(79
  #"(#(struct:overlay #(struct:translate 0 0 #(struct:overlay #(struct:tr"
  #"anslate 0 0 #(struct:translate 25 25 #(struct:ellipse 50 50 0 255 \"g"
  #"reen\" #f))) #(struct:translate 5 50 #(struct:polygon (#(struct:pulle"
@@ -5481,10 +5519,10 @@
 0 0 17 3 1 #"("
 0 0 17 3 6 #"beside"
 0 0 17 3 1 #" "
-0 6           4 17 93 43 0 0 17 3 1 #" "
-0 6           4 17 200 59 0 0 17 3 5 #") -> "
+0 6           4 17 93 45 0 0 17 3 1 #" "
+0 6           4 17 200 65 0 0 17 3 5 #") -> "
 0 6           4 17 334
-(74
+(80
  #"(#(struct:overlay #(struct:translate 0 0 #(struct:translate 25 25 #(s"
  #"truct:ellipse 50 50 0 255 \"green\" #f))) #(struct:translate 50 5 #(s"
  #"truct:polygon (#(struct:pulled-point 0 0 0 0 0 0) #(struct:pulled-poi"
@@ -5493,11 +5531,11 @@
 ) 0 0 17 3 4 #";  ("
 0 0 17 3 6 #"beside"
 0 0 17 3 1 #" "
-0 6           4 17 93 43 0 0 17 3 1 #" "
-0 6           4 17 200 59 0 0 17 3 1 #" "
-0 6           4 17 250 62 0 0 17 3 5 #") -> "
+0 6           4 17 93 45 0 0 17 3 1 #" "
+0 6           4 17 200 65 0 0 17 3 1 #" "
+0 6           4 17 250 68 0 0 17 3 5 #") -> "
 0 6           4 17 616
-(75
+(81
  #"(#(struct:overlay #(struct:translate 0 0 #(struct:overlay #(struct:tr"
  #"anslate 0 0 #(struct:translate 25 25 #(struct:ellipse 50 50 0 255 \"g"
  #"reen\" #f))) #(struct:translate 50 5 #(struct:polygon (#(struct:pulle"
@@ -5548,7 +5586,7 @@
 0 0 14 3 12 #"MATRIX-IMAGE"
 0 0 24 3 1 #" "
 0 6           4 21 3201
-(76
+(82
  #"(#(struct:overlay #(struct:translate 12.360679774997891 0 #(struct:ov"
  #"erlay #(struct:translate 0 0 #(struct:overlay #(struct:translate 0 0 "
  #"#(struct:overlay #(struct:translate 0 0 #(struct:translate 25 25 #(st"
@@ -5630,54 +5668,54 @@
 #";; Pornind de la o list\304\203 de imagini L, se dore\310\231te:"
 0 0 24 29 1 #"\n"
 0 0 17 3 84
-(77
+(83
  #";; (a) p\xC4\x83strarea doar a celor a c\xC4\x83ror \xC3\xAEn\xC4\x83"
  #"l\xC8\x9Bime este mai mare dec\xC3\xA2t min-height;"
 ) 0 0 24 29 1 #"\n"
 0 0 17 3 95
-(78
+(84
  #";;     - pentru determinarea \xC3\xAEn\xC4\x83l\xC8\x9Bimii, folosi"
  #"\xC8\x9Bi func\xC8\x9Bia (image-height img) care prime\xC8\x99te"
 ) 0 0 24 29 1 #"\n"
 0 0 17 3 81
-(79
+(85
  #";;     ca parametru o imagine img \xC8\x99i \xC3\xAEntoarce \xC3\xAEn"
  #"\xC4\x83l\xC8\x9Bimea acesteia, ca integer"
 ) 0 0 24 29 1 #"\n"
 0 0 17 3 83
-(80
+(86
  #";; (b) construirea unei matrice, ale c\xC4\x83rei linii sunt identice"
  #" cu lista rezultat\xC4\x83"
 ) 0 0 24 29 1 #"\n"
 0 0 17 3 87
-(81
+(87
  #";;     \xC3\xAEn urma punctului (a), dar \xC3\xAEn care fiecare imagi"
  #"ne de pe diagonala principal\xC4\x83"
 ) 0 0 24 29 1 #"\n"
 0 0 17 3 99
-(82
+(88
  #";;     este acum rotit\xC4\x83 cu 30 de grade \xC3\xAEnmul\xC8\x9Bit "
  #"cu num\xC4\x83rul liniei pe care se afl\xC4\x83 (numerotarea"
 ) 0 0 24 29 1 #"\n"
 0 0 17 3 36 #";;     liniilor va \303\256ncepe de la 1)."
 0 0 24 29 1 #"\n"
 0 0 17 3 91
-(83
+(89
  #";; ATEN\xC8\x9AIE! Utiliza\xC8\x9Bi func\xC8\x9Bionale \xC3\xAEn impl"
  #"ementare! NU este permis\xC4\x83 simularea accesului"
 ) 0 0 24 29 1 #"\n"
 0 0 17 3 94
-(84
+(90
  #";; aleator \xC3\xAEn list\xC4\x83 (take, drop, sau alte func\xC8\x9Bi"
  #"i definite de voi cu comportament similar)."
 ) 0 0 24 29 1 #"\n"
 0 0 17 3 98
-(85
+(91
  #";; Rotirea unei imagini se poate face cu ajutorul func\xC8\x9Biei (ro"
  #"tate angle image) care prime\xC8\x99te ca"
 ) 0 0 24 29 1 #"\n"
 0 0 17 3 103
-(86
+(92
  #";; argumente un unghi (angle) \xC8\x99i o imagine (image), \xC3\xAEnt"
  #"orc\xC3\xA2nd astfel imaginea ini\xC8\x9Bial\xC4\x83, rotit\xC4\x83 c"
  #"u"
@@ -5685,7 +5723,7 @@
 0 0 17 3 39 #";; angle grade, \303\256n sens trigonometric."
 0 0 24 29 1 #"\n"
 0 0 17 3 98
-(87
+(93
  #";; Exerci\xC8\x9Biul nu trebuie rezolvat exclusiv cu func\xC8\x9Biona"
  #"le, ci se poate combina cu recursivitate."
 ) 0 0 24 29 1 #"\n"
@@ -5800,7 +5838,7 @@
 0 0 21 3 1 #"'"
 0 0 24 3 3 #"( ("
 0 6           4 21 386
-(88
+(94
  #"(#(struct:translate -43.30127018922193 25.000000000000007 #(struct:po"
  #"lygon (#(struct:pulled-point 1.8 30 43.30127018922193 75.000000000000"
  #"01 1.8 -30) #(struct:pulled-point 1.8 30 129.9038105676658 25.0000000"
@@ -5809,7 +5847,7 @@
  #" 100.00000000000003 100.00000000000003) #f)"
 ) 0 0 24 3 1 #" "
 0 6           4 21 323
-(89
+(95
  #"(#(struct:polygon (#(struct:pulled-point 1/3 50 -0.0 70.0000000000000"
  #"1 1/3 -50) #(struct:pulled-point 1/3 50 70.0 70.00000000000001 1/3 -5"
  #"0) #(struct:pulled-point 1/3 50 70.0 1.4210854715202004e-14 1/3 -50) "
@@ -5817,7 +5855,7 @@
  #":bb 70.0 70.00000000000001 70.00000000000001) #f)"
 ) 0 0 24 3 1 #" "
 0 6           4 21 459
-(90
+(96
  #"(#(struct:polygon (#(struct:pulled-point 1.1 140 15.450849718747357 7"
  #"6.94208842938133 1.1 -140) #(struct:pulled-point 1.1 140 65.450849718"
  #"74735 76.94208842938133 1.1 -140) #(struct:pulled-point 1.1 140 80.90"
@@ -5829,14 +5867,14 @@
 0 0 24 29 1 #"\n"
 0 0 24 3 25 #"                        ("
 0 6           4 21 273
-(91
+(97
  #"(#(struct:polygon (#(struct:pulled-point 1.8 30 -0.0 86.6025403784438"
  #"8 1.8 -30) #(struct:pulled-point 1.8 30 100.0 86.60254037844388 1.8 -"
  #"30) #(struct:pulled-point 1.8 30 50.00000000000002 0.0 1.8 -30)) 255 "
  #"\"blue\") #(struct:bb 100.0 86.60254037844388 86.60254037844388) #f)"
 ) 0 0 24 3 1 #" "
 0 6           4 21 458
-(92
+(98
  #"(#(struct:translate 7.105427357601002e-15 60.621778264910695 #(struct"
  #":polygon (#(struct:pulled-point 1/3 50 60.621778264910716 35.00000000"
  #"0000014 1/3 -50) #(struct:pulled-point 1/3 50 95.62177826491072 -25.6"
@@ -5845,13 +5883,13 @@
  #"7357601002e-15 -0.0 1/3 -50)) 255 \"blue\")) #(struct:bb 95.621778264"
  #"91072 95.62177826491072 95.62177826491072) #f)"
 ) 0 0 24 3 1 #" "
-0 6           4 21 459 90 0 0 24 3 1 #")"
+0 6           4 21 459 96 0 0 24 3 1 #")"
 0 0 24 29 1 #"\n"
 0 0 24 3 25 #"                        ("
-0 6           4 21 273 91 0 0 24 3 1 #" "
-0 6           4 21 323 89 0 0 24 3 1 #" "
+0 6           4 21 273 97 0 0 24 3 1 #" "
+0 6           4 21 323 95 0 0 24 3 1 #" "
 0 6           4 21 507
-(93
+(99
  #"(#(struct:translate -0.0 80.90169943749473 #(struct:polygon (#(struct"
  #":pulled-point 1.1 140 76.94208842938133 -15.450849718747357 1.1 -140)"
  #" #(struct:pulled-point 1.1 140 76.94208842938133 -65.45084971874735 1"
@@ -5893,7 +5931,7 @@
 0 0 24 3 1 #")"
 0 0 24 29 1 #"\n"
 0 0 17 3 85
-(94
+(100
  #";; Implementa\xC8\x9Bi func\xC8\x9Bia curry-n ce converte\xC8\x99te o"
  #" func\xC8\x9Bie uncurry \xC3\xAEntr-o func\xC8\x9Bie"
 ) 0 0 24 29 1 #"\n"
@@ -5901,27 +5939,27 @@
 #";; curry ce prime\310\231te parametri unul c\303\242te unul."
 0 0 24 29 1 #"\n"
 0 0 17 3 84
-(95
+(101
  #";; Func\xC8\x9Bia va primi doi parametri: func\xC8\x9Bia uncurry f, "
  #"\xC8\x99i num\xC4\x83rul parametrilor n."
 ) 0 0 24 29 1 #"\n"
 0 0 17 3 80
-(96
+(102
  #";; HINTS -> Cum ar trebui gestiona\xC8\x9Bi parametrii pe care func"
  #"\xC8\x9Bia \xC3\xAEi prime\xC8\x99te?"
 ) 0 0 24 29 1 #"\n"
 0 0 17 3 65
-(97
+(103
  #";;       -> C\xC3\xA2nd \xC8\x99i cum ar trebui aplica\xC8\x9Bi ace"
  #"\xC8\x99ti parametrii?"
 ) 0 0 24 29 1 #"\n"
 0 0 17 3 88
-(98
+(104
  #";; Pute\xC8\x9Bi \xC3\xAEmbina recursivitatea cu utilizarea func\xC8"
  #"\x9Bionalelor. De asemenea, nu uita\xC8\x9Bi"
 ) 0 0 24 29 1 #"\n"
 0 0 17 3 64
-(99
+(105
  #";; faptul c\xC4\x83 oric\xC3\xA2nd pute\xC8\x9Bi s\xC4\x83 folosi\xC8"
  #"\x9Bi func\xC8\x9Bii auxiliare."
 ) 0 0 24 29 1 #"\n"
@@ -5946,7 +5984,7 @@
 0 0 21 3 1 #"'"
 0 0 24 3 6 #"()))  "
 0 0 17 3 72
-(100
+(106
  #";; Avem nevoie de o functie auxiliara pentru a retine parametrii prim"
  #"iti"
 ) 0 0 24 29 1 #"\n"
