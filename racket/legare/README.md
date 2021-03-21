@@ -1,7 +1,6 @@
 # Racket: Legarea variabilelor. Închideri funcționale
 
-  - Responsabil: [Teodor Szente](teodor98sz@gmail.com "wikilink")
-  - Data publicării: 08.03.2020
+  - Data publicării: 22.03.2021
 
 ## Obiective
 
@@ -133,7 +132,7 @@ Iată și câteva exemple:
 (define a 10)
 
 (let ((a 1) (b (+ a 1))) ; aici suntem in zona de definiții, nu în corpul let-ului =\> a e legat la 10
-  (cons a b))                   ; în corpul let-ului este vizibilă legarea lui a la 1
+  (cons a b))            ; în corpul let-ului este vizibilă legarea lui a la 1
 ```
 
 Codul anterior produce perechea `(1 . 11)`, întrucât legarea `(a
@@ -145,7 +144,7 @@ codul ar fi generat eroare.
 (let ((a 1)) ; prima legare
 
   (let ((f (lambda () (print a))))
-    (let ((a 2))                        ; a doua legare
+    (let ((a 2))                       ; a doua legare
      (f))))                            ; afișează 1
 ```
 În punctul din program corespunzător definirii lui `f`,
@@ -164,7 +163,7 @@ Este asemănător cu `let`, însă domeniul de vizibilitate al variabilelor
 (define a 10)
 
 (let* ((a 1) (b (+ a 1))) ; în momentul definirii lui b, este vizbilă legarea lui a la 1
-  (cons a b))                   ; desigur, aceeași legare e vizibilă și în corpul let-ului
+  (cons a b))             ; desigur, aceeași legare e vizibilă și în corpul let-ului
 ```
 
 Codul anterior întoarce perechea `(1 . 2)`, spre deosebire de
@@ -181,12 +180,12 @@ dar nu și din punct de vedere temporal). Acest aspect este ilustrat în
 exemplele de mai jos:
 ```lisp
 (letrec ((a b) (b 1)) ; în momentul definirii lui a este nevoie de valoarea lui b, necunoscută încă
-  (cons a b))               ; de aceea codul produce eroare
+  (cons a b))         ; de aceea codul produce eroare
 ```
 
 ```lisp
 (letrec
-   ((even-length? ` 
+   ((even-length?
      (lambda (L)                    ; even-length? este o închidere funcțională  
        (if (null? L)                ; deci corpul funcției nu este evaluat la  
            #t                       ; momentul definirii ei  
@@ -261,7 +260,7 @@ momentul dorit, aplicând această expresie (aici pe 0 argumente).
 
 ## Resurse
 
-  - [Documentație racket](https://docs.racket-lang.org/reference/let.html "wikilink")
+  - [Documentație Racket](https://docs.racket-lang.org/reference/let.html "wikilink")
 
   - 
   - 
