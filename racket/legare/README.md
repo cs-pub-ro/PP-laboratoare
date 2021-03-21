@@ -54,9 +54,9 @@ identificator şi valoarea acesteia la un moment dat.
 
 ```
 int random_number = 42;
-//           |                       |
-//           |                       |-------► valoarea variabilei la un moment dat.`
-//          ▼` `
+//       |          |
+//       |          |-------► valoarea variabilei la un moment dat.`
+//       ▼
 //  "random_number" este valoarea identificatorului.
 ```
 Legarea
@@ -154,16 +154,16 @@ identificatorul `a` este legat la valoarea `1`. Faptul că în contextul
 importanță. Comparați acest comportament cu exemplul din secțiunea
 //Legare dinamică//, de mai jos.
 
-### let\*
+### let*
 
 Este asemănător cu `let`, însă domeniul de vizibilitate al variabilelor
 începe imediat după definire. Asta înseamnă că o variabilă definită în
-`let\*` poate fi folosită în următoarele definiții din cadrul `let\*`.
+`let*` poate fi folosită în următoarele definiții din cadrul `let*`.
 
 ```lisp
 (define a 10)
 
-(let\* ((a 1) (b (+ a 1))) ; în momentul definirii lui b, este vizbilă legarea lui a la 1
+(let* ((a 1) (b (+ a 1))) ; în momentul definirii lui b, este vizbilă legarea lui a la 1
   (cons a b))                   ; desigur, aceeași legare e vizibilă și în corpul let-ului
 ```
 
@@ -184,7 +184,8 @@ exemplele de mai jos:
   (cons a b))               ; de aceea codul produce eroare
 ```
 
-```lisp (letrec
+```lisp
+(letrec
    ((even-length? ` 
      (lambda (L)                    ; even-length? este o închidere funcțională  
        (if (null? L)                ; deci corpul funcției nu este evaluat la  
@@ -197,7 +198,7 @@ exemplele de mai jos:
            (even-length? (cdr L))))))  
  (even-length? '(1 2 3 4 5 6)))     ; în acest moment deja ambele funcții au fost definite
 ```
- Codul de mai sus întoarce `true`. `odd-length?` este vizibilă în
+Codul de mai sus întoarce `true`. `odd-length?` este vizibilă în
 zona de program corespunzătoare definiției lui `even-length?` și va
 funcționa corect cu condiția ca momentul în care solicităm valoarea sa
 în acel punct din program să succeadă momentului definirii lui
@@ -236,7 +237,7 @@ ce valoare produce evaluarea unei λ-expresii? **Evaluarea oricărei
 
 O **închidere funcțională** este o pereche între:
   * **textul** λ-expresiei ( `(lambda (x) (+ x a))` pe exemplul nostru)
-  * **contextul** computațional în punctul de definire a λ-expresiei ( `(a 1)``pe exemplul nostru)`
+  * **contextul** computațional în punctul de definire a λ-expresiei ( `(a 1)` pe exemplul nostru)
 
 Ceea ce salvăm în context este de fapt mulțimea **variabilelor
 libere** în λ-expresia noastră, adică toate acele variabile referite
