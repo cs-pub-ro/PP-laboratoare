@@ -53,10 +53,14 @@
   (let ((l (get-length)))
     (* l l)))
 
+(let ([num-of-calls ((lambda () (compute-square-area magic-number) count-magic))])
 (check% 'a 1/4 (compute-square-area (lambda () 1)) is 1)
+(when (= num-of-calls 1)
 (check% 'b 1/4 (compute-square-area (lambda () 3932)) is 15460624)
 (check% 'c 1/4 (compute-square-area (lambda () 2788)) is 7772944)
 (check% 'd 1/4 (compute-square-area (lambda () 198.2522)) is 39303.93480483999)
+ )
+)
 
 
 (exercițiul 2 : 1 puncte)
