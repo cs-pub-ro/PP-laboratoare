@@ -42,7 +42,7 @@ dat de toate variabilele şi valorile acestora, vizibile în acel punct.
 
 **Exemplu:** Pe linia 6 contextul computaţional este: `{(a 2) (b 32) (s P)}`
 
-{{ :20:laboratoare:racket:context.png?800 |}}
+![Test Image 1][./img-ocw/context.png]
 
 ## Legare
 
