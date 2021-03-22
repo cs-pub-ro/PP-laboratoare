@@ -260,8 +260,8 @@ momentul dorit, aplicând această expresie (aici pe 0 argumente).
 ## Resurse
 
   - [Documentație Racket](https://docs.racket-lang.org/reference/let.html "wikilink")
-  - [Exerciții rezolvate și propuse](https://ocw.cs.pub.ro/courses/_media/pp/21/laboratoare/racket/binding.zip)
-  - [Soluții](https://ocw.cs.pub.ro/courses/_media/pp/21/laboratoare/racket/binding-sol.zip)
+  - [Exerciții rezolvate și propuse](https://ocw.cs.pub.ro/courses/_media/pp/21/laboratoare/racket/legare.zip)
+  - [Soluții](https://ocw.cs.pub.ro/courses/_media/pp/21/laboratoare/racket/legare-sol.zip)
   - [Cheatsheet Laboratorul 4](https://github.com/cs-pub-ro/PP-laboratoare/raw/master/racket/functionale/functionale-cheatsheet.pdf)
 ## Referințe
 
