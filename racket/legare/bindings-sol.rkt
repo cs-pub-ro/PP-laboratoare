@@ -50,8 +50,7 @@
 ;;             Nu puteți folosi `exp`/`expt`
 ;; compute-square-area:: functie -> intreg
 (define (compute-square-area get-length)
-  (let ((l (get-length)))
-    (* l l)))
+  'your-code-here)
 
 (let ([num-of-calls ((lambda () (compute-square-area magic-number) count-magic))])
 (check% 'a 1/4 (compute-square-area (lambda () 1)) is 1)
@@ -61,6 +60,7 @@
 (check% 'd 1/4 (compute-square-area (lambda () 198.2522)) is 39303.93480483999)
  )
 )
+(set! count-magic 0)
 
 
 (exercițiul 2 : 1 puncte)
@@ -79,12 +79,8 @@
 ;; Restrictii: Fiecare funcție primită drept argument trebuie aplicată o singură dată.
 ;; compute-length:: functie x functie x functie -> real
 (define (compute-length get-line-segment get-start-point get-end-point)
-  (let* ((segment (get-line-segment))
-         (start (get-start-point segment))
-         (stop (get-end-point segment))
-         (x1 (car start)) (y1 (cdr start))
-         (x2 (car stop)) (y2 (cdr stop)))
-    (sqrt (+ (sqr (- x1 x2)) (sqr (- y1 y2))))))
+  'your-code-here)
+
 
 (let ([num-of-calls ((lambda () (compute-length magic-segment get-start-point get-end-point) count-magic))])
   (check% 'a 1/5 num-of-calls is 3)
@@ -95,6 +91,7 @@
     (check% 'e 1/5 (fn-binding (cons '(658 . 665)  '(32343 . 31246))) is 44035.63086864999)
     )
 )
+(set! count-magic 0)
 
 (exercițiul 3 : 1 puncte)
 ;; Definiți funcția distance care calculează distanța
@@ -103,9 +100,9 @@
 ;; asistentului pentru a vă puncta acest exercițiu.
 ;; distance:: pereche x pereche -> real
 (define (distance x y)
-  (compute-length (λ () (cons x y)) car cdr))
+  'your-code-here)
 
-(check% 'a 0.25 (distance '(9 . 12)  '(12 . 16)) is 5)
+(check (distance '(9 . 12)  '(12 . 16)) is 5)
 
 (exercițiul 4 : 1 puncte)
 ;; Fie f(x) o funcție oarecare,
@@ -115,10 +112,7 @@
 ;;             Nu folositi functionale.
 ;; compute-f-with-step:: functie x numar x numar x numar -> list
 (define (compute-f-with-step f a b step)
-  (let iter ((x a))
-    (if (> x b)
-        '()
-        (cons (f x) (iter (+ x step))))))
+  'your-code-here)
 
 (check% 'a 1/2  (compute-f-with-step (lambda (x) (* x x)) 0 4 1) is '(0 1 4 9 16))
 (check% 'b 1/2  (compute-f-with-step (lambda (x) (+ (* 2 x) 1)) 0 4 1) is '(1 3 5 7 9))
@@ -134,8 +128,8 @@
 ;; Hint: Puteți folosi funcțiile `number->string` și `string->number`
 ;; num-concat:: numar numar -> numar
 (define (num-concat x y)
-  (let ((+ (λ (x y) (string->number (string-append (number->string x) (number->string y))))))
-    (+ x y)));; Nu stergeți această linie.
+  'your-code-here
+    (+ x y));; Nu stergeți această linie.
 
 (check% 'a 1/2 (num-concat 1 2) is 12)
 (check% 'b 1/2 (num-concat 33 674) is 33674)
@@ -143,17 +137,14 @@
 (exercițiul 6 : 3 puncte)
 ;; Definiți funcția compute-perimeter care primește un poligon reprezentat
 ;; printr-o listă de puncte și calculează perimetrul acestuia.
+;; Atenție: Nu aveți voie să definiți funcții ajutătoare în exteriorul funcției compute-perimeter.
+;;          Nu aveți voie să folosiți funcționale.
+;; Hint: Folosiți-vă de funcția distance
 ;; Restrictii: Nu să definiți funcții ajutătoare în exteriorul funcției compute-perimeter.
 ;;             Nu folosiți funcționale.
 ;; compute-perimeter:: lista de perechi -> numar
-;; Hint: Folosiți-vă de funcția distance
 (define (compute-perimeter points)
-  (let ((start (car points)))
-    (let iter ((points points) (d 0))
-      (if (null? (cdr points))
-          (+ d (distance (car points) start))
-          (iter (cdr points) (+ d (distance (car points) (cadr points))))))))
-
+  'your-code-here)
 
 (check% 'a 1/4 (compute-perimeter (list '(1 . 0) '(0 . 0) '(0 . 1) '(1 . 1))) is 4)
 (check% 'b 1/4 (compute-perimeter (list '(2 . 0) '(0 . 0) '(0 . 2) '(2 . 2))) is 8)
@@ -171,10 +162,7 @@
 ;; Hint:: Uitați-vă peste splitf-at.
 ;; 3-sequence-max:: lista x numar -> numar
 (define (3-sequence-max numbers separator)
-  (let ([pred (lambda (x) (not (equal? x separator)))])
-    (let*-values ([(left rest) (splitf-at numbers pred)]
-                  [(mid right) (splitf-at (cdr rest) pred)])
-      (max (sum left) (sum mid) (sum right)))))
+  'your-code-here)
 
 (check% 'a 1/2 (3-sequence-max '(1 0 2 0 3) 0) is 3)
 (check% 'b 1/2 (3-sequence-max '(2 3 4 0 4 105 6 0 54 5) 4) is 174)
@@ -189,7 +177,7 @@
 ;; și lasă loc pentru mai puține erori?
 ;; list-num-concat:: lista -> numar
 (define (list-num-concat numbers)
-  (string->number (apply string-append (map number->string numbers))))
+  'your-code-here)
 
 ;; Definiți funcția care gasește toate sufixele posibile pentru un număr.
 ;; ex:
@@ -198,10 +186,7 @@
 ;;             Există deja definită in laborator funcția number->list.
 ;; find-all-suffixes:: numar -> lista
 (define (find-all-suffixes number)
-  (let iter ((L (number->list number)))
-    (if (null? L)
-        '()
-        (cons (list-num-concat L) (iter (cdr L))))))
+  'your-code-here)
 
 (check% 'a 1/2 (find-all-suffixes 1234) is '(1234 234 34 4))
 (check% 'b 1/2 (find-all-suffixes 56789462782) is '(56789462782 6789462782 789462782 89462782 9462782 462782 62782 2782 782 82 2))
@@ -216,12 +201,8 @@
 ;;    next => o funcție care primește o stare și decide care e următoarea stare.
 ;; Restrictii: Trebuie să folosiți named let.
 ;; run:: numar x numar x functie -> lista
-
 (define (run initial-state final-state next)
-  (let iter ((state initial-state))
-    (if (equal? state final-state)
-        (list state)
-        (cons state (iter (next state))))))
+  'your-code-here)
 
 (check% 'a 1/4 (run 0 9 add1) is (range 10))
 (check% 'b 1/4 (run 9 0 sub1) is (reverse (range 10)))
@@ -235,7 +216,7 @@
 ;; Restrictii: Folosiți let.
 ;; generate-number:: intreg x numar -> numar
 (define (generate-number k x)
-  (list-num-concat (run x (+ x (* k (- k 1))) (λ (x) (+ x k)))))
+  'your-code-here)
 
 (check% 'c 1/2 (generate-number 3 2) is 258)
 (check% 'd 1/2 (generate-number 3 3) is 369)
