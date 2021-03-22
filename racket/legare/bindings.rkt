@@ -7,7 +7,7 @@
 (define (get-start-point x) (set! count-magic (+ count-magic 1)) (car x))
 (define (get-end-point x) (set! count-magic (+ count-magic 1)) (cdr x))
 (define (number->list num) (map (lambda (c) (- (char->integer c) (char->integer #\0))) (string->list (number->string num))))
-(define show-defaults 25) ; câte exerciții la care s-au întors rezultate default să fie arătate detaliat
+(define show-defaults 2) ; câte exerciții la care s-au întors rezultate default să fie arătate detaliat
 (define prepend #f) (define nopoints #t) (define name-ex '(testul testele trecut exercițiul)) ; variante: '(exercițiul exercițiile rezolvat exercițiul) sau '(testul testele trecut exercițiul) sau '(task taskurile rezolvat capitolul)
 (define default-results `(#f 0 () your-code-here)) (define (default-result r) (set! default-results (cons r default-results))) (define : 'separator) (define punct 'string) (define puncte 'string) (define BONUS 'string) (define exerciții 'string)
 (define total 0) (define all '()) (define n-ex 0) (define p-ex 0) (define n-exercs -1) (define default-returns '()) (define (ex n sep p . s) (set! n-ex n) (set! p-ex p) (set! all (cons (list n p) all))) (define exercițiul ex) (define (sunt n s) (set! n-exercs n)) (define s-a string-append)
@@ -60,6 +60,8 @@
 (check% 'd 1/4 (compute-square-area (lambda () 198.2522)) is 39303.93480483999)
  )
 )
+(set! count-magic 0)
+
 
 (exercițiul 2 : 1 puncte)
 ;; Funcția compute-length primește ca argumente 3 funcții:
@@ -89,6 +91,7 @@
     (check% 'e 1/5 (fn-binding (cons '(658 . 665)  '(32343 . 31246))) is 44035.63086864999)
     )
 )
+(set! count-magic 0)
 
 (exercițiul 3 : 1 puncte)
 ;; Definiți funcția distance care calculează distanța
