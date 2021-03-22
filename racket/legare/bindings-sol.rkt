@@ -37,7 +37,7 @@
 
 ;; Abilitatea de a scrie cod lizibil este critică pentru un programator și vă
 ;; va influența major cariera. Nu vă demoralizați dacă încă nu sunteți pricepuți,
-;; nu există o rețeță universală, această abilitate se dezvoltă
+;; nu există o rețetă universală, această abilitate se dezvoltă
 ;; de-a lungul anilor de scris cod zilnic.
 
 (sunt 10 exerciții)
@@ -217,6 +217,7 @@
 ;;    next => o funcție care primește o stare și decide care e următoarea stare.
 ;; Restrictii: Trebuie să folosiți named let.
 ;; run:: numar x numar x functie -> lista
+;; Funcția întoarce o listă ce cuprinde toate stările automatului
 
 (define (run initial-state final-state next)
   (let iter ((state initial-state))
@@ -235,6 +236,7 @@
 ;; folosind formula i*k+x.
 ;; Restrictii: Folosiți let.
 ;; generate-number:: intreg x numar -> numar
+
 (define (generate-number k x)
   (list-num-concat (run x (+ x (* k (- k 1))) (λ (x) (+ x k)))))
 
