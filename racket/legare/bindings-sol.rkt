@@ -37,7 +37,7 @@
 
 ;; Abilitatea de a scrie cod lizibil este critică pentru un programator și vă
 ;; va influența major cariera. Nu vă demoralizați dacă încă nu sunteți pricepuți,
-;; nu există o rețeță universală, această abilitate se dezvoltă
+;; nu există o rețetă universală, această abilitate se dezvoltă
 ;; de-a lungul anilor de scris cod zilnic.
 
 (sunt 10 exerciții)
@@ -201,6 +201,7 @@
 ;;    initial-state => o stare inițială din care automatul pornește
 ;;    final-state => o stare finală în care automatul se oprește
 ;;    next => o funcție care primește o stare și decide care e următoarea stare.
+;; Funcția întoarce o listă ce cuprinde toate stările automatului.
 ;; Atenție: Trebuie să folosiți named let.
 (define (run initial-state final-state next)
   (let iter ((state initial-state))
