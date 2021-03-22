@@ -44,11 +44,11 @@
 
 (exercițiul 1 : 1 puncte)
 ;; Funcția compute-square-area primește ca argument o funcție
-;; ce returnează un număr, reprezentând latura unui pătrat;
+;; nulară ce returnează un număr, reprezentând latura unui pătrat;
 ;; compute-square-area trebuie să calculeze aria acelui pătrat.
-;; Restrictii: Aplicați get-length o singură dată.
+;; Restricții: Aplicați get-length o singură dată.
 ;;             Nu puteți folosi `exp`/`expt`
-;; compute-square-area:: functie -> intreg
+;; compute-square-area:: funcție -> real
 (define (compute-square-area get-length)
   (let ((l (get-length)))
     (* l l)))
@@ -65,7 +65,7 @@
 
 (exercițiul 2 : 1 puncte)
 ;; Funcția compute-length primește ca argumente 3 funcții:
-;;  - get-line-segment => întoarce un segment de dreaptă.
+;;  - get-line-segment => nulară, întoarce un segment de dreaptă.
 ;;  - get-start-point => primește un segment de dreaptă și
 ;;                       întoarce punctul din care segmentul începe.
 ;;  - get-end-point => primește un segment de dreaptă și
@@ -76,8 +76,8 @@
 ;;
 ;; compute-length trebuie să calculeze lungimea segmentului de dreaptă.
 ;; (distanța dintre punctul de început și punctul de sfârșit)
-;; Restrictii: Fiecare funcție primită drept argument trebuie aplicată o singură dată.
-;; compute-length:: functie x functie x functie -> real
+;; Restricții: Fiecare funcție primită drept argument trebuie aplicată o singură dată.
+;; compute-length:: funcție x funcție x funcție -> real
 (define (compute-length get-line-segment get-start-point get-end-point)
   (let* ((segment (get-line-segment))
          (start (get-start-point segment))
@@ -111,10 +111,10 @@
 (exercițiul 4 : 1 puncte)
 ;; Fie f(x) o funcție oarecare,
 ;; Calculați valorile funcției f(x), a < x < b cu pasul step.
-;; Restrictii: Folosiți named let.
+;; Restricții: Folosiți named let.
 ;;             Nu apelați recursiv `compute-f-with-step`.
-;;             Nu folositi functionale.
-;; compute-f-with-step:: functie x numar x numar x numar -> list
+;;             Nu folosiți functionale.
+;; compute-f-with-step:: funcție x număr x număr x număr -> list
 (define (compute-f-with-step f a b step)
   (let iter ((x a))
     (if (> x b)
@@ -133,7 +133,7 @@
 ;; a realiza concatenarea dintre două numere.
 ;; Hint: `string-append` concatenează două string-uri
 ;; Hint: Puteți folosi funcțiile `number->string` și `string->number`
-;; num-concat:: numar numar -> numar
+;; num-concat:: număr x număr -> număr
 (define (num-concat x y)
   (let ((+ (λ (x y) (string->number (string-append (number->string x) (number->string y))))))
     (+ x y)));; Nu stergeți această linie.
@@ -144,10 +144,12 @@
 (exercițiul 6 : 3 puncte)
 ;; Definiți funcția compute-perimeter care primește un poligon reprezentat
 ;; printr-o listă de puncte și calculează perimetrul acestuia.
-;; Restrictii: Nu să definiți funcții ajutătoare în exteriorul funcției compute-perimeter.
-;;             Nu folosiți funcționale.
-;; compute-perimeter:: lista de perechi -> numar
+;; Atenție: Nu aveți voie să definiți funcții ajutătoare în exteriorul funcției compute-perimeter.
+;;          Nu aveți voie să folosiți funcționale.
 ;; Hint: Folosiți-vă de funcția distance
+;; Restricții: Nu definiți funcții ajutătoare în exteriorul funcției compute-perimeter.
+;;             Nu folosiți funcționale.
+;; compute-perimeter:: listă de perechi -> număr
 (define (compute-perimeter points)
   (let ((start (car points)))
     (let iter ((points points) (d 0))
@@ -166,38 +168,40 @@
 ;; Definiți funcția `3-sequence-max` care găsește
 ;; suma secvenței de sumă maximă.
 ;; ex:
-;; (1 2 3 0 3 5 4 0 5 200) => secvența de sumă maximă este 205
-;; Restrictii: Nu folosiți fold/apply.
+;; (1 2 3 0 3 5 4 0 5 200) cu separatorul 0
+;; => secvența de sumă maximă este 205
+;; Restricții: Nu folosiți fold/apply.
 ;;             Folosiți let-values/let*-values.
 ;; Hint:: Uitați-vă peste splitf-at.
-;; 3-sequence-max:: lista x numar -> numar
+;; 3-sequence-max:: listă de numere x orice -> număr
 (define (3-sequence-max numbers separator)
   (let ([pred (lambda (x) (not (equal? x separator)))])
-    (let*-values ([(left rest) (splitf-at numbers pred)]
-                  [(mid right) (splitf-at (cdr rest) pred)])
+    (let*-values ([(left rest1) (splitf-at numbers pred)]
+                  [(mid rest2) (splitf-at (cdr rest1) pred)]
+                  [(right) (cdr rest2)])
       (max (sum left) (sum mid) (sum right)))))
 
 (check% 'a 1/2 (3-sequence-max '(1 0 2 0 3) 0) is 3)
-(check% 'b 1/2 (3-sequence-max '(2 3 4 0 4 105 6 0 54 5) 4) is 174)
+(check% 'b 1/2 (3-sequence-max '(2 3 4 0 4 105 6 0 54 5) 4) is 170)
 
 (exercițiul 8 : 2 puncte BONUS)
 ;; Redefiniți funcția num-concat pentru a funcționa pe oricâte numere.
-;; Atenție: Nu puteți folosi `num-concat`
-;;          Folosiți funcționale.
+;; Restricții: Nu folosiți `num-concat`
+;;             Folosiți funcționale.
 ;; Înțelegeți cum vă poate ajuta programarea funcțională?
 ;; Cum ar arăta o suprascriere echivalentă într-un limbaj procedural?
 ;; Care implementare este mai straightforward, este mai ușor de înțeles
 ;; și lasă loc pentru mai puține erori?
-;; list-num-concat:: lista -> numar
+;; list-num-concat:: listă de numere -> număr
 (define (list-num-concat numbers)
   (string->number (apply string-append (map number->string numbers))))
 
-;; Definiți funcția care gasește toate sufixele posibile pentru un număr.
+;; Definiți funcția care găsește toate sufixele posibile pentru un număr.
 ;; ex:
 ;; (find-all-suffixes 123) => '(123 23 3)
-;; Restrictii: Folosiți named let.
-;;             Există deja definită in laborator funcția number->list.
-;; find-all-suffixes:: numar -> lista
+;; Restricții: Folosiți named let.
+;;             Există deja definită în laborator funcția number->list.
+;; find-all-suffixes:: număr -> listă de numere
 (define (find-all-suffixes number)
   (let iter ((L (number->list number)))
     (if (null? L)
@@ -215,8 +219,8 @@
 ;;    initial-state => o stare inițială din care automatul pornește
 ;;    final-state => o stare finală în care automatul se oprește
 ;;    next => o funcție care primește o stare și decide care e următoarea stare.
-;; Restrictii: Trebuie să folosiți named let.
-;; run:: numar x numar x functie -> lista
+;; Restricții: Trebuie să folosiți named let.
+;; run:: stare x stare x funcție -> listă de stări
 ;; Funcția întoarce o listă ce cuprinde toate stările automatului
 
 (define (run initial-state final-state next)
@@ -234,8 +238,8 @@
 ;; Folosindu-vă de exerciţiile anterioare generați numărul de lungime k
 ;; pentru care orice cifră de pe poziția i se poate obține
 ;; folosind formula i*k+x.
-;; Restrictii: Folosiți let.
-;; generate-number:: intreg x numar -> numar
+;; Restricții: Folosiți let.
+;; generate-number:: întreg x întreg -> întreg
 
 (define (generate-number k x)
   (list-num-concat (run x (+ x (* k (- k 1))) (λ (x) (+ x k)))))
