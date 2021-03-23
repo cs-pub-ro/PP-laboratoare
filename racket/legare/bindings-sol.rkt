@@ -110,7 +110,7 @@
 
 (exercițiul 4 : 1 puncte)
 ;; Fie f(x) o funcție oarecare,
-;; Calculați valorile funcției f(x), a < x < b cu pasul step.
+;; Calculați valorile funcției f(x), a <= x <= b cu pasul step.
 ;; Restricții: Folosiți named let.
 ;;             Nu apelați recursiv `compute-f-with-step`.
 ;;             Nu folosiți functionale.
