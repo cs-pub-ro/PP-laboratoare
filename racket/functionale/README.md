@@ -18,7 +18,7 @@ Aspectele urmărite sunt:
 ele pot fi manipulate ca orice altă valoare, de exemplu:
 
   - legate la un identificator: `(define par? even?)`
-  - stocate într-o structură de date: `(list \< \> odd? even?)`
+  - stocate într-o structură de date: `(list < > odd? even?)`
   - pasate ca argumente într-un apel de funcție: `(list? even?)`
   - returnate ca rezultat al unui apel de funcție: funcții curry din
     paragraful următor
