@@ -18,7 +18,7 @@ unzip2 x = (map fst x, map snd x)
 -- Verificare: check1
 check1 :: TestPP ()
 check1 = do
-  assertVal "[1] unzip2 (zip)" 1 $ -- 1p
+  assertVal "[1] unzip2 (zip)" $ -- 1p
     unzip2 (zip [1,2,3] ["a","b","c"]) == ([1,2,3], ["a","b","c"])
 
 {-
@@ -32,7 +32,7 @@ primes n = [p | p <- [1..n], divisors p == [1, p]]
 -- Verificare: check2
 check2 :: TestPP ()
 check2 = do
-  assertVal "[2] primes 30" 1 $ -- 1p
+  assertVal "[2] primes 30" $ -- 1p
     primes 30 == [2,3,5,7,11,13,17,19,23,29]
 
 {-
@@ -56,15 +56,15 @@ setUnion a b = a ++ setDiff b (setIntersection a b)
 -- Verificare: check4
 check3 :: TestPP ()
 check3 = do
-  assertVal "[3] cartProduct" 0.5 $ -- 0.5p
+  assertVal "[3] cartProduct" $ -- 0.5p
     cartProduct [1, 2] [3, 4, 5] == [(1, 3), (1, 4), (1, 5), (2, 3), (2, 4), (2, 5)]
   let a = [1, 7, 3, 6, 2]
       b = [2, 8, 6, 10, 4, 1]
-  assertVal "[3] setIntersection" 0.75 $ -- 0.75p
+  assertVal "[3] setIntersection" $ -- 0.75p
     sort (setIntersection a b) == [1, 2, 6]
-  assertVal "[3] setDiff" 0.75 $ -- 0.75p
+  assertVal "[3] setDiff" $ -- 0.75p
     sort (setDiff a b) == [3, 7]
-  assertVal "[3] setUnion" 1 $ -- 1p
+  assertVal "[3] setUnion" $ -- 1p
     sort (setUnion a b) == [1, 2, 3, 4, 6, 7, 8, 10]
 
 {-
@@ -83,7 +83,7 @@ group2 = foldr split []
 -- Verificare: check4
 check4 :: TestPP ()
 check4 =
-  assertVal "[4] group" 1.5 $ -- 1.5p
+  assertVal "[4] group" $ -- 1.5p
     group2 [1,1,1,3,2,2,3,3,2,2,5,5,1] == [[1,1,1],[3],[2,2],[3,3],[2,2],[5,5],[1]]
 
 
@@ -104,7 +104,7 @@ nrOcc = map (\xs -> (head xs, length xs)) . group2 . sort
 -- Verificare: check5
 check5 :: TestPP ()
 check5 =
-  assertVal "[5] number of occurrences" 1.5 $ -- 1.5p
+  assertVal "[5] number of occurrences" $ -- 1.5p
     nrOcc [1, 2, 3, 4, 2, 3, 3, 1, 2, 3, 3, 4] == [(1, 2), (2, 3), (3, 5), (4, 2)]
 
 {-
@@ -119,9 +119,9 @@ dup = unwords . concat . map (\word -> [word, word]) . words
 -- Verificare: check6
 check6 :: TestPP ()
 check6 = do
-  assertVal "[6] dup" 1 $ -- 1p
+  assertVal "[6] dup" $ -- 1p
     dup "Ce laborator frumos!" == "Ce Ce laborator laborator frumos! frumos!"
-  assertVal "[6] dup, again" 1 $ -- 1p
+  assertVal "[6] dup, again" $ -- 1p
     null $ (\sentence -> filter (/= 2) $ map length $ group $ words $ dup sentence) "To be or not to be"
 
 {-
@@ -137,11 +137,11 @@ isIsogram = isIsogramHelper . (map toLower) . (filter isLetter)
 -- Verificare: check7
 check7 :: TestPP ()
 check7 = do
-  assertVal "[7] isogram 1" 0.3 $ -- 1p
+  assertVal "[7] isogram 1" $ -- 1p
     isIsogram "isogram" == True
-  assertVal "[7] not isogram" 0.4 $ -- 1p
+  assertVal "[7] not isogram" $ -- 1p
     isIsogram "nOt-isogram" == False
-  assertVal "[7] isogram 2" 0.3 $ -- 1p
+  assertVal "[7] isogram 2" $ -- 1p
     isIsogram "s-h-o-u-l-d-b-e" == True
 
 {-
@@ -167,13 +167,13 @@ arePaired ls = arePairedHelper [] ls
 -- Verificare: check8
 check8 :: TestPP ()
 check8 = do
-  assertVal "[8] paired brackets true 1" 0.5 $ -- 0.5p
+  assertVal "[8] paired brackets true 1" $ -- 0.5p
     arePaired "{}[]{([])}" == True
-  assertVal "[8] paired brackets false 1" 0.5 $ -- 0.5p
+  assertVal "[8] paired brackets false 1" $ -- 0.5p
     arePaired "(){{}})" == False
-  assertVal "[8] paired brackets false 2" 0.5 $ -- 0.5p
+  assertVal "[8] paired brackets false 2" $ -- 0.5p
     arePaired "[][]([)]" == False
-  assertVal "[8] paired brackets true 2" 0.5 $ -- 0.5p
+  assertVal "[8] paired brackets true 2" $ -- 0.5p
     arePaired "([()])" == True
 
 {-
@@ -214,9 +214,9 @@ prettyPrint ch = mapM_ print (diamond ch)
 -- Verificare: check9
 check9 :: TestPP ()
 check9 = do
-  assertVal "[9] diamond C" 1 $ -- 1p
+  assertVal "[9] diamond C" $ -- 1p
     diamond 'C' == ["  A  "," B B ","C   C"," B B ","  A  "]
-  assertVal "[9] diamond F" 1 $ -- 1p
+  assertVal "[9] diamond F" $ -- 1p
     diamond 'F' == ["     A     ","    B B    ","   C   C   ","  D     D  "," E       E ",
                     "F         F"," E       E ","  D     D  ","   C   C   ","    B B    ","     A     "]
 
