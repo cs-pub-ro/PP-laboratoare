@@ -1,7 +1,5 @@
 # Haskell: Legarea variabilelor. Structuri de date infinite. Funcționale
 
--   Responsabil: [Tiberiu
-    Lepadatu](tiberiulepadatu14@gmail.com "wikilink")
 -   Data publicării: 30.03.2020
 -   Data ultimei modificări: 10.04.2020
 
@@ -9,7 +7,7 @@
 
 Scopul acestui laborator îl reprezintă acomodarea cu noțiuni avansate de
 programare în Haskell, având în vedere scrierea de cod \*\*clar\*\* și
-\*\*concis\*\*.
+**concis**.
 
 Aspectele urmărite sunt:
 
@@ -18,117 +16,6 @@ Aspectele urmărite sunt:
 -   funcționalele ca șabloane de proiectare
 -   programare "point-free"
 
-## Domenii de vizibilitate
-
-Spre deosebire de [Racket](..:racket:legare "wikilink"), unde legarea
-variabilelor la nivelul cel mai de sus (top-level) este dinamică,
-Haskell leagă definițiile \*\*static\*\*, acestea fiind vizibile
-implicit la nivel \*\*global\*\*. De exemplu, o definiție de forma:
-
-`theAnswer = 42`
-
-va putea fi utilizată implicit în toate fișierele încărcate de către
-compilator/interpretor la un moment dat. Domeniul de vizibilitate al
-definițiilor top-level poate fi însă redus cu ajutorul definirii de
-module: consultați capitolul 11 din [A Gentle Introduction to
-Haskell](http://www.haskell.org/tutorial/modules.html "wikilink") pentru
-mai multe detalii.
-
-La fel ca Racket, Haskell permite definirea în cadrul domeniilor de
-vizibilitate locală (mai exact în cadrul funcțiilor), cu ajutorul
-clauzelor *let* și *where*.
-
-### let
-
-Forma generală a clauzei *let* este următoarea:
-
-<code haskell> let id1 = val1
-
-`   id2 = val2`  
-`   ...`  
-`   idn = valn`  
-` in expr`
-
-</code>
-
-unde *expr* este o expresie Haskell care poate depinde de *id1, id2,
-..., idn*. De asemenea, domeniul de vizibilitate ale definițiilor locale
-este întreaga clauză *let* (similar cu *letrec* în Racket). Astfel,
-definiția următoare:
-
-<code haskell> p = let x = y + 1
-
-`       y = 2`  
-`       b n = if n == 0 then [] else n : b (n - 1)`  
-` in (x + y, b 2)`
-
-</code>
-
-este corectă. *x* poate să depindă de *y* datorită \*\*evaluării
-leneșe\*\*: în fapt *x* va fi evaluat în corpul clauzei, în cadrul
-expresiei *(x + y, b 2)*, unde *y* e deja definit.
-
-### where
-
-Clauza *where* este similară cu *let*, diferența principală constând în
-folosirea acesteia \*\*după\*\* corpul funcției. Forma generală a
-acesteia este:
-
-<code haskell> def = expr
-
-` where`  
-` id1 = val1`  
-` id2 = val2`  
-` ...`  
-` idn = valn`
-
-</code>
-
-cu aceleași observații ca în cazul *let*.
-
-Un exemplu de folosire este implementarea metodei de sortare QuickSort:
-
-<code haskell> qsort \[\] = \[\] qsort (p : xs) = qsort left ++ \[p\] ++
-qsort right
-
-` where`  
-` left = filter (< p) xs`  
-` right = filter (>= p) xs`
-
-</code>
-
-Clauzele de tip *let* și *where* facilitează \*\*reutilizarea\*\*
-codului. De exemplu, funcția:
-
-<code haskell> inRange :: Double -&gt; Double -&gt; String inRange x max
-
-` | f < low               = "Too low!"`  
-` | f >= low && f <= high = "In range"`  
-` | otherwise             = "Too high!"`  
-` where`  
-` f = x / max`  
-` (low, high) = (0.5, 1.0)`
-
-</code>
-
-verifică dacă o valoare normată se află într-un interval fixat. Expresia
-dată de *f* este folosită de mai multe ori în corpul funcției, motiv
-pentru care este urmărită încapsularea ei într-o definiție. De asemenea,
-se observă că definițiile locale, ca și cele top-level, permit pattern
-matching-ul pe constructorii de tip, în cazul acesta constructorul
-tipului pereche.
-
-Observăm că *where* și *let* sunt de asemenea utile pentru definirea de
-funcții auxiliare:
-
-<code haskell> naturals = iter 0
-
-` where iter x = x : iter (x + 1)`
-
-</code>
-
-*iter* având în exemplul de mai sus rolul de generator auxiliar al
-listei numerelor naturale.
 
 ## Structuri de date infinite, funcționale
 
