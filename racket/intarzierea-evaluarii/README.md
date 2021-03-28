@@ -1,6 +1,6 @@
 # Racket: Întârzierea evaluării
 
-  - Data publicării: TODO
+  - Data publicării: 29.03.2021
   - Data ultimei modificări: 28.03.2021
 
 ## Obiective
