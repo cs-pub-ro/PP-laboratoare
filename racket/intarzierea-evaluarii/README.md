@@ -402,9 +402,9 @@ Algoritmul este implementat mai jos:
 ```
 
 ## Resurse
-  - [Exerciții](TODO)
-  - [Soluții](TODO)
-  - [Cheatsheet](TODO)
+  - [Exerciții](intarzierea-evaluarii-skel.zip)
+  - [Soluții](intarzierea-evaluarii-sol.zip)
+  - [Cheatsheet laborator 5](https://github.com/cs-pub-ro/PP-laboratoare/raw/master/racket/intarzierea-evaluarii/fluxuri-cheatsheet.pdf)
 ## Referințe
 
   - [Structure and Interpretation of Computer Programs](https://web.mit.edu/alexmv/6.037/sicp.pdf "wikilink"), ediția a doua
