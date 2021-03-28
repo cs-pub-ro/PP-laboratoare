@@ -1,6 +1,6 @@
 * Se ia conținutul sursei de pe elf și se pune într-un fișier `README.rst`
 * Se folosește comanda
-  * `cat racket/intro/README.rst | pandoc --from mediawiki --to gfm -o racket/intro/README.md`
+  * `pandoc --from mediawiki --to gfm -o racket/intro/README.md racket/intro/README.rst`
 * Se repară formatul pentru toate bucățile de cod (atât inline, cât și codul multi-linie).
   * Pentru codul multi-linie, se folosește (fără backslashes):
 ```markdown
