@@ -51,7 +51,7 @@ de mai sus, **evaluarea aplicativă** decurge astfel:
 
 Observații:
 
-- parametrii funcției sunt evaluați **înaintea** aplicării funcției asupra acestora; afirmăm că transferul parametrilor se face **prin valoare**;`  
+- parametrii funcției sunt evaluați **înaintea** aplicării funcției asupra acestora; afirmăm că transferul parametrilor se face **prin valoare**;  
 - **`Racket`** (ca și majoritatea limbajelor tradiționale folosește **evaluare aplicativă**.
 
 ### Evaluare leneșă
@@ -142,8 +142,8 @@ Codul de mai sus este o rescriere din **calcul Lambda** în
 Racket este **aplicativă**, așadar etapele parcurse sunt
 următoarele:
 
-  - `(+ 2 3)`: al doilea parametru al funcției *+* se evaluează la *5*;
-  - `(+ 1 5)` se evaluează la *6*.
+  - `(+ 2 3)`: al doilea parametru al funcției `+` se evaluează la `5`;
+  - `(+ 1 5)` se evaluează la `6`.
 
 Pentru a obține beneficiile evaluării **leneșe** în Racket, putem
 **întârzia** evaluarea unei expresii în două moduri:
@@ -210,7 +210,7 @@ Pentru a forța evaluarea, folosim *force*:
 
 Folosind evaluarea leneșă, putem construi **obiecte infinite** sau
 **fluxuri** (*streams*). Exemplu de *flux*: șirul numerelor
-naturale: `(0 1 2 3 ... n ... )`. Un astfel de obiect se reprezintă ca o
+naturale: `(0 1 2 3 ... n ...)`. Un astfel de obiect se reprezintă ca o
 **pereche** între:
 
   - un **element curent** (primul element din flux, asemănător unui
@@ -274,7 +274,7 @@ fluxurilor, asemănătoare cu aceea pentru manipularea listelor:
 În spiritul abstractizării, putem folosi această interfață fără să ne
 preocupe dacă funcțiile sunt implementate folosind închideri funcționale
 sau promisiuni (pentru curioși - sunt implementate folosind promisiuni).
-Șirul infinit de *1* se va genera astfel:
+Șirul infinit de `1` se va genera astfel:
 ```lisp
 (define ones-stream
   (stream-cons 1 ones-stream))
@@ -329,7 +329,7 @@ unde: t0 = 0 t1 = 1 tk = t(k-2) + t(k-1) pentru k >= 2
 Fibo        = t0 t1 t2 t3 ... t(k-2) ... +
 (tail Fibo) = t1 t2 t3 t4 ... t(k-1) ...
 ___________________________________________
-Fibo  = t0 t1 t2 t3 t4 t5 ... tk ...
+Fibo  = t0 t1 t2 t3 t4 t5 ... t(k) ...
 ```
 
 Adunând elemente din șirurile (fluxurile) `Fibo` și `(tail Fibo)`,
