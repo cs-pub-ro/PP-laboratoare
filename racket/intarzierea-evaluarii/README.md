@@ -402,8 +402,8 @@ Algoritmul este implementat mai jos:
 ```
 
 ## Resurse
-  - [Exerciții](intarzierea-evaluarii-skel.zip)
-  - [Soluții](intarzierea-evaluarii-sol.zip)
+  - [Exerciții](https://ocw.cs.pub.ro/courses/_media/pp/21/laboratoare/racket/intarzierea-evaluarii-skel.zip)
+  - [Soluții](https://ocw.cs.pub.ro/courses/_media/pp/21/laboratoare/racket/intarzierea-evaluarii-sol.zip)
   - [Cheatsheet laborator 5](https://github.com/cs-pub-ro/PP-laboratoare/raw/master/racket/intarzierea-evaluarii/fluxuri-cheatsheet.pdf)
 ## Referințe
 
