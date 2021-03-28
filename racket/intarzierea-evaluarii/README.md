@@ -73,7 +73,7 @@ Observații:
     parametru și nu se evaluează înainte ca acest lucru să devină
     necesar; afirmăm că transferul parametrilor se face **prin
     nume**;
-  - ***Haskell*** folosește **evaluare leneșă**.
+  - **`Haskell`** folosește **evaluare leneșă**.
 
 Există avantaje și dezavantaje ale **evaluării leneșe**. O situație
 în care **evaluarea leneșă** se poate dovedi utilă este următoarea:
@@ -230,7 +230,7 @@ Fie șirul infinit:
 a(n) = 1, n >= 0
 ```
 
-Primele *5* elemente ale acestui șir sunt:
+Primele `5` elemente ale acestui șir sunt:
 
 ```lisp
 (1 1 1 1 1)
