@@ -1,7 +1,7 @@
 # Racket: Întârzierea evaluării
 
-  - Responsabil: [Mihaela Balint](oornot@gmail.com "wikilink")
-  - Data publicării: 16.03.2020
+  - Data publicării: TODO
+  - Data ultimei modificări: 28.03.2021
 
 ## Obiective
 
