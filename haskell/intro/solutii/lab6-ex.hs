@@ -162,13 +162,151 @@ removeDuplicatesRight l = foldr (\x acc -> if (elem x acc) then acc else (x : ac
 -- Verificare: check4
 check4 :: TestPP ()
 check4 = do
-  assertVal "[3] removeDuplicatesRight [1, 2, 1, 3, 1, 4, 1, 5]" $
+  assertVal "[4] removeDuplicatesRight [1, 2, 1, 3, 1, 4, 1, 5]" $
     removeDuplicatesRight [1, 2, 1, 3, 1, 4, 1, 5] == [2,3,4,1,5]
-  assertVal "[3] removeDuplicatesRight [1, 2, 2, 3, 1, 3, 4, 5, 4, 5, 6]" $
+  assertVal "[4] removeDuplicatesRight [1, 2, 2, 3, 1, 3, 4, 5, 4, 5, 6]" $
     removeDuplicatesRight [1, 2, 2, 3, 1, 3, 4, 5, 4, 5, 6] == [2,1,3,4,5,6]
+
+
+{-
+5. Traduceti codul Racket de mai jos in Haskell in doua moduri:
+  1) folosind let - computeLength
+  2) folosind where - computeLength2
+(define (compute-length get-line-segment get-start-point get-end-point)
+  (let* ((segment get-line-segment)
+         (start (get-start-point segment))
+         (stop (get-end-point segment))
+         (x1 (car start)) (y1 (cdr start))
+         (x2 (car stop)) (y2 (cdr stop)))
+    (sqrt (+ (sqr (- x1 x2)) (sqr (- y1 y2))))))
+
+pentru putere folositi (**) - exemplu: 4 ** 2
+pentru radical folositi sqrt - exemplu: sqrt 4
+-}
+
+-- cu let
+computeLength :: ((Double, Double), (Double, Double)) 
+            -> (((Double, Double), (Double, Double)) -> (Double, Double)) 
+            -> (((Double, Double), (Double, Double)) -> (Double, Double)) -> Double
+computeLength getLineSegment getStartPoint getEndPoint = 
+    let segment = getLineSegment
+        start = getStartPoint segment
+        end = getEndPoint segment
+        startX = fst start
+        startY = snd start
+        endX = fst end
+        endY = snd end
+    in sqrt (((endY - endX) ** 2) + ((startY - startX) ** 2))
+
+-- cu where
+computeLength2 :: ((Double, Double), (Double, Double)) 
+            -> (((Double, Double), (Double, Double)) -> (Double, Double)) 
+            -> (((Double, Double), (Double, Double)) -> (Double, Double)) -> Double
+computeLength2 getLineSegment getStartPoint getEndPoint = sqrt (((endY - endX) ** 2) + ((startY - startX) ** 2))
+    where
+        segment = getLineSegment
+        start = getStartPoint segment
+        end = getEndPoint segment
+        startX = fst start
+        startY = snd start
+        endX = fst end
+        endY = snd end
+
+-- Verificare: check5
+check5 :: TestPP ()
+check5 = do
+  assertVal "[5] computeLength ((4, 2), (4, 5)) fst snd" $
+    computeLength ((4, 2), (4, 5)) fst snd == 2.23606797749979
+  assertVal "[5] computeLength ((2, 3), (6, 9)) fst snd" $
+    computeLength ((2, 3), (6, 9)) fst snd == 3.1622776601683795
+  assertVal "[5] computeLength2 ((4, 2), (4, 5)) fst snd" $
+    computeLength2 ((4, 2), (4, 5)) fst snd == 2.23606797749979
+  assertVal "[5] computeLength2 ((2, 3), (6, 9)) fst snd" $
+    computeLength2 ((2, 3), (6, 9)) fst snd == 3.1622776601683795
+
+{-
+6. Sa se gaseasca cuvintele care au lungimea cel putin egala cu 10 caractere in doua moduri:
+    1) folosind filter
+    2) folosind list comprehensions
+-}
+
+findStringsLongerThanTenChars :: [String] -> [String]
+findStringsLongerThanTenChars l = filter (\x -> (length x) >= 10) l
+
+findStringsLongerThanTenChars2 :: [String] -> [String]
+findStringsLongerThanTenChars2 l = [x | x <- l, (length x) >= 10]
+
+-- Verificare: check6
+check6 :: TestPP ()
+check6 = do
+  assertVal "[6] findStringsLongerThanTenChars" $
+    findStringsLongerThanTenChars ["ana", "este", "o", 
+        "programatoare", "foarte", "interesanta"] == ["programatoare","interesanta"]
+  assertVal "[6] findStringsLongerThanTenChars2" $
+    findStringsLongerThanTenChars2 ["ana", "este", "o", 
+        "programatoare", "foarte", "interesanta"] == ["programatoare","interesanta"]
+
+{-
+7. Sa se construiasca o lista de perechi de tip (string, lungime_string) in doua moduri:
+    1) folosind map
+    2) folosind list comprehensions
+-}
+
+buildPairsStringLength :: [String] -> [(String, Int)]
+buildPairsStringLength l = map (\x -> (x, length x)) l
+
+buildPairsStringLength2 :: [String] -> [(String, Int)]
+buildPairsStringLength2 l = [(x, length x) | x <- l]
+
+-- Verificare: check7
+check7 :: TestPP ()
+check7 = do
+  assertVal "[7] buildPairsStringLength" $
+    buildPairsStringLength ["ana", "este", "o", 
+        "programatoare", "foarte", "interesanta"] == [("ana",3),("este",4),("o",1),
+          ("programatoare",13),("foarte",6),("interesanta",11)]
+  assertVal "[7] buildPairsStringLength2" $
+    buildPairsStringLength ["ana", "este", "o", 
+        "programatoare", "foarte", "interesanta"] == [("ana",3),("este",4),("o",1),
+          ("programatoare",13),("foarte",6),("interesanta",11)]
+
+{-
+8. Implementați, folosind obligatoriu list-comprehensions, operații pe mulțimi:
+intersecție, diferență, produs cartezian. Utilizați ulterior funcțiile definite anterior
+pentru a reprezenta reuniunea mulțimilor.
+-}
+setIntersection :: Eq a => [a] -> [a] -> [a]
+setIntersection a b = [x | x <- a, x `elem` b]
+
+setDiff :: Eq a => [a] -> [a] -> [a]
+setDiff a b = [x | x <- a, x `notElem` b]
+
+cartProduct :: [a] -> [b] -> [(a, b)]
+cartProduct a b = [(x, y) | x <- a, y <- b]
+
+setUnion :: Eq a => [a] -> [a] -> [a]
+setUnion a b = a ++ setDiff b (setIntersection a b)
+
+-- Verificare: check8
+check8 :: TestPP ()
+check8 = do
+  assertVal "[8] cartProduct" $
+    cartProduct [1, 2] [3, 4, 5] == [(1, 3), (1, 4), (1, 5), (2, 3), (2, 4), (2, 5)]
+  let a = [1, 7, 3, 6, 2]
+      b = [2, 8, 6, 10, 4, 1]
+  assertVal "[8] setIntersection" $
+    sort (setIntersection a b) == [1, 2, 6]
+  assertVal "[8] setDiff" $
+    sort (setDiff a b) == [3, 7]
+  assertVal "[8] setUnion" $
+    sort (setUnion a b) == [1, 2, 3, 4, 6, 7, 8, 10]
+
+
+-- TODO - to add
+
 
 {-
 Helpers for testing :)
 -}
 runAllTests = runTestPP $
-  sequence_[check1, check2, check3, check4]
+  sequence_[check1, check2, check3, check4, check5, check6, check7, check8]
