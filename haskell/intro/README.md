@@ -687,8 +687,241 @@ Atenție! Folosirea stilului "point-free" poate să scadă în anumite cazuri li
 Un exemplu de aplicație uzuală de "point-free style programming", cu care probabil sunteți deja familiari, este folosirea operatorului pipe ("|") în [unix shell scripting](http://www.vex.net/~trebla/weblog/pointfree.html "wikilink").
 
 ## Traduceri cod din Racket în Haskell
-TODO
+Aici, vom face comparații între Racket și Haskell, în ceea ce privește sintaxa, pe categorii.
 
+Funcții lambda:
+- Racket
+```lisp
+(lambda (x) (+ x 1))
+```
+- Haskell
+```haskell
+\x -> x + 1
+```
+
+Operatori aritmetici:
+- Racket
+```lisp
+(+ 1 2)
+(- 7 2)
+(* 2 11)
+(/ 5 2)
+(quotient 5 2)
+(modulo 5 2)
+```
+- Haskell
+```haskell
+1 + 2
+7 - 2
+2 * 11
+5 / 2
+mod 7 2
+quot 7 2
+```
+
+Operatori logici:
+- Racket
+```list
+(not #t) ; not
+(not #f) ; not
+(or #t #f) ; or
+(and #t #f) ; and
+```
+- Haskell
+```haskell
+not True -- not
+not False -- not
+True || False -- or
+True && False -- and
+```
+
+Apelare de funcții:
+- Racket
+```lisp
+(max 2 3)
+```
+- Haskell 
+```haskell
+max 2 3
+```
+
+Perechi:
+- Racket
+```lisp
+(cons 1 2) ; construirea unei perechi
+(car (cons 1 2)) ; primul element
+(cdr (cons 1 2)) ; al doilea element
+```
+- Haskell - sunt tupluri, mai precis colecții care pot avea elemente de tipuri diferite
+```haskell
+(1, 2) -- construirea unei perechi
+(fst (1, 2)) -- primul element
+(snd (1, 2)) -- al doilea element
+
+(1, 2, 3, 4, [], "aaaa") -- un tuplu care are mai multe elemente, de tipuri diferite
+```
+
+Liste:
+- Racket - listele sunt eterogene, pot conține elemente de tipuri diferite
+```lisp
+null ; lista goala
+'() ; lista goala
+
+(list 1 2 3 4) ; o lista de numere
+
+(car (list 1 2 3 4)) ; primul element din lista
+(cdr (list 1 2 3 4)) ; restul listei, fara primul element
+
+(cons 0 (list 1 2 3 4)) ; adaugarea unui element la inceputul unei liste
+
+(null? (list 1 2 3 4)) ; se verifica daca lista este goala
+
+(length (list 1 2 3 4)) ; lungimea unei liste
+
+(append (list 1 2 3 4) (list 5 6 7)) ; concatenarea dintre doua liste
+
+(member 4 (list 1 2 3 4)) ; se verifica daca un element exista intr-o lista
+```
+- Haskell - listele sunt omogene, au elemente de același tip
+```haskell
+[] -- lista goala
+
+[1, 2, 3, 4] -- o lista de numere
+
+head [1, 2, 3, 4] -- primul element din lista
+tail [1, 2, 3, 4] -- restul listei, fara primul element
+
+0 : [1, 2, 3, 4] -- adaugarea unui element la inceputul unei liste
+
+null [1, 2, 3, 4] -- se verifica daca lista este goala
+[] ==  [1, 2, 3, 4] -- se verifica daca lista este goala (trebuie sa elementele sa poata fi comparate - vom discuta despre Eq la laboratorul de clase in Haskell)
+
+length [1, 2, 3, 4] -- lungimea unei liste
+
+[1, 2, 3, 4] ++ [5, 6, 7] -- concatenarea dintre doua liste
+
+elem 4 [1, 2, 3, 4] -- se verifica daca un element exista intr-o lista
+4 `elem` [1, 2, 3, 4] -- se verifica daca un element exista intr-o lista
+```
+
+Sintaxa if:
+- Racket
+```list
+(if (< a 0)
+    (if (> a 10) 
+        (*a a) 
+            0)
+    -1))
+```
+- Haskell
+```haskell
+if a < 0 then 
+    if (a > 10) 
+        then a * a 
+        else 0
+    else -1
+```
+
+Definirea unei funcții:
+- Racket
+```lisp
+(define (sum-list l)
+  (if (null? l)
+      0
+      (+ (car l) (sum-list (cdr l)))))
+```
+- Haskell
+```haskell
+-- cu if-else-then
+sumList :: [Int] -> Int
+sumList l = if null l then 0 else head l + sumList (tail l)
+
+-- pattern matching
+sumList2 :: [Int] -> Int
+sumList2 [] = 0
+sumList2 (x:xl) = x + sumList2 xl
+
+-- cu garzi
+sumList3 :: [Int] -> Int
+sumList3 l
+    | null l = 0
+    | otherwise = head l + sumList3 (tail l)
+
+-- cu case of
+sumList4 :: [Int] -> Int
+sumList4 l = case l of
+    [] -> 0
+    (x:xl) -> x + sumList4 xl
+```
+
+Funcționale:
+- Racket
+```lisp
+; map
+(map (λ (x) (+ x 1)) (list 1 2 3 4))
+(map add1 (list 1 2 3 4))
+
+; filter
+(filter (λ (x) (equal? (modulo x 2) 0)) (list 1 2 3 4 5 6))
+
+; foldl
+(reverse (foldl (lambda (x acc) (cons x acc)) '() (list 1 2 3 4 5)))
+
+; foldr
+(foldr (lambda (x acc) (cons x acc)) '() (list 1 2 3 4 5))
+```
+- Haskell
+```haskell
+-- map
+map (\x -> x + 1) [1, 2, 3, 4]
+map (+ 1) [1, 2, 3, 4]
+
+-- filter
+filter (\x -> mod x 2 == 0) [1, 2, 3, 3, 4, 5, 6]
+
+-- foldl
+reverse $ foldl (\acc x -> x : acc) [] [1, 2, 3, 4, 5] -- [1, 2, 3, 4, 5]
+
+-- foldr
+foldr (\x acc -> x : acc) [] [1, 2, 3, 4, 5] -- [1, 2, 3, 4, 5]
+```
+
+Legări:
+- Racket
+- Haskell - `let` în Haskell se comporta precum `letrec` din Racket
+```haskell
+-- cu let
+f a = 
+    let c = a
+        b = a + 1
+    in (c + b) -- let din Racket
+
+g a = 
+    let c = a
+        b = c + 1
+    in (c + b) -- let* din Racket
+
+h a = 
+    let c = b
+        b = a + 1
+    in (c + b) -- letrec din Racket, aici nu avem eroare datorita evaluarii lenese
+
+-- cu where
+f' a = (c + b)
+    where
+        c = a
+        b = a + 1  -- let din Racket
+
+g' a = (c + b)
+    where
+        c = a
+        b = c + 1  -- let* din Racket
+
+h' a = (c + b)
+    where
+        c = b
+        b = a + 1  -- letrec din Racket, aici nu avem eroare datorita evaluarii lenese
+```
 ## Resurse
 
 -   {{ :20:laboratoare:haskell:intro-ex.zip \| Exerciții}}
