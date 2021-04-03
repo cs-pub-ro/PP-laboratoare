@@ -502,9 +502,6 @@ naturals = iter 0
 
 `iter` având în exemplul de mai sus rolul de generator auxiliar al listei numerelor naturale.
 
-## Evaluare leneșă
-TODO
-
 ## Liste infinite și generarea lor folosind funcționale
 
 Haskell facilitează generarea de liste infinite, dată fiind natura **leneșă** a evaluării expresiilor. De exemplu mulțimea numerelor naturale poate fi definită după cum urmează:
