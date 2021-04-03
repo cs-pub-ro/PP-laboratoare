@@ -803,7 +803,7 @@ elem 4 [1, 2, 3, 4] -- se verifica daca un element exista intr-o lista
 
 Sintaxa if:
 - Racket
-```list
+```lisp
 (if (< a 0)
     (if (> a 10) 
         (*a a) 
