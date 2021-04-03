@@ -9,11 +9,11 @@ Expresia `undefined` are orice tip dar nu poate fi evaluată.
 -}
 
 {-
-    1. Traduceti codul Racket de mai jos in Haskell, in 4 moduri:
+    1. Traduceți codul Racket de mai jos în Haskell, în 4 moduri:
       1) cu if-then-else - reverseList
       2) cu pattern matching - reverseList2
       3) cu case of - reverseList3
-      4) cu garzi - reverseList4
+      4) cu gărzi - reverseList4
 
     (define (rev L)
       (if (null? L)
@@ -21,7 +21,7 @@ Expresia `undefined` are orice tip dar nu poate fi evaluată.
           (append (rev (cdr L))
                   (list (car L)))))
 
-    De asemenea, implementati functia folosind foldl (reverseList5) si foldr (reverseList6)
+    De asemenea, implementați funcția folosind foldl (reverseList5) și foldr (reverseList6)
 -}
 
 -- if-then-else
@@ -39,7 +39,7 @@ reverseList3 l = case l of
     [] -> []
     (x : xl) -> (reverseList3 xl) ++ [x]
 
--- garzi
+-- gărzi
 reverseList4 :: [a] -> [a]
 reverseList4 l
     | null l = []
@@ -70,10 +70,10 @@ check1 = do
     reverseList6 [1, 2, 3, 4, 5, 6, 7, 8, 9, 10] == [10, 9, 8, 7, 6, 5, 4, 3, 2, 1]
 
 {-
-    2. Traduceti codul Racket de mai jos in Haskell, in 4 moduri:
+    2. Traduceți codul Racket de mai jos în Haskell, în 4 moduri:
       1) cu if-then-else - numToBase
       2) cu pattern matching - numToBase2
-      3) cu garzi - numToBase3
+      3) cu gărzi - numToBase3
       4) cu case of - numToBase4
 
     (define (num->base n b)
@@ -81,8 +81,8 @@ check1 = do
           '()
           (append (num->base (quotient n b) b)
                   (list (modulo n b)))))
-    - pentru quotient folositi functia quot (exemplu: quot 7 2)
-    - pentru modulo folositi functia mod (exemplu: mod 7 2)
+    - pentru quotient folosiți functia quot (exemplu: quot 7 2)
+    - pentru modulo folosiți functia mod (exemplu: mod 7 2)
 -}
 
 -- if-then-else
@@ -94,7 +94,7 @@ numToBase2 :: Integer -> Integer -> [Integer]
 numToBase2 0 _ = []
 numToBase2 n b = (numToBase2 (quot n b) b) ++ [(mod n b)]
 
--- garzi
+-- gărzi
 numToBase3 :: Integer -> Integer -> [Integer]
 numToBase3 n b 
     | n == 0 = []
@@ -128,7 +128,7 @@ check2 = do
 
 
 {-
-    3. Traduceti codul Racket de mai jos in Haskell:
+    3. Traduceți codul Racket de mai jos în Haskell:
 
     (define (remove-duplicates-left L)
       (reverse (foldl (λ (x acc)
@@ -148,7 +148,7 @@ check3 = do
     removeDuplicatesLeft [1, 2, 2, 3, 1, 3, 4, 5, 4, 5, 6] == [1,2,3,4,5,6]
 
 {-
-    4. Traduceti codul Racket de mai jos in Haskell:
+    4. Traduceți codul Racket de mai jos în Haskell:
 
       (define (remove-duplicates-right L)
         (foldr (λ (x acc)
@@ -169,19 +169,20 @@ check4 = do
 
 
 {-
-    5. Traduceti codul Racket de mai jos in Haskell in doua moduri:
+    5. Traduceți codul Racket de mai jos în Haskell în două moduri:
       1) folosind let - computeLength
       2) folosind where - computeLength2
-    (define (compute-length get-line-segment get-start-point get-end-point)
-      (let* ((segment get-line-segment)
-            (start (get-start-point segment))
-            (stop (get-end-point segment))
-            (x1 (car start)) (y1 (cdr start))
-            (x2 (car stop)) (y2 (cdr stop)))
-        (sqrt (+ (sqr (- x1 x2)) (sqr (- y1 y2))))))
 
-    - pentru putere folositi (**) - exemplu: 4 ** 2
-    - pentru radical folositi sqrt - exemplu: sqrt 4
+      (define (compute-length get-line-segment get-start-point get-end-point)
+        (let* ((segment get-line-segment)
+              (start (get-start-point segment))
+              (stop (get-end-point segment))
+              (x1 (car start)) (y1 (cdr start))
+              (x2 (car stop)) (y2 (cdr stop)))
+          (sqrt (+ (sqr (- x1 x2)) (sqr (- y1 y2))))))
+
+    - pentru putere folosiți (**) - exemplu: 4 ** 2
+    - pentru radical folosiți sqrt - exemplu: sqrt 4
 -}
 
 -- cu let
@@ -225,7 +226,7 @@ check5 = do
     computeLength2 ((2, 3), (6, 9)) fst snd == 3.1622776601683795
 
 {-
-    6. Sa se gaseasca cuvintele care au lungimea cel putin egala cu 10 caractere in doua moduri:
+    6. Să se găsească cuvintele care au lungimea cel puțin egală cu 10 caractere în două moduri:
         1) folosind filter
         2) folosind list comprehensions
 -}
@@ -247,7 +248,7 @@ check6 = do
         "programatoare", "foarte", "interesanta"] == ["programatoare","interesanta"]
 
 {-
-    7. Sa se construiasca o lista de perechi de tip (string, lungime_string) in doua moduri:
+    7. Să se construiască o listă de perechi de tip (string, lungime_string) în două moduri:
         1) folosind map
         2) folosind list comprehensions
 -}

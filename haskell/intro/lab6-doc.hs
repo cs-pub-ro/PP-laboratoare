@@ -2,10 +2,6 @@
 Tipuri:
 
 Încărcați în ghci fișierul și verificați tipul următoarelor expresii.
-
-ex:
-*Main> :t anInteger
-
 -}
 anInteger = 42
 aFloat = 42.2

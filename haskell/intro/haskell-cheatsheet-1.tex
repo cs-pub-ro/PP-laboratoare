@@ -281,12 +281,15 @@ null [1, 2, 3]                       False
 \begin{tikzpicture}
 \node [mybox_blue] (box){%
     \begin{minipage}{0.3\textwidth}
-	{\centering\bf\small\color{wenge} length elem reverse\\}
+	{\centering\bf\small\color{wenge} length elem notElem reverse\\}
 		\begin{lstlisting}[language=Haskell, numbers=none]
 length [1, 2, 3, 4]                  4
 
 elem 3 [1, 2, 3, 4]                  True
 elem 5 [1, 2, 3, 4]                  False
+
+notElem 3 [1, 2, 3, 4]               False
+notElem 5 [1, 2, 3, 4]               True
 
 reverse [1, 2, 3, 4]                 [4, 3, 2, 1]
         \end{lstlisting}
@@ -425,6 +428,194 @@ zipWith (+) [1, 2] [3, 4]    [4, 6]
 
 \node[fancytitle_neongreen, right=10pt] at (box.north west) {Funcționale uzuale};
 \end{tikzpicture}
+
+\begin{tikzpicture}
+\node [mybox_persianred] (box){%
+    \begin{minipage}{0.3\textwidth}
+    
+\begin{lstlisting}[language=Haskell, numbers=none]
+let id1 = expr1
+    id2 = expr2
+    ...
+    idn = expr3
+    in expr
+
+Exemplu:
+
+g = let x = y + 1
+        y = 2
+        (z, t) = (2, 5)
+        f n = n * y
+	in (x + y, f 3, z + t)
+
+\end{lstlisting}
+
+Observație: Let este o \textbf{expresie}, o putem folosi 
+în orice context în care putem folosi expresii.
+
+Domeniul de vizibilitate al definițiilor locale este întreaga clauza let. (e.g. putem 
+sa li includem pe 'y' în definiția lui 'x', deși 'y' este definit ulterior. Cele doua definiții nu sunt vizibile în afara clauzei let).
+
+\end{minipage}
+};
+
+\node[fancytitle_persianred, right=10pt] at (box.north west) {Sintaxa Let};
+\end{tikzpicture}
+
+\begin{tikzpicture}
+\node [mybox_seagreen] (box){%
+    \begin{minipage}{0.3\textwidth}
+%     	{\centering\bf\small\color{seagreen} :t \\}
+
+\begin{lstlisting}[language=Haskell, numbers=none]
+def = expr
+  where
+  id1 = val1
+  id2 = val2
+  ...
+  idn = valn
+
+Exemple:
+
+inRange :: Double -> Double -> String
+inRange x max
+  | f < low               = "Too_low!"
+  | f >= low && f <= high = "In_range"
+  | otherwise             = "Too_high!"
+  where
+    f = x / max
+    (low, high) = (0.5, 1.0)
+
+-- with case
+listType l = case l of
+               []  -> msg "empty"
+               [x] -> msg "singleton"
+               _   -> msg "a_longer"
+             where
+               msg ltype = ltype ++ "_list"
+               
+\end{lstlisting}
+
+
+	\end{minipage}
+};
+
+\node[fancytitle_seagreen, right=10pt] at (box.north west) {Sintaxa Where};
+\end{tikzpicture}
+
+
+\begin{tikzpicture}
+\node [mybox_jazzberryjam] (box){%
+    \begin{minipage}{0.3\textwidth}
+%     	{\centering\bf\small\color{jazzberryjam} [] (:) \\}
+
+Putem exploata evaluarea leneșă a expresiilor în Haskell pentru
+a genera liste infinite. 
+(un element nu este construit până când nu îl folosim efectiv).
+
+Exemplu: definirea lazy a mulțimii tuturor numerelor naturale
+
+\begin{lstlisting}[language=Haskell, numbers=none]
+naturals = iter 0
+  where iter x = x : iter (x + 1)
+
+-- Pentru a accesa elementele multimii putem folosi operatorii obisnuiti de la liste
+
+> head naturals 
+0
+> take 10 naturals
+[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+
+\end{lstlisting}
+	\end{minipage}
+};
+
+\node[fancytitle_jazzberryjam, right=10pt] at (box.north west) {Liste infinite};
+\end{tikzpicture}
+
+\begin{tikzpicture}
+\node [mybox_orange] (box){%
+    \begin{minipage}{0.3\textwidth}
+    {\centering\bf\small\color{orange} iterate, repeat, intersperse, zip, zipWith}
+
+
+\textbf{iterate} generează o listă infinită prin aplicarea repetată a lui f:
+iterate f x == [x, f x, f (f x), ...]
+
+\begin{lstlisting}[language=Haskell, numbers=none]
+
+Exemplu:
+naturals  = iterate (+ 1) 0
+powsOfTwo = iterate (* 2) 1 -- [1, 2, 4, 8, ..]
+
+repeat :: a -> [a]
+> ones = repeat 1          -- [1, 1, 1, ..]
+
+intersperse :: a -> [a] -> [a]
+> intersperse ',' "abcde"  -- "a,b,c,d,e"
+
+zip :: [a] -> [b] -> [(a, b)]
+zip naturals ["w", "o", "r", "d"] 
+-- [(0, "w"), (1, "o"), (2, "r"), (3, "d")]
+
+zipWith :: (a -> b -> c) -> [a] -> [b] -> [c]
+
+evens = zipWith (+) naturals naturals       
+	-- [2, 4, 6, ..]
+
+fibo = 1 : 1 : zipWith (+) fibo (tail fibo) 
+	-- sirul lui Fibonacci
+        
+concat :: [[a]] -> [a]
+> concat ["Hello","World", "!"]
+"HelloWorld!"
+
+\end{lstlisting}
+    \end{minipage}
+};
+
+\node[fancytitle_orange, right=10pt] at (box.north west) {Funcționale utile};
+\end{tikzpicture}
+
+\begin{tikzpicture}
+\node [mybox_midnightgreen] (box){%
+    \begin{minipage}{0.3\textwidth}
+% {\centering \bf\small\color{midnightgreen} \textbackslash arg1 arg2 $\rightarrow$ corp\\}
+
+În anumite situații, putem omite parantezele folosind '\$'.
+
+\begin{lstlisting}[language=Haskell, numbers=none]
+> length (tail (zip [1,2,3,4] ("abc" ++ "d")))
+-- este echivalent cu 
+> length $ tail $ zip [1,2,3,4] $ "abc" ++ "d"
+3
+\end{lstlisting}
+\end{minipage}
+};
+
+\node[fancytitle_midnightgreen, right=10pt] at (box.north west) {Operatorul '\$'};
+\end{tikzpicture}
+
+\begin{tikzpicture}
+\node [mybox_cerise] (box){
+    \begin{minipage}{0.3\textwidth}
+    
+(f . g)(x) -- echivalenta cu f(g(x))    
+    
+\begin{lstlisting}[language=Haskell, numbers=none]
+> let f = (+ 1) . (* 2)
+> map f [1, 2, 3]
+[3, 5, 7]
+
+> length . tail . zip [1,2,3,4] $ "abc" ++ "d"
+3
+\end{lstlisting}
+\end{minipage}
+};
+
+\node[fancytitle_cerise, right=10pt] at (box.north west) {Operatorul de compunere a funcțiilor '.'};
+\end{tikzpicture}
+
 %---------------------------------------------------------------------------------
 
 \end{multicols*}
