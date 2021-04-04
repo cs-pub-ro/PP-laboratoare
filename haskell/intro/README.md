@@ -540,7 +540,7 @@ Exemple de utilizare:
 ```haskell 
 ones = repeat 1 -- [1, 1, 1, ..] 
 onesTwos = intersperse 2 ones -- [1, 2, 1, 2, ..] 
-fibs = 1 : 1 : zipWith (+) fibs (tail fibs) -- sirul lui Fibonacci 
+fibs = 0 : 1 : zipWith (+) fibs (tail fibs) -- sirul lui Fibonacci 
 powsOfTwo = iterate (\* 2) 1 -- puterile lui 2
 palindromes = filter isPalindrome [0..] -- palindroame
     where  
