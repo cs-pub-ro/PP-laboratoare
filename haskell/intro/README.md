@@ -108,7 +108,7 @@ Modulul `Prelude` conține funcții des folosite și este inclus implicit în or
 
 ## Comentarii
 
-În Haskell, avem comentarii pe un singur rând, folosind `%%--%%` (2 de `-` legați) sau comentarii pe mai multe rânduri, încadrate de `{-` și `-}`. În plus, există comentarii pentru realizarea de documentație dar nu vom insista pe ele aici.
+În Haskell, avem comentarii pe un singur rând, folosind `--` (2 de `-` legați) sau comentarii pe mai multe rânduri, încadrate de `{-` și `-}`. În plus, există comentarii pentru realizarea de documentație dar nu vom insista pe ele aici.
 
 ## Funcții
 
