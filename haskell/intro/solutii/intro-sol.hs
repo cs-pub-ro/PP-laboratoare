@@ -56,18 +56,12 @@ reverseList6 l = foldr (\x acc -> acc ++ [x]) [] l
 -- Verificare: check1
 check1 :: TestData
 check1 = tests_ 1
-    [ testVal "reverseList"
-        (reverseList [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]) [10, 9, 8, 7, 6, 5, 4, 3, 2, 1]
-    , testVal "reverseList2"
-        (reverseList2 [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]) [10, 9, 8, 7, 6, 5, 4, 3, 2, 1]
-    , testVal "reverseList3"
-        (reverseList3 [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]) [10, 9, 8, 7, 6, 5, 4, 3, 2, 1]
-    , testVal "reverseList4"
-        (reverseList4 [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]) [10, 9, 8, 7, 6, 5, 4, 3, 2, 1]
-    , testVal "reverseList5"
-        (reverseList5 [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]) [10, 9, 8, 7, 6, 5, 4, 3, 2, 1]
-    , testVal "reverseList6"
-        (reverseList6 [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]) [10, 9, 8, 7, 6, 5, 4, 3, 2, 1]
+    [ testVal "reverseList" [10, 9, 8, 7, 6, 5, 4, 3, 2, 1] $ reverseList [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+    , testVal "reverseList2" [10, 9, 8, 7, 6, 5, 4, 3, 2, 1] $ reverseList2 [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+    , testVal "reverseList3" [10, 9, 8, 7, 6, 5, 4, 3, 2, 1] $ reverseList3 [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+    , testVal "reverseList4" [10, 9, 8, 7, 6, 5, 4, 3, 2, 1] $ reverseList4 [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+    , testVal "reverseList5" [10, 9, 8, 7, 6, 5, 4, 3, 2, 1] $ reverseList5 [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+    , testVal "reverseList6" [10, 9, 8, 7, 6, 5, 4, 3, 2, 1] $ reverseList6 [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
     ]
 
 {-
