@@ -215,7 +215,7 @@ Tipurile numerice sunt puțin diferite față de alte limbaje de programare cuno
 42 :: Num a => a
 ```
 
-În exemplul de mai sus, `a` este o variabilă de tip (stă pentru orice fel de tip) restricționată (prin folosirea `=&gt;`) la toate tipurile numerice (`Num a`).
+În exemplul de mai sus, `a` este o variabilă de tip (stă pentru orice fel de tip) restricționată (prin folosirea `=>`) la toate tipurile numerice (`Num a`).
 
 Important de reținut este faptul că există **2** tipuri întregi: `Int` și `Integer`. Primul este finit, determinat de arhitectură, în timp ce al doilea este infinit, putând ajunge oricât de mare.
 
