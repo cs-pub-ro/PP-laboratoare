@@ -125,7 +125,7 @@ lambda*
 \x y -> x + y
 ```
 
-Sintaxa Haskell este ceva mai apropriată de cea a **calculului Lambda**: `\\` anunță parametrii (separați prin spații), iar -&gt; precizează corpul funcției.
+Sintaxa Haskell este ceva mai apropriată de cea a **calculului Lambda**: `\` anunță parametrii (separați prin spații), iar `->` precizează corpul funcției.
 
 În Racket, puteam da nume funcției folosind legarea dinamică prin intermediul lui `define` sau legarea statică prin intermediul lui `let`. Exemplele următoare ilustrează cele 2 cazuri, împreună cu apelul funcției.
 
