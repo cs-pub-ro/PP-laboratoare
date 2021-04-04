@@ -585,7 +585,7 @@ De exemplu, putem să definim operația de însumare a elementelor unei liste in
 Alternativ, în stilul "point-free", vom evita descrierea explicită a argumentului funcției:
 
 ```haskell
-> let sum = foldl (+) 0
+sum = foldl (+) 0
 ```
 
 Practic, ne-am folosit de faptul că în Haskell toate funcțiile sunt în formă [curry](https://wiki.haskell.org/Currying "wikilink"), aplicând parțial funcția `foldl` pe primele doua argumente, pentru a obține o expresie care așteaptă o listă și produce rezultatul dorit.
