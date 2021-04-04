@@ -454,7 +454,7 @@ check13 = do
     14. Metoda Babiloniana - folosita pentru aflarea rădăcinii pătrate a unui
     număr "a".
     
-    Ca Newton-Raphson, si aceasta este o metoda iterativa cu pasul:
+    Ca Newton-Raphson, și aceasta este o metodă iterativă cu pasul:
     x_new = 0.5 * (x_old + A / x_old), unde x_old va trebui initializat
     cu o valoare aleatoare.
     
