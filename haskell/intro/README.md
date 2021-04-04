@@ -525,7 +525,8 @@ iterate :: (a -> a) -> a -> [a]
 `iterate` primește o funcție `f` și o valoare inițială `x` și generează o listă infinită din aplicarea repetată a lui `f`. Implementarea listei numerelor naturale va arăta deci astfel:
 
 ```haskell
-naturals = iterate (\ x -> x + 1) 0
+naturals = iterate (\x -> x + 1) 0  -- SAU
+naturals = iterate (+ 1) 0
 ```
 
 Observăm că `iterate` este nu numai o funcțională, ci și un **șablon de proiectare** (design pattern). Alte funcționale cu care putem genera liste infinite sunt:
@@ -542,8 +543,8 @@ Exemple de utilizare:
 ```haskell 
 ones = repeat 1 -- [1, 1, 1, ..] 
 onesTwos = intersperse 2 ones -- [1, 2, 1, 2, ..] 
-fibs = 1 : 1 : zipWith (+) fibs (tail fibs) -- sirul lui Fibonacci 
-powsOfTwo = iterate (\* 2) 1 -- puterile lui 2
+fibs = 0 : 1 : zipWith (+) fibs (tail fibs) -- sirul lui Fibonacci 
+powsOfTwo = iterate (* 2) 1 -- puterile lui 2
 palindromes = filter isPalindrome [0..] -- palindroame
     where  
     isPalindrome x = show x == reverse (show x) -- truc: reprezint numarul ca String
@@ -574,27 +575,27 @@ f3 x = inc . square $ x
 f4 = inc . square
 ```
 
-Stilul are câteva avantaje în domeniul expresivității și al verificării programului dar poate duce ușor la cod obfuscat.
+Stilul are câteva avantaje în domeniul expresivității și al verificării programului dar, folosit excesiv, poate duce la cod obscur, greu de înțeles.
 
-["Point-free style"](https://wiki.haskell.org/Pointfree "wikilink") reprezintă o paradigmă de programare în care evităm menționarea explicită a parametrilor unei funcții în definiția acesteia. Cu alte cuvinte, se referă la scrierea unei funcții ca o succesiune de compuneri de funcții. Această abordare ne ajută, atunci când scriem sau citim cod, să ne concentrăm asupra obiectivului urmărit de algoritm deoarece expunem mai transparent ordinea în care sunt efectuate operațiile. În multe situații, codul realizat astfel este mai compact și mai ușor de urmărit.
+["Point-free style"](https://wiki.haskell.org/Pointfree "wikilink") reprezintă un stil de programare în care evităm menționarea explicită a parametrilor unei funcții în definiția acesteia. Cu alte cuvinte, se referă la scrierea unei funcții ca o succesiune de compuneri de funcții. Această abordare ne ajută, atunci când scriem sau citim cod, să ne concentrăm asupra obiectivului urmărit de algoritm deoarece expunem mai transparent ordinea în care sunt efectuate operațiile. În multe situații, codul realizat astfel este mai compact și mai ușor de urmărit.
 
 De exemplu, putem să definim operația de însumare a elementelor unei liste in felul următor:
 
 ```haskell
-> let sum xs = foldl (+) 0 xs
+sum xs = foldl (+) 0 xs
 ```
 
 Alternativ, în stilul "point-free", vom evita descrierea explicită a argumentului funcției:
 
 ```haskell
-> let sum = foldl (+) 0
+sum = foldl (+) 0
 ```
 
 Practic, ne-am folosit de faptul că în Haskell toate funcțiile sunt în formă [curry](https://wiki.haskell.org/Currying "wikilink"), aplicând parțial funcția `foldl` pe primele doua argumente, pentru a obține o expresie care așteaptă o listă și produce rezultatul dorit.
 
 Pentru a compune două funcții, vom folosi operatorul `.`:
 
-`> :t (.)` `(.) :: (b -> c) -> (a -> b) -> a -> c`
+`(.) :: (b -> c) -> (a -> b) -> a -> c`
 
 Dacă analizăm tipul operatorului, observăm că acesta primește ca argumente o funcție care acceptă o intrare de tipul `b` și întoarce o valoare de tipul `c`, respectiv încă o funcție care primește o intrare de tipul `a` și produce o valoare de tipul `b`, compatibilă cu intrarea așteptată de prima funcție. Rezultatul întors este o funcție care acceptă valori de tipul `a` și produce rezultate de tipul `c`.
 
@@ -616,7 +617,7 @@ De observat că au fost necesare paranteze pentru ca întreaga expresie `(+ 1) .
 ($) :: (a -> b) -> a -> b
 ```
 
-`$` este un operator care aplică o funcție unară pe parametrul său. Semantica expresiei `f $ x` este aceeași cu cea a `f x`, diferența fiind pur sintactică: precedența `$` impune ordinea de evaluare astfel încât expresia din stânga `$` este aplicată pe cea din dreapta. Avantajul practic este că putem sa omitem parantezele în anumite situații, în general atunci când ar trebui să plasăm o paranteză de la punctul unde se află `$` până la sfârșitul expresiei curente.
+`$` este un operator care aplică o funcție unară pe parametrul său. Semantica expresiei `f $ x` este aceeași cu cea a `f x`, diferența fiind pur sintactică: precedența `$` impune ordinea de grupare astfel încât expresia din stânga `$` este aplicată pe cea din dreapta. Avantajul practic este că putem sa omitem parantezele în anumite situații, în general atunci când ar trebui să plasăm o paranteză de la punctul unde se află `$` până la sfârșitul expresiei curente.
 
 De exemplu, expresiile următoare sunt echivalente:
 
