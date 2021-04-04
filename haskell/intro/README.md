@@ -579,7 +579,7 @@ Stilul are câteva avantaje în domeniul expresivității și al verificării pr
 De exemplu, putem să definim operația de însumare a elementelor unei liste in felul următor:
 
 ```haskell
-> let sum xs = foldl (+) 0 xs
+sum xs = foldl (+) 0 xs
 ```
 
 Alternativ, în stilul "point-free", vom evita descrierea explicită a argumentului funcției:
