@@ -336,7 +336,7 @@ f :: Double -> Double
 f x = undefined
 
 df :: Double -> Double
--- df x = -2 * x - de tradus aceasta secventa in point-free
+-- df x = -2 * x - de tradus această secvență în point-free
 df x = undefined
 
 -- Verificare: check11
