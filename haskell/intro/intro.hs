@@ -275,6 +275,11 @@ squaredEvens = map (\x -> trace ("square " ++ show x) x^2) evens
 sumOfSquaredEvens :: Int
 sumOfSquaredEvens = foldl' (\acc x -> trace ("add " ++ show x) (acc + x)) 0 squaredEvens
 
+-- Verificare: check9
+check9 :: TestData
+check9 = tests_ 9
+    [ testManually "To be experimented in ghci console" True ]
+
 {-
     10. Scrieți o funcție "infiniteApply" care primește ca parametru o funcție "f"
     și o valoare inițială x0.
@@ -428,5 +433,5 @@ check14 = tests_ 14
 {-
 Helpers for testing :) You can also run check1, check2 etc independently
 -}
-check = quickCheck False [check1, check2, check3, check4, check5, check6, check7, check8, check10, check11, check12, check13, check14]
-vmchecker = vmCheck [check1, check2, check3, check4, check5, check6, check7, check8, check10, check11, check12, check13, check14]
+check = quickCheck False [check1, check2, check3, check4, check5, check6, check7, check8, check9, check10, check11, check12, check13, check14]
+vmchecker = vmCheck [check1, check2, check3, check4, check5, check6, check7, check8, check9, check10, check11, check12, check13, check14]
