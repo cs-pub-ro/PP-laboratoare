@@ -63,7 +63,7 @@ Evaluarea aplicativă din Racket va forța evaluarea parametrului x și apoi va 
 9
 ```
 
-Evaluarea leneșă din Haskell va evaluarea parametrul x la cerere în cadrul apelului funcției square: 
+Evaluarea leneșă din Haskell va evalua parametrul x la cerere în cadrul apelului funcției square: 
 ```haskell
 square (1 + 2)
 (1 + 2) * (1 + 2)
