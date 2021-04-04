@@ -464,7 +464,7 @@ check13 = do
     f(x) = x^2 - a
     df(x) = 2*x
     
-    Implementati metoda Babilioniana
+    Implementați metoda Babilioniană
  -}
 
 babylonian_method :: Double -> Double -> Double -> Double
