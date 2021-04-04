@@ -572,7 +572,7 @@ f3 x = inc . square $ x
 f4 = inc . square
 ```
 
-Stilul are câteva avantaje în domeniul expresivității și al verificării programului dar poate duce ușor la cod obfuscat.
+Stilul are câteva avantaje în domeniul expresivității și al verificării programului dar, folosit excesiv, poate duce la cod obscur, greu de înțeles.
 
 ["Point-free style"](https://wiki.haskell.org/Pointfree "wikilink") reprezintă un stil de programare în care evităm menționarea explicită a parametrilor unei funcții în definiția acesteia. Cu alte cuvinte, se referă la scrierea unei funcții ca o succesiune de compuneri de funcții. Această abordare ne ajută, atunci când scriem sau citim cod, să ne concentrăm asupra obiectivului urmărit de algoritm deoarece expunem mai transparent ordinea în care sunt efectuate operațiile. În multe situații, codul realizat astfel este mai compact și mai ușor de urmărit.
 
