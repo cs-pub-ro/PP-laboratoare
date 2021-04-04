@@ -372,8 +372,7 @@ construcției potrivite duce la definiții scurte și ușor de înțeles.
 
 ## Curry vs Uncurry
 
-Fiind un limbaj funcțional, în Haskell funcțiile sunt valori de prim
-rang. Astfel, putem afla tipul unei funcții:
+Fiind un limbaj funcțional, în Haskell funcțiile sunt valori de prim rang. Astfel, putem afla tipul unei funcții:
 
 ```haskell
 f x y = x + y
@@ -386,9 +385,7 @@ f :: Num a => a -> a -> a
 
 Fiecare argument este separat prin `->` de următorul sau de rezultat.
 
-Amintindu-ne de discuția despre [funcții curry și
-uncurry](../racket/functionale#functii-curryuncurry "wikilink"),
-rezultatul următor nu trebuie să ne surprindă
+Amintindu-ne de discuția despre [funcții curry și uncurry](https://ocw.cs.pub.ro/courses/pp/21/laboratoare/racket/functionale#functii_curryuncurry "wikilink"), rezultatul următor nu trebuie să ne surprindă
 
 ```haskell
 > :t f 3
@@ -414,6 +411,8 @@ foldl :: (a -> b -> a) -> a -> [b] -> a
 foldr :: (a -> b -> b) -> b -> [a] -> b
 > :t zip
 zip :: [a] -> [b] -> [(a, b)]
+> :t zipWith
+zipWith :: (a -> b -> c) -> [a] -> [b] -> [c]
 ```
 
 Folosirea lor duce la un cod mai ușor de citit și de întreținut.
@@ -428,9 +427,7 @@ theAnswer = 42
 
 va putea fi utilizată implicit în toate fișierele încărcate de către compilator/interpretor la un moment dat. Domeniul de vizibilitate al definițiilor top-level poate fi însă redus cu ajutorul definirii de module: consultați capitolul 11 din [A Gentle Introduction to Haskell](http://www.haskell.org/tutorial/modules.html "wikilink") pentru mai multe detalii.
 
-La fel ca Racket, Haskell permite definirea în cadrul domeniilor de
-vizibilitate locală (mai exact în cadrul funcțiilor), cu ajutorul
-clauzelor `let` și `where`.
+La fel ca Racket, Haskell permite definirea în cadrul domeniilor de vizibilitate locală (mai exact în cadrul funcțiilor), cu ajutorul clauzelor `let` și `where`.
 
 ### let
 
@@ -564,7 +561,7 @@ El are avantajul de a grupa expresiile din dreapta și stânga lui înainte de a
 length $ 3 : [1, 2] -- length (3 : [1, 2])
 ```
 
-Împreună cu `curry`, `uncurry` și `flip` aceste funcții duc la un stil de programare în care valoarea în care se evaluează funcția nu este prezentă. Urmăriți exemplul următor de transformare
+Împreună cu `curry`, `uncurry` și `flip` aceste funcții duc la un stil de programare în care punctul (de exemplu, `x`) în care se evaluează funcția nu este explicitat. Urmăriți exemplul următor de transformare:
 
 ```haskell
 square x = x*x
