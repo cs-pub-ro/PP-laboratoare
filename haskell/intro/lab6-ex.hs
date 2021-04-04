@@ -332,7 +332,7 @@ check10 = do
  -}
 
 f :: Double -> Double
--- f x = 36 - x ** 2 - de tradus aceasta secventa in point-free
+-- f x = 36 - x ** 2 - de tradus această secvență în point-free
 f x = undefined
 
 df :: Double -> Double
