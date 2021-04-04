@@ -431,7 +431,7 @@ check12 = do
     
     Hint 2: zip, dropWhile, abs
     
-    Rulați algoritmul pentru valorile initiale: 3 si -3 (x_old = 3, x_old = -3)
+    Rulați algoritmul pentru valorile inițiale: 3 si -3 (x_old = 3, x_old = -3)
  -}
 
 newton_raphson_solve :: Double -> Double -> (Double -> Double) -> (Double ->Double) -> Double
