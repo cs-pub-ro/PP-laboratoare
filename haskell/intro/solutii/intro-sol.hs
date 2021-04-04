@@ -26,28 +26,32 @@ Expresia `undefined` are orice tip dar nu poate fi evaluată.
 
 -- if-then-else
 reverseList :: [a] -> [a]
-reverseList l = undefined
+reverseList l = if (null l) then [] else reverseList (tail l) ++ [(head l)]
 
 -- pattern matching
 reverseList2 :: [a] -> [a]
 reverseList2 [] = []
-reverseList2 (x : xl) = undefined
+reverseList2 (x : xl) = (reverseList2 xl) ++ [x]
 
 -- case of
 reverseList3 :: [a] -> [a]
-reverseList3 l = undefined
+reverseList3 l = case l of
+    [] -> []
+    (x : xl) -> (reverseList3 xl) ++ [x]
 
 -- gărzi
 reverseList4 :: [a] -> [a]
-reverseList4 l = undefined
+reverseList4 l
+    | null l = []
+    | otherwise = reverseList4 (tail l) ++ [(head l)]
 
 -- foldl
 reverseList5 :: [a] -> [a]
-reverseList5 l = undefined
+reverseList5 l = foldl (\acc x -> x : acc) [] l
 
 -- foldr
 reverseList6 :: [a] -> [a]
-reverseList6 l = undefined
+reverseList6 l = foldr (\x acc -> acc ++ [x]) [] l
 
 -- Verificare: check1
 check1 :: TestPP ()
@@ -83,20 +87,24 @@ check1 = do
 
 -- if-then-else
 numToBase :: Integer -> Integer -> [Integer]
-numToBase n b = undefined
+numToBase n b = if (n == 0) then [] else (numToBase (quot n b) b) ++ [(mod n b)]
 
 -- pattern matching
 numToBase2 :: Integer -> Integer -> [Integer]
 numToBase2 0 _ = []
-numToBase2 n b = undefined
+numToBase2 n b = (numToBase2 (quot n b) b) ++ [(mod n b)]
 
 -- gărzi
 numToBase3 :: Integer -> Integer -> [Integer]
-numToBase3 n b = undefined
+numToBase3 n b 
+    | n == 0 = []
+    | otherwise = (numToBase3 (quot n b) b) ++ [(mod n b)]
 
 -- case of
 numToBase4 :: Integer -> Integer -> [Integer]
-numToBase4 n b = undefined
+numToBase4 n b = case n of 
+    0 -> []
+    _ -> (numToBase4 (quot n b) b) ++ [(mod n b)]
 
 -- Verificare: check2
 check2 :: TestPP ()
@@ -129,7 +137,7 @@ check2 = do
 -}
 
 removeDuplicatesLeft :: (Eq a) => [a] -> [a]
-removeDuplicatesLeft l = undefined
+removeDuplicatesLeft l = reverse (foldl (\acc x -> if (elem x acc) then acc else (x : acc)) [] l)
 
 -- Verificare: check3
 check3 :: TestPP ()
@@ -149,7 +157,7 @@ check3 = do
 -}
 
 removeDuplicatesRight :: (Eq a) => [a] -> [a]
-removeDuplicatesRight l = undefined
+removeDuplicatesRight l = foldr (\x acc -> if (elem x acc) then acc else (x : acc)) [] l
 
 -- Verificare: check4
 check4 :: TestPP ()
@@ -181,25 +189,41 @@ check4 = do
 computeLength :: ((Double, Double), (Double, Double)) 
             -> (((Double, Double), (Double, Double)) -> (Double, Double)) 
             -> (((Double, Double), (Double, Double)) -> (Double, Double)) -> Double
-computeLength getLineSegment getStartPoint getEndPoint = undefined
+computeLength getLineSegment getStartPoint getEndPoint = 
+    let segment = getLineSegment
+        start = getStartPoint segment
+        end = getEndPoint segment
+        startX = fst start
+        startY = snd start
+        endX = fst end
+        endY = snd end
+    in sqrt (((endY - startY) ** 2) + ((endX - startX) ** 2))
 
 -- cu where
 computeLength2 :: ((Double, Double), (Double, Double)) 
             -> (((Double, Double), (Double, Double)) -> (Double, Double)) 
             -> (((Double, Double), (Double, Double)) -> (Double, Double)) -> Double
-computeLength2 getLineSegment getStartPoint getEndPoint = undefined
+computeLength2 getLineSegment getStartPoint getEndPoint = sqrt (((endY - startY) ** 2) + ((endX - startX) ** 2))
+    where
+        segment = getLineSegment
+        start = getStartPoint segment
+        end = getEndPoint segment
+        startX = fst start
+        startY = snd start
+        endX = fst end
+        endY = snd end
 
 -- Verificare: check5
 check5 :: TestPP ()
 check5 = do
   assertVal "[5] computeLength ((4, 2), (4, 5)) fst snd" $
-    computeLength ((4, 2), (4, 5)) fst snd == 2.23606797749979
+    computeLength ((4, 2), (4, 5)) fst snd == 3.0
   assertVal "[5] computeLength ((2, 3), (6, 9)) fst snd" $
-    computeLength ((2, 3), (6, 9)) fst snd == 3.1622776601683795
+    computeLength ((2, 3), (6, 9)) fst snd == 7.211102550927978
   assertVal "[5] computeLength2 ((4, 2), (4, 5)) fst snd" $
-    computeLength2 ((4, 2), (4, 5)) fst snd == 2.23606797749979
+    computeLength2 ((4, 2), (4, 5)) fst snd == 3.0
   assertVal "[5] computeLength2 ((2, 3), (6, 9)) fst snd" $
-    computeLength2 ((2, 3), (6, 9)) fst snd == 3.1622776601683795
+    computeLength2 ((2, 3), (6, 9)) fst snd == 7.211102550927978
 
 {-
     6. Să se găsească cuvintele care au lungimea cel puțin egală cu 10 caractere în două moduri:
@@ -208,10 +232,10 @@ check5 = do
 -}
 
 findStringsLongerThanTenChars :: [String] -> [String]
-findStringsLongerThanTenChars l = undefined
+findStringsLongerThanTenChars l = filter (\x -> (length x) >= 10) l
 
 findStringsLongerThanTenChars2 :: [String] -> [String]
-findStringsLongerThanTenChars2 l = undefined
+findStringsLongerThanTenChars2 l = [x | x <- l, (length x) >= 10]
 
 -- Verificare: check6
 check6 :: TestPP ()
@@ -230,10 +254,10 @@ check6 = do
 -}
 
 buildPairsStringLength :: [String] -> [(String, Int)]
-buildPairsStringLength l = undefined
+buildPairsStringLength l = map (\x -> (x, length x)) l
 
 buildPairsStringLength2 :: [String] -> [(String, Int)]
-buildPairsStringLength2 l = undefined
+buildPairsStringLength2 l = [(x, length x) | x <- l]
 
 -- Verificare: check7
 check7 :: TestPP ()
@@ -243,7 +267,7 @@ check7 = do
         "programatoare", "foarte", "interesanta"] == [("ana",3),("este",4),("o",1),
           ("programatoare",13),("foarte",6),("interesanta",11)]
   assertVal "[7] buildPairsStringLength2" $
-    buildPairsStringLength ["ana", "este", "o", 
+    buildPairsStringLength2 ["ana", "este", "o", 
         "programatoare", "foarte", "interesanta"] == [("ana",3),("este",4),("o",1),
           ("programatoare",13),("foarte",6),("interesanta",11)]
 
@@ -254,28 +278,28 @@ check7 = do
 -}
 
 setIntersection :: Eq a => [a] -> [a] -> [a]
-setIntersection a b = undefined
+setIntersection a b = [x | x <- a, x `elem` b]
 
 setDiff :: Eq a => [a] -> [a] -> [a]
-setDiff a b = undefined
+setDiff a b = [x | x <- a, x `notElem` b]
 
 cartProduct :: [a] -> [b] -> [(a, b)]
-cartProduct a b = undefined
+cartProduct a b = [(x, y) | x <- a, y <- b]
 
 setUnion :: Eq a => [a] -> [a] -> [a]
-setUnion a b = undefined
+setUnion a b = a ++ setDiff b (setIntersection a b)
 
 -- Verificare: check8
 check8 :: TestPP ()
 check8 = do
-  assertVal "[8] cartProduct" $
-    cartProduct [1, 2] [3, 4, 5] == [(1, 3), (1, 4), (1, 5), (2, 3), (2, 4), (2, 5)]
   let a = [1, 7, 3, 6, 2]
       b = [2, 8, 6, 10, 4, 1]
   assertVal "[8] setIntersection" $
     sort (setIntersection a b) == [1, 2, 6]
   assertVal "[8] setDiff" $
     sort (setDiff a b) == [3, 7]
+  assertVal "[8] cartProduct" $
+    cartProduct [1, 2] [3, 4, 5] == [(1, 3), (1, 4), (1, 5), (2, 3), (2, 4), (2, 5)]
   assertVal "[8] setUnion" $
     sort (setUnion a b) == [1, 2, 3, 4, 6, 7, 8, 10]
 
@@ -304,7 +328,7 @@ sumOfSquaredEvens = foldl' (\acc x -> trace ("add " ++ show x) (acc + x)) 0 squa
  -}
 
 infiniteApply :: (Double -> Double) -> Double -> [Double]
-infiniteApply f x0 = undefined
+infiniteApply f x0 = x0 : (infiniteApply f $ f x0)
 
 -- Verificare: check10
 check10 :: TestPP ()
@@ -333,11 +357,11 @@ check10 = do
 
 f :: Double -> Double
 -- f x = 36 - x ** 2 - de tradus această secvență în point-free
-f x = undefined
+f = (36-).(**2)
 
 df :: Double -> Double
 -- df x = -2 * x - de tradus această secvență în point-free
-df x = undefined
+df = (*(-2))
 
 -- Verificare: check11
 check11 :: TestPP ()
@@ -358,7 +382,7 @@ check11 = do
     x_new = x_old - f(x_old) / df(x_old)
     
     Inițial, x_old va fi o valoare aleatoare ("initial guess"), iar pe măsură
-    ce vom aplica formula de mai sus in mod iterativ, rezultul va fi din ce în ce
+    ce vom aplica formula de mai sus în mod iterativ, rezultul va fi din ce în ce
     mai apropiat de soluția corectă (f(x) = 0).
 
     Dându-se o valoare inițială, calculați fluxul aproximărilor succesive
@@ -372,13 +396,13 @@ check11 = do
     Testați afișând primele 10 elemente ale acestui flux.
  -}
 
-newton_raphson x g dg = undefined
+newtonRaphson x g dg = iterate (\x -> x - (g x) / (dg x)) x
 
 -- Verificare: check11
 check12 :: TestPP ()
 check12 = do
-  assertVal "[12] newton_raphson 6 f df" $
-    (take 10 $ newton_raphson 6 f df) == [6.0,6.0,6.0,6.0,6.0,6.0,6.0,6.0,6.0,6.0]
+  assertVal "[12] newtonRaphson 6 f df" $
+    (take 10 $ newtonRaphson 6 f df) == [6.0,6.0,6.0,6.0,6.0,6.0,6.0,6.0,6.0,6.0]
 
 
 {-
@@ -407,19 +431,23 @@ check12 = do
     
     Hint 2: zip, dropWhile, abs
     
-    Rulați algoritmul pentru valorile initiale: 3 si -3 (x_old = 3, x_old = -3)
+    Rulați algoritmul pentru valorile inițiale: 3 si -3 (x_old = 3, x_old = -3)
  -}
 
-newton_raphson_solve :: Double -> Double -> (Double -> Double) -> (Double ->Double) -> Double
-newton_raphson_solve x_old atol g dg = undefined
+newtonRaphsonSolve :: Double -> Double -> (Double -> Double) -> (Double ->Double) -> Double
+newtonRaphsonSolve x_old atol g dg =
+    snd $ head $ dropWhile (\(x, y) -> abs(x - y) > atol) vals
+  where
+    nr = newtonRaphson x_old g dg
+    vals = zip (tail nr) nr
 
 -- Verificare: check13
 check13 :: TestPP ()
 check13 = do
-  assertVal "[13] newton_raphson_solve -3 0 f df" $
-    newton_raphson_solve (-3) 0 f df == -6
-  assertVal "[13] newton_raphson_solve 3 0 f df" $
-    newton_raphson_solve 3 0 f df == 6
+  assertVal "[13] newtonRaphsonSolve -3 0 f df" $
+    newtonRaphsonSolve (-3) 0 f df == -6
+  assertVal "[13] newtonRaphsonSolve 3 0 f df" $
+    newtonRaphsonSolve 3 0 f df == 6
 
 
 {-
@@ -439,16 +467,16 @@ check13 = do
     Implementați metoda Babilioniană
  -}
 
-babylonian_method :: Double -> Double -> Double -> Double
-babylonian_method a x_old atol = undefined
+babylonianMethod :: Double -> Double -> Double -> Double
+babylonianMethod a x_old atol = newtonRaphsonSolve x_old atol (\x->x**2-a) (\x->2*x)
 
 -- Verificare: check14
 check14 :: TestPP ()
 check14 = do
-  assertVal "[14] babylonian_method 36 3 0" $
-    babylonian_method 36 3 0 == 6
-  assertVal "[14] babylonian_method 36 (-3) 0" $
-    babylonian_method 36 (-3) 0 == -6
+  assertVal "[14] babylonianMethod 36 3 0" $
+    babylonianMethod 36 3 0 == 6
+  assertVal "[14] babylonianMethod 36 (-3) 0" $
+    babylonianMethod 36 (-3) 0 == -6
  
 {-
 Helpers for testing :)
