@@ -525,7 +525,8 @@ iterate :: (a -> a) -> a -> [a]
 `iterate` primește o funcție `f` și o valoare inițială `x` și generează o listă infinită din aplicarea repetată a lui `f`. Implementarea listei numerelor naturale va arăta deci astfel:
 
 ```haskell
-naturals = iterate (\ x -> x + 1) 0
+naturals = iterate (\x -> x + 1) 0  -- SAU
+naturals = iterate (+ 1) 0
 ```
 
 Observăm că `iterate` este nu numai o funcțională, ci și un **șablon de proiectare** (design pattern). Alte funcționale cu care putem genera liste infinite sunt:
