@@ -455,7 +455,7 @@ check13 = do
     număr "a".
     
     Ca Newton-Raphson, și aceasta este o metodă iterativă cu pasul:
-    x_new = 0.5 * (x_old + A / x_old), unde x_old va trebui initializat
+    x_new = 0.5 * (x_old + A / x_old), unde x_old va trebui inițializat
     cu o valoare aleatoare.
     
     Această metodă derivă din formula generală a lui Newton-Raphson
