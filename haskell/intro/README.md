@@ -174,7 +174,7 @@ Tot pentru simplitate, Haskell permite folosirea unor secțiuni -- elemente de z
 (2 -) == \x -> 2 - x
 ```
 
-**Atenție**: În construcția `(- x)` operatorul `-` este unar, nu binar (este echivalentul funcției `negate`).
+**Atenție**: În construcția `(- x)` operatorul `-` este unar, nu binar (este echivalentul funcției `negate`). Dacă doriți să aplicați pațial la dreapta operatorul de scădere, utilizați funcția `subtract`, ca în expresia `(\`subtract\` 2)`.
 
 ## Tipuri de bază
 
