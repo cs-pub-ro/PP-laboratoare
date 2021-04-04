@@ -592,7 +592,7 @@ Practic, ne-am folosit de faptul că în Haskell toate funcțiile sunt în form�
 
 Pentru a compune două funcții, vom folosi operatorul `.`:
 
-`> :t (.)` `(.) :: (b -> c) -> (a -> b) -> a -> c`
+`(.) :: (b -> c) -> (a -> b) -> a -> c`
 
 Dacă analizăm tipul operatorului, observăm că acesta primește ca argumente o funcție care acceptă o intrare de tipul `b` și întoarce o valoare de tipul `c`, respectiv încă o funcție care primește o intrare de tipul `a` și produce o valoare de tipul `b`, compatibilă cu intrarea așteptată de prima funcție. Rezultatul întors este o funcție care acceptă valori de tipul `a` și produce rezultate de tipul `c`.
 
