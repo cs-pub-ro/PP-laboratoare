@@ -423,7 +423,7 @@ check13 = do
 
 
 {-
-    14. Metoda Babiloniana - folosita pentru aflarea rădăcinii pătrate a unui
+    14. Metoda Babiloniană - folosită pentru aflarea rădăcinii pătrate a unui
     număr "a".
     
     Ca Newton-Raphson, si aceasta este o metoda iterativa cu pasul:
