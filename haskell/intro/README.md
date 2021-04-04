@@ -564,7 +564,7 @@ El are avantajul de a grupa expresiile din dreapta și stânga lui înainte de a
 length $ 3 : [1, 2] -- length (3 : [1, 2])
 ```
 
-Împreună cu `curry`, `uncurry* și `flip` aceste funcții duc la un stil de programare în care valoarea în care se evaluează funcția nu este prezentă. Urmăriți exemplul următor de transformare
+Împreună cu `curry`, `uncurry` și `flip` aceste funcții duc la un stil de programare în care valoarea în care se evaluează funcția nu este prezentă. Urmăriți exemplul următor de transformare
 
 ```haskell
 square x = x*x
