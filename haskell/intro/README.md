@@ -269,7 +269,7 @@ Operatorul de **concatenare** este `++`:
 [1, 2, 3, 4, 5]
 ```
 
-Haskell oferă un mod suplimentar de a genera liste: scriem proprietățile pe care ar trebui să le respecte elementele listei într-o sintaxă numită **list comprehension**. Este o sintaxă similară celei din matematică. De exemplu, vrem lista numerelor pare, divizibile cu 3. În matematică, am fi avut ceva de tipul `{x \| x ∈ N2, x ≡ 0 (mod 3)}` (pentru `N2` mulțimea numerelor pare). În Haskell, avem
+Haskell oferă un mod suplimentar de a genera liste: scriem proprietățile pe care ar trebui să le respecte elementele listei într-o sintaxă numită **list comprehension**. Este o sintaxă similară celei din matematică. De exemplu, vrem lista numerelor pare, divizibile cu 3. În matematică, am fi avut ceva de tipul `{x | x ∈ N2, x ≡ 0 (mod 3)}` (pentru `N2` mulțimea numerelor pare). În Haskell, avem
 
 ```haskell
 > [x | x <- [0, 2 ..], x `mod` 3 == 0] -- lista numerelor naturale pare, divizibile cu 3
