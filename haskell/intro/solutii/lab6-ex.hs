@@ -360,7 +360,7 @@ f :: Double -> Double
 f = (36-).(**2)
 
 df :: Double -> Double
--- df x = -2 * x - de tradus aceasta secventa in point-free
+-- df x = -2 * x - de tradus această secvență în point-free
 df = (*(-2))
 
 -- Verificare: check11
