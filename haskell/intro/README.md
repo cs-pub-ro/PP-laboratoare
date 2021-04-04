@@ -472,7 +472,8 @@ cu aceleași observații ca în cazul `let`.
 Un exemplu de folosire este implementarea metodei de sortare QuickSort:
 
 ```haskell
-qsort [] = [] qsort (p : xs) = qsort left ++ [p] ++ qsort right
+qsort [] = [] 
+qsort (p : xs) = qsort left ++ [p] ++ qsort right
     where  
     left = filter (< p) xs
     right = filter (>= p) xs
