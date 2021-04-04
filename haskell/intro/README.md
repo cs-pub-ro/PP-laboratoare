@@ -530,10 +530,12 @@ naturals = iterate (\ x -> x + 1) 0
 
 Observăm că `iterate` este nu numai o funcțională, ci și un **șablon de proiectare** (design pattern). Alte funcționale cu care putem genera liste infinite sunt:
 
--   `repeat`: repetă o valoare la infinit
--   `intersperse`: introduce o valoare între elementele unei liste
 -   `zipWith`: generalizare a lui `zip` care, aplică o funcție binară pe elementele a două liste; e completată de `zipWith3` (pentru funcții ternare), `zipWith4` etc.
 -   `foldl`, `foldr`, `map`, `filter`
+
+De asemenea, există funcții, care nu primesc ca parametru alte funcții, cu care putem genera liste infinite, de exemplu:
+-   `repeat`: repetă o valoare la infinit
+-   `intersperse`: introduce o valoare între elementele unei liste
 
 Exemple de utilizare:
 
