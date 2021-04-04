@@ -382,7 +382,7 @@ check11 = do
     x_new = x_old - f(x_old) / df(x_old)
     
     Inițial, x_old va fi o valoare aleatoare ("initial guess"), iar pe măsură
-    ce vom aplica formula de mai sus in mod iterativ, rezultul va fi din ce în ce
+    ce vom aplica formula de mai sus în mod iterativ, rezultul va fi din ce în ce
     mai apropiat de soluția corectă (f(x) = 0).
 
     Dându-se o valoare inițială, calculați fluxul aproximărilor succesive
