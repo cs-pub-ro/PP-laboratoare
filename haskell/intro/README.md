@@ -84,7 +84,7 @@ Codul Haskell poate fi atât compilat cât și interpretat. Pentru interpretare 
 În cadrul laboratorului, recomandăm folosirea **ghci** în modul
 următor:
 
--   se salvează definițiile de funcții într-un fișiere cu extensia `.hs`
+-   se salvează definițiile de funcții într-un fișier cu extensia `.hs`
     (ex.: lab6-ex.hs)
 -   se deschide consola sistemului (ex.: cmd/powershell pe Win) in
     directorul cu fisierul `.hs`
