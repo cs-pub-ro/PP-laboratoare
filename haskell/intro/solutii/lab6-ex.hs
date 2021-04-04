@@ -320,7 +320,7 @@ sumOfSquaredEvens = foldl' (\acc x -> trace ("add " ++ show x) (acc + x)) 0 squa
     10. Scrieți o funcție "infiniteApply" care primește ca parametru o funcție "f"
     și o valoare inițială x0.
     
-    Funcția ar trebui să intoarcă o listă infinită sub forma:
+    Funcția ar trebui să întoarcă o listă infinită sub forma:
       x0, f x0, f (f x0), f (f (f x0)), ...
     
     Când testați funcția, fiți pregătiți să apăsați CTRL + C deoarece evaluarea
