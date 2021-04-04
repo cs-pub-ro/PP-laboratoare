@@ -276,7 +276,7 @@ Haskell oferă un mod suplimentar de a genera liste: scriem proprietățile pe c
 [0,6,12,18,24,30,36,42,48,54,60,66,72,78,84,90,96,102,108, Interrupted.
 ```
 
-Observați că se generează elemente la infinit. Pentru fiecare element din lista `[0, 2 ..]` (din expresia `x &lt;- [0, 2..]`) se testează condițiile următoare. Dacă toate sunt îndeplinite, se generează elementul din fața `|`.
+Observați că se generează elemente la infinit. Pentru fiecare element din lista `[0, 2 ..]` (din expresia `x <- [0, 2..]`) se testează condițiile următoare. Dacă toate sunt îndeplinite, se generează elementul din fața `|`.
 
 Pentru a putea vedea o porțiune a fluxului folosim functiile `take` și `drop`.
 
