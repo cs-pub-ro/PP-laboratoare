@@ -135,7 +135,7 @@ Sintaxa Haskell este ceva mai apropriată de cea a **calculului Lambda**: `\` an
 ```
 ```lisp 
 (let ((f (lambda (x y) (+ x y)))) 
-(f 2 3))
+  (f 2 3))
 ```
 
 În Haskell, funcția echivalentă ar fi
