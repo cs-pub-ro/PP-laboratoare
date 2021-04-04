@@ -314,7 +314,7 @@ factorial_if x = if x < 1 then 1 else x * factorial_if (x - 1)
 
 Este obligatoriu ca `if` să conțină **ambele** ramuri și ca acestea să fie **de același tip**.
 
-Mai frumos, putem scrie funcția de mai sus folosind gărzi:
+Mai frumos, putem scrie funcția de mai sus folosind **gărzi**:
 
 ```haskell 
 factorial_guards x
