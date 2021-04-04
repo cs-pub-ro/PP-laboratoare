@@ -326,7 +326,7 @@ Observați indentarea: orice linie care face parte din aceeași expresie ca cea 
 
 Construcția `otherwise` este echivalentă expresiei `True`. O gardă poate conține orice fel de expresie care se va evalua la o valoarea de tip `Bool`.
 
-Fiecare gardă este testată în ordine, prima adevărată este executată.
+Gărzile sunt testate în ordine, fiind evaluată expresia aferentă primei gărzi adevărate. Astfel, un set de gărzi este similar unei expresii `cond` din Racket, cu toate că există anumite restricții în privința locului în care pot fi definite gărzi.
 
 Pentru a ne apropia de definiția matematică, putem scrie aceeași funcție folosind `case` (echivalentul `switch`-ului din C dar mult mai avansat):
 
