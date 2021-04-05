@@ -856,26 +856,26 @@ Funcționale:
 - Racket
 ```lisp
 ; map
-(map (λ (x) (+ x 1)) (list 1 2 3 4))
-(map add1 (list 1 2 3 4))
+(map (λ (x) (+ x 1)) (list 1 2 3 4)) ; '(2 3 4 5)
+(map add1 (list 1 2 3 4)) ; '(2 3 4 5)
 
 ; filter
-(filter (λ (x) (equal? (modulo x 2) 0)) (list 1 2 3 4 5 6))
+(filter (λ (x) (equal? (modulo x 2) 0)) (list 1 2 3 4 5 6)) ; '(2 4 6)
 
 ; foldl
-(reverse (foldl (lambda (x acc) (cons x acc)) '() (list 1 2 3 4 5)))
+(reverse (foldl (lambda (x acc) (cons x acc)) '() (list 1 2 3 4 5))) ; '(1 2 3 4 5)
 
 ; foldr
-(foldr (lambda (x acc) (cons x acc)) '() (list 1 2 3 4 5))
+(foldr (lambda (x acc) (cons x acc)) '() (list 1 2 3 4 5)) ; '(1 2 3 4 5)
 ```
 - Haskell
 ```haskell
 -- map
-map (\x -> x + 1) [1, 2, 3, 4]
-map (+ 1) [1, 2, 3, 4]
+map (\x -> x + 1) [1, 2, 3, 4] -- [2, 3, 4, 5]
+map (+ 1) [1, 2, 3, 4] -- [2, 3, 4, 5]
 
 -- filter
-filter (\x -> mod x 2 == 0) [1, 2, 3, 3, 4, 5, 6]
+filter (\x -> mod x 2 == 0) [1, 2, 3, 3, 4, 5, 6] -- [2, 4, 6]
 
 -- foldl
 reverse $ foldl (\acc x -> x : acc) [] [1, 2, 3, 4, 5] -- [1, 2, 3, 4, 5]
@@ -883,6 +883,9 @@ reverse $ foldl (\acc x -> x : acc) [] [1, 2, 3, 4, 5] -- [1, 2, 3, 4, 5]
 -- foldr
 foldr (\x acc -> x : acc) [] [1, 2, 3, 4, 5] -- [1, 2, 3, 4, 5]
 ```
+Un fapt notabil în ceea ce diferența dintre Haskell și Racket este în faptul că diferă ordinea parametrilor la funcția anonimă dată ca parametru între tipurile de fold (în Racket nu diferă ordinea, care este element -> acumulator, acest fapt se poate observa în exemplele de mai sus), mai precis:
+- `foldl`: acumulator -> element
+- `foldr`: element -> acumulator
 
 Legări:
 - Racket
