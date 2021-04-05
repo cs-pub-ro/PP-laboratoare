@@ -923,6 +923,8 @@ h' a = (c + b)
 ## Resurse
 
 -   [Cheatsheet](https://github.com/cs-pub-ro/PP-laboratoare/raw/haskell-intro/haskell/intro/haskell-cheatsheet-1.pdf)
+-   [Schelet](https://ocw.cs.pub.ro/courses/_media/pp/21/laboratoare/haskell/intro-skel.zip)
+-   [Soluții](https://ocw.cs.pub.ro/courses/_media/pp/21/laboratoare/haskell/intro-sol.zip)
 
 ## Referințe
 
