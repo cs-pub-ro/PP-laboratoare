@@ -297,9 +297,8 @@ check10 = tests_ 10
 
 
 {-
-    11. Având o funcție "f" și derivata acesteia "df", dorim să aflăm "x" știind că
-    f(x) = 0. Cu alte cuvinte, "x" este o rădăcină a funcției "f".
-    
+    11. Avem o funcție "f" și derivata acesteia "df".
+
     Funcțiile "f" si "df" de mai jos sunt definite cu explicitarea parametrului,
     stil numit point-wise ("point" se referă la "x").
     
@@ -345,8 +344,6 @@ check11 = tests_ 11
     Hint:
     take + iterate (deja implementat in Haskell) / infinite_apply (implementat
     la exercițiul anterior)
-
-    Testați afișând primele 10 elemente ale acestui flux.
  -}
 
 newtonRaphson x g dg = undefined
@@ -382,8 +379,6 @@ check12 = tests_ 12
     unde ti reprezinta al i-lea termen aflat cu metoda Newton-Raphson
     
     Hint 2: zip, dropWhile, abs
-    
-    Rulați algoritmul pentru valorile initiale: 3 si -3 (x_old = 3, x_old = -3)
  -}
 
 newtonRaphsonSolve :: Double -> Double -> (Double -> Double) -> (Double ->Double) -> Double

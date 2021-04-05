@@ -255,6 +255,23 @@ True && False                 False
 \end{tikzpicture}
 
 \begin{tikzpicture}
+\node [mybox_midnightgreen] (box){%
+    \begin{minipage}{0.3\textwidth}
+{\centering \bf\small\color{midnightgreen} \textbackslash arg1 arg2 $\rightarrow$ corp\\}
+
+\begin{lstlisting}[language=Haskell, numbers=none]
+\x -> x                       functia identitate
+(\x y -> x + y) 1 2           3
+let f = \x y -> x + y         legare la un nume
+(f 1 2)                       3
+\end{lstlisting}
+\end{minipage}
+};
+
+\node[fancytitle_midnightgreen, right=10pt] at (box.north west) {Funcții anonime (lambda)};
+\end{tikzpicture}
+
+\begin{tikzpicture}
 \node [mybox_orange] (box){%
     \begin{minipage}{0.3\textwidth}
     	{\centering\bf\small\color{orange} (++) head tail last init take drop\\}
@@ -328,23 +345,6 @@ swap ("Hello", True)    (True, "Hello")
 \node[fancytitle_amaranth, right=10pt] at (box.north west) {Tupluri};
 \end{tikzpicture}
 
-
-\begin{tikzpicture}
-\node [mybox_midnightgreen] (box){%
-    \begin{minipage}{0.3\textwidth}
-{\centering \bf\small\color{midnightgreen} \textbackslash arg1 arg2 $\rightarrow$ corp\\}
-
-\begin{lstlisting}[language=Haskell, numbers=none]
-\x -> x                       functia identitate
-(\x y -> x + y) 1 2           3
-let f = \x y -> x + y         legare la un nume
-(f 1 2)                       3
-\end{lstlisting}
-\end{minipage}
-};
-
-\node[fancytitle_midnightgreen, right=10pt] at (box.north west) {Funcții anonime (lambda)};
-\end{tikzpicture}
 
 %---------------------------------------------------------------------------------
 
@@ -581,6 +581,32 @@ concat :: [[a]] -> [a]
 \end{tikzpicture}
 
 \begin{tikzpicture}
+\node [mybox_orange] (box){%
+    \begin{minipage}{0.3\textwidth}
+Cu ajutorul list comprehensions, putem genera liste pe baza altor liste, construite pe baza unor modele și a unor condiții.
+	\begin{lstlisting}[language=Haskell, numbers=none]
+[x | x <- [1..5]]               [1, 2, 3, 4, 5]
+
+[x + 2 | x <- [1..5]]           [3, 4, 5, 6, 7]
+
+[x | x <- [1..10], x `mod` 2 == 0]   [2,4,6,8,10]
+
+[(x, y) | x <- [1..4], y <- [10..12]]
+-- aici se va construi o lista de perechi - [(1,10),(1,11),(1,12),(2,10),(2,11),(2,12),(3,10),(3,11),(3,12),(4,10),(4,11),(4,12)]
+
+[(x, y) | x <- [1..8], y <- [10..16], mod x 2 == 0, mod y 3 == 0 ]
+-- [(2,12),(2,15),(4,12),(4,15),(6,12),(6,15),(8,12),(8,15)]
+
+take 10 [x | x <- [1..], mod x 2 == 0]
+-- flux de numere pare - [2,4,6,8,10,12,14,16,18,20]
+\end{lstlisting}
+    \end{minipage}
+};
+
+\node[fancytitle_orange, right=10pt] at (box.north west) {List comprehensions};
+\end{tikzpicture}
+
+\begin{tikzpicture}
 \node [mybox_midnightgreen] (box){%
     \begin{minipage}{0.3\textwidth}
 % {\centering \bf\small\color{midnightgreen} \textbackslash arg1 arg2 $\rightarrow$ corp\\}
@@ -618,27 +644,6 @@ concat :: [[a]] -> [a]
 
 \node[fancytitle_cerise, right=10pt] at (box.north west) {Operatorul de compunere a funcțiilor '.'};
 \end{tikzpicture}
-
-\begin{tikzpicture}
-\node [mybox_orange] (box){%
-    \begin{minipage}{0.3\textwidth}
-Cu ajutorul list comprehensions, putem genera liste pe baza altor liste, construite pe baza unor modele și a unor condiții.
-	\begin{lstlisting}[language=Haskell, numbers=none]
-[x | x <- [1..5]]               [1, 2, 3, 4, 5]
-
-[x + 2 | x <- [1..5]]           [3, 4, 5, 6, 7]
-
-[x | x <- [1..10], x `mod` 2 == 0]   [2,4,6,8,10]
-
-[(x, y) | x <- [1..4], y <- [10..12]]
--- aici se va construi o lista de perechi - [(1,10),(1,11),(1,12),(2,10),(2,11),(2,12),(3,10),(3,11),(3,12),(4,10),(4,11),(4,12)]
-\end{lstlisting}
-    \end{minipage}
-};
-
-\node[fancytitle_orange, right=10pt] at (box.north west) {List comprehensions};
-\end{tikzpicture}
-
 %---------------------------------------------------------------------------------
 
 \end{multicols*}
