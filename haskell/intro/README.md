@@ -922,9 +922,7 @@ h' a = (c + b)
 ```
 ## Resurse
 
--   {{ :20:laboratoare:haskell:intro-ex.zip \| Exerciții}}
--   {{ :20:laboratoare:haskell:haskell-cheatsheet-1.pdf \| Cheatsheet}}
--   {{ :20:laboratoare:haskell:intro-sol.zip \| Soluții}}
+-   [Cheatsheet](https://github.com/cs-pub-ro/PP-laboratoare/raw/haskell-intro/haskell/intro/haskell-cheatsheet-1.pdf)
 
 ## Referințe
 
