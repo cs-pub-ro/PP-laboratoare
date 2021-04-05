@@ -886,6 +886,19 @@ foldr (\x acc -> x : acc) [] [1, 2, 3, 4, 5] -- [1, 2, 3, 4, 5]
 
 Legări:
 - Racket
+```lisp
+(define (f a) 
+    (let ((c a) (b (+ a 1))) 
+        (+ c b)))
+        
+(define (g a) 
+    (let* ((c a) (b (+ c 1))) 
+        (+ c b)))
+    
+;(define (h a) 
+;    (letrec ((c b) (b (+ a 1))) 
+;        (+ c b)))               ; aici vom avea eroare, pentru ca la legarea lui b la c, b-ul nu este definit
+```
 - Haskell - `let` în Haskell se comporta precum `letrec` din Racket
 ```haskell
 -- cu let
