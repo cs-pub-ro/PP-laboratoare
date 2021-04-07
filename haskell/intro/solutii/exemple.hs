@@ -60,9 +60,9 @@ un caz de bază ce întoarce o valoare și un pas inductiv tradus printr-un apel
 recursiv și un apel de funcție cu 2 argumente. Șablonul este capturat de
 funcțiile `fold`:
 -}
-lengthFold = foldl (\x y -> x + 1) 0
-sumListFold = foldl (+) 0
-productListFold = foldl (*) 0
+lengthFold l = foldl (\x y -> x + 1) 0 l
+sumListFold l = foldl (+) 0 l
+productListFold l = foldl (*) 0 l
 maxListFold list = foldl max (head list) (tail list)
 
 {-
