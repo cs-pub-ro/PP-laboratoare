@@ -26,24 +26,26 @@ Expresia `undefined` are orice tip dar nu poate fi evaluată.
 
 -- if-then-else
 reverseList :: [a] -> [a]
-reverseList l = if (null l) then [] else reverseList (tail l) ++ [(head l)]
+reverseList l = if null l 
+                    then [] 
+                    else reverseList (tail l) ++ [head l]
 
 -- pattern matching
 reverseList2 :: [a] -> [a]
 reverseList2 [] = []
-reverseList2 (x : xl) = (reverseList2 xl) ++ [x]
+reverseList2 (x : xl) = reverseList2 xl ++ [x]
 
 -- case of
 reverseList3 :: [a] -> [a]
 reverseList3 l = case l of
     [] -> []
-    (x : xl) -> (reverseList3 xl) ++ [x]
+    (x : xl) -> reverseList3 xl ++ [x]
 
 -- gărzi
 reverseList4 :: [a] -> [a]
 reverseList4 l
     | null l = []
-    | otherwise = reverseList4 (tail l) ++ [(head l)]
+    | otherwise = reverseList4 (tail l) ++ [head l]
 
 -- foldl
 reverseList5 :: [a] -> [a]
@@ -82,24 +84,26 @@ check1 = tests_ 1
 
 -- if-then-else
 numToBase :: Integer -> Integer -> [Integer]
-numToBase n b = if (n == 0) then [] else (numToBase (quot n b) b) ++ [(mod n b)]
+numToBase n b = if n == 0 
+                    then [] 
+                    else numToBase (quot n b) b ++ [mod n b]
 
 -- pattern matching
 numToBase2 :: Integer -> Integer -> [Integer]
 numToBase2 0 _ = []
-numToBase2 n b = (numToBase2 (quot n b) b) ++ [(mod n b)]
+numToBase2 n b = numToBase2 (quot n b) b ++ [mod n b]
 
 -- gărzi
 numToBase3 :: Integer -> Integer -> [Integer]
 numToBase3 n b 
     | n == 0 = []
-    | otherwise = (numToBase3 (quot n b) b) ++ [(mod n b)]
+    | otherwise = numToBase3 (quot n b) b ++ [mod n b]
 
 -- case of
 numToBase4 :: Integer -> Integer -> [Integer]
 numToBase4 n b = case n of 
     0 -> []
-    _ -> (numToBase4 (quot n b) b) ++ [(mod n b)]
+    _ -> numToBase4 (quot n b) b ++ [mod n b]
 
 -- Verificare: check2
 check2 :: TestData
@@ -125,7 +129,7 @@ check2 = tests_ 2
 -}
 
 removeDuplicatesLeft :: (Eq a) => [a] -> [a]
-removeDuplicatesLeft l = reverse (foldl (\acc x -> if (elem x acc) then acc else (x : acc)) [] l)
+removeDuplicatesLeft l = reverse (foldl (\acc x -> if elem x acc then acc else (x : acc)) [] l)
 
 -- Verificare: check3
 check3 :: TestData
@@ -144,7 +148,7 @@ check3 = tests_ 3
 -}
 
 removeDuplicatesRight :: (Eq a) => [a] -> [a]
-removeDuplicatesRight l = foldr (\x acc -> if (elem x acc) then acc else (x : acc)) [] l
+removeDuplicatesRight l = foldr (\x acc -> if elem x acc then acc else (x : acc)) [] l
 
 -- Verificare: check4
 check4 :: TestData
@@ -214,10 +218,10 @@ check5 = tests_ 5
 -}
 
 findStringsLongerThanTenChars :: [String] -> [String]
-findStringsLongerThanTenChars l = filter (\x -> (length x) >= 10) l
+findStringsLongerThanTenChars l = filter (\x -> length x >= 10) l
 
 findStringsLongerThanTenChars2 :: [String] -> [String]
-findStringsLongerThanTenChars2 l = [x | x <- l, (length x) >= 10]
+findStringsLongerThanTenChars2 l = [x | x <- l, length x >= 10]
 
 -- Verificare: check6
 check6 :: TestData
