@@ -127,7 +127,7 @@ check2 = let root = foldl insertElem BSTNil [7, 4, 12, 2, 3, 1, 10, 15, 8]
 {-
  3. Structuri infinite - Arbore binar 
 
-  Pornind de la o valoare numerica x0, găsiți numărul minim de
+  Pornind de la o valoare numerică x0, găsiți numărul minim de
   aplicări de funcții succesive f sau g necesare pentru a ajunge 
   la o valoare target xf.
 
@@ -142,7 +142,7 @@ check2 = let root = foldl insertElem BSTNil [7, 4, 12, 2, 3, 1, 10, 15, 8]
 
     De ce ne ajută o structură arborescentă în acest caz?
 
-    Putem construi un arbore binar infinit avand ca radacină un nod cu 
+    Putem construi un arbore binar infinit avand ca rădăcină un nod cu 
     valoarea x0. Pentru construirea nodului de pe ramura din stânga se 
     va aplica funcția f, iar pe ramura din dreapta se va aplica funcția g.
 
@@ -172,7 +172,7 @@ check2 = let root = foldl insertElem BSTNil [7, 4, 12, 2, 3, 1, 10, 15, 8]
   și un nod dat.
 
   Astfel, extindeți tipul definit anterior (de exemplu puteți adăuga un 
-  câmp parinte, un câmp string pentru a reține funcția aplicată pe nodul curent) 
+  câmp părinte, un câmp string pentru a reține funcția aplicată pe nodul curent) 
   și implementați următoarele funcții:
     * completeBinaryTree - pornind de la x0 construiește arborele binar infinit aplicând
       f pe nodul stâng, respectiv g pe nodul drept
