@@ -178,7 +178,11 @@ check2 = let root = foldl insertElem BSTNil [7, 4, 12, 2, 3, 1, 10, 15, 8]
   
 -}
 
-data InfBST a = UndefinedTree deriving Show
+data InfBST a = Node
+    { value   :: a
+    , left    :: InfBST a
+    , right   :: InfBST a
+    } deriving (Eq, Show)
 
 f :: (Num a) => a -> a
 f = \x -> 2 * x 
