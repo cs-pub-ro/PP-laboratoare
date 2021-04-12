@@ -33,8 +33,10 @@ double y = x;
 este considerată corectă de către compilator, deși variabilele `x` și `y` au tipuri diferite. În Haskell, secvența echivalentă de cod:
 
 ```haskell
-x :: Int x = -1
-y :: Double y = x 
+x :: Int 
+x = -1
+y :: Double 
+y = x 
 ```
 
 va genera o eroare de tip, fiind necesară folosirea unor funcții de conversie (de exemplu `fromIntegral`) pentru realizarea „cast”-urilor de la un tip la altul.
@@ -253,8 +255,8 @@ Observăm că `newtype`, spre deosebire de `type`, creează un **nou tip**, nu u
 ``` haskell 
 newtype Fahrenheit = MakeFahrenheit Float deriving Show
 
-celsiusToFahrenheit :: Celsius -> Fahrenheit celsiusToFahrenheit
-(MakeCelsius c) = MakeFahrenheit $ c * 9/5 + 32 
+celsiusToFahrenheit :: Celsius -> Fahrenheit 
+celsiusToFahrenheit (MakeCelsius c) = MakeFahrenheit $ c * 9/5 + 32 
 ```
 
 Diferența principală între `data` și `newtype` este că `newtype` permite crearea de tipuri **izomorfe**: atât `Celsius` cât și `Fahrenheit` sunt tipuri identice cu `Float` din punctul de vedere al structurii, însă folosirea lor în cadrul programului diferă, `Float` având o semantică mai generală (orice număr în virgulă mobilă).
