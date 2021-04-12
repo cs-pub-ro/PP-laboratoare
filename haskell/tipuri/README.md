@@ -1,7 +1,7 @@
 # Haskell: Tipuri de date utilizator
 
-  - Data publicării: 11.05.2021
-  - Data ultimei modificări: 11.05.2021
+  - Data publicării: 11.04.2021
+  - Data ultimei modificări: 11.04.2021
 
 ## Obiective
 
@@ -37,7 +37,7 @@ x :: Int x = -1
 y :: Double y = x 
 ```
 
-va genera o eroare de tip, fiind necesară folosirea unor funcții de conversie (de exemplu *fromIntegral*) pentru realizarea „cast”-urilor de la un tip la altul.
+va genera o eroare de tip, fiind necesară folosirea unor funcții de conversie (de exemplu `fromIntegral`) pentru realizarea „cast”-urilor de la un tip la altul.
 
 Observăm că o consecință a tipării puternice o reprezintă imposibilitatea de a defini liste eterogene. De exemplu următoarea expresie rezultă într-un mesaj de eroare:
 
@@ -60,19 +60,19 @@ De asemenea, Haskell este tipat **static**, sau **la compilare**: după cum am o
 
 funcția `head` poate fi aplicată în general pe liste, însă aplicarea ei pe lista vidă va genera o eroare **dinamică** (în timpul rulării programului), deoarece nu este posibilă definirea funcției pentru această valoare.
 
-Stabilirea statică a tipurilor este făcută cu ajutorul unui mecanism de **sinteză de tip**: la compilare sunt verificate tipurile tuturor expresiilor, compilarea terminându-se cu succes doar când acestea corespund. Sinteza este efectuată pe tipuri de date oricât de complexe, astfel că, de exemplu, o expresie *expr* având tipul:
+Stabilirea statică a tipurilor este făcută cu ajutorul unui mecanism de **sinteză de tip**: la compilare sunt verificate tipurile tuturor expresiilor, compilarea terminându-se cu succes doar când acestea corespund. Sinteza este efectuată pe tipuri de date oricât de complexe, astfel că, de exemplu, o expresie `expr` având tipul:
 
 ``` haskell 
 expr :: [(a,Int)]
 ```
 
-va fi verificată în adâncime, de la „rădăcină” (tipul listă) către „frunze” (variabila de tip *a*, tipul *Int*).
+va fi verificată în adâncime, de la „rădăcină” (tipul listă) către „frunze” (variabila de tip `a`, tipul `Int`).
 
 În continuare, vom studia construcțiile sintactice Haskell care ne permit definirea tipurilor de date utilizator.
 
 ## type
 
-Construcția `type` ne permite definirea unui **sinonim** de tip, similar cu *typedef* din C. De exemplu:
+Construcția `type` ne permite definirea unui **sinonim** de tip, similar cu `typedef` din C. De exemplu:
 
 ``` haskell 
 type Point = (Int, Int)
@@ -102,7 +102,7 @@ Construcția `data` permite definirea de noi tipuri de date algebrice, având ur
 data NumeTip = Constructor1 | Constructor2 | .. | ConstructorN
 ```
 
-Observăm distincția între *numele tipului* (denumit și *constructorde tip*), care poate fi folosit în expresii de tip (spre exemplu, `expr:: NumeTip`), și *numele constructorilor* (denumiți și *constructori de date*), acestea fiind folosite în definiții, cum ar fi `expr = Constructor1`. De exemplu:
+Observăm distincția între *numele tipului* (denumit și *constructor de tip*), care poate fi folosit în expresii de tip (spre exemplu, `expr:: NumeTip`), și *numele constructorilor* (denumiți și *constructori de date*), acestea fiind folosite în definiții, cum ar fi `expr = Constructor1`. De exemplu:
 
 ``` haskell 
 data PointT = PointC Double Double deriving Show
