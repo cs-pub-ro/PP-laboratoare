@@ -11,19 +11,14 @@ import TestPP
   1. Vectori
   Se dă tipul de date Vector, reprezentând vectori din spațiul R^3.
 
-  Implementați următoarele operații cu vectori:
-  - norma unui vector
-  - normalizarea unui vector
-  - produsul scalar (dot product) dintre doi vectori
-  - verificarea ortogonalității unor vectori
+  Implementați produsul scalar (dot product) dintre doi vectori.
 
   Explicații
 
   Fie a și b doi vectori din R^3 considerați de forma:
   a = a1 * i + a2 * j + a3 * k
   b = b1 * i + b2 * j + b3 * k
-  Produsul vectorial al celor doi vectori o să fie egal cu:
-  a x b = (a2 * b3 - a3 * b2) * i + (a3 * b1 - a1 * b3) * j + (a1 * b2 - a2 * b1) * k
+  
   Produsul scalar al celor doi vectori o să fie egal cu:
   a • b = a1 * b1 + a2 * b2 + a3 * b3
   Produsul scalar a doi vectori u și v este 0 dacă și numai dacă u și v sunt ortogonali.
@@ -37,33 +32,15 @@ data Vector = V
   , vz :: Double
   } deriving (Show, Eq)
 
-lengthV :: Vector -> Double
-lengthV = undefined
-
-normalizeV :: Vector -> Vector
-normalizeV = undefined
-
 dotV :: Vector -> Vector -> Double
 dotV = undefined
-
-computeDotProd :: [Vector] -> [Double]
-computeDotProd = undefined
-
-orthogonalV :: [Vector] -> Bool
-orthogonalV = undefined
 
 check1 :: TestData
 check1 = let 
       v1 = V 1 (-1) 0
       v2 = V 1 1 0
-      v3 = V 0 0 0
-  in tests_ 1 $
-          [ testVal "lengthV" (sqrt 2) $ lengthV v1
-          , testVal "normalizeV" (V 0 (-1) 0) $ normalizeV (V 0 (-1) 0)
-          , testVal "dotV" 0.0 $  dotV v1 v2
-          , testCond "orthogonalV" $ orthogonalV [v1, v2, v3]
-          ]
-
+  in test_ 1 $ testVal "dotV" 0.0 $ dotV v1 v2
+          
 {-
   2. Arbori binari de căutare
 
