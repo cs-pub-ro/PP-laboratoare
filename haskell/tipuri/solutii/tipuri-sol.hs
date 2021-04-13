@@ -105,21 +105,21 @@ check2 = let root = foldl insertElem BSTNil [7, 4, 12, 2, 3, 1, 10, 15, 8]
   Pornind de la o valoare numerică x0, găsiți numărul minim de
   aplicări de funcții succesive f sau g necesare pentru a ajunge 
   la o valoare target xf.
-
+  
   De exemplu:
     Fie f = \x -> 2 * x și g = \x -> 3 * x + 1
     * pentru a ajunge la valoarea 8 din x0 = 1 este nevoie de 2 aplicări:
-      xf = 2 * 4 = f(4) = f(3 * 1 + 1) = g(1) = g(x0)
+      xf = 2 * 4 = f(4) = f(g(3 * 1 + 1)) = f(g(1)) = f(g(x0))
     * pentru a ajunge la valoarea 13 din x0 = 1 este nevoie de 2 aplicări:
-      xf = 3 * 4 + 1 = g(4) = f(3 * 1 + 1) = g(1) = g(x0)
-    * de la x0 = 1 la xf = 10 nu putem ajunge cu ajutorul funcților anterior
+      xf = 3 * 4 + 1 = g(4) = g(g(3 * 1 + 1)) = g(g(1)) = g(g(x0))
+    * de la x0 = 1 la xf = 10 nu putem ajunge cu ajutorul funcțiilor anterior
       mentionate
 
-    De ce ne ajută o structură arborescentă în acest caz?
+  De ce ne ajută o structură arborescentă în acest caz?
 
-    Putem construi un arbore binar infinit avand ca rădăcină un nod cu 
-    valoarea x0. Pentru construirea nodului de pe ramura din stânga se 
-    va aplica funcția f, iar pe ramura din dreapta se va aplica funcția g.
+  Putem construi un arbore binar infinit avand ca rădăcină un nod cu 
+  valoarea x0. Pentru construirea nodului de pe ramura din stânga se 
+  va aplica funcția f, iar pe ramura din dreapta se va aplica funcția g.
 
     Exemplu:
                                ┌─────┐
@@ -157,7 +157,7 @@ check2 = let root = foldl insertElem BSTNil [7, 4, 12, 2, 3, 1, 10, 15, 8]
       de forma (valoare, funcție_aplicată) 
     * path - primește 2 numere x0 si xf și întoarce calea de la x0 la xf o listă de perechi
       de forma (valoare, funcție_aplicată). Întoarce o listă vidă în cazul în care nu se 
-      poate obține xf cu ajutorul funcților date.
+      poate obține xf cu ajutorul funcțiilor date.
 
   Dacă aveți pe nodul stâng și nodul drept doar funcții monoton crescatoare, cum puteți
   opri căutarea?
