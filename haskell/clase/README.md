@@ -316,15 +316,9 @@ Cele spuse mai sus dezvăluie o caracteristică interesantă a sistemului de tip
 
 Pentru a afla informații despre clase în `ghci` se poate utiliza comanda `:info <typeclass` unde typeclass este clasa despre care dorim să aflăm informații.
 
-Mai multe detalii [[http://www.haskell.org/tutorial/classes.html|aici]]
-
-## Exerciții
-
-Exercițiile se găsesc în fișerul `PQueue.hs`.
-
-Pentru primul exercițiu, asistentul trebuie să verifice dacă s-au definit cele 2 funcții `toList` și `fromList` utilizând operațiile `isEmpty`, `insert`, `empty`, `top`, `pop`.
+Mai multe detalii aici(http://www.haskell.org/tutorial/classes.html)
 
 ## Resurse
--   [Cheatsheet](https://github.com/cs-pub-ro/PP-laboratoare/blob/master/haskell/clase/haskell-cheatsheet-2.pdf)
+-   [Cheatsheet](https://github.com/cs-pub-ro/PP-laboratoare/blob/master/haskell/clase/haskell-cheatsheet-4.pdf)
 -   [Schelet](https://ocw.cs.pub.ro/courses/_media/pp/21/laboratoare/haskell/clase-skel.zip)
 -   [Soluții](https://ocw.cs.pub.ro/courses/_media/pp/21/laboratoare/haskell/clase-sol.zip)
