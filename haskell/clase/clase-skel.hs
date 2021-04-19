@@ -129,7 +129,9 @@ type Prio = Int
     implicite pentru funcțiile din această clasă:
     * fromList
     * toList
-
+    Aceste funcții nu sunt verificate de checker, ele trebuie verificate împreună cu
+    asistentul.
+    
     Clasa PQueue definește interfața pentru toate structurile de coada de priorități
     pe care le vom implementa mai jos.
 -}

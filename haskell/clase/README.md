@@ -229,7 +229,7 @@ Biblioteca standard `Prelude` oferă un set de clase predefinite, care sunt intr
 * `Integral` -- clasă pentru tipurile întregi. (`Int` și `Integer` sunt incluse aici). Definește funcții ca `mod` sau `div`
 * `Fractional` -- clasă pentru numere reprezentabile ca fracții - definește funcția `(/)`
 * `Floating` -- clasă pentru numere reale - definește funcții ca `sqrt`, `exp`, `sin`, `cos`, etc.
-* `Monad` -- definește tipuri care pot reprezenta acțiuni monadice. Mai multe despre monade aici: [[http://book.realworldhaskell.org/read/monads.html|Monade]]
+* `Monad` -- definește tipuri care pot reprezenta acțiuni monadice. Mai multe despre monade aici: Monade(http://book.realworldhaskell.org/read/monads.html)
 
 
 ## Deriving
@@ -316,15 +316,10 @@ Cele spuse mai sus dezvăluie o caracteristică interesantă a sistemului de tip
 
 Pentru a afla informații despre clase în `ghci` se poate utiliza comanda `:info <typeclass` unde typeclass este clasa despre care dorim să aflăm informații.
 
-Mai multe detalii [[http://www.haskell.org/tutorial/classes.html|aici]]
-
-## Exerciții
-
-Exercițiile se găsesc în fișerul `PQueue.hs`.
-
-Pentru primul exercițiu, asistentul trebuie să verifice dacă s-au definit cele 2 funcții `toList` și `fromList` utilizând operațiile `isEmpty`, `insert`, `empty`, `top`, `pop`.
+Mai multe detalii aici(http://www.haskell.org/tutorial/classes.html)
 
 ## Resurse
+
 -   [Cheatsheet](https://github.com/cs-pub-ro/PP-laboratoare/blob/master/haskell/clase/haskell-cheatsheet-3.pdf)
 -   [Schelet](https://ocw.cs.pub.ro/courses/_media/pp/21/laboratoare/haskell/clase-skel.zip)
 -   [Soluții](https://ocw.cs.pub.ro/courses/_media/pp/21/laboratoare/haskell/clase-sol.zip)
