@@ -62,7 +62,7 @@ Tipul acestei funcții este:
 elem :: Eq a => a -> [a] -> Bool
 ```
 
-Elementul de noutate este ''Eq a =>''. Acesta se numește **constrângere de tip** și apare ca urmare a folosirii funcției ''%%(==)%%''. Spre deosebire de funcția ''length'', care putea fi folosită indiferent de tipul listei, funcția ''elem'' este generică într-un sens mai restrâns. Ea funcționează doar pentru liste cu elemente care definesc egalitatea (operatorul ''=='').
+Elementul de noutate este ''Eq a =>''. Acesta se numește **constrângere de tip** și apare ca urmare a folosirii funcției `(==)`. Spre deosebire de funcția ''length'', care putea fi folosită indiferent de tipul listei, funcția ''elem'' este generică într-un sens mai restrâns. Ea funcționează doar pentru liste cu elemente care definesc egalitatea (operatorul ''=='').
 
 Cu alte cuvinte, ''elem'' poate fi aplicată pentru o listă de ''Int'' sau ''String'', pentru că știm să definim egalitatea pentru aceste tipuri, dar nu și pentru o listă de funcții. Deși pare neintuitiv, următoarea expresie:
 
@@ -78,7 +78,7 @@ va produce următoarea eroare la compilare:
     In the expression: elem (+ 1) [(+ 1), (* 2), (/ 3)]
 ```
 
-Cu alte cuvinte, tipul funcție nu aparține clasei ''Eq'' și deci nu definește ''%%(==)%%''.
+Cu alte cuvinte, tipul funcție nu aparține clasei ''Eq'' și deci nu definește `(==)`.
 
 Revenind la definiția lui ''elem'', nu numai că această funcție merge doar pe tipuri care definesc operația de egalitate, dar se va comporta diferit pentru fiecare mod în care egalitatea este implementată.
 Pentru o implementare diferită a egalității pentru numere întregi, de exemplu, vom obține un comportament diferit pentru funcția ''elem''. Spunem că ''elem'' este **polimorfică ad-hoc**. 
@@ -101,7 +101,7 @@ class  Eq a  where
     (/=) :: a -> a -> Bool
 ```
 
-''Eq'' definește 2 funcții, ''%%(==)%%'' și ''%%(/=)%%''. Pentru **a înrola** un tip în clasa ''Eq'', ambele funcții trebuie implementate.
+''Eq'' definește 2 funcții, `(==)` și `(/=)`. Pentru **a înrola** un tip în clasa ''Eq'', ambele funcții trebuie implementate.
 
 Echivalentul din Java pentru ''Eq'' ar fi următorul:
 
@@ -225,9 +225,9 @@ Biblioteca standard ''Prelude'' oferă un set de clase predefinite, care sunt in
 * ''Show'' -- pentru tipuri care pot fi reprezentate ca String-uri - principala funcție este ''show''. Această funcție este folosită și de consola GHCi atunci când afișează rezultatele.
 * ''Read'' -- inversa lui ''Show'' - pentru tipuri care pot fi citite din String
 * ''Enum'' -- pentru tipuri care pot fi enumerate - folosită implicit de construcții de forma ''[a..b]'' care generează toate elementele între două limite (sau plecând de la un punct de start).
-* ''Num'' -- clasă pentru toate tipurile numerice - definește operațiile aritmetice de bază: ''%%(+)%%'', ''%%(-)%%'', ''%%(*)%%'', etc.
+* ''Num'' -- clasă pentru toate tipurile numerice - definește operațiile aritmetice de bază: `(+)`, `(-)`, `(*)`, etc.
 * ''Integral'' -- clasă pentru tipurile întregi. (''Int'' și ''Integer'' sunt incluse aici). Definește funcții ca ''mod'' sau ''div''
-* ''Fractional'' -- clasă pentru numere reprezentabile ca fracții - definește funcția ''%%(/)%%''
+* ''Fractional'' -- clasă pentru numere reprezentabile ca fracții - definește funcția `(/)`
 * ''Floating'' -- clasă pentru numere reale - definește funcții ca ''sqrt'', ''exp'', ''sin'', ''cos'', etc.
 * ''Monad'' -- definește tipuri care pot reprezenta acțiuni monadice. Mai multe despre monade aici: [[http://book.realworldhaskell.org/read/monads.html|Monade]]
 
