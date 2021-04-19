@@ -4,7 +4,8 @@
 {-# LANGUAGE RankNTypes #-}
 
 import Data.Maybe
-import Data.List (sort)
+import Data.List (sort, insertBy)
+import Data.Function (on)
 import TestPP
 
 
@@ -101,12 +102,12 @@ instance Eq TicTacToe
         (Board b1) == (Board b2) = b1 == b2
 {-
     Completați instanța Ord a stărilor jocului. O stare este 
-    "mai mică" decât cealaltă dacăs-au efectuat mai puține mutări.
+    "mai mică" decât cealaltă dacă s-au efectuat mai puține mutări.
 -}
 instance Ord TicTacToe
     where 
         (Board b1) <= (Board b2) = moves b1 <= moves b2 where
-            moves = length . filter (\ x -> x /= Blank)
+            moves = length . filter (/= Blank)
 
 -- Test 1
 
@@ -183,7 +184,7 @@ class (Ord a) => PQueue pq a where
 
 -- Test 2
 check2 :: TestData
-check2 = tests_ 2 $ [testManually "fromList/toList" False]
+check2 = tests_ 2 $ [testManually "fromList/toList" True]
 -------------------------------------------------------------------------------
 
 {-
@@ -191,7 +192,7 @@ check2 = tests_ 2 $ [testManually "fromList/toList" False]
     listă de elemente. Includeți ListPQ în clasa PQueue.
 -}
 
-newtype ListPQ a = LPQ {lpq :: [(Prio, a)] }
+newtype ListPQ a = LPQ { lpq :: [(Prio, a)] }
 
 instance (Ord a) => PQueue ListPQ a where
     empty = LPQ []
@@ -395,7 +396,7 @@ check7 = tests_ 7
         Funcția f primește drept parametri: o valoare din coadă (al doilea element din tuplu)
     și acumulatorul.
         Pentru ListPQ foldr ar trebui să aibă același comportament ca foldr.
-        Pentru LeftistPQ foldr' ar trebui să parcurgă arborele dreapta, rădăcină, stânga.
+        Pentru LeftistPQ foldr ar trebui să parcurgă arborele dreapta, rădăcină, stânga.
 
 
     Reminder:
@@ -452,35 +453,35 @@ check8 = tests_ 8
 
 {-
     9.  Adăugați tipurile ListPQ și LeftistPQ în clasa Functor
-       Funcția f primește ca parametru o valoare din coadă (al doilea element din tuplu)
+    Funcția f primește ca parametru o valoare din coadă (al doilea element din tuplu)
+    Folosiți constructorii LPQ și Node/Empty !
+    
+    class Functor f where
+        fmap :: (a -> b) -> f a -> f b
 -}
-class Functor f where
-    fmap :: (Ord a, Ord b) => ((Prio, a) -> (Prio, b)) -> f a -> f b
 
-instance Main.Functor ListPQ where
-    fmap f (LPQ queue) = fromList $ map f queue
+instance Functor ListPQ where
+    fmap f (LPQ queue) = LPQ $ map (\ (x,y) -> (x, f y)) queue
 
-instance Main.Functor LeftistPQ where
-    fmap f node = fromList $ toList $ fmapHelp f node
-                where
-                    fmapHelp f x = case x of
-                        Node r el left right -> Node r (f el) (fmapHelp f left) (fmapHelp f right)
-                        _ -> Empty 0
+instance Functor LeftistPQ where
+    fmap f node = case node of
+        Node r el left right -> Node r (fmap f el) (fmap f left) (fmap f right)
+        _ -> Empty 0
 -- Test 9
 check9 :: TestData
 check9 = tests_ 9 
           [
-            testVal "Functor ListPQ Int" refInt $ toList $ Main.fmap fInt listPQInt,
-            testVal "Functor ListPQ Str" refStr $ toList $ Main.fmap fStr listPQStr,
-            testVal "Functor LeftistPQ Int" refInt $ toList $ Main.fmap fInt leftistPQInt,
-            testVal "Functor LeftistPQ Str" refStr $ toList $ Main.fmap fStr leftistPQStr
+            testVal "Functor ListPQ Int" refInt $ toList $ fmap fInt listPQInt,
+            testVal "Functor ListPQ Str" refStr $ toList $ fmap fStr listPQStr,
+            testVal "Functor LeftistPQ Int" refInt $ toList $ fmap fInt leftistPQInt,
+            testVal "Functor LeftistPQ Str" refStr $ toList $ fmap fStr leftistPQStr
           ]
         where
-          fInt (x, y) = (x, (y +  100))
-          fStr (x, y) = (x, (y ++ "42")) 
+          fInt = (+ 100)
+          fStr = (++ "42")
 
-          refInt = reverse $ sort $ map fInt elemsInt
-          refStr = reverse $ sort $ map fStr elemsStr
+          refInt = reverse $ sort $ map (\ (x,y) -> (x, fInt y)) elemsInt
+          refStr = reverse $ sort $ map (\ (x,y) -> (x, fStr y)) elemsStr
 {-
     10. Adăugați LeftistPQ în clasa Show
     Va trebui ca arborele să fie afișat în modul următor:

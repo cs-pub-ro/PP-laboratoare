@@ -354,10 +354,10 @@ check7 = tests_ 7
           refSize = length elemsInt
 {-
     8.(BONUS)  Adăugați tipurile ListPQ și LeftistPQ în clasa MyFoldable
-        Funcția f primește drept parametri: o valoare din coadă (al doilea element din tuplu)
+    Funcția f primește drept parametri: o valoare din coadă (al doilea element din tuplu)
     și acumulatorul.
-        Pentru ListPQ foldr' ar trebui să aibă același comportament ca foldr.
-        Pentru LeftistPQ foldr' ar trebui să parcurgă arborele dreapta, rădăcină, stânga.
+    Pentru ListPQ foldr ar trebui să aibă același comportament ca foldr.
+    Pentru LeftistPQ foldr ar trebui să parcurgă arborele dreapta, rădăcină, stânga.
 
 
     Reminder:
@@ -411,36 +411,37 @@ check8 = tests_ 8
            -
            -}
 
-
 {-
-    9.  Adăugați tipurile ListPQ și LeftistPQ în clasa MyFunctor
-       Funcția f primește ca parametru o valoare din coadă (al doilea element din tuplu)
+    9.  Adăugați tipurile ListPQ și LeftistPQ în clasa Functor
+    Funcția f primește ca parametru o valoare din coadă (al doilea element din tuplu)
+    Folosiți constructorii LPQ și Node/Empty !
+    
+    class Functor f where
+        fmap :: (a -> b) -> f a -> f b
 -}
 
-class Functor f where
-    fmap :: (Ord a, Ord b) => ((Prio, a) -> (Prio, b)) -> f a -> f b
-
-instance Main.Functor ListPQ where
+instance Functor ListPQ where
     fmap = undefined
 
-instance Main.Functor LeftistPQ where
+instance Functor LeftistPQ where
     fmap = undefined
 
 -- Test 9
 check9 :: TestData
-check9 = tests_ 9
+check9 = tests_ 9 
           [
-            testVal "Functor ListPQ Int" refInt $ toList $ Main.fmap fInt listPQInt,
-            testVal "Functor ListPQ Str" refStr $ toList $ Main.fmap fStr listPQStr,
-            testVal "Functor LeftistPQ Int" refInt $ toList $ Main.fmap fInt leftistPQInt,
-            testVal "Functor LeftistPQ Str" refStr $ toList $ Main.fmap fStr leftistPQStr
+            testVal "Functor ListPQ Int" refInt $ toList $ fmap fInt listPQInt,
+            testVal "Functor ListPQ Str" refStr $ toList $ fmap fStr listPQStr,
+            testVal "Functor LeftistPQ Int" refInt $ toList $ fmap fInt leftistPQInt,
+            testVal "Functor LeftistPQ Str" refStr $ toList $ fmap fStr leftistPQStr
           ]
         where
-          fInt (x, y) = (x, y + 100)
-          fStr (x, y) = (x, y ++ "42")
+          fInt = (+ 100)
+          fStr = (++ "42")
 
-          refInt = reverse $ sort $ map fInt elemsInt
-          refStr = reverse $ sort $ map fStr elemsStr
+          refInt = reverse $ sort $ map (\ (x,y) -> (x, fInt y)) elemsInt
+          refStr = reverse $ sort $ map (\ (x,y) -> (x, fStr y)) elemsStr
+
 {-
     10. Adăugați LeftistPQ în clasa Show
     Va trebui ca arborele să fie afișat în modul următor:
