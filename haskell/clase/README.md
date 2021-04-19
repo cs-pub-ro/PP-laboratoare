@@ -184,7 +184,7 @@ Aceasta este o definiție naturală pentru clasa ''Ord''. Nu are sens să discut
 
 ## Membri impliciți
 
-Observăm că de fiecare dată când am definit funcția ''%%(/=)%%'', am definit-o de fapt ca fiind opusul funcției ''%%(==)%%''. Acesta poate fi un caz foarte des întâlnit. Ar fi util dacă Haskell ne-ar permite să oferim implementări implicite pentru funcțiile din clase.
+Observăm că de fiecare dată când am definit funcția `(/=)`, am definit-o de fapt ca fiind opusul funcției `(==)`. Acesta poate fi un caz foarte des întâlnit. Ar fi util dacă Haskell ne-ar permite să oferim implementări implicite pentru funcțiile din clase.
 
 Vestea bună e că Haskell pune la dispoziție această facilitate. Iată cum putem defini ''Eq'':
 
@@ -196,7 +196,7 @@ class Eq a where
     a /= b = not (a == b)
 ``` 
 
-Acum, când înrolăm un tip în ''Eq'' e suficient să implementăm doar ''%%(==)%%''.
+Acum, când înrolăm un tip în ''Eq'' e suficient să implementăm doar `(==)`.
 
 ```c
 instance Eq Person where
@@ -204,7 +204,7 @@ instance Eq Person where
         name1 == name2 && cnp1 == cnp2
 ```
 
-Desigur, dacă dorim, putem suprascrie implementarea implicită pentru ''%%(/=)%%'' cu o implementare proprie.
+Desigur, dacă dorim, putem suprascrie implementarea implicită pentru `(/=)` cu o implementare proprie.
 
 La drept vorbind, în biblioteca standard Haskell (modulul ''Prelude'') ''Eq'' este definit astfel:
 
@@ -215,13 +215,13 @@ class  Eq a  where
     x == y               = not (x /= y)
 ```
 
-Observăm că ambele funcții au implementări implicite. Astfel, atunci când instanțiem ''Eq'' putem să implementăm fie ''%%(/=)%%'', fie ''%%(==)%%'', fie pe ambele.
+Observăm că ambele funcții au implementări implicite. Astfel, atunci când instanțiem ''Eq'' putem să implementăm fie `(/=)`, fie `(==)`, fie pe ambele.
 
 ## Clase predefinite
 
 Biblioteca standard ''Prelude'' oferă un set de clase predefinite, care sunt introduse implicit în programele Haskell. Enumerăm câteva:
 
-* ''Ord'' -- pentru tipuri care pot fi ordonate - definește funcții precum ''<'', ''>'', ''%%<=%%'', etc.
+* ''Ord'' -- pentru tipuri care pot fi ordonate - definește funcții precum ''<'', ''>'', `<=`, etc.
 * ''Show'' -- pentru tipuri care pot fi reprezentate ca String-uri - principala funcție este ''show''. Această funcție este folosită și de consola GHCi atunci când afișează rezultatele.
 * ''Read'' -- inversa lui ''Show'' - pentru tipuri care pot fi citite din String
 * ''Enum'' -- pentru tipuri care pot fi enumerate - folosită implicit de construcții de forma ''[a..b]'' care generează toate elementele între două limite (sau plecând de la un punct de start).
