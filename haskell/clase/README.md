@@ -47,7 +47,7 @@ Cu alte cuvinte definiția lui ''map'' nu depinde în niciun fel de tipul funcț
 Această proprietate a limbajului ne permite să implementăm algoritmi generici, aplicabili într-un număr mare de cazuri, încurajând reutilizarea de cod.
 
 
-== Polimorfism ad-hoc ==
+## Polimorfism ad-hoc
 
 Să analizăm funcția ''elem''. ''elem'' caută un element într-o listă și întoarce ''True'' dacă lista conține elementul căutat sau ''False'' altfel:
 
@@ -85,7 +85,7 @@ Pentru o implementare diferită a egalității pentru numere întregi, de exempl
 
 Ca să înțelegem mai bine acest concept, trebuie să înțelegem conceptul de clasă din Haskell.
 
-== Clase ==
+## Clase
 
 Am întâlnit conceptele de clasă până acum sub forma constrângerilor de tip, așa cum este și cazul funcției ''elem''. Clasele (eng. Type class) sunt un concept esențial în Haskell și unul dintre punctele forte ale limbajului.
 
@@ -153,7 +153,7 @@ instance Eq a => Eq (BST a) where
 
 Observăm că sintaxa ''Eq a =>'' își face din nou apariția. Forma ''Eq a => Eq (BST a)'' înseamnă: "dacă ''a'' aparține clasei ''Eq'', atunci și tipul ''(BST a)'' aparține clasei ''Eq''". Această constrângere este necesară deoarece pentru a verifica că un nod este egal cu un altul (''Node info1 l1 r1 == Node info2 l2 r2'', trebuie să verificăm că informațiile corespunzătoare din noduri sunt egale (''info1 == info2'') -- ceea ce înseamnă că elementele stocate în arbore trebuie să aparțină la rândul lor clasei ''Eq''.
 
-== Extindere de clase ==
+## Extindere de clase
 
 Haskell permite ca o clasă să extindă o altă clasă. Acest lucru este necesar când dorim ca un tip inclus într-o clasă să fie inclus doar dacă face deja parte dintr-o altă clasă.
 
@@ -182,7 +182,7 @@ Important de reținut din definiția de mai sus este linia ''class  (Eq a) => Or
 
 Aceasta este o definiție naturală pentru clasa ''Ord''. Nu are sens să discutăm despre ordonarea elementelor dintr-un tip dacă acesta nu definește ce înseamnă egalitatea dintre elemente.
 
-== Membri impliciți ==
+## Membri impliciți
 
 Observăm că de fiecare dată când am definit funcția ''%%(/=)%%'', am definit-o de fapt ca fiind opusul funcției ''%%(==)%%''. Acesta poate fi un caz foarte des întâlnit. Ar fi util dacă Haskell ne-ar permite să oferim implementări implicite pentru funcțiile din clase.
 
@@ -217,7 +217,7 @@ class  Eq a  where
 
 Observăm că ambele funcții au implementări implicite. Astfel, atunci când instanțiem ''Eq'' putem să implementăm fie ''%%(/=)%%'', fie ''%%(==)%%'', fie pe ambele.
 
-== Clase predefinite ==
+## Clase predefinite
 
 Biblioteca standard ''Prelude'' oferă un set de clase predefinite, care sunt introduse implicit în programele Haskell. Enumerăm câteva:
 
@@ -232,7 +232,7 @@ Biblioteca standard ''Prelude'' oferă un set de clase predefinite, care sunt in
 * ''Monad'' -- definește tipuri care pot reprezenta acțiuni monadice. Mai multe despre monade aici: [[http://book.realworldhaskell.org/read/monads.html|Monade]]
 
 
-== Deriving ==
+## Deriving
 
 Am observat că implementările noastre pentru clasa ''Eq'' de mai sus au fost relativ simple. În general implementarea lui ''Eq'' pentru un tip nou de date presupune verificarea câmp cu câmp a fiecărei componente a noului tip de date. Pentru că este simplu, compilatorul de Haskell poate face asta automat pentru noi, folosind cuvântul cheie ''deriving''.
 
@@ -244,7 +244,7 @@ va genera o implementare a clasei ''Eq'' similare cu cea făcută de noi mai sus
 
 Există mai multe clase care pot fi instanțiate în acest fel: ''Ord'', ''Enum'', ''Bounded'', ''Show'', ''Read''.
 
-== Num ==
+## Num
 
 Poate v-ați pus la un moment dat întrebarea ce tip au expresiile numerice simple, cum ar fi expresia ''5''. Cu siguranță trebuie să aibă un tip numeric -- însă despre ce tip e vorba? ''5'' este în același timp reprezentarea pentru numărul întreg 5, pentru numărul real 5.0 sau pentru numărul complex 5+0i. Deci, despre care ''5'' discutăm ?
 
@@ -263,7 +263,7 @@ GHCi ne poate raspunde la aceasta intrebare:
 
 Haskell nu constrânge constanta ''5'' la niciun tip numeric concret până când acest lucru nu este evident din context.
 
-== Tipuri de ordin superior ==
+## Tipuri de ordin superior
 
 Să considerăm urmatoarea problemă: Dat fiind un arbore binar de tipul ''BST a'', să definim o funcție ''f'' cu tipul ''a -> b'', care aplicată pe arbore va genera un arbore de tipul ''BST b''. Va menține structura arborelui, dar pentru fiecare element dintr-un nod, va aplica funcția ''f'' asupra acelui element.
 
@@ -318,15 +318,13 @@ Pentru a afla informații despre clase în ''ghci'' se poate utiliza comanda '':
 
 Mai multe detalii [[http://www.haskell.org/tutorial/classes.html|aici]]
 
-== Exerciții ==
+## Exerciții
 
 Exercițiile se găsesc în fișerul ''PQueue.hs''.
 
 Pentru primul exercițiu, asistentul trebuie să verifice dacă s-au definit cele 2 funcții ''toList'' și ''fromList'' utilizând operațiile ''isEmpty'', ''insert'', ''empty'', ''top'', ''pop''.
 
-* {{:20:laboratoare:haskell:clase-cheatsheet.pdf|Cheatsheet}}
-* {{:20:laboratoare:haskell:clase-ex.zip|Exerciții}}
-
-== Resurse utile ==
-[[https://wiki.haskell.org/Polymorphism | Polimorfism în Haskell]] \\
-[[https://wiki.haskell.org/Constructor | Constructori de tip și date]]
+## Resurse
+-   [Cheatsheet](https://github.com/cs-pub-ro/PP-laboratoare/blob/master/haskell/clase/haskell-cheatsheet-2.pdf)
+-   [Schelet](https://ocw.cs.pub.ro/courses/_media/pp/21/laboratoare/haskell/clase-skel.zip)
+-   [Soluții](https://ocw.cs.pub.ro/courses/_media/pp/21/laboratoare/haskell/clase-sol.zip)
