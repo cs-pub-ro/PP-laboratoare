@@ -62,7 +62,7 @@ Tipul acestei funcții este:
 elem :: Eq a => a -> [a] -> Bool
 ```
 
-Elementul de noutate este `Eq a =>`. Acesta se numește **constrângere de tip** și apare ca urmare a folosirii funcției `(==)`. Spre deosebire de funcția `length`, care putea fi folosită indiferent de tipul listei, funcția `elem` este generică într-un sens mai restrâns. Ea funcționează doar pentru liste cu elemente care definesc egalitatea (operatorul ==).
+Elementul de noutate este `Eq a =>`. Acesta se numește **constrângere de tip** și apare ca urmare a folosirii funcției `(==)`. Spre deosebire de funcția `length`, care putea fi folosită indiferent de tipul listei, funcția `elem` este generică într-un sens mai restrâns. Ea funcționează doar pentru liste cu elemente care definesc egalitatea (operatorul `==`).
 
 Cu alte cuvinte, `elem` poate fi aplicată pentru o listă de `Int` sau `String`, pentru că știm să definim egalitatea pentru aceste tipuri, dar nu și pentru o listă de funcții. Deși pare neintuitiv, următoarea expresie:
 
