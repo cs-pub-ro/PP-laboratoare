@@ -229,7 +229,7 @@ Biblioteca standard `Prelude` oferă un set de clase predefinite, care sunt intr
 * `Integral` -- clasă pentru tipurile întregi. (`Int` și `Integer` sunt incluse aici). Definește funcții ca `mod` sau `div`
 * `Fractional` -- clasă pentru numere reprezentabile ca fracții - definește funcția `(/)`
 * `Floating` -- clasă pentru numere reale - definește funcții ca `sqrt`, `exp`, `sin`, `cos`, etc.
-* `Monad` -- definește tipuri care pot reprezenta acțiuni monadice. Mai multe despre monade aici: Monade(http://book.realworldhaskell.org/read/monads.html)
+* `Monad` -- definește tipuri care pot reprezenta acțiuni monadice. Mai multe despre monade aici: Monade(http://book.realworldhaskell.org/read/monads.html "wikilink")
 
 
 ## Deriving
@@ -316,7 +316,7 @@ Cele spuse mai sus dezvăluie o caracteristică interesantă a sistemului de tip
 
 Pentru a afla informații despre clase în `ghci` se poate utiliza comanda `:info <typeclass` unde typeclass este clasa despre care dorim să aflăm informații.
 
-Mai multe detalii aici(http://www.haskell.org/tutorial/classes.html)
+Mai multe detalii aici(http://www.haskell.org/tutorial/classes.html "wikilink")
 
 ## Resurse
 
