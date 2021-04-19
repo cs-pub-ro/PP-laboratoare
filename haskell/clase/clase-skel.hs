@@ -154,7 +154,7 @@ class (Ord a) => PQueue pq a where
 
     {-
         Creează o coadă de priorități dintr-o lista de tupluri
-        !! Fiți atenți la alegerea ordinii de parcurgere a listei !!
+        !! Utilizați foldr !!
     -}
     fromList :: [(Prio, a)] -> pq a
     fromList = undefined
@@ -374,22 +374,20 @@ check7 = tests_ 7
         Mai multe informații: https://wiki.haskell.org/Foldable_and_Traversable
 -}
 
-class MyFoldable f where
-    foldr' :: (a -> b -> b) -> b -> f a -> b
+instance Foldable ListPQ where
+    foldr = undefined
 
-instance MyFoldable ListPQ where
-    foldr' = undefined
+instance Foldable LeftistPQ where
+    foldr = undefined
 
-instance MyFoldable LeftistPQ where
-    foldr' = undefined
 -- Test 8
 check8 :: TestData
 check8 = tests_ 8
           [
-            testVal "MyFoldable ListPQ Int" 0 $ foldr' fInt 0 listPQInt,
-            testVal "MyFoldable ListPQ Str" "IAPCPPPALFAAA" $ foldr' fStr "" listPQStr,
-            testVal "MyFoldable LeftistPQ Int" 0 $ foldr' fInt 0 leftistPQInt,
-            testVal "MyFoldable LeftistPQ Str" "AAPCPAIALFAPP" $ foldr' fStr "" leftistPQStr
+            testVal "Foldable ListPQ Int" 0 $ foldr fInt 0 listPQInt,
+            testVal "Foldable ListPQ Str" "IAPCPPPALFAAA" $ foldr fStr "" listPQStr,
+            testVal "Foldable LeftistPQ Int" 0 $ foldr fInt 0 leftistPQInt,
+            testVal "Foldable LeftistPQ Str" "AAPCPAIALFAPP" $ foldr fStr "" leftistPQStr
           ]
         where
           fStr = (++)
@@ -419,27 +417,27 @@ check8 = tests_ 8
        Funcția f primește ca parametru o valoare din coadă (al doilea element din tuplu)
 -}
 
-class MyFunctor f where
-    fmap' :: (Ord a, Ord b) => ((Prio, a)  -> (Prio, b)) -> f a -> f b
+class Functor f where
+    fmap :: (Ord a, Ord b) => ((Prio, a) -> (Prio, b)) -> f a -> f b
 
-instance MyFunctor ListPQ where
-    fmap' = undefined
+instance Main.Functor ListPQ where
+    fmap = undefined
 
-instance MyFunctor LeftistPQ where
-    fmap' = undefined
+instance Main.Functor LeftistPQ where
+    fmap = undefined
 
 -- Test 9
 check9 :: TestData
 check9 = tests_ 9
           [
-            testVal "MyFunctor ListPQ Int" refInt $ toList $ fmap' fInt listPQInt,
-            testVal "MyFunctor ListPQ Str" refStr $ toList $ fmap' fStr listPQStr,
-            testVal "MyFunctor LeftistPQ Int" refInt $ toList $ fmap' fInt leftistPQInt,
-            testVal "MyFunctor LeftistPQ Str" refStr $ toList $ fmap' fStr leftistPQStr
+            testVal "Functor ListPQ Int" refInt $ toList $ Main.fmap fInt listPQInt,
+            testVal "Functor ListPQ Str" refStr $ toList $ Main.fmap fStr listPQStr,
+            testVal "Functor LeftistPQ Int" refInt $ toList $ Main.fmap fInt leftistPQInt,
+            testVal "Functor LeftistPQ Str" refStr $ toList $ Main.fmap fStr leftistPQStr
           ]
         where
-          fInt (x, y) = (x - 10, y + 100)
-          fStr (x, y) = (x + 10, y ++ "42")
+          fInt (x, y) = (x, y + 100)
+          fStr (x, y) = (x, y ++ "42")
 
           refInt = reverse $ sort $ map fInt elemsInt
           refStr = reverse $ sort $ map fStr elemsStr
