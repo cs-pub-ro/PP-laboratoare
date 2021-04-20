@@ -6,7 +6,6 @@ import Data.List (sort)
 import TestPP
 
 
-
  ----------------------------------------------------------------------------------------------------
 {- Setup Testare -}
 
@@ -26,6 +25,11 @@ elemsStr = zip prios valsStr
     Pentru simplitate, checkerul va face mutările (nu trebuie
     reținut jucătorul care trebuie să mute în starea curentă).
 -}
+
+{-
+    Vom reprezenta poziția sub forma unui tuplu.
+-}
+type Position = (Int, Int)
 
 {-
     Completați tipul de date pentru reprezentarea celulelor de X și 0.
@@ -118,7 +122,6 @@ check1 = let
     precum și funcții care operează pe aceasta.
 -}
 
-type Position = (Int, Int)
 -- Considerăm că un element din coadă este reprezentat de un tuplu care va conține:
 -- * prioritatea
 -- * valoarea

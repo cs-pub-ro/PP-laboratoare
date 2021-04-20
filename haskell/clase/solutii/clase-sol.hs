@@ -1,13 +1,10 @@
 {-# LANGUAGE MultiParamTypeClasses #-}
 {-# LANGUAGE FlexibleInstances #-}
-{-# LANGUAGE InstanceSigs #-}
-{-# LANGUAGE RankNTypes #-}
 
 import Data.Maybe
 import Data.List (sort, insertBy)
 import Data.Function (on)
 import TestPP
-
 
 
  ----------------------------------------------------------------------------------------------------
@@ -31,7 +28,12 @@ elemsStr = zip prios valsStr
 -}
 
 {-
-    Tip de date pentru reprezentarea celulelor de X și 0
+    Vom reprezenta poziția sub forma unui tuplu.
+-}
+type Position = (Int, Int)
+
+{-
+    Tip de date pentru reprezentarea celulelor de X și 0.
 -}
 data Cell = X | Zero | Blank 
     deriving Eq
@@ -133,7 +135,6 @@ check1 = let
     precum și funcții care operează pe aceasta.
 -}
 
-type Position = (Int, Int)
 -- Considerăm că un element din coadă este reprezentat de un tuplu care va conține:
 -- * prioritatea
 -- * valoarea
