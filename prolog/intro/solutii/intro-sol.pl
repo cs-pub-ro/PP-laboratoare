@@ -71,7 +71,7 @@ exercitiul(3, [0.5, puncte]).
 %% 'RevList' este o listă ce conține elementele listei 'List' în ordine inversă
 %% și elementele listei 'Acc'.
 %% (Indicație: 'Acc' se va comporta precum un acumulator)
-%% Regulile nu trebuie să conține alte predicate (în afară de "cut" și ",").
+%% Obs. Regulile vor folosi doar predicatul myReverseAcc(și ",").
 
 myReverseAcc([], L, L).
 myReverseAcc([H|T],A,L):- myReverseAcc(T,[H|A],L).
@@ -82,45 +82,31 @@ check3:-
         1, chk(myReverseAcc([1,2,3], [0], [3,2,1,0])),
         2, exp('myReverseAcc([1,2,3], [0], Rev)', ['Rev', [3,2,1,0]]),
         2, exp('myReverseAcc(List, [0], [3,2,1,0])', ['List', [1,2,3]]),
-        2, exp('myReverseAcc([X2,1], [3], [X1,2,3])', ['X1', 1, 'X2', 2])]),
-        writeln('Exercițiul 3 rezolvat corect!').
+        2, exp('myReverseAcc([X2,1], [3], [X1,2,3])', ['X1', 1, 'X2', 2])]),setDiff([], _, []).
+setDiff([H1|T1], L2, [H1|T3]):-not(membru(H1, L2)),
+                               setDiff(T1, L2, T3).
+setDiff([H1|T1], L2, L3):-membru(H1, L2),
+                          setDiff(T1, L2, L3).
+
+
+%% -----------------------------------------------------------------------------
+
+exercitiul(4, [0.5, puncte]).
+%% numToBase/3
+%% numToBase(+N, +B, -Nb)
+
+
+numToBase(0, _, 0).
+numToBase(N, B, Nb):- Quotient is N//B,
+                      Rest is N mod B,
+                      numToBase(Quotient, B, Qb),
+                      Nb is Qb * 10 + Rest.
+
 
 
 
 %% -----------------------------------------------------------------------------
-exercitiul(4, [1, punct]).
-%% extract/4
-%% extract(+List, +Start, +End, -Range)
-%% 'Range' reprezintă lista formată din elementele listei 'List' aflate
-%% pe pozițiile din intervalul 'Start' .. 'End'. 'Start' va fi întotdeauna
-%% mai mic decât 'End'. Primul element se află pe poziția 0. Dacă 'End'
-%% depășește lungimea listei, 'Range' va conține toate elementele de la 'Start'
-%% la finalul listei.
 
-extract(List, Start, End, Range):-
-        extract(List, 0, Start, End, Range).
-
-extract([], _, _, _, []).
-extract([Head|_], End, _, End, [Head]):-!.
-extract([Head|Tail], N, Start, End, [Head|Rest]):-
-        N >= Start, !, N1 is N + 1,
-        extract(Tail, N1, Start, End, Rest).
-extract([_|Tail], N, Start, End, Rest):-
-        N1 is N + 1,
-        extract(Tail, N1, Start, End, Rest).
-
-check4:-
-    tests([
-        chk(extract([a,b,c,d,e], 0, 3, [a,b,c,d])),
-        chk(extract([a,b,c,d,e], 1, 10, [b,c,d,e])),
-        exp('extract([a,b,C,D,e], 2, 4, [c,d,e])', ['C', c, 'D', d]),
-        exp('extract([a,b,C1,D1,e], 2, 4, [C2,D2,e])', [cond('C1==C2'), cond('D1==D2')]),
-        chk(extract([a,b,c,_,d], 3, 4, [X,X]))]),
-        writeln('Exercițiul 4 rezolvat corect!').
-
-
-
-%% -----------------------------------------------------------------------------
 exercitiul(5, [0.5, puncte]).
 %% factorial/2
 %% factorial(+N, -Fact)
@@ -137,40 +123,15 @@ factorial(N, F):-
 check5:-
 	tests([
         exp('factorial(1, F1)',['F1',1]),
-	exp('factorial(4, F2)',['F2',24]), 
+	exp('factorial(4, F2)',['F2',24]),
         chk(factorial(5, 120)),
 	chk(factorial(6, 720)),
 	chk(factorial(7, 5040))]),
         writeln('Exercițiul 5 rezolvat corect!').
-     
-  
-
-%% -----------------------------------------------------------------------------
-exercitiul(6, [0.5, puncte]).
-%% factorial2/2
-%% factorial2(?N, ?Fact)
-%% 'Fact' este factorialul lui 'N'.
-%% Cel puțin unul dintre cele două argumente trebuie să fie legat la un număr.
-
-factorial2(0, 1).
-factorial2(N, F):-
-        factorial2(N1, F1),
-        N is N1 + 1,
-        F is N * F1.
-
-check6:-
-	tests([
-	exp('factorial2(2, F1)', ['F1', 2]),
-	exp('factorial2(4, F2)', ['F2', 24]),
-	exp('factorial2(N3, 120)', ['N3', 5]),
-	exp('factorial2(N4, 720)', ['N4', 6]),
-	chk(factorial2(7, 5040))]),
-        writeln('Exercițiul 6 rezolvat corect!').
-
 
 
 %% -----------------------------------------------------------------------------
-exercitiul(7,[1, punct]).
+exercitiul(6,[1, punct]).
 %% palindrom/2
 %% palindrom(+List)
 %% 'List' este un palindrom.
@@ -178,36 +139,49 @@ exercitiul(7,[1, punct]).
 palindrom(L):-
         myReverseAcc(L,[],L).
 
-check7 :-
+check6 :-
 	tests([
 	chk(palindrom([1,2,3,2,1])),
 	chk(palindrom([1,2,3,3,2,1])),
 	uck(palindrom([1,2,3,0,2,1])),
 	exp('palindrom([1,2,3,X3,X2,X1])', ['X1', 1, 'X2', 2, 'X3', 3]),
 	uck(palindrom([1,2,3,X,_,X]))]),
-        writeln('Exercițiul 7 rezolvat corect!').
-
+        writeln('Exercițiul 6 rezolvat corect!').
 
 
 %% -----------------------------------------------------------------------------
-exercitiul(8, [1, punct]).
-%% sublista/2
-%% sublista(+List, ?SubList)
-%% 'SubList' este o sublistă a lui 'List' ('SubList' poate fi obținută prin
-%% eliminarea a zero sau mai multe elemente din 'List'
 
-sublista([],[]):-!.
-sublista([Head|Tail],[Head|SubTail]):-sublista(Tail,SubTail).
-sublista([_|Tail],SubTail):-sublista(Tail,SubTail).
+exercitiul(7,[1, punct]).
+%% setIntersection/3
+%% setIntersection(+L1, +L2, -L)
 
-check8 :-
-	tests([
-	1,chk(sublista([1,2,3,4,5],[2,3,4])),
-	1,chk(sublista([1,2,3,4,5],[1,2,3,4,5])),
-	1,uck(sublista([1,2,3,4,5],[2,1,4])),
-	2,sls('sublista([1,2,3],S4)', 'S4', [[],[1],[1,2],[1,2,3],[1,3],[2],[2,3],[3]])]),
-        writeln('Exercițiul 8 rezolvat corect!').
+setIntersection([], _, []).
+setIntersection([H1|T1], L2, L3):-membru(H1, L2),
+                               L3 = [H1|T3],
+                               setIntersection(T1, L2, T3).
+setIntersection([_|T1], L2, L3):-setIntersection(T1, L2, L3).
 
+%% -----------------------------------------------------------------------------
+
+exercitiul(8,[1, punct]).
+%% setDiff/3
+%% setDiff(+L1, +L2, -L)
+%
+setDiff([], _, []).
+setDiff([H1|T1], L2, [H1|T3]):-not(membru(H1, L2)),
+                               setDiff(T1, L2, T3).
+setDiff([H1|T1], L2, L3):-membru(H1, L2),
+                          setDiff(T1, L2, L3).
+
+%% -----------------------------------------------------------------------------
+
+exercitiul(9,[1, punct]).
+%% setUnion/3
+%% setUnion(+L1, +L2, -L)
+
+setUnion(L1, L2, L):- setIntersection(L1, L2, Int),
+                      setDiff(L2, Int, Diff),
+                      myConcat(L1, Diff, L).
 
 
 %% -----------------------------------------------------------------------------
@@ -386,7 +360,7 @@ check14:-
 	exp('drum(X, b, [a, b])', ['X', a]),
 	uck(drum(a, m, X)),
 	uck(drum(a, X, [a, b, k]))
-	]), 
+	]),
 	writeln('Exercițiul 14 rezolvat corect!').
 
 
@@ -410,7 +384,7 @@ check15:-
 	chk(cost(c, a, -1)),
 	chk(cost(a, d, 2)),
 	uck(cost(a, h, X)),
-	uck(cost(b,m,X))	
+	uck(cost(b,m,X))
 	]),
         writeln('Exercițiul 15 rezolvat corect!').
 
