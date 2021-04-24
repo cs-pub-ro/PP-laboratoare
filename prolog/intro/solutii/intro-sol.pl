@@ -17,10 +17,12 @@ perm([F|R],P):- perm(R,P1), remove(F,P,P1).
 
 :- discontiguous exercitiul/2.
 %% -----------------------------------------------------------------------------
+
 exercitiul(1, [1, punct]).
 %% myConcat/3
 %% myConcat(?List1, ?List2, ?List)
-%% 'List' este lista formată prin concatenarea listelor 'List1' și 'List2'.
+%% 'List' este lista formată prin concatenarea listelor 'List1' și
+%% 'List2' si functioneaza similar cu un parametru acumulator.
 
 myConcat([],L,L).
 myConcat([A|B],C,[A|D]) :- myConcat(B, C, D).
@@ -83,11 +85,6 @@ check3:-
         2, exp('myReverseAcc([1,2,3], [0], Rev)', ['Rev', [3,2,1,0]]),
         2, exp('myReverseAcc(List, [0], [3,2,1,0])', ['List', [1,2,3]]),
         2, exp('myReverseAcc([X2,1], [3], [X1,2,3])', ['X1', 1, 'X2', 2])]),setDiff([], _, []).
-setDiff([H1|T1], L2, [H1|T3]):-not(membru(H1, L2)),
-                               setDiff(T1, L2, T3).
-setDiff([H1|T1], L2, L3):-membru(H1, L2),
-                          setDiff(T1, L2, L3).
-
 
 %% -----------------------------------------------------------------------------
 
@@ -103,6 +100,13 @@ numToBase(N, B, Nb):- Quotient is N//B,
                       Nb is Qb * 10 + Rest.
 
 
+check4:-
+    tests([
+        1, chk(numToBase(0, 2, 0)),
+        1, chk(numToBase(8, 2, 1000)),
+        1, chk(numToBase(63, 5, 223)),
+        1, chk(numToBase(76, 10, 76)),
+        1, exp('numToBase(17, 3, X)', ['X', 122])]).
 
 
 %% -----------------------------------------------------------------------------
@@ -161,6 +165,13 @@ setIntersection([H1|T1], L2, L3):-membru(H1, L2),
                                setIntersection(T1, L2, T3).
 setIntersection([_|T1], L2, L3):-setIntersection(T1, L2, L3).
 
+check7:-
+    tests([
+        1, chk(setIntersection([], [1,2], [])),
+        1, chk(setIntersection([1,2,3], [7,9,24], [])),
+        1, chk(setIntersection([1,2,3], [2], [2])),
+        2, exp('setIntersection([1,2,3,4,7,13], [7,13,21], Int)', ['Int', [7,13]])]).
+
 %% -----------------------------------------------------------------------------
 
 exercitiul(8,[1, punct]).
@@ -173,6 +184,15 @@ setDiff([H1|T1], L2, [H1|T3]):-not(membru(H1, L2)),
 setDiff([H1|T1], L2, L3):-membru(H1, L2),
                           setDiff(T1, L2, L3).
 
+
+check8:-
+    tests([
+        1, chk(setDiff([], [1,2], [])),
+        1, chk(setDiff([1,2,3], [7,9,24], [1,2,3])),
+        1, chk(setDiff([1,2,3], [2], [1,3])),
+        2, exp('setDiff([1,2,3,4,7,13], [7,13,21], Diff)', ['Diff', [1,2,3,4]])]).
+
+
 %% -----------------------------------------------------------------------------
 
 exercitiul(9,[1, punct]).
@@ -182,6 +202,14 @@ exercitiul(9,[1, punct]).
 setUnion(L1, L2, L):- setIntersection(L1, L2, Int),
                       setDiff(L2, Int, Diff),
                       myConcat(L1, Diff, L).
+
+check9:-
+    tests([
+        1, chk(setUnion([], [1,2], [1,2])),
+        1, chk(setUnion([1,2,3], [7,9,24], [1,2,3,7,9,24])),
+        1, chk(setUnion([1,2,3], [2], [1,2,3])),
+        2, exp('setUnion([1,2,3,4,7,13], [29,3,7,13,21], Union)', ['Union', [1,2,3,4,7,13,29,21]])]).
+
 
 
 %% -----------------------------------------------------------------------------
@@ -202,13 +230,13 @@ arc(h,i). arc(h,j). arc(i,k). arc(j,l).
 arc(n,o). arc(o,p).
 
 %% -----------------------------------------------------------------------------
-exercitiul(9, [0.5, puncte]).
+exercitiul(10, [0.5, puncte]).
 %% isLeaf/1
 %% isLeaf(?Nod)
 
 isLeaf(X):- nod(X), \+ arc(X,_).
 
-check9:-
+check10:-
 	tests([
 	chk(isLeaf(d)),
 	chk(isLeaf(f)),
@@ -222,17 +250,17 @@ check9:-
 	uck(isLeaf(c)),
 	uck(isLeaf(e)),
 	nsl('isLeaf(A)', 'A', 7)]),
-        writeln('Exercițiul 9 rezolvat corect!').
+        writeln('Exercițiul 10 rezolvat corect!').
 
 
 
 %% -----------------------------------------------------------------------------
-exercitiul(10, [0.5, puncte]).
+exercitiul(11, [0.5, puncte]).
 %% isRoot/1
 
 isRoot(X):- nod(X), \+ arc(_,X).
 
-check10:-
+check11:-
 	tests([
 	chk(isRoot(a)),
 	chk(isRoot(h)),
@@ -243,12 +271,12 @@ check10:-
 	uck(isRoot(e)),
 	uck(isRoot(l)),
 	nsl('isRoot(A)', 'A', 4)]),
-        writeln('Exercițiul 10 rezolvat corect!').
+        writeln('Exercițiul 11 rezolvat corect!').
 
 
 
 %% -----------------------------------------------------------------------------
-exercitiul(11, [1, punct]).
+exercitiul(12, [1, punct]).
 %% descendantOf/2
 %% descendantOf(?X,?Y)
 %% Nodul X este un urmaș a lui Y.
@@ -256,7 +284,7 @@ exercitiul(11, [1, punct]).
 descendantOf(X,Y):-arc(Y,X).
 descendantOf(X,Y):-arc(Z,X), descendantOf(Z,Y).
 
-check11:-
+check12:-
 	tests([
 	chk(descendantOf(b, a)),
 	chk(descendantOf(c, a)),
@@ -272,12 +300,12 @@ check11:-
 	nsl('descendantOf(X, h)', 'X', 4),
 	nsl('descendantOf(l, X)', 'X', 2),
 	nsl('descendantOf(f, X)', 'X', 3)]),
-        writeln('Exercițiul 11 rezolvat corect!').
+        writeln('Exercițiul 12 rezolvat corect!').
 
 
 
 %% -----------------------------------------------------------------------------
-exercitiul(12, [2, puncte]).
+exercitiul(13, [2, puncte]).
 %% descendants/2
 %% descendants(?Nod, ?N)
 %% Nodul Nod are N urmași.
@@ -297,7 +325,7 @@ descendants(X, N):-
         descendants(Z, N2),
         N is N1 + N2 + 2.
 
-check12:-
+check13:-
 	tests([
 	chk(descendants(a, 6)),
 	chk(descendants(b, 1)),
@@ -308,7 +336,7 @@ check12:-
 	chk(descendants(l, 0)),
 	sls('descendants(X, 1)', 'X', [b, e, i, j, o]),
 	sls('descendants(X, 2)', 'X', [n])]),
-        writeln('Exercițiul 12 rezolvat corect!').
+        writeln('Exercițiul 13 rezolvat corect!').
 
 
 
@@ -317,7 +345,7 @@ check12:-
 %%=====BONUS======
 %%================
 %% -----------------------------------------------------------------------------
-exercitiul(13, [1, punct, bonus]).
+exercitiul(14, [1, punct, bonus]).
 %% sameTree/2
 %% sameTree(+Nod, +Nod).
 
@@ -326,7 +354,7 @@ sameTree(A, B):- descendantOf(B, A).
 sameTree(A, B):- isRoot(C), descendantOf(A, C), descendantOf(B, C).
 
 
-check13:-
+check14:-
 	tests([
 	chk(sameTree(a, b)),
 	chk(sameTree(c, a)),
@@ -336,12 +364,12 @@ check13:-
 	uck(sameTree(a, m)),
 	uck(sameTree(c, n)),
 	uck(sameTree(d, i))]),
-        writeln('Exercițiul 13 rezolvat corect!').
+        writeln('Exercițiul 14 rezolvat corect!').
 
 
 
 %% -----------------------------------------------------------------------------
-exercitiul(14, [2, puncte, bonus]).
+exercitiul(15, [2, puncte, bonus]).
 %% drum/3
 %% drum(?Nod, ?Nod, ?Lista)
 
@@ -350,7 +378,7 @@ drum(A, B, [A, B]):- \+ (\+ arc(A, B), \+ arc(B, A)).
 drum(A, B, [A|T]):- descendantOf(B, A), arc(A, C), descendantOf(B, C), drum(C, B, T), !.
 drum(A, B, [A|T]):- arc(C, A), drum(C, B, T), !.
 
-check14:-
+check15:-
 	tests([
 	chk(drum(a, b, [a,b])),
 	chk(drum(e, a, [e, c, a])),
@@ -361,12 +389,12 @@ check14:-
 	uck(drum(a, m, X)),
 	uck(drum(a, X, [a, b, k]))
 	]),
-	writeln('Exercițiul 14 rezolvat corect!').
+	writeln('Exercițiul 15 rezolvat corect!').
 
 
 
 %% -----------------------------------------------------------------------------
-exercitiul(15, [2, puncte, bonus]).
+exercitiul(16, [2, puncte, bonus]).
 %% cost/3
 %% cost(+Nod, +Nod, -Cost).
 %% un arc in sus costa -1, unul in jos, 1.
@@ -377,7 +405,7 @@ cost(A, B, -1):- arc(B, A), !.
 cost(A, B, N):- descendantOf(B, A), arc(A, C), descendantOf(B, C), cost(C, B, N2), !, N is N2 + 1.
 cost(A, B, N):- arc(C, A), cost(C, B, N2), !, N is N2 - 1.
 
-check15:-
+check16:-
 	tests([
 	chk(cost(a, a, 0)),
 	chk(cost(a, b, 1)),
@@ -386,7 +414,7 @@ check15:-
 	uck(cost(a, h, X)),
 	uck(cost(b,m,X))
 	]),
-        writeln('Exercițiul 15 rezolvat corect!').
+        writeln('Exercițiul 16 rezolvat corect!').
 
 
 
