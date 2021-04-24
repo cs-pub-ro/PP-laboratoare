@@ -271,6 +271,9 @@ exercitiul(10, [0.5, puncte]).
 %% isLeaf/1
 %% isLeaf(?Nod)
 
+%% Hint: Predicatul este adevărat dacă Nod este nod si nu există arcuri
+%% care pornesc din Nod.
+
 isLeaf(X):- nod(X), \+ arc(X,_).
 
 check10:-
@@ -294,6 +297,10 @@ check10:-
 %% -----------------------------------------------------------------------------
 exercitiul(11, [0.5, puncte]).
 %% isRoot/1
+%% isRoot(?Nod)
+
+%% Hint: Predicatul este adevărat dacă Nod este nod si nu există arcuri
+%% care au ca destinatie Nod.
 
 isRoot(X):- nod(X), \+ arc(_,X).
 
@@ -317,6 +324,10 @@ exercitiul(12, [1, punct]).
 %% descendantOf/2
 %% descendantOf(?X,?Y)
 %% Nodul X este un urmaș a lui Y.
+
+%% Hint: Predicatul este adevărat dacă există un arc de la Y la X sau
+%% dacă există arc de la unul din urmasii lui Y la X.
+
 
 descendantOf(X,Y):-arc(Y,X).
 descendantOf(X,Y):-arc(Z,X), descendantOf(Z,Y).
@@ -346,6 +357,10 @@ exercitiul(13, [2, puncte]).
 %% descendants/2
 %% descendants(?Nod, ?N)
 %% Nodul Nod are N urmași.
+
+%% Hint: Un nod frunză are 0 urmasi. Un nod X poate avea unul sau doi
+%% urmasi directi. Numărul urmasilor unui nod este egal cu numărul
+%% urmasilor directi + numărul urmasilor urmasilor directi.
 
 descendants(X, 0):-
         isLeaf(X).
@@ -386,6 +401,10 @@ exercitiul(14, [1, punct, bonus]).
 %% sameTree/2
 %% sameTree(+Nod, +Nod).
 
+%% Hint: Predicatul este adevărat dacă Nod1 este urmasul lui Nod2, sau
+%% Nod2 este urmasul lui Nod1, sau Nod1 si Nod2 sunt urmasi ai aceleiasi
+%% rădăcini.
+
 sameTree(A, B):- descendantOf(A, B).
 sameTree(A, B):- descendantOf(B, A).
 sameTree(A, B):- isRoot(C), descendantOf(A, C), descendantOf(B, C).
@@ -412,8 +431,9 @@ exercitiul(15, [2, puncte, bonus]).
 
 drum(A, A, [A]).
 drum(A, B, [A, B]):- \+ (\+ arc(A, B), \+ arc(B, A)).
-drum(A, B, [A|T]):- descendantOf(B, A), arc(A, C), descendantOf(B, C), drum(C, B, T), !.
-drum(A, B, [A|T]):- arc(C, A), drum(C, B, T), !.
+drum(A, B, [A|T]):- arc(C, A), drum(C, B, T).
+drum(A, B, [A|T]):- descendantOf(B, A), arc(A, C), descendantOf(B, C),drum(C, B, T).
+
 
 check15:-
 	tests([
