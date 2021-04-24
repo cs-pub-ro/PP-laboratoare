@@ -1,4 +1,4 @@
-﻿%% LABORATOR 10
+﻿%% LABORATOR 09
 %% Prolog - Intro
 
 
@@ -24,6 +24,11 @@ exercitiul(1, [1, punct]).
 %% 'List' este lista formată prin concatenarea listelor 'List1' și
 %% 'List2' si functioneaza similar cu un parametru acumulator.
 
+%% Hint: Predicatul myConcat este adevărat dacă primul element al
+%% rezultatului (List) este egal cu primul element al listei List1, iar
+%% restul lui List este egal cu concatenarea restului lui List1 cu
+%% List2.
+
 myConcat([],L,L).
 myConcat([A|B],C,[A|D]) :- myConcat(B, C, D).
 
@@ -48,6 +53,10 @@ exercitiul(2, [0.5, puncte]).
 %% myReverse(?List, +RevList)
 %% 'RevList' este o listă ce conține elementele listei 'List' în ordine inversă.
 %% Regulile pot conține și predicatul myConcat/3.
+
+%% Hint: Predicatul este adevărat dacă RevList are ca ultim element
+%% primul element din L, iar restul lui RevList este inversul restului
+%% elementelor din L.
 
 myReverse([],[]).
 myReverse([H1|T1],L2):- myReverse(T1,H2), myConcat(H2,[H1],L2).
@@ -75,6 +84,11 @@ exercitiul(3, [0.5, puncte]).
 %% (Indicație: 'Acc' se va comporta precum un acumulator)
 %% Obs. Regulile vor folosi doar predicatul myReverseAcc(și ",").
 
+%% Hint: Inversul listei se va construi in Acc. Predicatul este adevărat
+%% dacă valoarea primului element al acumulatorului, pentru restul lui
+%% List, este egal cu primul element din List.
+
+
 myReverseAcc([], L, L).
 myReverseAcc([H|T],A,L):- myReverseAcc(T,[H|A],L).
 
@@ -91,7 +105,12 @@ check3:-
 exercitiul(4, [0.5, puncte]).
 %% numToBase/3
 %% numToBase(+N, +B, -Nb)
+%% Nb este reprezentarea lui N in baza B.
+%% Vom considera B <= 10.
 
+%% Hint: Predicatul este adevărat dacă Nb este egal cu Qb * 10 + Rest,
+%% unde Qb reprezintă valoarea lui N // B în baza B, iar Rest este
+%% restul împărtirii lui N la B.
 
 numToBase(0, _, 0).
 numToBase(N, B, Nb):- Quotient is N//B,
@@ -117,6 +136,8 @@ exercitiul(5, [0.5, puncte]).
 %% 'Fact' este factorialul lui 'N'.
 %% N va fi mereu legat la un număr natural.
 
+%% Hint: Predicatul este adevărat dacă F este egal cu N*(N-1)!.
+
 factorial(0, 1).
 factorial(N, F):-
         N > 0,
@@ -140,6 +161,8 @@ exercitiul(6,[1, punct]).
 %% palindrom(+List)
 %% 'List' este un palindrom.
 
+%% Hint: Predicatul este adevărat dacă inversul lui List este List.
+
 palindrom(L):-
         myReverseAcc(L,[],L).
 
@@ -158,6 +181,10 @@ check6 :-
 exercitiul(7,[1, punct]).
 %% setIntersection/3
 %% setIntersection(+L1, +L2, -L)
+%% L este intersectia listelor L1 si L2.
+
+%% Hint: Predicatul este adevărat dacă primul element din L3 este egal
+%% cu primul element din L1 (H1), dacă H1 este si în lista L2.
 
 setIntersection([], _, []).
 setIntersection([H1|T1], L2, L3):-membru(H1, L2),
@@ -177,7 +204,11 @@ check7:-
 exercitiul(8,[1, punct]).
 %% setDiff/3
 %% setDiff(+L1, +L2, -L)
-%
+%% L este diferenta listelor L1 si L2 (L1 - L2)
+
+%% Hint: Predicatul este adevărat dacă primul element din L3 este egal
+%% cu primul element din L1 (H1), dacă H1 nu este si în lista L2.
+
 setDiff([], _, []).
 setDiff([H1|T1], L2, [H1|T3]):-not(membru(H1, L2)),
                                setDiff(T1, L2, T3).
@@ -198,6 +229,12 @@ check8:-
 exercitiul(9,[1, punct]).
 %% setUnion/3
 %% setUnion(+L1, +L2, -L)
+%% L este reuniunea listelor L1 si L2.
+
+%% Hint: Predicatul este adevărat dacă L este egal cu
+%% L1 ++ (L2 - (L1 intersectat L2))
+
+
 
 setUnion(L1, L2, L):- setIntersection(L1, L2, Int),
                       setDiff(L2, Int, Diff),
