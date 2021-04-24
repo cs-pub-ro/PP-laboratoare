@@ -17,7 +17,7 @@ Aspectele urmărite sunt:
 Polimorfismul este un mecanism al limbajului Haskell (și nu doar al acestuia) prin care se poate defini un **set de operații (interfață comună)** pentru mai multe tipuri.
 Categoriile de polimorfism pe care le vom întâlni cel mai des în Haskell sunt: parametric și ad-hoc.
 
-# Polimorfism parametric
+## Polimorfism parametric
 
 Așa cum ați observat în laboratoarele anterioare, Haskell permite definirea de funcții care operează pe structuri de date generice. Să luăm spre exemplu funcția `length`. Aceasta permite calcularea lungimii oricărei liste, indiferent de tipul elementelor din listă. Această proprietate a limbajului poartă denumirea de **polimorfism parametric**.
 
