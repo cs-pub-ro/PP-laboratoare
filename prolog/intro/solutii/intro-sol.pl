@@ -1,20 +1,5 @@
 ﻿%% LABORATOR 09
 %% Prolog - Intro
-
-
-lungime([],0).
-lungime([_|R], N):- lungime(R,N1), N is N1 + 1.
-
-membru(Elem,[Elem|_]).
-membru(Elem,[_|Rest]) :- membru(Elem,Rest).
-
-remove(E,[E|R],R).
-remove(E,[F|R],[F|L]):- remove(E,R,L).
-
-perm([],[]).
-perm([F|R],P):- perm(R,P1), remove(F,P,P1).
-
-
 :- discontiguous exercitiul/2.
 %% -----------------------------------------------------------------------------
 
@@ -189,7 +174,7 @@ exercitiul(7,[]).
 %% cu primul element din L1 (H1), dacă H1 este si în lista L2.
 
 setIntersection([], _, []).
-setIntersection([H1|T1], L2, L3):-membru(H1, L2),
+setIntersection([H1|T1], L2, L3):-member(H1, L2),
                                L3 = [H1|T3],
                                setIntersection(T1, L2, T3).
 setIntersection([_|T1], L2, L3):-setIntersection(T1, L2, L3).
@@ -213,9 +198,9 @@ exercitiul(8,[]).
 %% cu primul element din L1 (H1), dacă H1 nu este si în lista L2.
 
 setDiff([], _, []).
-setDiff([H1|T1], L2, [H1|T3]):-not(membru(H1, L2)),
+setDiff([H1|T1], L2, [H1|T3]):-not(member(H1, L2)),
                                setDiff(T1, L2, T3).
-setDiff([H1|T1], L2, L3):-membru(H1, L2),
+setDiff([H1|T1], L2, L3):-member(H1, L2),
                           setDiff(T1, L2, L3).
 
 
@@ -527,31 +512,6 @@ test_mode(quickcheck) :- \+ test_mode(vmchecker).
 %:-clean.
 
 clean :- retractall(punct(_, _)), retractall(current(_)).
-
-
-% -----------------
-
-% runs vm tests
-vmtest :- checkVm.
-vmcheck :- checkVm.
-checkVm :-
-        clean,
-        findall(T:Score, (tt(T, _), vmtest(T, Score)), Results),
-        findall(Score, member(_:Score, Results), Scores),
-        sum_list(Scores, S),
-        format('Total: ~w~n', [S]),
-        clean.
-
-% entry point (for users) for individual vm tests.
-vmtest(T) :-
-        vmtest(T, Score),
-        format('Total: ~w.', [Score]).
-
-% performes a vm test, outputs score.
-vmtest(T, Score) :-
-        once(vmpoints(T, Pts)),
-        tt(T, TestList),
-        tests(TestList, Pts, T, Score).
 
 % -----------------
 
