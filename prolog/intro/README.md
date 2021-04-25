@@ -220,102 +220,6 @@ iubeste(X, Y):- bun(X), cunoaste(X, Y), frumoasa(Y).   %6
 Se observă definirea atât printr-un fapt(linia 5), cât și printr-o
 regulă (linia 6) a predicatului *iubeste(?Cine, ?PeCine)*.
 
-## Backtracking
-
-Pentru a prezenta mecanismul de backtracking în Prolog, vom folosi baza
-de fapte dată ca exemplu mai sus.
-
-Vom urmari în continuare pașii realizați pentru satisfacerea scopului:
-
-```prolog 
-?- iubeste(X, Y).
-```
-
-Așa cum am precizat anterior, căutarea pornește de la începutul bazei de
-cunoștințe. Prima potrivire va fi la linia 5, cu faptul:
-
-```prolog
-iubeste(mihai, maria).  %5
-```
-
-În urma unificării, variabilele *X* si *Y* se vor instanția la
-constantele *mihai* și *maria* și se va realiza un marcaj la linia
-respectivă. Pentru a încerca resatisfacerea scopului, căutarea va începe
-acum după marcajul făcut anterior. Urmatoarea potrivire va fi la linia
-6, cu regula:
-
-```prolog
-iubeste(X, Y):- bun(X), cunoaste(X, Y), frumoasa(Y).  %6
-```
-
-La unificarea scopului cu antetul unei reguli, pentru a putea satisface
-acest scop trebuie satisfăcută regula. Aceasta revine la a satisface
-toate faptele din corpul regulii, deci conjuncția de scopuri. Scopurile
-din corpul regulii devin subscopuri a căror satisfacere se va încerca
-printr-un mecanism identic cu cel al satisfacerii scopului inițial.
-
-În continuare se va încerca satisfacerea scopului `bun(X).`
-
-Fiind vorba de un nou scop, căutarea va avea loc de la începutul bazei
-de cunoștințe. Acest scop va unifica cu predicatul de la linia 2:
-
-```prolog
-bun(vlad).  %2
-```
-
-În urma unificării, varibila `X` se va instanția la valoarea `vlad`.
-
-În continuare se va încerca satisfacerea scopului `cunoaste(vlad, Y).`
-care va unifica cu faptul de la linia 3 și va duce la legarea variabilei
-`Y` la `maria`: 
-```prolog 
-cunoaste(vlad, maria).  %3
-```
-
-Ultimul scop care mai trebuie satisfăcut este `frumoasa(maria)`, dar
-acesta eșuează deoarece nu unifica cu niciunul dintre faptele sau
-regulile din baza de cunoștințe.
-
-Aici intervine mecanismul de **backtracking**. Se va reveni la
-scopul satisfăcut anterior, `cunoaste(vlad, Y).` și se va încerca
-resatisfacerea acestuia. Dacă aceasta ar eșua, ne-am întoarce la scopul
-dinaintea sa ș.a.m.d. Acest lucru se va repeta pană când se epuizează
-toate scopurile din corpul regulii, caz în care unificarea scopului
-inițial cu antetul regulii ar eșua, iar răspunsul ar fi `false*`
-
-În cazul nostru, însă, este necesar un singur pas de întoarcere deoarece
-`cunoaste(vlad, Y).` poate fi resatisfăcut prin unificarea cu faptul de
-la linia 4:
-
-```prolog
-cunoaste(vlad, ana).  %4
-```
-
-În urma unificării, variabila `Y` va fi legată la `ana`, iar următorul
-scop ce va trebui satisfăcut este `frumoasa(ana)`. Acesta va reuși
-deoarece unifică cu faptul de la linia 1:
-
-```prolog
-frumoasa(ana).  %1
-```
-
-Astfel am obținut o noua soluție pentru scopul `iubeste(X, Y).`, avand
-`X = vlad` si `Y = ana`.
-
-Procesul nu se oprește însă pana când nu s-au încercat toate unificările
-posibile pentru satisfacerea scopului. Tot prin intermediul mecanismului
-de backtracking, se va reveni la scopurile anterioare și se va observa
-dacă acestea pot fi resatisfăcute. În exemplul nostru acest lucru nu
-este posibil, deci răspunsul va fi *false*.
-
-Prin urmare, rezultatul final va fi:
-
-```prolog
-?- iubeste(X, Y).
-X = mihai, Y = maria;
-X = vlad, Y = ana;
-false.
-```
 
 ## Operatori
 
@@ -385,5 +289,4 @@ specificarea acestora:
     Prolog](http://www.ida.liu.se/~ulfni53/lpp/bok/bok.pdf "wikilink")
   - [Built-in
     Predicates](http://www.swi-prolog.org/pldoc/doc_for?object=section%281,%274%27,swi%28%27/doc/Manual/builtin.html%27%29%29 "wikilink")
-  - [Red Cut vs Green
-    Cut](http://en.wikipedia.org/wiki/Cut_%28logic_programming%29#Red_Cut "wikilink")
+
