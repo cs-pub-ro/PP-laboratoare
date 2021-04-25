@@ -18,7 +18,7 @@ perm([F|R],P):- perm(R,P1), remove(F,P,P1).
 :- discontiguous exercitiul/2.
 %% -----------------------------------------------------------------------------
 
-exercitiul(1, [1, punct]).
+exercitiul(1, []).
 %% myConcat/3
 %% myConcat(?List1, ?List2, ?List)
 %% 'List' este lista formată prin concatenarea listelor 'List1' și
@@ -48,7 +48,7 @@ check1:-
 
 
 %% -----------------------------------------------------------------------------
-exercitiul(2, [0.5, puncte]).
+exercitiul(2, []).
 %% myReverse/2
 %% myReverse(?List, +RevList)
 %% 'RevList' este o listă ce conține elementele listei 'List' în ordine inversă.
@@ -76,7 +76,7 @@ check2:-
 
 
 %% -----------------------------------------------------------------------------
-exercitiul(3, [0.5, puncte]).
+exercitiul(3, []).
 %% myReverseAcc/3
 %% myReverseAcc(?List, ?Acc, ?RevList)
 %% 'RevList' este o listă ce conține elementele listei 'List' în ordine inversă
@@ -98,11 +98,12 @@ check3:-
         1, chk(myReverseAcc([1,2,3], [0], [3,2,1,0])),
         2, exp('myReverseAcc([1,2,3], [0], Rev)', ['Rev', [3,2,1,0]]),
         2, exp('myReverseAcc(List, [0], [3,2,1,0])', ['List', [1,2,3]]),
-        2, exp('myReverseAcc([X2,1], [3], [X1,2,3])', ['X1', 1, 'X2', 2])]),setDiff([], _, []).
+        2, exp('myReverseAcc([X2,1], [3], [X1,2,3])', ['X1', 1, 'X2', 2])]),setDiff([], _, []),
+        writeln('Exercițiul 3 rezolvat corect!').
 
 %% -----------------------------------------------------------------------------
 
-exercitiul(4, [0.5, puncte]).
+exercitiul(4, []).
 %% numToBase/3
 %% numToBase(+N, +B, -Nb)
 %% Nb este reprezentarea lui N in baza B.
@@ -131,7 +132,7 @@ check4:-
 
 %% -----------------------------------------------------------------------------
 
-exercitiul(5, [0.5, puncte]).
+exercitiul(5, []).
 %% factorial/2
 %% factorial(+N, -Fact)
 %% 'Fact' este factorialul lui 'N'.
@@ -157,7 +158,7 @@ check5:-
 
 
 %% -----------------------------------------------------------------------------
-exercitiul(6,[1, punct]).
+exercitiul(6,[]).
 %% palindrom/2
 %% palindrom(+List)
 %% 'List' este un palindrom.
@@ -179,7 +180,7 @@ check6 :-
 
 %% -----------------------------------------------------------------------------
 
-exercitiul(7,[1, punct]).
+exercitiul(7,[]).
 %% setIntersection/3
 %% setIntersection(+L1, +L2, -L)
 %% L este intersectia listelor L1 si L2.
@@ -203,7 +204,7 @@ check7:-
 
 %% -----------------------------------------------------------------------------
 
-exercitiul(8,[1, punct]).
+exercitiul(8,[]).
 %% setDiff/3
 %% setDiff(+L1, +L2, -L)
 %% L este diferenta listelor L1 si L2 (L1 - L2)
@@ -230,7 +231,7 @@ check8:-
 
 %% -----------------------------------------------------------------------------
 
-exercitiul(9,[1, punct]).
+exercitiul(9,[]).
 %% setUnion/3
 %% setUnion(+L1, +L2, -L)
 %% L este reuniunea listelor L1 si L2.
@@ -272,7 +273,7 @@ arc(h,i). arc(h,j). arc(i,k). arc(j,l).
 arc(n,o). arc(o,p).
 
 %% -----------------------------------------------------------------------------
-exercitiul(10, [0.5, puncte]).
+exercitiul(10, []).
 %% isLeaf/1
 %% isLeaf(?Nod)
 
@@ -300,7 +301,7 @@ check10:-
 
 
 %% -----------------------------------------------------------------------------
-exercitiul(11, [0.5, puncte]).
+exercitiul(11, []).
 %% isRoot/1
 %% isRoot(?Nod)
 
@@ -325,7 +326,7 @@ check11:-
 
 
 %% -----------------------------------------------------------------------------
-exercitiul(12, [1, punct]).
+exercitiul(12, []).
 %% descendantOf/2
 %% descendantOf(?X,?Y)
 %% Nodul X este un urmaș a lui Y.
@@ -358,7 +359,7 @@ check12:-
 
 
 %% -----------------------------------------------------------------------------
-exercitiul(13, [2, puncte]).
+exercitiul(13, []).
 %% descendants/2
 %% descendants(?Nod, ?N)
 %% Nodul Nod are N urmași.
@@ -396,13 +397,7 @@ check13:-
         writeln('Exercițiul 13 rezolvat corect!').
 
 
-
-
-%%================
-%%=====BONUS======
-%%================
-%% -----------------------------------------------------------------------------
-exercitiul(14, [1, punct, bonus]).
+exercitiul(14, []).
 %% sameTree/2
 %% sameTree(+Nod, +Nod).
 
@@ -430,7 +425,7 @@ check14:-
 
 
 %% -----------------------------------------------------------------------------
-exercitiul(15, [2, puncte, bonus]).
+exercitiul(15, []).
 %% drum/3
 %% drum(?Nod, ?Nod, ?Lista)
 
@@ -467,7 +462,7 @@ check15:-
 
 
 %% -----------------------------------------------------------------------------
-exercitiul(16, [2, puncte, bonus]).
+exercitiul(16, []).
 %% cost/3
 %% cost(+Nod, +Nod, -Cost).
 %% un arc in sus costa -1, unul in jos, 1.
