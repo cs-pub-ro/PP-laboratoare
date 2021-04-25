@@ -14,8 +14,7 @@ Aspectele urmărite sunt:
     **reguli**, **scopuri**
   - sintaxa **Prolog**
   - structuri de date
-  - backtracking
-  - unificare
+
 
 ## SWI-Prolog
 
@@ -223,8 +222,13 @@ regulă (linia 6) a predicatului *iubeste(?Cine, ?PeCine)*.
 
 ## Operatori
 
-  - Aritmetici: + - \* /
-  - Relaționali: = \\= \< \> =\< \>= =:=
+  - Aritmetici: `+` `-` `*` `/`
+  - Relaționali: `=\=` `<` `>` `=<` `>=` `=:=`
+  - Logici: `,` (si) `;` (sau) `\+` (not)
+ 
+Operatorul `\+` folosit pentru un operand reprezintă faptul că nu se poate demonstra că operandul este adevărat.
+Alternativ, dacă sunt variabile în operand, `\+` denotă că nu există nicio legare pentru variabile, astfel încât
+ operandul să fie adevărat.
 
 La scrierea expresiei `1+2\*(X/Y)`, valoarea acesteia nu este calculată,
 ci expresia este reținută ca atare. Se poate observa că operatorii `=:=`
@@ -278,10 +282,10 @@ specificarea acestora:
 
 
 ## Resurse
+-   [Cheatsheet](https://github.com/cs-pub-ro/PP-laboratoare/raw/master/prolog/intro/prolog-cheatsheet-1.pdf)
+-   [Schelet](https://ocw.cs.pub.ro/courses/_media/pp/21/laboratoare/prolog/intro-skel.zip)
+-   [Soluții](https://ocw.cs.pub.ro/courses/_media/pp/21/laboratoare/prolog/intro-sol.zip)
 
-  - 
-  - 
-  - 
 ## Referințe
 
   - [Learn prolog now\!](http://www.learnprolognow.org/ "wikilink")
