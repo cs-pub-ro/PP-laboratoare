@@ -86,7 +86,7 @@ check3:-
         1, chk(myReverseAcc([1,2,3], [0], [3,2,1,0])),
         2, exp('myReverseAcc([1,2,3], [0], Rev)', ['Rev', [3,2,1,0]]),
         2, exp('myReverseAcc(List, [0], [3,2,1,0])', ['List', [1,2,3]]),
-        2, exp('myReverseAcc([X2,1], [3], [X1,2,3])', ['X1', 1, 'X2', 2])]),setDiff([], _, []),
+        2, exp('myReverseAcc([X2,1], [3], [X1,2,3])', ['X1', 1, 'X2', 2])]),
         writeln('Exercițiul 3 rezolvat corect!').
 
 
