@@ -143,8 +143,13 @@ exercitiul(6,[]).
 %% setIntersection(+L1, +L2, -L)
 %% L este intersectia listelor L1 si L2.
 
-%% Hint: Predicatul este adevărat dacă primul element din L3 este egal
-%% cu primul element din L1 (H1), dacă H1 este si în lista L2.
+%% Hint:
+%% - În cazul în care primul element din L1 (H1) este în L2,
+%% predicatul este adevărat dacă H1 se află pe prima pozitie în lista
+%% rezultat.
+%% - În cazul în care primul element din L1 nu este în L2, predicatul
+%% este adevărat dacă L3 reprezintă intersectia dintre restul lui L1 si
+%% L2.
 
 setIntersection([], _, []).
 setIntersection([H1|T1], L2, L3):-member(H1, L2),
@@ -167,14 +172,19 @@ exercitiul(7,[]).
 %% setDiff(+L1, +L2, -L)
 %% L este diferenta listelor L1 si L2 (L1 - L2)
 
-%% Hint: Predicatul este adevărat dacă primul element din L3 este egal
-%% cu primul element din L1 (H1), dacă H1 nu este si în lista L2.
+%% Hint:
+%% - În cazul în care primul element din L1 (H1) nu este în L2,
+%% predicatul este adevărat dacă H1 se află pe prima pozitie în lista
+%% rezultat.
+%% - În cazul în care primul element din L1 este în L2, predicatul
+%% este adevărat dacă L3 reprezintă diferenta dintre restul lui L1 si
+%% L2.
+
 
 setDiff([], _, []).
 setDiff([H1|T1], L2, [H1|T3]):- \+ member(H1, L2),
                                setDiff(T1, L2, T3).
-setDiff([H1|T1], L2, L3):-member(H1, L2),
-                          setDiff(T1, L2, L3).
+setDiff([_|T1], L2, L3):-setDiff(T1, L2, L3).
 
 
 check7:-
