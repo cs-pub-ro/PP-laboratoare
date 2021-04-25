@@ -340,8 +340,8 @@ instanțiază.
 
 ?- X is 2 + 1. X = 3.
 
-?- X =:= 2 + 1. ERROR: =:=/2: Arguments are not sufficiently
-instantiated
+?- X =:= 2 + 1. 
+ERROR: =:=/2: Arguments are not sufficiently instantiated
 
 ```
 
