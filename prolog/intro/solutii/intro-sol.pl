@@ -125,7 +125,8 @@ check4:-
         1, chk(numToBase(8, 2, 1000)),
         1, chk(numToBase(63, 5, 223)),
         1, chk(numToBase(76, 10, 76)),
-        1, exp('numToBase(17, 3, X)', ['X', 122])]).
+        1, exp('numToBase(17, 3, X)', ['X', 122])]),
+        writeln('Exercițiul 4 rezolvat corect!').
 
 
 %% -----------------------------------------------------------------------------
@@ -197,7 +198,8 @@ check7:-
         1, chk(setIntersection([], [1,2], [])),
         1, chk(setIntersection([1,2,3], [7,9,24], [])),
         1, chk(setIntersection([1,2,3], [2], [2])),
-        2, exp('setIntersection([1,2,3,4,7,13], [7,13,21], Int)', ['Int', [7,13]])]).
+        2, exp('setIntersection([1,2,3,4,7,13], [7,13,21], Int)', ['Int', [7,13]])]),
+        writeln('Exercițiul 7 rezolvat corect!').
 
 %% -----------------------------------------------------------------------------
 
@@ -221,7 +223,9 @@ check8:-
         1, chk(setDiff([], [1,2], [])),
         1, chk(setDiff([1,2,3], [7,9,24], [1,2,3])),
         1, chk(setDiff([1,2,3], [2], [1,3])),
-        2, exp('setDiff([1,2,3,4,7,13], [7,13,21], Diff)', ['Diff', [1,2,3,4]])]).
+        2, exp('setDiff([1,2,3,4,7,13], [7,13,21], Diff)', ['Diff', [1,2,3,4]])]),
+        writeln('Exercițiul 8 rezolvat corect!').
+
 
 
 %% -----------------------------------------------------------------------------
@@ -245,7 +249,8 @@ check9:-
         1, chk(setUnion([], [1,2], [1,2])),
         1, chk(setUnion([1,2,3], [7,9,24], [1,2,3,7,9,24])),
         1, chk(setUnion([1,2,3], [2], [1,2,3])),
-        2, exp('setUnion([1,2,3,4,7,13], [29,3,7,13,21], Union)', ['Union', [1,2,3,4,7,13,29,21]])]).
+        2, exp('setUnion([1,2,3,4,7,13], [29,3,7,13,21], Union)', ['Union', [1,2,3,4,7,13,29,21]])]),
+        writeln('Exercițiul 9 rezolvat corect!').
 
 
 
@@ -429,10 +434,21 @@ exercitiul(15, [2, puncte, bonus]).
 %% drum/3
 %% drum(?Nod, ?Nod, ?Lista)
 
+%% Hint: Predicatul este adevărat dacă:
+%%  - există drum de la un nod la el însusi si drumul este format din
+%%  acel nod
+%%  - există drum de la un nod A la un nod B dacă există arc de la A la
+%%  B sau de la B la A si drumul este format din cele două noduri.
+%%  - dacă există un drum T, de la unul din descendentii direct ai lui A
+%%  la B, iar drumul dintre A si B este [A|T].
+%%  - dacă există un drum T de la unul din strămosii directi ai lui A la
+%%  B, iar drumul dintre A si B este [A|T].
+
 drum(A, A, [A]).
 drum(A, B, [A, B]):- \+ (\+ arc(A, B), \+ arc(B, A)).
+drum(A, B, [A|T]):- descendantOf(B,A), arc(A, C), descendantOf(B, C),drum(C, B, T).
 drum(A, B, [A|T]):- arc(C, A), drum(C, B, T).
-drum(A, B, [A|T]):- descendantOf(B, A), arc(A, C), descendantOf(B, C),drum(C, B, T).
+
 
 
 check15:-
@@ -456,11 +472,20 @@ exercitiul(16, [2, puncte, bonus]).
 %% cost(+Nod, +Nod, -Cost).
 %% un arc in sus costa -1, unul in jos, 1.
 
+%% Hint: Predicatul este adevărat dacă:
+%%  - costul unui drum de la un nod la el însusi este 0.
+%%  - costul unui drum de la un nod la unul din descendentii directi
+%%  este 1, iar de la un nod la unul din ascendentii directi este -1.
+%%  - dacă există un drum de cost N, de la unul din descendentii directi
+%%  ai lui A la B si costul drumului de la A la B este N+1.
+%%  - dacă există un drum de cost N, de la unul din stramosii directi
+%%  ai lui A la B si costul drumului de la A la B este N-1.
+
 cost(A, A, 0).
-cost(A, B, 1):- arc(A, B), !.
-cost(A, B, -1):- arc(B, A), !.
-cost(A, B, N):- descendantOf(B, A), arc(A, C), descendantOf(B, C), cost(C, B, N2), !, N is N2 + 1.
-cost(A, B, N):- arc(C, A), cost(C, B, N2), !, N is N2 - 1.
+cost(A, B, 1):- arc(A, B).
+cost(A, B, -1):- arc(B, A).
+cost(A, B, N):- descendantOf(B, A), arc(A, C), descendantOf(B, C), cost(C, B, N2), N is N2 + 1.
+cost(A, B, N):- arc(C, A), cost(C, B, N2), N is N2 - 1.
 
 check16:-
 	tests([
@@ -474,19 +499,33 @@ check16:-
         writeln('Exercițiul 16 rezolvat corect!').
 
 
-
-
-
-
-
-
 %% ----------------------------------------
 %% ----------------------------------------
+%% ----------------------------------------
+%% ----------------------------------------
+%% Tester
 
-%test_mode(vmchecker). % not implemented yet
-test_mode(quick).
+% pentru vmchecker, trebuie pentru fiecare segment de testare să existe:
+% o afirmație vmpoints(<ID_segment>, <Număr_puncte_segment>)
+% o afirmație tt(<ID_segment>, <Listă_teste>)
+% Trebuie ca test_mode(vmchecker) să fie adevărat.
 
+% pentru quickchecking (la laborator), trebuie ca pentru fiecare
+% exercițiu să existe:
+% o afirmație exercitiul(<ID>, [<Număr puncte>, alte, comentarii])
+% o afirmație check<ID>(tests(<Listă_teste>))
+% e.g. dacă există exercitiul(5), trebuie să existe și check5(...)
+%
+% Tipurile de teste sunt prezentate în tester.pl, în cadrul predicatului
+% testtest/0.
 
+testtimelimit(5). % in seconds
+
+%test_points(show). % uncomment to show points in non-vmchecker mode.
+test_points(hide) :- test_mode(vmchecker); \+ test_points(show).
+
+%test_mode(vmchecker). % uncomment to activate the vmchecker mode.
+test_mode(quickcheck) :- \+ test_mode(vmchecker).
 
 :-dynamic(punct/2).
 :-dynamic(current/1).
@@ -494,91 +533,181 @@ test_mode(quick).
 
 clean :- retractall(punct(_, _)), retractall(current(_)).
 
-testtest(5).
-testtest(a, 5).
-testtest(b, _).
-testtest(d, [2, 1, 3]).
-testtest(e, [2, 1, 3, 1, 2]).
-testtest(1, 2, 3).
-testtest(c, X, X).
 
-testtest :- tests([
-               % chk(P) ("check") verifică evaluarea cu succes a lui P
-               chk(testtest(5)), % a
-               chk(testtest(6)), % b % eșuează
-               % uck(P) ("uncheck") verifică evaluarea cu eșec a lui P
-               uck(testtest(6)), % c
-               uck(testtest(5)), % d % eșuează
-               % exp(P, Exps) ("expect") verifică evaluarea cu succes a lui P și a unor condiții
-               % P este dat ca șir de caractere pentru o verificare și afișare mai bune.
-               % Condițiile sunt evaluate pe rând și independent unele de altele.
-               % Dacă în lista de condiții avem un nume de variabilă,
-               % se verifică că aceasta a fost legat la valoarea care urmează imediat în listă.
-               % valoarea de verificat nu poate conține variabile din interogare
-               % (pentru asta folosiți cond, vezi mai jos).
-               exp('testtest(X, X)', ['X', b]), % e
-               exp('testtest(X, Y, Z)', ['X', 1, 'Y', 2, 'Z', 3]), % f
-               exp('testtest(X, X)', ['X', a]), % g % eșuează
-               % Dacă în lista de condiții avem v('Var'), se verifică că Var a rămas nelegată.
-               exp('testtest(b, Y)', [v('Y')]), % h
-               exp('testtest(a, Y)', [v('Y')]), % i % eșuează
-               % Dacă în lista de condiții avem cond('P'), se verifică că P este adevărat.
-               % Diversele condiții din structuri cond diferite se verifică independent.
-               exp('testtest(c, X, X)', [v('X'), cond('X==X')]), % j
-               % Dacă în lista de condiții avem set('V', Set), se verifică că V este legată la mulțimea Set.
-               % Duplicatele contează.
-               exp('testtest(d, L)', [set('L', [1, 2, 3]), 'L', [1, 2, 3]]), % k % eșuează pe a 2a condiție
-               exp('testtest(d, L)', [set('L', [2, 3, 4, 5])]), % l
-               exp('testtest(e, L)', [set('L', [1, 2, 3])]), % m
-               % setU funcționează la fel, dar ignoră duplicatele.
-               exp('testtest(e, L)', [setU('L', [1, 2, 3])]), % n
-               % nsl(P, Template, NSols) ("N Solutions") verifică dacă lungimea lui L din findall(P, Template, L) este NSols
-               2, nsl('testtest(X, Y)', '(X, Y)', 4), % o
-               % testul de mai sus valorează de 2 ori mai mult decât celelalte
+% -----------------
 
-               % sls(P, Template, Sols) ("Solutions") verifică dacă findall(P, Template, L) leagă L la aceeași mulțime cu Sols.
-               % Duplicatele contează
-               2, sls('testtest(X, X)', '(X, X)', [(b, b)]), % p
-               % testul de mai sus valorează de 2 ori mai mult decât celelalte
+% runs vm tests
+vmtest :- checkVm.
+vmcheck :- checkVm.
+checkVm :-
+        clean,
+        findall(T:Score, (tt(T, _), vmtest(T, Score)), Results),
+        findall(Score, member(_:Score, Results), Scores),
+        sum_list(Scores, S),
+        format('Total: ~w~n', [S]),
+        clean.
 
-               sls('testtest(X, Y)', '(X, Y)', [(b, 5)]) % q
-           ]).
+% entry point (for users) for individual vm tests.
+vmtest(T) :-
+        vmtest(T, Score),
+        format('Total: ~w.', [Score]).
 
+% performes a vm test, outputs score.
+vmtest(T, Score) :-
+        once(vmpoints(T, Pts)),
+        tt(T, TestList),
+        tests(TestList, Pts, T, Score).
 
+% -----------------
+
+% runs quickcheck tests
+check :-
+        clean,
+        forall(exercitiul(Ex,_),
+               (   atom_concat(check, Ex, Ck),
+                   retractall(current(_)), assert(current(Ex)),
+                   once(call(Ck)) ; true)),
+        findall(P, punct(_, P), L),
+        sum_list(L, S),
+        (   test_points(show),
+            format('Punctaj total: ~f~n',[S])
+        ;   true),
+        clean.
+
+% entry point for quick check; handles checking all exercises or just
+% one.
 tests(Tests) :- (   current(_), ! ; retractall(punct(_, _))),
-    total_fractions(Tests, TF),
-    (   current(Ex), !, exercitiul(Ex, [Pts | _]), Total is TF / Pts
-    ;   Total is TF / 100
-    ),
-    tests(Tests, 1, Total),
-    (   current(_), !
-    ;   findall(P, punct(_, P), L), sum_list(L, S), format('Rezolvat ~0f%.~n', [S])
-    ).
+        (   current(Ex), !, (exercitiul(Ex, [Pts | _]), !, Total is Pts
+                            ;
+                            exercitiul(Ex, []), Total is 0)
+        ;   Total is 100, Ex = none
+        ),
+        tests(Tests, Total, Ex, Score),
+        (   current(Ex), assert(punct(Ex, Score)), !
+        ;   format('Rezolvat ~0f%.~n', [Score])
+        ), !.
+tests(_) :- failure(unknown, 'INTERN: tests/1 failed').
 
-tests([], _, _) :- !.
-tests([P, T|R], Idx, Tot) :- number(P), !, test(T, Idx, P, Tot), tests(R, Idx+1, Tot).
-tests([T|R], Idx, Tot) :- test(T, Idx, 1, Tot), tests(R, Idx+1, Tot).
 
-total_fractions([], 0).
-total_fractions([P, _|R], Tot) :- number(P), !, total_fractions(R, TotR), Tot is TotR + P.
-total_fractions([_|R], Tot) :- total_fractions(R, TotR), Tot is TotR + 1.
+% ---------------
+% general testing
 
-test(T, Idx, Frac, Tot) :- IdxI is Idx + 96, char_code(CEx, IdxI),
-    (   current(NEx), !, swritef(Ex, '[%w|%w]', [NEx, CEx]) ; swritef(Ex, '%w|', [CEx])),
-    (once(test(Ex, T)), !, success(Ex, Frac, Tot) ; true).
+% unified entry point for testing; computes fractions, computes if
+% exercise is not done, and starts per-test iteration.
+tests(Tests, TotalPoints, Ex, Score) :- %trace,
+    total_units(Tests, TF, Ck/AllCheck, UCk/AllUCk, Others/AllOthers),
+    %format('Total units: ~w~n', [TF]),
+    (   isNotDone(Ck/AllCheck, UCk/AllUCk, Others/AllOthers), !,
+        (   Ex == none, !
+        ;   ( test_mode(vmchecker), !, format("+0.00 ~10t  ") ; true ),
+            format("[~w] Nerezolvat.~n", [Ex])
+        ),
+        Score = 0
+    ;   Unit is TotalPoints / TF,
+        tests(Tests, Ex, 1, Unit, 0, Score)
+    ), !.
+tests(_, _, Ex, _) :- failure(Ex, 'INTERN: tests/4 failed').
 
-success(Ex, Frac, Tot) :-
-    Score is Frac / Tot,
-    assert(punct(Ex, Score)),
-    format('~w[OK] Corect. +~2f.~n', [Ex, Score]).
+isNotDone(0/TC, TU/TU, 0/TO) :- (TO > 0, !; TC > 0).
+% otherwise, probably done
 
-failure(Ex, M) :- format('~w[--] ~w~n', [Ex, M]), fail.
+% iterates through tests, handles test index, generates test id, adds
+% points
+tests([], _, _, _, Points, Points) :- !.
+tests([wait|R], Ex, Idx, Unit, PointsIn, PointsOut) :- !,
+    tests(R, Ex, Idx, Unit, PointsIn, PointsOut).
+tests([Fraction, T|R], Ex, Idx, Unit, PointsIn, PointsOut) :-
+        number(Fraction), !, test(T, Ex, Idx, Fraction, Unit, PointsIn, PointsOut1),
+        tests(R, Ex, Idx+1, Unit, PointsOut1, PointsOut).
+tests([T|R], Ex, Idx, Unit, PointsIn, PointsOut) :-
+        test(T, Ex, Idx, 1, Unit, PointsIn, PointsOut1),
+        tests(R, Ex, Idx+1, Unit, PointsOut1, PointsOut).
+tests(_, Ex, _, _, _, _) :- failure(Ex, 'INTERN: tests/6 failed').
+
+total_units([], 0, 0/0, 0/0, 0/0).
+total_units([wait, P, _|R], Tot, A, B, C) :-
+    number(P), !, total_units([counted|R], TotR, A, B, C), Tot is TotR + P.
+total_units([wait, _|R], Tot, CO/TCO, UO/TUO, OO/TOO) :- !,
+    total_units(R, TotR, CO/TCO, UO/TUO, OO/TOO), Tot is TotR + 1.
+total_units([P, T|R], Tot, A, B, C) :-
+    number(P), !, total_units([counted, T|R], TotR, A, B, C), Tot is TotR + P.
+total_units([counted, T|R], Tot, CO/TCO, UO/TUO, OO/TOO) :- !, %trace,
+    test(T, dry, dry, _, _, 0, P),
+    (   ( T = chk(_), ! ; T = ckA(_, _) ), !, TA = 1,
+        (   P > 0, A = 1, !; A = 0 )
+    ;   TA = 0, A = 0),
+    (   ( T = uck(_), ! ; T = nsl(_, _, 0) ), !, TB = 1,
+        (   P > 0, B = 1, !; B = 0 )
+    ;   TB = 0, B = 0),
+    (   T \= chk(_), T \= ckA(_, _), T \= uck(_), T \= ech(_, _), T \= nsl(_, _, 0), !,
+        TD = 1, (   P > 0, D = 1, !; D = 0 )
+    ;   TD = 0, D = 0),
+    total_units(R, TotR, C/TC, U/TU, O/TO), Tot is TotR,
+    CO is C+A, TCO is TC+TA, UO is U+B, TUO is TU+TB, OO is O+D, TOO is TO+TD.
+total_units(TT, Tot, A, B, C) :-
+    !, total_units([counted|TT], TotR, A, B, C), Tot is TotR + 1.
+
+test(T, NEx, Idx, Fraction, Unit, PointsIn, PointsOut) :-
+        (   NEx == dry, !, Ex = dry, TimeLimit = 0.1
+        ;   testtimelimit(TimeLimit),
+            IdxI is Idx + 96, char_code(CEx, IdxI),
+            (   NEx == none, !, swritef(Ex, '%w|', [CEx])
+            ;   swritef(Ex, '[%w|%w]', [NEx, CEx]))
+        ),
+        swritef(MTime, 'limita de %w secunde depasita', [TimeLimit]),
+        (   catch(
+                catch(call_with_time_limit(TimeLimit, once(test(Ex, T))),
+                      time_limit_exceeded,
+                      except(Ex, MTime)
+                     ),
+                Expt,
+                (   swritef(M, 'exceptie: %w', [Expt]), except(Ex, M))
+            ),
+            !, success(Ex, Fraction, Unit, Points),
+            PointsOut is PointsIn + Points
+        ; PointsOut = PointsIn).
+test(_, Ex, Idx, _, _, _, _) :- failure(Ex/Idx, 'INTERN: test/7 failed').
+
+success(dry, _, _, 1) :- !.
+success(Ex, Fraction, Unit, Score) :-
+    Score is Fraction * Unit,
+    %format('~w ~w ~w ~w~n', [Ex, Fraction, Unit, Score]),
+    (   test_mode(vmchecker), !,
+        format('+~2f ~10t  ~w Corect.~n', [Score, Ex])
+    ;
+    (   test_points(show),
+        format('~w[OK] Corect. +~2f.~n', [Ex, Score])
+    ;   format('~w[OK] Corect.~n', [Ex])
+    )).
+failure(dry, _) :- !, fail.
+failure(Ex, M) :-
+        (   test_mode(vmchecker), !,
+            format('+0.00 ~10t  ~w ~w~n', [Ex, M]), fail
+        ;   format('~w[--] ~w~n', [Ex, M]), fail).
+except(dry, _) :- !, fail.
+except(Ex, M) :-
+        (   test_mode(vmchecker), !,
+            format('+0.00 ~10t ~w Exception: ~w~n', [Ex, M]), fail
+        ;   format('~w[/-] ~w~n', [Ex, M]), fail).
 
 test(Ex, chk(P)) :- !, testCall(Ex, P).
 test(Ex, uck(P)) :- !, testCall(Ex, \+ P).
 test(Ex, exp(Text, ExpList)) :- !,
     read_term_from_atom(Text, P, [variable_names(Vars)]),
     testCall(Ex, P, Text), testExp(Ex, Text, Vars, ExpList).
+test(_, ckA(_, [])) :- !.
+test(Ex, ckA(Pred, [Test|Tests])) :- !,
+    swritef(S, '%w(%w)', [Pred, Test]),
+    read_term_from_atom(S, P, []),
+    testCall(Ex, P, S), test(Ex, ckA(Pred, Tests)).
+test(_, ech(_, [])) :- !.
+test(Ex, ech(Text, [Cond|Conds])) :- !,
+    swritef(S, '%w|%w', [Text, Cond]),
+    read_term_from_atom(S, P|Q, [variable_names(Vars)]),
+    forall(P, (
+               swritef(Msg, '%w pentru soluția %w a predicatului %w', [Cond, Vars, Text]),
+               testCall(Ex, Q, Msg))),
+    test(Ex, ech(Text, Conds)).
 test(Ex, nsl(Text, Tmplt, N)) :- !,
     swritef(S, 'findall(%w, %w, TheList)', [Tmplt, Text]),
     read_term_from_atom(S, P, [variable_names(Vars)]),
@@ -591,11 +720,19 @@ test(Ex, sSO(Text, Tmplt, Sols)) :- !,
     swritef(S, 'setof(%w, %w, TheList)', [Tmplt, Text]),
     read_term_from_atom(S, P, [variable_names(Vars)]),
     testCall(Ex, P, S), testSols(Ex, Text, Vars, Sols).
-test(Ex, _) :- failure(Ex, 'INTERNAL: Test necunoscut').
+test(Ex, _) :- failure(Ex, 'INTERN: Test necunoscut').
 
+% Pentru exercițiul Ex, evaluează clauza Do, dată ca termen.
+% Opțional, în mesajul de eroare interogarea poate fi afișată ca
+% parametrul Text.
 testCall(Ex, Do) :- swritef(Text, '%q', [Do]), testCall(Ex, Do, Text).
-testCall(_, Do, _) :- call(Do), !.
-testCall(Ex, _, Text) :- swritef(M, 'Interogarea %w a esuat.', [Text]), failure(Ex, M).
+testCall(Ex, Do, Text) :-
+        catch((call(Do), !
+              ;   !, swritef(M, 'Interogarea %w a esuat.', [Text]), failure(Ex, M)
+              ), Exc,
+              (swritef(M, 'Interogarea %w a produs exceptie: %w', [Text, Exc]),
+              except(Ex, M))
+             ).
 
 testExp(_, _, _, []) :- !.
 testExp(Ex, Text, Vars, [v(Var) | Rest]) :- !,
@@ -605,7 +742,7 @@ testExp(Ex, Text, Vars, [v(Var) | Rest]) :- !,
                     [Text, Var, V]), failure(Ex, M)
         )
     ;
-    swritef(M, 'INTERNAL: Interogarea %w nu contine variabila %w.', [Text, Var]),
+    swritef(M, 'INTERN: Interogarea %w nu contine variabila %w.', [Text, Var]),
     failure(Ex, M)
     ).
 testExp(Ex, Text, Vars, [set(Var, Set) | Rest]) :- !,
@@ -613,7 +750,7 @@ testExp(Ex, Text, Vars, [set(Var, Set) | Rest]) :- !,
         testSet(Ex, Text, 'intoarce', V, Set),
         testExp(Ex, Text, Vars, Rest)
     ;
-    swritef(M, 'INTERNAL: Interogarea %w nu contine variabila %w.', [Text, Var]),
+    swritef(M, 'INTERN: Interogarea %w nu contine variabila %w.', [Text, Var]),
     failure(Ex, M)
     ).
 testExp(Ex, Text, Vars, [setU(Var, Set) | Rest]) :- !,
@@ -621,7 +758,7 @@ testExp(Ex, Text, Vars, [setU(Var, Set) | Rest]) :- !,
         testSetU(Ex, Text, 'intoarce', V, Set),
         testExp(Ex, Text, Vars, Rest)
     ;
-    swritef(M, 'INTERNAL: Interogarea %w nu contine variabila %w.', [Text, Var]),
+    swritef(M, 'INTERN: Interogarea %w nu contine variabila %w.', [Text, Var]),
     failure(Ex, M)
     ).
 testExp(Ex, Text, Vars, [cond(Cond) | Rest]) :- !,
@@ -640,9 +777,15 @@ testExp(Ex, Text, Vars, [Var, Val | Rest]) :- !,
                     [Text, Var, V, Val]), failure(Ex, M)
         )
     ;
-    swritef(M, 'INTERNAL: Interogarea %w nu contine variabila %w.', [Text, Var]),
+    swritef(M, 'INTERN: Interogarea %w nu contine variabila %w.', [Text, Var]),
     failure(Ex, M)
     ).
+testExp(Ex, _, _, [X | _]) :- !,
+        swritef(M, 'INTERN: element necunoscut pentru exp: %w', [X]),
+        failure(Ex, M).
+testExp(Ex, _, _, X) :- !,
+        swritef(M, 'INTERN: format gresit pentru exp: %w', [X]),
+        failure(Ex, M).
 
 testNSols(Ex, Text, Vars, N) :-
     (   getVal('TheList', Vars, V), length(V, NSols), !,
@@ -661,10 +804,11 @@ testSols(Ex, Text, Vars, Sols) :-
 
 testSetU(Ex, Text, TypeText, SetG, SetE) :- sort(SetG, SetGUnique),
     testSet(Ex, Text, TypeText, SetGUnique, SetE).
-testSet(Ex, Text, TypeText, SetG, SetE) :- msort(SetG, SetGSorted),
-    (   SetGSorted == SetE, ! ;
-        setMinus(SetG, SetE, TooMuch),
-        setMinus(SetE, SetG, TooLittle),
+testSet(Ex, Text, TypeText, SetG, SetE) :-
+    msort(SetG, SetGSorted), msort(SetE, SetESorted),
+    (   SetGSorted == SetESorted, ! ;
+        testSetMinus(SetG, SetE, TooMuch),
+        testSetMinus(SetE, SetG, TooLittle),
         (   TooMuch == [], TooLittle == [], !,
             M1 = 'vezi duplicate'
         ;   swritef(M1, '%w sunt in plus, %w lipsesc', [TooMuch, TooLittle])
@@ -674,19 +818,8 @@ testSet(Ex, Text, TypeText, SetG, SetE) :- msort(SetG, SetGSorted),
                 [Text, TypeText, SetG, SetE, M1]), failure(Ex, M)
     ).
 
-setMinus(From, ToRemove, Result) :-
+testSetMinus(From, ToRemove, Result) :-
         findall(E, (member(E, From), \+ member(E, ToRemove)), Result).
 
 getVal(Var, [Var=Val | _], Val) :- !.
 getVal(Var, [_ | Vars], Val) :- getVal(Var, Vars, Val).
-
-check:-
-    clean,
-    forall(exercitiul(Ex, _),
-           (   atom_concat(check, Ex, Ck),
-               retractall(current(_)), assert(current(Ex)),
-               once(call(Ck)) ; true)),
-    findall(P, punct(_, P), L),
-    sum_list(L, S),
-    format('Punctaj total: ~f~n',[S]),
-    clean.
