@@ -41,8 +41,8 @@ exercitiul(2, []).
 %% Regulile pot conține și predicatul myConcat/3.
 
 %% Hint: Predicatul este adevărat dacă RevList are ca ultim element
-%% primul element din L, iar restul lui RevList este inversul restului
-%% elementelor din L.
+%% primul element din L, iar prima parte a lui RevList (de la primul
+%% element pâna la penultimul) este inversul restului elementelor din L.
 
 myReverse(_,_):- fail.
 

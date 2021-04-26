@@ -43,8 +43,8 @@ exercitiul(2, []).
 %% Regulile pot conține și predicatul myConcat/3.
 
 %% Hint: Predicatul este adevărat dacă RevList are ca ultim element
-%% primul element din L, iar restul lui RevList este inversul restului
-%% elementelor din L.
+%% primul element din L, iar prima parte a lui RevList (de la primul
+%% element pâna la penultimul) este inversul restului elementelor din L.
 
 myReverse([],[]).
 myReverse([H1|T1],L2):- myReverse(T1,H2), myConcat(H2,[H1],L2).
@@ -152,8 +152,7 @@ exercitiul(6,[]).
 %% L2.
 
 setIntersection([], _, []).
-setIntersection([H1|T1], L2, L3):-member(H1, L2),
-                               L3 = [H1|T3],
+setIntersection([H1|T1], L2, [H1|T3]):-member(H1, L2),
                                setIntersection(T1, L2, T3).
 setIntersection([_|T1], L2, L3):-setIntersection(T1, L2, L3).
 
@@ -371,7 +370,7 @@ exercitiul(13, []).
 %%  B, iar drumul dintre A si B este [A|T].
 
 drum(A, A, [A]).
-drum(A, B, [A, B]):- \+ (\+ arc(A, B), \+ arc(B, A)).
+drum(A, B, [A, B]):- arc(A, B); arc(B, A).
 drum(A, B, [A|T]):- descendantOf(B,A), arc(A, C), descendantOf(B, C),drum(C, B, T).
 drum(A, B, [A|T]):- arc(C, A), drum(C, B, T).
 
