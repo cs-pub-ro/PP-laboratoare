@@ -449,6 +449,7 @@ testtimelimit(5). % in seconds
 %test_points(show). % uncomment to show points in non-vmchecker mode.
 test_points(hide) :- test_mode(vmchecker); \+ test_points(show).
 
+
 %test_mode(vmchecker). % uncomment to activate the vmchecker mode.
 test_mode(quickcheck) :- \+ test_mode(vmchecker).
 
