@@ -1,6 +1,6 @@
 # Prolog: Introducere
-  - Data publicării: 22.04.2021
-  - Data ultimei modificări: 22.04.2021
+  - Data publicării: 26.04.2021
+  - Data ultimei modificări: 26.04.2021
 
 ## Obiective
 
