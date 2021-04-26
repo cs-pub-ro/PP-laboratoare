@@ -66,11 +66,11 @@ corespunzătoare a predicatelor.
 Exemple de fapte: 
 ```prolog
 papagal(coco).
-iubește(mihai, maria).
-iubește(mihai, ana).
+iubeste(mihai, maria).
+iubeste(mihai, ana).
 frumoasă(ana).
 bun(gelu).
-deplasează(cub, camera1, camera2).
+deplaseaza(cub, camera1, camera2).
 ```
 
 ## Structuri
@@ -138,7 +138,7 @@ interesează.
 true.
 ?- papagal(CineEste).
 CineEste = coco
-?- deplaseaza(\_, DeUnde, Unde).
+?- deplaseaza(_, DeUnde, Unde).
 DeUnde = camera1, Unde = camera2
 
 ```
@@ -223,12 +223,8 @@ regulă (linia 6) a predicatului *iubeste(?Cine, ?PeCine)*.
 ## Operatori
 
   - Aritmetici: `+` `-` `*` `/`
-  - Relaționali: `=\=` `<` `>` `=<` `>=` `=:=`
+  - Relaționali: `=\=` `<` `>` `=<` `>=` `=:=` `is`
   - Logici: `,` (si) `;` (sau) `\+` (not)
- 
-Operatorul `\+` folosit pentru un operand reprezintă faptul că nu se poate demonstra că operandul este adevărat.
-Alternativ, dacă sunt variabile în operand, `\+` denotă că nu există nicio legare pentru variabile, astfel încât
- operandul să fie adevărat.
 
 La scrierea expresiei `1+2\*(X/Y)`, valoarea acesteia nu este calculată,
 ci expresia este reținută ca atare. Se poate observa că operatorii `=:=`
@@ -236,22 +232,30 @@ ci expresia este reținută ca atare. Se poate observa că operatorii `=:=`
 egalitatea structurală.
 
 De asemenea, `is` și `=` pot primi variabile neinstanțiate pe care le
-instanțiază.
+instanțiază (`is` doar în partea stângă).
 
 ```prolog
 
-?- 1 + 2 =:= 2 + 1. true.
+?- 1 + 2 =:= 2 + 1.
+true.
 
-?- 1 + 2 = 2 + 1. false.
+?- 1 + 2 = 2 + 1. 
+false.
 
-?- X = 2 + 1. X = 2+1.
+?- X = 2 + 1. 
+X = 2+1.
 
-?- X is 2 + 1. X = 3.
+?- X is 2 + 1. 
+X = 3.
 
 ?- X =:= 2 + 1. 
 ERROR: =:=/2: Arguments are not sufficiently instantiated
-
 ```
+### Negație
+
+Operatorul unar `\+` folosit pentru un operand reprezintă faptul că nu se poate demonstra că operandul este adevărat.
+Dacă operandul conține variabile, `\+` denotă că nu există nicio legare pentru variabile astfel încât
+ operandul să fie adevărat.
 
 ## Liste
 
