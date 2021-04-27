@@ -144,7 +144,7 @@ check5 :-
 exercitiul(6,[]).
 %% setIntersection/3
 %% setIntersection(+L1, +L2, -L)
-%% L este intersectia listelor L1 si L2.
+%% L este intersecția listelor L1 si L2.
 
 %% Hint:
 %% - În cazul în care primul element din L1 (H1) este și în L2,
@@ -228,7 +228,6 @@ check8:-
 %% -----------------------------------------------------------------------------
 %% -----------------------------------------------------------------------------
 %% Se dau următoarele fapte ce descriu arcele unei păduri de arbori binari.
-%% Fiecare nod poate avea maxim doi fii.
 
 nod(a). nod(b). nod(c). nod(d). nod(e). nod(f). nod(g).
 nod(h). nod(i). nod(j). nod(k). nod(l).
