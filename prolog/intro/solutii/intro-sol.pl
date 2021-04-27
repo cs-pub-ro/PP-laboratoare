@@ -155,7 +155,8 @@ exercitiul(6,[]).
 setIntersection([], _, []).
 setIntersection([H1|T1], L2, [H1|T1IntL2]):-member(H1, L2),
                                setIntersection(T1, L2, T1IntL2).
-setIntersection([_|T1], L2, T1IntL2):-setIntersection(T1, L2, T1IntL2).
+setIntersection([H1|T1], L2, T1IntL2):- \+member(H1, L2),
+                               setIntersection(T1, L2, T1IntL2).
 
 check6:-
     tests([
@@ -184,7 +185,8 @@ exercitiul(7,[]).
 setDiff([], _, []).
 setDiff([H1|T1], L2, [H1|T1MinL2]):- \+ member(H1, L2),
                                setDiff(T1, L2, T1MinL2).
-setDiff([_|T1], L2, T1MinL2):-setDiff(T1, L2, T1MinL2).
+setDiff([H1|T1], L2, T1MinL2):- member(H1,L2),
+                               setDiff(T1, L2, T1MinL2).
 
 
 check7:-
