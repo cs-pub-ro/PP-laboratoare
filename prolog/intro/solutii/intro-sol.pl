@@ -3,14 +3,14 @@
 :- discontiguous exercitiul/2.
 %% -----------------------------------------------------------------------------
 
-%% Pentru a testa laboratorul, folositi check. Pentru a testa exercitiul
-%% N, folositi checkN.
+%% Pentru a testa laboratorul, folositi check. Pentru a testa exercițiul
+%% N, folosiți checkN.
 
 exercitiul(1, []).
 %% myConcat/3
 %% myConcat(?List1, ?List2, ?List)
 %% 'List' este lista formată prin concatenarea listelor 'List1' și
-%% 'List2' si functioneaza similar cu un parametru acumulator.
+%% 'List2'.
 
 %% Hint: Predicatul myConcat este adevărat dacă primul element al
 %% rezultatului (List) este egal cu primul element al listei List1, iar
@@ -18,7 +18,7 @@ exercitiul(1, []).
 %% List2.
 
 myConcat([],L,L).
-myConcat([A|B],C,[A|D]) :- myConcat(B, C, D).
+myConcat([H1|T1],L2,[H1|TSol]) :- myConcat(T1, L2, TSol).
 
 check1:-
     tests([
@@ -47,7 +47,7 @@ exercitiul(2, []).
 %% element pâna la penultimul) este inversul restului elementelor din L.
 
 myReverse([],[]).
-myReverse([H1|T1],L2):- myReverse(T1,H2), myConcat(H2,[H1],L2).
+myReverse([H|T],RevList):- myReverse(T,RevT), myConcat(RevT,[H],RevList).
 
 check2:-
     tests([
@@ -72,9 +72,12 @@ exercitiul(3, []).
 %% (Indicație: 'Acc' se va comporta precum un acumulator)
 %% Obs. Regulile vor folosi doar predicatul myReverseAcc(și ",").
 
-%% Hint: Inversul listei se va construi in Acc. Predicatul este adevărat
-%% dacă valoarea primului element al acumulatorului, pentru restul lui
-%% List, este egal cu primul element din List.
+%% Hint: Inversul listei se va construi în Acc. Predicatul este adevărat
+%% dacă în apelul pentru restul lui List, valoarea primului element al
+%% acumulatorului este egală cu primul element din List, iar al treilea
+%% argument este același pentru apelul curent și pentru apelul recursiv
+%% (rezultatul se întoarce neschimbat de la sfârșitul recursivității
+%% până la apelul inițial).
 
 
 myReverseAcc([], L, L).
@@ -144,24 +147,23 @@ exercitiul(6,[]).
 %% L este intersectia listelor L1 si L2.
 
 %% Hint:
-%% - În cazul în care primul element din L1 (H1) este în L2,
-%% predicatul este adevărat dacă H1 se află pe prima pozitie în lista
-%% rezultat.
-%% - În cazul în care primul element din L1 nu este în L2, predicatul
-%% este adevărat dacă L3 reprezintă intersectia dintre restul lui L1 si
-%% L2.
+%% - În cazul în care primul element din L1 (H1) este și în L2,
+%% rezultatul este format din H1 și intersecția restului lui L1 cu L2.
+%% - În cazul în care primul element din L1 nu este și în L2,
+%% rezultatul este intersecția restului lui L1 cu L2.
 
 setIntersection([], _, []).
-setIntersection([H1|T1], L2, [H1|T3]):-member(H1, L2),
-                               setIntersection(T1, L2, T3).
-setIntersection([_|T1], L2, L3):-setIntersection(T1, L2, L3).
+setIntersection([H1|T1], L2, [H1|T1IntL2]):-member(H1, L2),
+                               setIntersection(T1, L2, T1IntL2).
+setIntersection([_|T1], L2, T1IntL2):-setIntersection(T1, L2, T1IntL2).
 
 check6:-
     tests([
         1, chk(setIntersection([], [1,2], [])),
         1, chk(setIntersection([1,2,3], [7,9,24], [])),
         1, chk(setIntersection([1,2,3], [2], [2])),
-        2, exp('setIntersection([1,2,3,4,7,13], [7,13,21], Int)', ['Int', [7,13]])]),
+        2, exp('setIntersection([1,2,3,4,7,13], [7,13,21], Int)',
+               [set('Int', [7,13])])]),
         writeln('Exercițiul 6 rezolvat corect!').
 
 %% -----------------------------------------------------------------------------
@@ -169,21 +171,20 @@ check6:-
 exercitiul(7,[]).
 %% setDiff/3
 %% setDiff(+L1, +L2, -L)
-%% L este diferenta listelor L1 si L2 (L1 - L2)
+%% L este diferența listelor L1 si L2 (L1 - L2)
 
 %% Hint:
 %% - În cazul în care primul element din L1 (H1) nu este în L2,
-%% predicatul este adevărat dacă H1 se află pe prima pozitie în lista
-%% rezultat.
-%% - În cazul în care primul element din L1 este în L2, predicatul
-%% este adevărat dacă L3 reprezintă diferenta dintre restul lui L1 si
+%% rezultatul este format din H1 și diferența dintre restul lui L1 și
 %% L2.
+%% - În cazul în care primul element din L1 este în L2, rezultatul este
+%% diferența dintre restul lui L1 și L2.
 
 
 setDiff([], _, []).
-setDiff([H1|T1], L2, [H1|T3]):- \+ member(H1, L2),
-                               setDiff(T1, L2, T3).
-setDiff([_|T1], L2, L3):-setDiff(T1, L2, L3).
+setDiff([H1|T1], L2, [H1|T1MinL2]):- \+ member(H1, L2),
+                               setDiff(T1, L2, T1MinL2).
+setDiff([_|T1], L2, T1MinL2):-setDiff(T1, L2, T1MinL2).
 
 
 check7:-
@@ -191,7 +192,8 @@ check7:-
         1, chk(setDiff([], [1,2], [])),
         1, chk(setDiff([1,2,3], [7,9,24], [1,2,3])),
         1, chk(setDiff([1,2,3], [2], [1,3])),
-        2, exp('setDiff([1,2,3,4,7,13], [7,13,21], Diff)', ['Diff', [1,2,3,4]])]),
+        2, exp('setDiff([1,2,3,4,7,13], [7,13,21], Diff)',
+               [set('Diff', [1,2,3,4])])]),
         writeln('Exercițiul 7 rezolvat corect!').
 
 
@@ -217,7 +219,8 @@ check8:-
         1, chk(setUnion([], [1,2], [1,2])),
         1, chk(setUnion([1,2,3], [7,9,24], [1,2,3,7,9,24])),
         1, chk(setUnion([1,2,3], [2], [1,2,3])),
-        2, exp('setUnion([1,2,3,4,7,13], [29,3,7,13,21], Union)', ['Union', [1,2,3,4,7,13,29,21]])]),
+        2, exp('setUnion([1,2,3,4,7,13], [29,3,7,13,21], Union)',
+               [set('Union', [1,2,3,4,7,13,29,21])])]),
         writeln('Exercițiul 8 rezolvat corect!').
 
 
@@ -244,7 +247,7 @@ exercitiul(9, []).
 %% isLeaf/1
 %% isLeaf(?Nod)
 
-%% Hint: Predicatul este adevărat dacă Nod este nod si nu există arcuri
+%% Hint: Predicatul este adevărat dacă Nod este nod și nu există arcuri
 %% care pornesc din Nod.
 
 isLeaf(X):- nod(X), \+ arc(X,_).
@@ -272,8 +275,8 @@ exercitiul(10, []).
 %% isRoot/1
 %% isRoot(?Nod)
 
-%% Hint: Predicatul este adevărat dacă Nod este nod si nu există arcuri
-%% care au ca destinatie Nod.
+%% Hint: Predicatul este adevărat dacă Nod este nod și nu există arcuri
+%% care au ca destinație Nod.
 
 isRoot(X):- nod(X), \+ arc(_,X).
 
@@ -299,7 +302,7 @@ exercitiul(11, []).
 %% Nodul X este un urmaș a lui Y.
 
 %% Hint: Predicatul este adevărat dacă există un arc de la Y la X sau
-%% dacă există arc de la unul din urmasii lui Y la X.
+%% dacă există arc de la unul dintre urmașii lui Y la X.
 
 
 descendantOf(X,Y):-arc(Y,X).
@@ -329,11 +332,12 @@ check11:-
 
 exercitiul(12, []).
 %% sameTree/2
-%% sameTree(+Nod, +Nod).
+%% sameTree(+Nod1, +Nod2).
+%% Nod1 și Nod2 sunt în același arbore.
 
-%% Hint: Predicatul este adevărat dacă Nod1 este urmasul lui Nod2, sau
-%% Nod2 este urmasul lui Nod1, sau Nod1 si Nod2 sunt urmasi ai aceleiasi
-%% rădăcini.
+%% Hint: Predicatul este adevărat dacă Nod1 este urmașul lui Nod2, sau
+%% Nod2 este urmașul lui Nod1, sau Nod1 și Nod2 sunt urmași ai unui
+%% același nod.
 
 sameTree(A, B):- descendantOf(A, B).
 sameTree(A, B):- descendantOf(B, A).
@@ -357,22 +361,22 @@ check12:-
 %% -----------------------------------------------------------------------------
 exercitiul(13, []).
 %% drum/3
-%% drum(?Nod, ?Nod, ?Lista)
+%% drum(?Nod1, ?Nod2, ?Drum)
 
-%% Hint: Predicatul este adevărat dacă:
-%%  - există drum de la un nod la el însusi si drumul este format din
-%%  acel nod
-%%  - există drum de la un nod A la un nod B dacă există arc de la A la
-%%  B sau de la B la A si drumul este format din cele două noduri.
-%%  - dacă există un drum T, de la unul din descendentii direct ai lui A
-%%  la B, iar drumul dintre A si B este [A|T].
-%%  - dacă există un drum T de la unul din strămosii directi ai lui A la
-%%  B, iar drumul dintre A si B este [A|T].
+%% Hint: Există un drum de la Nod1 la Nod2, dacă:
+%%  - Nod1 și Nod2 sunt același nod, iar drumul este format din acel nod
+%%  - Nod1 și Nod2 au un arc între ele, iar drumul este
+%%  format din cele două noduri.
+%%  - Nod1 este părintele unui nod X, Nod2 este un descendent al lui
+%%  X, între X și Nod2 există un drum T, și atunci drumul căutat
+%%  este [Nod1|T].
+%%  - Nod1 este copilul unui nod X și există un drum T de la X la
+%%  Node2, și atunci drumul căutat este [Nod1|T].
 
 drum(A, A, [A]).
 drum(A, B, [A, B]):- arc(A, B); arc(B, A).
-drum(A, B, [A|T]):- descendantOf(B,A), arc(A, C), descendantOf(B, C),drum(C, B, T).
-drum(A, B, [A|T]):- arc(C, A), drum(C, B, T).
+drum(A, B, [A|T]):- arc(A, C), descendantOf(B, C), drum(C, B, T).
+drum(A, B, [A|T]):- arc(P, A), drum(P, B, T).
 
 
 
@@ -394,23 +398,24 @@ check13:-
 %% -----------------------------------------------------------------------------
 exercitiul(14, []).
 %% cost/3
-%% cost(+Nod, +Nod, -Cost).
-%% un arc in sus costa -1, unul in jos, 1.
+%% cost(+Nod1, +Nod2, -Cost).
+%% un arc în sus costă -1, unul în jos, 1.
 
 %% Hint: Predicatul este adevărat dacă:
 %%  - costul unui drum de la un nod la el însusi este 0.
-%%  - costul unui drum de la un nod la unul din descendentii directi
-%%  este 1, iar de la un nod la unul din ascendentii directi este -1.
-%%  - dacă există un drum de cost N, de la unul din descendentii directi
-%%  ai lui A la B si costul drumului de la A la B este N+1.
-%%  - dacă există un drum de cost N, de la unul din stramosii directi
-%%  ai lui A la B si costul drumului de la A la B este N-1.
+%%  - costul unui drum de la un nod la unul dintre descendenții săi
+%%  direcți este 1, iar de la un nod la părintele său este -1.
+%%  - dacă Nod2 este descendent al unui copil al lui Nod1, și există un
+%%  drum de cost N, de la copil la Nod2, atunci costul drumului este
+%%  N+1
+%%  - dacă există un drum de cost N, de la părintele lui Nod1, către
+%%  Nod2, atunci costul drumului de la Nod1 la Nod2 este N-1.
 
 cost(A, A, 0).
 cost(A, B, 1):- arc(A, B).
 cost(A, B, -1):- arc(B, A).
-cost(A, B, N):- descendantOf(B, A), arc(A, C), descendantOf(B, C), cost(C, B, N2), N is N2 + 1.
-cost(A, B, N):- arc(C, A), cost(C, B, N2), N is N2 - 1.
+cost(A, B, N1):- arc(A, C), descendantOf(B, C), cost(C, B, N), N1 is N + 1.
+cost(A, B, N1):- arc(P, A), cost(P, B, N), N1 is N - 1.
 
 check14:-
 	tests([
@@ -419,7 +424,7 @@ check14:-
 	chk(cost(c, a, -1)),
 	chk(cost(a, d, 2)),
 	uck(cost(a, h, X)),
-	uck(cost(b,m,X))
+	uck(cost(b, m, X))
 	]),
         writeln('Exercițiul 14 rezolvat corect!').
 
