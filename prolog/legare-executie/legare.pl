@@ -2,7 +2,7 @@
 :- discontiguous exercitiul/2.
 %% -----------------------------------------------------------------------------
 
-%% -- BACKTRACKING ATUNCI CÂND CUNOAȘTEM LUNGIMEA SOLUȚIEI --
+%% -- PUTEREA GENERATIVĂ A LIMBAJULUI --
 exercitiul(1, []).
 %% În problema pătratului latin, trebuie ca să nu existe același simbol
 %% de mai multe ori pe aceeași linie sau pe aceeași coloană.
@@ -42,14 +42,14 @@ solve_latin(S) :- template(S), correct(S).
 %% TODO
 %% safe/2
 %% safe(+X/Y/S, +Others)
-%% Unde Others este lista pozițiilor deja completate.
+%% Unde Others este lista pozițiilor deja completate, iar compusul X/Y/S
+%% indică plasarea simbolului S pe
 %%
 %% Hint: ansamblul X/Y/S este valid în raport cu cele din lista others
 %% dacă nu există o altă poziționare a aceluiași simbol pe aceeași linie
 %% sau pe aceeași coloană.
 safe(_, _) :- false.
-safe(X/Y/S, Others) :-
-    \+ member(X/_/S, Others), \+ member(_/Y/S, Others).
+
 
 check1 :- tests([
               uck(safe(1/1/a, [1/3/a])),
@@ -69,9 +69,80 @@ check1 :- tests([
 %% soluțiile.
 
 
+
+%% -----------------------------------------------------------------------------
+exercitiul(2, []).
+%% permutari4/2
+%% permutari(+Lista4, -Permutare4)
+%% Predicatul calculează permutările unei liste de 4 elemente.
+%%
+%% Hint: dăm proprietățile permutării: permutarea are aceeași lungime și
+%% fiecare dintre elementele din Lista4 sunt și în permutare.
+permutari4([_, _, _, _], _) :- false.
+
+
+check2 :- tests([
+              chk(permutari4([1,2,3,4],[1,2,3,4])),
+              chk(permutari4([1,2,3,4],[2,1,4,3])),
+              uck(permutari4([1,2,3,4],[2,2,4,3])),
+              uck(permutari4([1,2,3,4],[2,2,4,3,1])),
+              nsl("permutari4([1,2,3,4], P)", 'P', 24)
+          ]).
+
+%% -----------------------------------------------------------------------------
+exercitiul(3, []).
+%% alternare/4
+%% alternare(+A, +B, +Len, -Res)
+%% Predicatul construiește în Res o listă de lungime Len în care se
+%% alternează valorile din A și B.
+%%
+%% Observați outputul de deasupra testului c;
+%% Observați cum variabilele sunt legate *după* construcția listei în
+%% interogarea:
+%% alternare(X, Y, 5, Res), writeln(Res), X = 1, Y = 2.
+alternare(_, _, _, _) :- false.
+
+
+check3 :- tests([
+              exp("alternare(X, Y, 10, [A, B, C, D | Rest])", [
+                      cond("length(Rest, 6)"),
+                      cond("X == A"), cond("C == A"),
+                      cond("Y == B"), cond("D == B")
+                  ]),
+              ech("(alternare(X, Y, 10, Res), member(E, Res))",
+                  ['var(E)', '(X == E ; Y == E)']),
+              wait, chk((alternare(X, Y, 4, Res),
+                   format("~n     A: ~w, B: ~w, Res: ~w~n", [X, Y, Res])))
+          ]).
+
+
 %% -- CONSTRUCȚIA SOLUȚIILOR MULTIPLE FOLOSIND ALTERNATIVE --
 
-exercitiul(2, []).
+%% -----------------------------------------------------------------------------
+exercitiul(4, []).
+%% sublista/2
+%% sublista(+List, ?SubList)
+%% 'SubList' este o sublistă a lui 'List' ('SubList' poate fi obținută prin
+%% eliminarea a zero sau mai multe elemente din 'List')
+%%
+%% Hint: în parcurgerea listei, primul element din listă poate să facă
+%% parte din sublistă (ca prim element al sublistei), sau poate să nu
+%% facă parte din sublistă. Restul sublistei este o sublistă din restul
+%% listei.
+
+sublista(_,_) :- false.
+
+
+check4 :- tests([
+              chk(sublista([1,2,3,4,5],[2,3,4])),
+              chk(sublista([1,2,3,4,5],[1,2,3,4,5])),
+              uck(sublista([1,2,3,4,5],[2,1,4])),
+              sls('sublista([1,2,3],S4)', 'S4',
+                  [[],[1],[1,2],[1,2,3],[1,3],[2],[2,3],[3]])
+          ]).
+
+
+exercitiul(5, []).
 %% extract/4
 %% extract(+List, +Start, +End, -Range)
 %% 'Range' reprezintă lista formată din elementele listei 'List' aflate
@@ -90,56 +161,23 @@ exercitiul(2, []).
 %%    mergem în listă și adăugăm elemente în Range.
 
 extract(_,_,_,_) :- false.
-extract([], _, _, []).
-extract(_, _, 0, []).
-extract([H|T], 0, End, [H|Range]) :-
-    End1 is End-1,
-    extract(T, 0, End1, Range).
-extract([_|T], Start, End, Range) :-
-    S1 is Start - 1, E1 is End - 1,
-    extract(T, S1, E1, Range).
 
 
-check2 :- tests([
-        chk(extract([a,b,c,d,e], 0, 3, [a,b,c,d])),
-        chk(extract([a,b,c,d,e], 1, 10, [b,c,d,e])),
-        exp('extract([a,b,C,D,e], 2, 4, [c,d,e])', ['C', c, 'D', d]),
-        exp('extract([a,b,C1,D1,e], 2, 4, [C2,D2,e])',
-            [cond('C1==C2'), cond('D1==D2')]),
-        chk(extract([a,b,c,_,d], 3, 4, [X,X]))
+check5 :- tests([
+              chk(extract([a,b,c,d,e], 0, 3, [a,b,c,d])),
+              chk(extract([a,b,c,d,e], 1, 10, [b,c,d,e])),
+              exp('extract([a,b,C,D,e], 2, 4, [c,d,e])', ['C', c, 'D', d]),
+              exp('extract([a,b,C1,D1,e], 2, 4, [C2,D2,e])',
+                  [cond('C1==C2'), cond('D1==D2')]),
+              chk(extract([a,b,c,_,d], 3, 4, [X,X]))
           ]).
 
-
-%% -----------------------------------------------------------------------------
-exercitiul(3, []).
-%% sublista/2
-%% sublista(+List, ?SubList)
-%% 'SubList' este o sublistă a lui 'List' ('SubList' poate fi obținută prin
-%% eliminarea a zero sau mai multe elemente din 'List')
-%%
-%% Hint: în parcurgerea listei, primul element din listă poate să facă
-%% parte din sublistă (ca prim element al sublistei), sau poate să nu
-%% facă parte din sublistă. Restul sublistei este o sublistă din restul
-%% listei.
-
-sublista(_,_) :- false.
-sublista([], []).
-sublista([H|T], [H|SubT]) :- sublista(T, SubT).
-sublista([_|T], SubT) :- sublista(T, SubT).
-
-check3 :- tests([
-	1,chk(sublista([1,2,3,4,5],[2,3,4])),
-	1,chk(sublista([1,2,3,4,5],[1,2,3,4,5])),
-	1,uck(sublista([1,2,3,4,5],[2,1,4])),
-	2,sls('sublista([1,2,3],S4)', 'S4',
-              [[],[1],[1,2],[1,2,3],[1,3],[2],[2,3],[3]])
-          ]).
 
 
 %% -- DIRECȚIONALITATE FLEXIBILĂ ÎN CALCUL --
 
 %% -----------------------------------------------------------------------------
-exercitiul(4, []).
+exercitiul(6, []).
 %% factorial2/2
 %% factorial2(?N, ?Fact)
 %% 'Fact' este factorialul lui 'N'.
@@ -151,15 +189,13 @@ exercitiul(4, []).
 %% căreia putem calcula numărul și factorialul actual.
 
 factorial2(_, _) :- false.
-factorial2(0, 1).
-factorial2(N, F) :- factorial2(N1, F1), N is N1 + 1, F is F1 * N.
 
-check4 :- tests([
-	exp('factorial2(2, F1)', ['F1', 2]),
-	exp('factorial2(4, F2)', ['F2', 24]),
-	exp('factorial2(N3, 120)', ['N3', 5]),
-	exp('factorial2(N4, 720)', ['N4', 6]),
-	chk(factorial2(7, 5040))
+check6 :- tests([
+              exp('factorial2(2, F1)', ['F1', 2]),
+              exp('factorial2(4, F2)', ['F2', 24]),
+              exp('factorial2(N3, 120)', ['N3', 5]),
+              exp('factorial2(N4, 720)', ['N4', 6]),
+              chk(factorial2(7, 5040))
           ]).
 
 
@@ -194,7 +230,7 @@ parinte(miruna, gigi).
 persoane([alin, ana, gigi, ioana, mihai, miruna, radu, rodica, wendy]).
 
 
-exercitiul(5, []).
+exercitiul(7, []).
 %% auCopil/2
 %% auCopil(?A, ?B)
 %% Predicatul exprimă faptul că două persoane au un copil împreună.
@@ -202,9 +238,8 @@ exercitiul(5, []).
 %% Hint: persoanele trebuie să fie diferite.
 
 auCopil(_, _) :- false.
-auCopil(A, B) :- parinte(X, A), parinte(X, B), A \= B, !.
 
-check5 :- tests([
+check7 :- tests([
               chk(auCopil(mihai, wendy)),
               chk(auCopil(rodica, gigi)),
               chk(auCopil(radu, miruna)),
@@ -216,6 +251,7 @@ check5 :- tests([
               uck(auCopil(miruna, alin))
           ]).
 
+exercitiul(8, []).
 %% soti/2
 %% soti(?A, ?B)
 %% Predicatul arată că două persoane sunt soți. Considerăm că sunt soți
@@ -234,14 +270,21 @@ check5 :- tests([
 %%
 %% Hint: puteți folosi operatorul de ordonare naturală @< pentru a
 %% impune o anumită ordine între persoane.
+soti(_, _) :- false.
 
 
-soti(A, B):- persoane(L),
-    member(A, L),
-    member(B, L),
-    A @< B,
-    auCopil(A, B).
+check8 :- tests([
+              chk((soti(mihai, wendy) ; soti(wendy, mihai))),
+              chk((soti(gigi, rodica) ; soti(rodica, gigi))),
+              chk((soti(radu, miruna) ; soti(miruna, radu))),
+              uck(soti(mihai, rodica)),
+              uck(soti(rodica, rodica)),
+              uck(soti(ana, alin)),
+              uck(soti(miruna, alin)),
+              nsl("soti(X, Y)", "(X, Y)", 3)
+          ]).
 
+exercitiul(9, []).
 %% linie/2
 %% linie(+Urmas, -Linie_Genealogică)
 %% Predicat pentru aflarea unei linii genealogice pentru o persoană.
@@ -249,34 +292,60 @@ soti(A, B):- persoane(L),
 %% săi, până la o persoană ai cărei parinți nu sunt cunoscuți.
 %% Soluții succesive ale predicatului prezintă diversele linii
 %% genealogice existente pentru urmaș.
-linie(Urmas, [Urmas]) :- \+ parinte(Urmas, _).
-linie(Urmas, [Urmas | Cale]) :-
-    parinte(Urmas, Parinte),
-    linie(Parinte, Cale).
+linie(_, _) :- false.
 
+
+check9 :- tests([
+              chk(linie(ioana, [ioana, radu, mihai])),
+              chk(linie(ioana, [ioana, radu, wendy])),
+              chk(linie(ioana, [ioana, miruna, rodica])),
+              chk(linie(ioana, [ioana, miruna, gigi])),
+              sls("linie(alin, L)", "L",
+                  [[alin, radu, mihai], [alin, radu, wendy],
+                   [alin, miruna, rodica], [alin, miruna, gigi]]),
+              sls("linie(ana, L)", "L",
+                  [[ana, mihai], [ana, wendy]]),
+              sls("linie(rodica, L)", "L", [[rodica]])
+          ]).
+
+exercitiul(10, []).
 %% prima_linie_prin/3
 %% prima_linie_prin(+Urmas, +Persoana, -Linie_Genealogică)
 %% Ne dorim să aflăm o singură linie genealogică, prima în care este
 %% prezentă o anumită persoană.
-prima_linie_prin(Urmas, Persoana, Linie) :-
-    linie(Urmas, Linie),
-    member(Persoana, Linie), !.
+prima_linie_prin(_, _, _) :- false.
 
+
+check10 :- tests([
+               chk(prima_linie_prin(alin, miruna, [alin, miruna, rodica])),
+               exp("prima_linie_prin(alin, miruna, L)",
+                   ['L', [alin, miruna, rodica]]),
+               nsl("prima_linie_prin(alin, miruna, L)", 'L', 1),
+               uck(prima_linie_prin(alin, ana, _))
+           ]).
+
+
+exercitiul(11, []).
 %% stramosi/2
 %% stramosi(+Urmas, -Stramosi)
 %% Predicatul determină toți strămoșii pentru un anumit urmaș.
 %%
 %% Hint: o persoană are exact 2 părinți, care fiecare are strămoșii lui.
-%% Folosiți predicatul cut la momentul oportun pentru a avea o singură
-%% soluție.
-stramosi(Urmas, [Urmas]) :- \+ parinte(Urmas, _), !.
-stramosi(Urmas, Stramosi) :-
-    parinte(Urmas, A),
-    parinte(Urmas, B),
-    A \= B, !,
-    stramosi(A, SA),
-    stramosi(B, SB),
-    append(SA, SB, Stramosi).
+%% Folosiți predicatul cut la momentul / momentele oportun(e) pentru a
+%% avea o singură soluție.
+stramosi(_, _) :- false.
+
+
+check11 :- tests([
+               exp("stramosi(ioana,X)", [
+                   set('X', [ioana, radu, mihai, wendy, miruna, rodica, gigi])]),
+               exp("stramosi(ana,X)", [
+                   set('X', [ana, mihai, wendy])]),
+               exp("stramosi(rodica,X)", [set('X', [rodica])]),
+               nsl("stramosi(ioana,X)", 'X', 1),
+               nsl("stramosi(ana,X)", 'X', 1)
+           ]).
+
 
 
 
