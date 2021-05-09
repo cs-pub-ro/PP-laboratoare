@@ -169,7 +169,8 @@ alipire a unor valori, fără a calcula vreodată împărțirea.
 % Lungimea soluției este cunoscută și fixă.
 template([1/_, 2/_, 3/_, 4/_, 5/_, 6/_, 7/_]).
 
-correct([]) :- !. correct([X/Y | Others]):-
+correct([]) :- !.
+correct([X/Y | Others]):-
        correct(Others),
        member(Y, ["r", "g", "b"]),
        safe(X/Y, Others).
