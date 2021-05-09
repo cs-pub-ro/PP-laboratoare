@@ -258,8 +258,8 @@ Rev = [4, 3, 2, 1].
 de bifurcație create în predicatul curent. La evaluarea predicatului cut
 într-un predicat `p`, se vor realiza două tipuri de efecte:
 
-  * nu se vor mai genera soluții (dacă este nevoie, sau dacă soluția curent eșuează) pentru alte reguli ale predicatului `p` 
-  * nu se vor mai genera soluții (dacă este nevoie, sau dacă soluția curent eșuează), pentru alte soluții ale condițiilor care apar **în aceeași regulă cu cut**, și înainte de cut.
+  * nu se vor mai genera soluții (dacă este nevoie, sau dacă soluția curentă eșuează) pentru alte reguli ale predicatului `p` 
+  * nu se vor mai genera soluții (dacă este nevoie, sau dacă soluția curentă eșuează), pentru alte soluții ale condițiilor care apar **în aceeași regulă cu cut**, și înainte de cut.
 
 
 De exemplu, în programul: 
