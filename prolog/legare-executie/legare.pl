@@ -23,7 +23,7 @@ template([1/1/_, 1/2/_, 1/3/_, 2/1/_, 2/2/_, 2/3/_, 3/1/_, 3/2/_, 3/3/_]).
 %% correct(?Solution)
 %% Solution reprezintă o soluție validă pentru problemă. Într-o soluție
 %% validă fiecare poziție este validă în raport cu următoarele.
-correct([]) :- !.
+correct([]).
 correct([X/Y/S | Others]):-
         correct(Others),
         member(S, [a, b, c]),
@@ -219,18 +219,21 @@ check5 :- tests([
 %% soti/2
 %% soti(?A, ?B)
 %% Predicatul arată că două persoane sunt soți. Considerăm că sunt soți
-%% dacă au un copil împreună. Folosiți cut, astfel încât:
+%% dacă au un copil împreună. Folosiți predicatul cut, astfel încât:
 %%   - o pereche să nu apară de mai multe ori
-%%   - să avem 3 soluții pentru interogarea ?- soti(X, Y).
+%%   - să avem exact 3 soluții pentru interogarea ?- soti(X, Y).
 %%
-%% Hint: folosirea lui cut face ca apelul predicatului să întoarcă o
-%% singură soluție. Ce predicat puteți folosi, echivalent de altfel,
-%% pe care îl aveți deja implementat și la care nu se cere să returneze
+%% Hint: folosirea lui cut într-un predicat face ca apelul
+%% acelui predicat să întoarcă o singură soluție. Deci nu putem folosi
+%% cur în predicatul soti. În ce predicat deja implementat, echivalent
+%% altfel cu soti, puteți folosi cut, și la care nu se cere să returneze
 %% mai multe soluții, ci poate fi folosit doar pentru verificarea că cei
 %% doi au copii împreună?
+%%
 %% Hint: cei doi trebuie să fie persoane.
+%%
 %% Hint: puteți folosi operatorul de ordonare naturală @< pentru a
-%% ordona persoane.
+%% impune o anumită ordine între persoane.
 
 
 soti(A, B):- persoane(L),
