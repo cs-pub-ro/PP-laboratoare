@@ -257,7 +257,7 @@ Rev = [4, 3, 2, 1].
 de bifurcație create în predicatul curent. La evaluarea predicatului cut
 într-un predicat `p`, se vor realiza două tipuri de efecte:
 
-  * nu se vor mai genera soluții (dacă este nevoie, sau dacă soluția curent eșuează) pentru alte reguli ale predicatului `p` 
+  * nu se vor mai genera soluții (dacă este nevoie, sau dacă soluția curent eșuează) pentru alte reguli ale predicatului `p` 
   * nu se vor mai genera soluții (dacă este nevoie, sau dacă soluția curent eșuează), pentru alte soluții ale condițiilor care apar **în aceeași regulă cu cut**, și înainte de cut.
 
 
@@ -298,8 +298,8 @@ se creează *după* evaluarea lui cut.
 
 Putem utiliza predicatul cut în două moduri:
 
-  * atunci când știm că am ajuns la soluția care ne interesează, și știm că nu mai avem nevoie de o altă soluție pentru predicat, putem utiliza cut pentru a nu mai explora alte soluții (cut verde / *green cut*).
-  * atunci când dorim în mod explicit ca Prolog să nu mai exploreze alte posibilități pentru același predicat, pentru că acestea nu ar genera soluții corecte, dacă se aplică regula curentă (cut roșu / *red cut*).
+  * atunci când știm că am ajuns la soluția care ne interesează, și știm că nu mai avem nevoie de o altă soluție pentru predicat,  putem utiliza cut pentru a nu mai explora alte soluții (cut verde / *green cut*).
+  * atunci când dorim în mod explicit ca Prolog să nu mai exploreze alte posibilități pentru același predicat, pentru că acestea nu ar genera soluții corecte, dacă se aplică regula curentă (cut roșu / *red cut*).
 
 Exemplu: implementarea predicatului `min`.
 
