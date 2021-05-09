@@ -213,7 +213,7 @@ p2(X) :- \+ lazy(X), student(X).
 ```
 
 Acest lucru se întâmplă pentru că, în `p2`, Prolog nu poate să derive,
-pe baza negației, legări pentru `X`. În prolog putem folosi negația doar
+pe baza negației, legări pentru `X`. În Prolog putem folosi negația doar
 pentru a *verifică* variabile deja legate, sau pentru a exprima faptul
 că *nu se poate demonstra că predicatul este adevărat*. În `p1`, `X`
 este legat și negația are rolul de a verifica că `lazy` nu este adevărat
