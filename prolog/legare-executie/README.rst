@@ -1,4 +1,4 @@
-# Prolog: Introducere
+# Prolog: Legare și execuție
   * Data publicării: 09.05.2021
   * Data ultimei modificări: 09.05.2021
 
@@ -91,6 +91,12 @@ false.
 </code>
 
 
+Putem folosi puterea generativă a limbajului pentru a produce soluții bazate pe combinații. De exemplu, dacă ne dorim toate perechile de numere (ca soluții succesive) din listele ''L1'' și ''L2'', dar a căror sumă **nu** este în lista ''L3'', putem folosi interogarea:
+
+<code prolog>
+[L1,L2,L3]=[[1,2,3], [4,5,6], [5,6]], member(X, L1), member(Y, L2), S is X + Y, \+ member(S, L3).
+</code>
+
 
 == Obținerea de soluții prin generare și testare ==
 
@@ -105,16 +111,16 @@ solve(S) :-
 	safe(S). % predicat care verifică faptul că țările nu au culori identice cu niciun vecin
 </code>
 	
-Programul anterior este foarte ineficient. El construieşte extrem de multe atribuiri, fără a le respinge pe cele "ilegale" într-un stadiu incipient al construcţiei. 
+Programul anterior este foarte ineficient. El construiește extrem de multe atribuiri, fără a le respinge pe cele "ilegale" într-un stadiu incipient al construcției. 
 
 
-== Backtracking atunci când cunoaștem dimensiunea soluţiei ==
+== Backtracking atunci când cunoaștem dimensiunea soluției ==
 
-Mecanismul de backtracking ne oferă o rezolvare mai eficientă. Știm că orice soluţie pentru problema colorării hărților constă într-o listă de atribuiri a 3 culori, de genul ''%%[X1/C1,X2/C2, ... X7/C7]%%'', scopul programului de rezolvare fiind să instanţieze adecvat variabilele X1, C1, X2, C2 etc.
+Mecanismul de backtracking ne oferă o rezolvare mai eficientă. Știm că orice soluție pentru problema colorării hărților constă într-o listă de atribuiri a 3 culori, de genul ''%%[X1/C1,X2/C2, ... X7/C7]%%'', scopul programului de rezolvare fiind să instanțieze adecvat variabilele X1, C1, X2, C2 etc.
 
 Vom considera că orice soluție este de forma ''%%[1/C1,2/C2, ... 7/C7]%%'', deoarece ordinea țărilor nu este importantă. 
 
-Fie problema mai generală a colorării a N țări folosind M culori. Definim soluţia pentru N = 7 ca o soluţie pentru problema generală a colorării hărților, care în plus respectă template-ul ''%%[1/Y1,2/Y2, ... 7/Y7]%%''. Semnul "/" este folosit în acest caz ca o modalitate de alipire a unor valori, fără a calcula vreodată împărțirea.
+Fie problema mai generală a colorării a N țări folosind M culori. Definim soluția pentru N = 7 ca o soluție pentru problema generală a colorării hărților, care în plus respectă template-ul ''%%[1/Y1,2/Y2, ... 7/Y7]%%''. Semnul "/" este folosit în acest caz ca o modalitate de alipire a unor valori, fără a calcula vreodată împărțirea.
 
 În Prolog vom scrie:
 <code>
@@ -130,9 +136,9 @@ correct([X/Y | Others]):-
 solve_maps(S):-template(S), correct(S).
 </code>
 
-**Regulă:** Atunci când calea către soluţie respectă un anumit template (avem de instanţiat un număr finit, predeterminat, de variabile), este eficient să definim un astfel de template în program. 
+**Regulă:** Atunci când calea către soluție respectă un anumit template (avem de instanțiat un număr finit, predeterminat, de variabile), este eficient să definim un astfel de template în program. 
 
-**Observaţie:** În exemplul de mai sus am reţinut explicit ordinea celor 7 țări. Redundanţa în reprezentarea datelor ne asigură un câştig în viteza de calcul (câştigul se observă la scrierea predicatului safe).
+**Observație:** În exemplul de mai sus am reținut explicit ordinea celor 7 țări. Redundanța în reprezentarea datelor ne asigură un câștig în viteza de calcul (câștigul se observă la scrierea predicatului safe).
 
 
 == Controlul execuției: operatorul cut (!), negația (\+) și false
@@ -214,7 +220,44 @@ Primele două soluții sunt soluții date de primele două reguli pentru ''p''. 
   * alternativele pentru ''p'', deci nu se va mai considera regula ''p(d)''.
 Alternativele pentru ''t'' sunt însă considerate normal, pentru că acestea se creează //după// evaluarea lui cut.
 
+Putem utiliza predicatul cut în două moduri:
+  * atunci când știm că am ajuns la soluția care ne interesează, și știm că nu mai avem nevoie de o altă soluție pentru predicat, putem utiliza cut pentru a nu mai explora alte soluții (cut verde / //green cut//).
+  * atunci când dorim în mod explicit ca Prolog să nu mai exploreze alte posibilități pentru același predicat, pentru că acestea nu ar genera soluții corecte, dacă se aplică regula curentă (cut roșu / //red cut//).
+
+Exemplu: implementarea predicatului ''min''.
+
+Varianta 1 -- fără cut:
+min(X, Y, Min) :- X < Y, X = Min. % regula 1
+min(X, Y, Min) :- X >= Y, Y = Min. % regula 2
+
+Este important să avem comparația din regula 2, în lipsa ei obținând, pentru cazul în care ''X < Y'', o a doua soluție falsă, în care Y este minimul. Testați cu:
+
+minB(X, Y, Min) :- X < Y, X = Min. % regula 1
+minB(_, Y, Min) :- Y = Min. % regula 2
+
+Pentru interogarea ''minB(2, 3, Min)'' se obțin două soluții: ''Min=2'' și ''Min=3''.
+
+Putem integra predicatul cut ca un cut verde astfel:
+
+min2(X, Y, Min) :- X < Y, !, X = Min. % regula 1
+min2(X, Y, Min) :- X >= Y, Y = Min. % regula 2
+
+Este o utilizare de tip "green cut" - cut poate să lipsească și execuția nu devine incorectă, dar este îmbunătățită prin faptul că atunci când ''X < Y'' Prolog va ști să nu mai intre (nu mai este nevoie să intre) pe a doua regulă.
+
+Observați că este important ca predicatul cut să fie pus atunci când știm cu siguranță ca suntem pe ramura corectă. Dacă, de exemplu, implementăm astfel:
+
+min2B(X, Y, Min) :- !, X < Y, X = Min.
+min2B(X, Y, Min) :- X >= Y, Y = Min.
+
+Pentru ''min2B(3, 2 ,M)'', se va evalua predicatul cut (care anulează alternativa pentru min2B), inegalitatea eșuează, și interogarea va eșua, pentru că din cauza lui cut Prolog nu mai intră și pe a doua regulă.
 
 
+Putem integra predicatul cut ca un cut roșu astfel:
 
+min3(X, Y, Min) :- X < Y, !, X = Min.
+min3(_, Y, Min) :- Y = Min.
+
+Dacă inegalitatea din prima regulă reușește, sigur nu mai avem nevoie de a doua regulă.
+
+Aici, cut **nu** poate să lipsească -- dacă lipsește vom obține și soluții incorecte, ca în cazul lui ''minB''.
 
