@@ -266,7 +266,8 @@ De exemplu, în programul:
 ```prolog
 p(a). 
 p(b). 
-p(A/B) :- q(A), !, t(A/B). p(d).
+p(A/B) :- q(A), !, t(A/B). 
+p(d).
 
 q(a). 
 q(b). 
