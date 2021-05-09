@@ -302,9 +302,9 @@ Putem utiliza predicatul cut în două moduri:
   * atunci când știm că am ajuns la soluția care ne interesează, și știm că nu mai avem nevoie de o altă soluție pentru predicat,  putem utiliza cut pentru a nu mai explora alte soluții (cut verde / *green cut*).
   * atunci când dorim în mod explicit ca Prolog să nu mai exploreze alte posibilități pentru același predicat, pentru că acestea nu ar genera soluții corecte, dacă se aplică regula curentă (cut roșu / *red cut*).
 
-Exemplu: implementarea predicatului `min`.
+**Exemplu:** implementarea predicatului `min`.
 
-Varianta 1 -- fără cut:
+**Varianta 1** -- fără cut:
 ```prolog
 min(X, Y, Min) :- X < Y, X = Min. % regula 1
 min(X, Y, Min) :- X >= Y, Y = Min. % regula 2
@@ -322,7 +322,7 @@ minB(_, Y, Min) :- Y = Min. % regula 2
 Pentru interogarea `minB(2, 3, Min)` se obțin două soluții: `Min=2` și
 `Min=3`.
 
-Putem integra predicatul cut ca un cut verde astfel:
+**Varianta 2** Putem integra predicatul cut ca un cut verde astfel:
 
 ```prolog
 min2(X, Y, Min) :- X < Y, !, X = Min. % regula 1
@@ -346,7 +346,7 @@ Pentru `min2B(3, 2 ,M)`, se va evalua predicatul cut (care anulează
 alternativa pentru min2B), inegalitatea eșuează, și interogarea va eșua,
 pentru că din cauza lui cut Prolog nu mai intră și pe a doua regulă.
 
-Putem integra predicatul cut ca un cut roșu astfel:
+**Varianta 3** Putem integra predicatul cut ca un cut roșu astfel:
 
 ```prolog
 min3(X, Y, Min) :- X < Y, !, X = Min. 
