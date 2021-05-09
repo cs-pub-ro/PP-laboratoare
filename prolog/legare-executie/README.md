@@ -27,7 +27,7 @@ lungime([_ | R], N) :- lungime(R, N1), N is N1 + 1.
 ```
 
 ```prolog
-?- lungime([1,2,3],N).`
+?- lungime([1,2,3],N).
 N = 3.
 ```
 
@@ -170,9 +170,9 @@ alipire a unor valori, fără a calcula vreodată împărțirea.
 template([1/_, 2/_, 3/_, 4/_, 5/_, 6/_, 7/_]).
 
 correct([]) :- !. correct([X/Y | Others]):-
-       correct(Others),`  
-       member(Y, ["r", "g", "b"]),`  
-       safe(X/Y, Others).`
+       correct(Others),
+       member(Y, ["r", "g", "b"]),
+       safe(X/Y, Others).
 
 solve_maps(S):-template(S), correct(S).
 ```
