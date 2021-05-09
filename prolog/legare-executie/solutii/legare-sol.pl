@@ -96,7 +96,7 @@ exercitiul(3, []).
 %% alternare/4
 %% alternare(+A, +B, +Len, -Res)
 %% Predicatul construiește în Res o listă de lungime Len în care se
-%% alternează valorile din A și B.
+%% alternează valorile A și B.
 %%
 %% Observați outputul de deasupra testului c;
 %% Observați cum variabilele sunt legate *după* construcția listei în
