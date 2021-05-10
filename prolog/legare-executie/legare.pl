@@ -261,7 +261,7 @@ exercitiul(8, []).
 %%
 %% Hint: folosirea lui cut într-un predicat face ca apelul
 %% acelui predicat să întoarcă o singură soluție. Deci nu putem folosi
-%% cur în predicatul soti. În ce predicat deja implementat, echivalent
+%% cut în predicatul soti. În ce predicat deja implementat, echivalent
 %% altfel cu soti, puteți folosi cut, și la care nu se cere să returneze
 %% mai multe soluții, ci poate fi folosit doar pentru verificarea că cei
 %% doi au copii împreună?

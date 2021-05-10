@@ -1,5 +1,5 @@
 #  Prolog: Legare și execuție
-  
+
   * Data publicării: 09.05.2021
   * Data ultimei modificări: 09.05.2021
 
@@ -21,7 +21,7 @@ rezultate de orice formă.
 
 De exemplu, pentru a obține lungimea unei liste putem folosi:
 ```prolog
-% lungime(+Lista,-Lungime) 
+% lungime(+Lista,-Lungime)
 lungime([],0).
 lungime([_ | R], N) :- lungime(R, N1), N is N1 + 1.
 ```
@@ -47,7 +47,7 @@ membru(Elem, [Elem | _]).
 membru(Elem, [_ | Rest]) :- membru(Elem, Rest).
 ```
 
-Putem folosi acest predicat pentru a obține un răspuns: 
+Putem folosi acest predicat pentru a obține un răspuns:
 ```prolog
 ?- membru(3, [1, 2, 3, 4, 5]).
 true.
@@ -78,14 +78,14 @@ următorul exemplu în care dorim generarea, pe rând, a tuturor
 permutărilor unei liste:
 
 ```prolog
-% remove(+Elem, +Lista, -ListaNoua) 
-remove(E, [E | R], R). 
+% remove(+Elem, +Lista, -ListaNoua)
+remove(E, [E | R], R).
 remove(E, [F | R], [F | L]) :- remove(E, R, L).
 ```
 
 ```prolog
-% perm(+Lista, -Permutare) 
-perm([], []). 
+% perm(+Lista, -Permutare)
+perm([], []).
 perm([F | R], P) :- perm(R, P1), remove(F, P, P1).
 ```
 
@@ -135,9 +135,9 @@ care desemnează culorile atribuite fiecărei țări `(1, 2, 3, 4, 5, 6,
 
 Această strategie se traduce în următorul cod Prolog:
 ```prolog
-% predicat care verifică că toate elementele din prima listă sunt prezente în a doua 
+% predicat care verifică că toate elementele din prima listă sunt prezente în a doua
 all_members([], _).
-all_members([X | Rest], In) :- member(X, In), all_members(Rest, In). 
+all_members([X | Rest], In) :- member(X, In), all_members(Rest, In).
 
 % predicat care verifică faptul că țările nu au culori identice cu niciun vecin
 solve(S) :- L = [_ | _], length(L, 7), all_members(L, ["r", "g", "b"]), safe(S).
@@ -164,7 +164,7 @@ colorării hărților, care în plus respectă template-ul `[1/Y1,2/Y2,
 ... 7/Y7]`. Semnul "/" este folosit în acest caz ca o modalitate de
 alipire a unor valori, fără a calcula vreodată împărțirea.
 
-În Prolog vom scrie: 
+În Prolog vom scrie:
 ```prolog
 % Lungimea soluției este cunoscută și fixă.
 template([1/_, 2/_, 3/_, 4/_, 5/_, 6/_, 7/_]).
@@ -215,7 +215,7 @@ p2(X) :- \+ lazy(X), student(X).
 
 Acest lucru se întâmplă pentru că, în `p2`, Prolog nu poate să derive,
 pe baza negației, legări pentru `X`. În Prolog putem folosi negația doar
-pentru a *verifică* variabile deja legate, sau pentru a exprima faptul
+pentru a *verifica* variabile deja legate, sau pentru a exprima faptul
 că *nu se poate demonstra că predicatul este adevărat*. În `p1`, `X`
 este legat și negația are rolul de a verifica că `lazy` nu este adevărat
 pentru `X`. În `p2`, `X` este nelegat, deci putem interpreta rezultatele
@@ -245,7 +245,7 @@ eșuează întotdeauna.
 ```prolog
 ?- my_reverse([1,2,3,4],[],Rev).
 List:[1,2,3,4], Acc:[]
-List:[2,3,4], Acc:[1] 
+List:[2,3,4], Acc:[1]
 List:[3,4], Acc:[2,1]
 List:[4], Acc:[3,2,1]
 List:[], Acc:[4,3,2,1]
@@ -258,25 +258,25 @@ Rev = [4, 3, 2, 1].
 de bifurcație create în predicatul curent. La evaluarea predicatului cut
 într-un predicat `p`, se vor realiza două tipuri de efecte:
 
-  * nu se vor mai genera soluții (dacă este nevoie, sau dacă soluția curentă eșuează) pentru alte reguli ale predicatului `p` 
+  * nu se vor mai genera soluții (dacă este nevoie, sau dacă soluția curentă eșuează) pentru alte reguli ale predicatului `p`
   * nu se vor mai genera soluții (dacă este nevoie, sau dacă soluția curentă eșuează), pentru alte soluții ale condițiilor care apar **în aceeași regulă cu cut**, și înainte de cut.
 
 
-De exemplu, în programul: 
+De exemplu, în programul:
 ```prolog
-p(a). 
-p(b). 
-p(A/B) :- q(A), !, t(A/B). 
+p(a).
+p(b).
+p(A/B) :- q(A), !, t(A/B).
 p(d).
 
-q(a). 
-q(b). 
+q(a).
+q(b).
 q(c).
 
-t(a/a). 
-t(a/b). 
-t(b/c). 
-t(b/d). 
+t(a/a).
+t(a/b).
+t(b/c).
+t(b/d).
 ```
 
 Interogarea `?- p(X).` va întoarce soluțiile:
@@ -331,7 +331,7 @@ min2(X, Y, Min) :- X >= Y, Y = Min. % regula 2
 ```
 
 Este o utilizare de tip "green cut" - cut poate să lipsească și execuția
-nu devine incorectă, dar este îmbunătățită prin faptul că atunci când 
+nu devine incorectă, dar este îmbunătățită prin faptul că atunci când
 `X < Y` Prolog va ști să nu mai intre (nu mai este nevoie să intre) pe a
 doua regulă.
 
@@ -350,7 +350,7 @@ pentru că din cauza lui cut Prolog nu mai intră și pe a doua regulă.
 **Varianta 3** Putem integra predicatul cut ca un cut roșu astfel:
 
 ```prolog
-min3(X, Y, Min) :- X < Y, !, X = Min. 
+min3(X, Y, Min) :- X < Y, !, X = Min.
 min3(_, Y, Min) :- Y = Min.
 ```
 
