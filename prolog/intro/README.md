@@ -32,6 +32,7 @@ Folosim SWI-Prolog, așa cum este detaliat
     * `edit('new.pl')`, dacă fișierul a fost creat anterior
 * dacă fișierul nu a fost încărcat prin argument în linia de comandă, se încarcă folosind comanda `consult('file.pl').`
 * pentru a reîncărca toate fișierele modificate de la ultima încărcare, se folosește comanda `make.`
+* pentru a ieși din terminalul `swipl`, se folosește comanda `halt.`
 
 
 ## Comentarii
