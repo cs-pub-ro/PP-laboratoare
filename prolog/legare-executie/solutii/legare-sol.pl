@@ -43,7 +43,7 @@ solve_latin(S) :- template(S), correct(S).
 %% safe/2
 %% safe(+X/Y/S, +Others)
 %% Unde Others este lista pozițiilor deja completate, iar compusul X/Y/S
-%% indică plasarea simbolului S pe
+%% indică plasarea simbolului S la coordonatele X, Y.
 %%
 %% Hint: ansamblul X/Y/S este valid în raport cu cele din lista others
 %% dacă nu există o altă poziționare a aceluiași simbol pe aceeași linie
