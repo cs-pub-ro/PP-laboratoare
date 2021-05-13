@@ -1,12 +1,13 @@
 #lang racket
 ; ignorați următoarele linii de cod...
+(define (count-call value) (set! call-number (add1 call-number)) value) (define (reset) (set! call-number 0)) (define call-number 0)
+
 (define (sum numbers) (foldr + 0 numbers))
 (define count-magic 0)
 (define (magic-number) (set! count-magic (+ count-magic 1)) 42)
 (define (magic-segment) (set! count-magic (+ count-magic 1)) (cons '(2 . 2)  '(6 . 7)))
 (define (get-start-point x) (set! count-magic (+ count-magic 1)) (car x))
 (define (get-end-point x) (set! count-magic (+ count-magic 1)) (cdr x))
-(define (number->list num) (map (lambda (c) (- (char->integer c) (char->integer #\0))) (string->list (number->string num))))
 (define show-defaults 2) ; câte exerciții la care s-au întors rezultate default să fie arătate detaliat
 (define prepend #f) (define nopoints #t) (define name-ex '(testul testele trecut exercițiul)) ; variante: '(exercițiul exercițiile rezolvat exercițiul) sau '(testul testele trecut exercițiul) sau '(task taskurile rezolvat capitolul)
 (define default-results `(#f 0 () your-code-here)) (define (default-result r) (set! default-results (cons r default-results))) (define : 'separator) (define punct 'string) (define puncte 'string) (define BONUS 'string) (define exerciții 'string)
@@ -50,18 +51,14 @@
 ;;             Nu puteți folosi `exp`/`expt`
 ;; compute-square-area:: funcție -> real
 (define (compute-square-area get-length)
-  (let ((l (get-length)))
-    (* l l)))
+  'your-code-here)
 
-(let ([num-of-calls ((lambda () (compute-square-area magic-number) count-magic))])
-(check% 'a 1/4 (compute-square-area (lambda () 1)) is 1)
-(when (= num-of-calls 1)
-(check% 'b 1/4 (compute-square-area (lambda () 3932)) is 15460624)
-(check% 'c 1/4 (compute-square-area (lambda () 2788)) is 7772944)
-(check% 'd 1/4 (compute-square-area (lambda () 198.2522)) is 39303.93480483999)
- )
-)
-(set! count-magic 0)
+(define (checknum r) (display call-number) (or (eq? r 'your-code-here) (= call-number 1) (format "a fost construit apelând de ~s ori în loc de o singură dată" call-number)))
+(check% 'a 1/4 (compute-square-area (lambda () (count-call 1))) is 1 checknum)(reset)
+(check% 'b 1/4 (compute-square-area (lambda () (count-call 3932))) is 15460624 checknum)(reset)
+(check% 'c 1/4 (compute-square-area (lambda () (count-call 2788))) is 7772944 checknum)(reset)
+(check% 'd 1/4 (compute-square-area (lambda () (count-call 198.2522))) is 39303.93480483999 checknum)(reset)
+
 
 (exercițiul 2 : 1 puncte)
 ;; Funcția compute-length primește ca argumente 3 funcții:
@@ -79,12 +76,8 @@
 ;; Restricții: Fiecare funcție primită drept argument trebuie aplicată o singură dată.
 ;; compute-length:: funcție x funcție x funcție -> real
 (define (compute-length get-line-segment get-start-point get-end-point)
-  (let* ((segment (get-line-segment))
-         (start (get-start-point segment))
-         (stop (get-end-point segment))
-         (x1 (car start)) (y1 (cdr start))
-         (x2 (car stop)) (y2 (cdr stop)))
-    (sqrt (+ (sqr (- x1 x2)) (sqr (- y1 y2))))))
+  'your-code-here)
+
 
 (let ([num-of-calls ((lambda () (compute-length magic-segment get-start-point get-end-point) count-magic))])
   (check% 'a 1/5 num-of-calls is 3)
@@ -104,9 +97,9 @@
 ;; asistentului pentru a vă puncta acest exercițiu.
 ;; distance:: pereche x pereche -> real
 (define (distance x y)
-  (compute-length (λ () (cons x y)) car cdr))
+  'your-code-here)
 
-(check% 'a 0.25 (distance '(9 . 12)  '(12 . 16)) is 5)
+(check (distance '(9 . 12)  '(12 . 16)) is 5)
 
 (exercițiul 4 : 1 puncte)
 ;; Fie f(x) o funcție oarecare,
@@ -116,10 +109,7 @@
 ;;             Nu folosiți functionale.
 ;; compute-f-with-step:: funcție x număr x număr x număr -> list
 (define (compute-f-with-step f a b step)
-  (let iter ((x a))
-    (if (> x b)
-        '()
-        (cons (f x) (iter (+ x step))))))
+  'your-code-here)
 
 (check% 'a 1/2  (compute-f-with-step (lambda (x) (* x x)) 0 4 1) is '(0 1 4 9 16))
 (check% 'b 1/2  (compute-f-with-step (lambda (x) (+ (* 2 x) 1)) 0 4 1) is '(1 3 5 7 9))
@@ -135,8 +125,8 @@
 ;; Hint: Puteți folosi funcțiile `number->string` și `string->number`
 ;; num-concat:: număr x număr -> număr
 (define (num-concat x y)
-  (let ((+ (λ (x y) (string->number (string-append (number->string x) (number->string y))))))
-    (+ x y)));; Nu stergeți această linie.
+  'your-code-here
+    (+ x y));; Nu ștergeți această linie.
 
 (check% 'a 1/2 (num-concat 1 2) is 12)
 (check% 'b 1/2 (num-concat 33 674) is 33674)
@@ -151,12 +141,7 @@
 ;;             Nu folosiți funcționale.
 ;; compute-perimeter:: listă de perechi -> număr
 (define (compute-perimeter points)
-  (let ((start (car points)))
-    (let iter ((points points) (d 0))
-      (if (null? (cdr points))
-          (+ d (distance (car points) start))
-          (iter (cdr points) (+ d (distance (car points) (cadr points))))))))
-
+  'your-code-here)
 
 (check% 'a 1/4 (compute-perimeter (list '(1 . 0) '(0 . 0) '(0 . 1) '(1 . 1))) is 4)
 (check% 'b 1/4 (compute-perimeter (list '(2 . 0) '(0 . 0) '(0 . 2) '(2 . 2))) is 8)
@@ -175,11 +160,7 @@
 ;; Hint:: Uitați-vă peste splitf-at.
 ;; 3-sequence-max:: listă de numere x orice -> număr
 (define (3-sequence-max numbers separator)
-  (let ([pred (lambda (x) (not (equal? x separator)))])
-    (let*-values ([(left rest1) (splitf-at numbers pred)]
-                  [(mid rest2) (splitf-at (cdr rest1) pred)]
-                  [(right) (cdr rest2)])
-      (max (sum left) (sum mid) (sum right)))))
+  'your-code-here)
 
 (check% 'a 1/2 (3-sequence-max '(1 0 2 0 3) 0) is 3)
 (check% 'b 1/2 (3-sequence-max '(2 3 4 0 4 105 6 0 54 5) 4) is 170)
@@ -194,7 +175,7 @@
 ;; și lasă loc pentru mai puține erori?
 ;; list-num-concat:: listă de numere -> număr
 (define (list-num-concat numbers)
-  (string->number (apply string-append (map number->string numbers))))
+  'your-code-here)
 
 ;; Definiți funcția care găsește toate sufixele posibile pentru un număr.
 ;; ex:
@@ -202,11 +183,10 @@
 ;; Restricții: Folosiți named let.
 ;;             Există deja definită în laborator funcția number->list.
 ;; find-all-suffixes:: număr -> listă de numere
+(define (number->list num) (map (lambda (c) (- (char->integer c) (char->integer #\0))) (string->list (number->string num))))
+
 (define (find-all-suffixes number)
-  (let iter ((L (number->list number)))
-    (if (null? L)
-        '()
-        (cons (list-num-concat L) (iter (cdr L))))))
+  'your-code-here)
 
 (check% 'a 1/2 (find-all-suffixes 1234) is '(1234 234 34 4))
 (check% 'b 1/2 (find-all-suffixes 56789462782) is '(56789462782 6789462782 789462782 89462782 9462782 462782 62782 2782 782 82 2))
@@ -224,10 +204,7 @@
 ;; Funcția întoarce o listă ce cuprinde toate stările automatului
 
 (define (run initial-state final-state next)
-  (let iter ((state initial-state))
-    (if (equal? state final-state)
-        (list state)
-        (cons state (iter (next state))))))
+  'your-code-here)
 
 (check% 'a 1/4 (run 0 9 add1) is (range 10))
 (check% 'b 1/4 (run 9 0 sub1) is (reverse (range 10)))
@@ -240,9 +217,8 @@
 ;; folosind formula i*k+x.
 ;; Restricții: Folosiți let.
 ;; generate-number:: întreg x întreg -> întreg
-
 (define (generate-number k x)
-  (list-num-concat (run x (+ x (* k (- k 1))) (λ (x) (+ x k)))))
+  'your-code-here)
 
 (check% 'c 1/2 (generate-number 3 2) is 258)
 (check% 'd 1/2 (generate-number 3 3) is 369)
