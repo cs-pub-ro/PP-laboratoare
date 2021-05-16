@@ -130,10 +130,12 @@ solve(Pb, Solution):-
 % solve(taran, Sol), validSol(taran, Sol).
 
 check0 :- tests([
-              % a - c
-              ech('safeTaran([X, Y])', ['X = lup', 'Y = varza']),
-              chk(safeTaran([_])),
-              chk(safeTaran([]))
+              chk(safeTaran([])),
+              chk(safeTaran([lup])),
+              chk(safeTaran([capra])),
+              chk(safeTaran([varza])),
+              ech('S == [_, _], safeTaran(S)',
+                  [set('S', ['lup', 'varza'])])
         ]).
 
 exercitiul(1, []).
