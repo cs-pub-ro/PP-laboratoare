@@ -286,12 +286,18 @@ do_bfs(Solution):-
 %% Pași de urmat
 %% Căutarea începe de la nodul inițial dat (a) care n-are predecesor 
 %% Se generează apoi toate nodurile accesibile din nodul curent (exista
-%%      un arc de la nod la vecin). Folosiți edge pentru a genera nodurile vecine
+%%      un arc de la nod la vecin). Folosiți predicatul getNeighb definit mai jos 
+%%      pentru a genera nodurile vecine
 %% Se adaugă toate aceste noduri la coada(lista) de stări încă nevizitate - Frontier
 %% Căutarea continuă din starea aflată la începutul frontierei, până se întâlneşte 
 %%      o stare finală (am ajuns la nodul final dat - h)
-bfs(_,_,_) :- false.
 
+% Întoarce în  Result nodurile vecine ale nodului X primit ca parametru
+% Exemplu utilizare: getNeighb(a, [], Result). 
+getNeighb(X, Acc, Result) :- edge(X,Y), \+ memberchk((Y,_), Acc), !, getNeighb(X, [(Y,X)|Acc], Result).
+getNeighb(_, Acc, Result) :- reverse(Acc, Result).
+
+bfs(_,_,_) :- false.
 
 %% TODO
 %% extract_path/2
@@ -352,9 +358,10 @@ check3 :- tests([
 exercitiul(4, [2, puncte]).
 % Dată fiind funcția nodes, parcurgeți toată pădurea de arbori.
 
-% nodes(-NN)
-% Întoarce în NN toate nodurile din pădurea de arbori.
-nodes(NN) :- findall(N, nod(N), NN).
+% nodes(+Acc, -Result)
+% Întoarce în Result toate nodurile din pădurea de arbori.
+nodes(Acc, Result) :- nod(N), \+ memberchk(N, Acc), !, nodes([N|Acc], Result).
+nodes(Acc, Result) :- reverse(Acc, Result).
 
 % TODO
 % trees/1

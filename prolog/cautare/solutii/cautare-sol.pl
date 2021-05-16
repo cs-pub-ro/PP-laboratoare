@@ -313,10 +313,18 @@ do_bfs(Solution):-
 %% Pași de urmat
 %% Căutarea începe de la nodul inițial dat (a) care n-are predecesor 
 %% Se generează apoi toate nodurile accesibile din nodul curent (exista
-%%      un arc de la nod la vecin). Folosiți edge pentru a genera nodurile vecine
+%%      un arc de la nod la vecin). Folosiți predicatul getNeighb definit mai jos 
+%%      pentru a genera nodurile vecine
 %% Se adaugă toate aceste noduri la coada(lista) de stări încă nevizitate - Frontier
 %% Căutarea continuă din starea aflată la începutul frontierei, până se întâlneşte 
 %%      o stare finală (am ajuns la nodul final dat - h)
+
+% Întoarce în  Result nodurile vecine ale nodului X primit ca parametru
+% Exemplu utilizare: getNeighb(a, [], Result). 
+getNeighb(X, Acc, Result) :- edge(X,Y), \+ memberchk((Y,_), Acc), !, getNeighb(X, [(Y,X)|Acc], Result).
+getNeighb(_, Acc, Result) :- reverse(Acc, Result).
+
+bfs(_,_,_) :- false.
 
 bfs([(FinalNode,Parent)|_], Closed, [(FinalNode, Parent)|Closed]):-
         final_node(FinalNode), !.
@@ -327,7 +335,7 @@ bfs([(CurrentNode,_)|Rest], Closed, Solution):-
         bfs(Rest, Closed, Solution).
 bfs([(CurrentNode,Parent)|Rest], Closed, Solution):-
         % găsim toți copiii lui CurrentNode
-        findall((Node, CurrentNode), edge(CurrentNode, Node), Children),
+        getNeighb(CurrentNode, [], Children),
         % îi adăugăm la frontieră
         append(Rest, Children, NewFrontier),
         % continuăm
@@ -409,9 +417,10 @@ check3 :- tests([
 exercitiul(4, [2, puncte]).
 % Dată fiind funcția nodes, parcurgeți toată pădurea de arbori.
 
-% nodes(-NN)
-% Întoarce în NN toate nodurile din pădurea de arbori.
-nodes(NN) :- findall(N, nod(N), NN).
+% nodes(+Acc, -Result)
+% Întoarce în Result toate nodurile din pădurea de arbori.
+nodes(Acc, Result) :- nod(N), \+ memberchk(N, Acc), !, nodes([N|Acc], Result).
+nodes(Acc, Result) :- reverse(Acc, Result).
 
 % TODO
 % trees/1
@@ -423,7 +432,8 @@ nodes(NN) :- findall(N, nod(N), NN).
 % definit anterior. Eliminați folosind setMinus nodurile din NN care apar
 % în parcurgerea curentă.
 trees(_) :- false.
-trees(Trees) :- nodes(NN), parcAll(NN, Trees).
+trees(Trees) :- nodes([], NN), parcAll(NN, Trees).
+
 parcAll([], []).
 parcAll([N | Todo], [ParcN | ParcRest]) :-
         preorder(N, ParcN),
