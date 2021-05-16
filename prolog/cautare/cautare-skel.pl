@@ -6,7 +6,7 @@
 %% -------------------------------------------------------------
 
 %% -- BACKTRACKING ATUNCI CÂND NU CUNOAȘTEM LUNGIMEA SOLUȚIEI --
-exercitiul(1, []).
+exercitiul(0, []).
 
 %% Problema țăranului, a lupului, a caprei și a verzei.
 %% Un țăran, ducând la târg un lup, o capră şi o varză ajunge 
@@ -126,6 +126,15 @@ solve(Pb, Solution):-
 
 % Vizualizați soluțiile cu
 % solve(taran, Sol), validSol(taran, Sol).
+
+check0 :- tests([
+              % a - c
+              ech('safeTaran([X, Y])', ['X = lup', 'Y = varza']),
+              chk(safeTaran([_])),
+              chk(safeTaran([]))
+        ]).
+
+exercitiul(1, []).
 
 %% Problema Misionarilor și Canibalilor
 %% ====================================
@@ -281,7 +290,7 @@ do_bfs(Solution):-
 %% Se adaugă toate aceste noduri la coada(lista) de stări încă nevizitate - Frontier
 %% Căutarea continuă din starea aflată la începutul frontierei, până se întâlneşte 
 %%      o stare finală (am ajuns la nodul final dat - h)
-bfs(_,_) :- false.
+bfs(_,_,_) :- false.
 
 
 %% TODO
