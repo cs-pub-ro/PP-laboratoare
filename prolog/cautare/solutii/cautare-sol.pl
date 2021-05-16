@@ -9,7 +9,10 @@
 exercitiul(1, []).
 
 %% Problema țăranului, a lupului, a caprei și a verzei.
-%%
+%% Un țăran, ducând la târg un lup, o capră şi o varză ajunge 
+%% în dreptul unui râu pe care trebuie să-l treacă. Cum va proceda el, ştiind că:
+%% - lupul mănâncă capra şi capra mănâncă varza;
+%% - el nu poate să-i treacă pe toţi o dată şi nici câte doi;
 %% Vom reprezenta o stare astfel:
 %% state(MalTaran, Lista-cu-cine-este-pe-malul-cu-taranul)
 %%
@@ -22,7 +25,7 @@ opus(vest, est).
 %% TODO
 %% safeTaran/1
 %% safeTaran(+)
-%% Verifică dacă cine rămâne pe vechiul mal este safe
+%% Verifică dacă cine rămâne pe vechiul mal este în siguranță
 safeTaran :- fail.
 safeTaran([]).
 safeTaran([_]).
@@ -135,16 +138,18 @@ solve(Pb, Solution):-
 %% mai mulți canibali decât misionari (pot exista însă pe un mal doar
 %% canibali).
 %%
-%% Primul pas este definirea unui format pentru starea problemeo. 
+%% Primul pas este definirea unui format pentru starea problemei.
+%% Pentru a reprezenta malul puteți folosi constantele est si vest 
+%% folosite anterior.
 %% Ce informații ar trebui să conțină starea? Este suficient să conțină 
 %% malul și numărul de canibali, respectiv misionari de pe acesta?
 %%
 %% Scrieți predicatele initial_state, final_state, și next_state
 %% pentru problema misionarilor.
-
+%%
 %% Pentru o mai bună structură, implementați întâi predicatele boat/2
 %% și safeMisionari/2 detaliate mai jos.
-
+%%
 %% Predicate utile: sort/2, @</2 (vedeți help)
 
 
@@ -152,7 +157,12 @@ solve(Pb, Solution):-
 % boat/2
 % boat(-NM, -NC)
 % Posibilele combinații de număr de misionari și canibali care pot
-% călători cu barca.
+% călători cu barca, unde NM este numărul de misionari, iar NC numărul 
+% de canibali din bancă
+%
+% Nu uitați ca barca are capacitate de maximum două persoane și nu poate 
+% călători fără nicio persoană.
+% Ex boat(2, 0)
 boat(_, _) :- fail.
 boat(0, 1).
 boat(0, 2).
@@ -164,7 +174,7 @@ boat(1, 1).
 % safe/2
 % safe(+NM, +NC)
 % Verifică dacă numărul dat de misionari și canibali pot fi pe același
-% mal.
+% mal (să nu existe mai mulți canibali decât misionari)
 % Atenție la de câte ori este adevărat safeMisionari pentru diverse
 % valori ale argumentelor - poate influența numărul soluțiilor pentru
 % problemă.
@@ -188,6 +198,7 @@ parseState(state(vest, M, C), vest, OM, OC, M, C) :-
 % initial_state(misionari, -State)
 % Determină starea inițială pentru problema misionarilor, în formatul
 % ales.
+% Hint Barca și cei 6(3 canibali, 3 misionari) se află inițial pe un mal
 initial_state(misionari, _) :- fail.
 initial_state(misionari, state(est, 3 ,3)).
 
@@ -195,6 +206,7 @@ initial_state(misionari, state(est, 3 ,3)).
 % final_state(misionari, +State)
 % Verifică dacă starea dată este stare finală pentru problema
 % misionarilor.
+% Hint Barca și cei 6(3 canibali, 3 misionari) se află pe malul opus
 final_state(misionari, _) :- fail.
 final_state(misionari, state(vest, 3, 3)).
 
@@ -205,6 +217,14 @@ final_state(misionari, state(vest, 3, 3)).
 % Toate soluțiile predicatului next_state pentru o stare S1 dată trebuie
 % să fie toate posibilele stări următoare S2 în care se poate ajunge din
 % S1.
+% Hinturi
+%   - Consecință - malul se schimba (folosiți predicatul opus pentru validare)
+%   - Tranziția dintr-o stare în alta se realizează printr-o traversare
+%     validă cu barca (folosiți predicatul boat)
+%   - Atât pe malul estic cât și cel vestic constrângerea este respectată, și anume
+%     nu există mai mulți canibali decât misionari (folosiți predicatul safeMisionari
+%     pentru validare). Pentru a calcula numărul de canibali/misionari de pe malul opus
+%     ce formulă puteți folosi știind ca numărul total de canibali/misionari este 3?
 
 next_state(misionari, _, _) :- fail.
 next_state(misionari, state(Mal1, M1, C1), state(Mal2, M2, C2)) :-
@@ -272,10 +292,18 @@ do_bfs(Solution):-
 
 %% bfs/3
 %% bfs(+Frontier, +Closed, -Solution)
-%% Frontier reprezintă coada nodurilor ce vor fi explorate, Closed reprezintă
+%% Frontier reprezintă coada nodurilor ce vor fi explorate(nevizitate), Closed reprezintă
 %% lista nodurilor vizitate deja, iar Solution va reprezenta lista finală a
 %% nodurilor vizitate până la găsirea soluției.
 %% Toate cele 3 liste vor avea elementele în forma pereche (Nod, Părinte).
+%%
+%% Pași de urmat
+%% Căutarea începe de la nodul inițial dat (a) care n-are predecesor 
+%% Se generează apoi toate nodurile accesibile din nodul curent (exista)
+%%      un arc de la nod la vecin (folosiți edge pentru a genera nodurile)
+%% Se adaugă toate aceste noduri la coada(lista) de stări încă nevizitate - Frontier
+%% căutarea continuă din starea aflată la începutul frontierei, până se întâlneşte 
+%%      o stare finală (am ajuns la nodu final dat - h)
 
 bfs([(FinalNode,Parent)|_], Closed, [(FinalNode, Parent)|Closed]):-
         final_node(FinalNode), !.
@@ -343,7 +371,12 @@ arc(n, [o, p]). arc(o, [q, r, s]). arc(p, [t, u, v]).
 % preorder/2
 % preorder(+N, -Parc)
 % Întoarce în Parc o listă de noduri rezultate din parcurgerea în
-% preordine începând din noudl N.
+% preordine începând din nodul N.
+% Hint - definiți un predicat auxiliar care primește lista de noduri
+% de vizitat (de forma [N|Rest]) și Parc(listă de noduri rezultate din parcurgere)
+% Folosind predicatul arc generați noduri copil ale nodului curent și adăugați în
+% restul listei de parcurs (Rest). Folosiți apoi lista rezultat pentru  a genera restul 
+% listei soluție
 preorder(_, _) :- fail.
 preorder(_, _) :- fail.
 preorder(N, Parc) :- parc([N], Parc).
@@ -372,6 +405,10 @@ nodes(NN) :- findall(N, nod(N), NN).
 % trees(-Trees)
 % Întoarce în trees o listă în care fiecare element este parcurgerea
 % unui arbore.
+% Folosiți predicatul nodes pentru a  obtine toate nodurile din pădurea
+% de arbori. Pentru fiecare nod generați o parcurgere folosind predicatul 
+% definit anterior. Eliminați folosind setMinus nodurile din NN care apar
+% în parcurgerea curentă.
 trees(_) :- fail.
 trees(Trees) :- nodes(NN), parcAll(NN, Trees).
 parcAll([], []).
