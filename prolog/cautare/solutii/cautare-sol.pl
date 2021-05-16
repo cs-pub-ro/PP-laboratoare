@@ -109,7 +109,7 @@ setMinus(From, ToRemove, Result) :- subtract(From, ToRemove, Result).
 %% rezolvarea unei probleme de căutare în spațiul stărilor. 
 %% Fiecare dintre predicate ia ca prim argument problema
 %% pe care o rezolvăm.
-%% Observațiutilizarea predicatelor initial_state/2, final_state/2 și
+%% Observați utilizarea predicatelor initial_state/2, final_state/2 și
 %% next_state/3. 
 
 %% search(+Pb, +StariVizitate, -Sol)
