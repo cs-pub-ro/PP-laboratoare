@@ -24,8 +24,10 @@ opus(vest, est).
 
 %% TODO
 %% safeTaran/1
-%% safeTaran(+)
-%% Verifică dacă cine rămâne pe vechiul mal este în siguranță
+%% safeTaran(+Lista-cu-cine-este-pe-malul-opus-taranului)
+%% Verifică dacă cine rămâne pe malul opus este în siguranță
+%% De exemplu o lista formată din [lup, capra] nu respectă
+%% constrângerea setată de problemă
 safeTaran(_) :- false.
 safeTaran([]).
 safeTaran([_]).
