@@ -24,9 +24,6 @@ opus(vest, est).
 %% safeTaran(+)
 %% Verifică dacă cine rămâne pe vechiul mal este safe
 safeTaran :- fail.
-safeTaran([]).
-safeTaran([_]).
-safeTaran(Cine) :- sort(Cine, [lup, varza]).
 
 allTaran([capra, lup, varza]).
 
@@ -134,7 +131,11 @@ solve(Pb, Solution):-
 %% Găsiți o secvență de traversări, astfel încât nicăieri să nu existe
 %% mai mulți canibali decât misionari (pot exista însă pe un mal doar
 %% canibali).
-
+%%
+%% Primul pas este definirea unui format pentru starea problemeo. 
+%% Ce informații ar trebui să conțină starea? Este suficient să conțină 
+%% malul și numărul de canibali, respectiv misionari de pe acesta?
+%%
 %% Scrieți predicatele initial_state, final_state, și next_state
 %% pentru problema misionarilor.
 
@@ -156,17 +157,18 @@ boat(_, _) :- fail.
 % safe(+NM, +NC)
 % Verifică dacă numărul dat de misionari și canibali pot fi pe același
 % mal.
+% Atenție la de câte ori este adevărat safeMisionari pentru diverse
+% valori ale argumentelor - poate influența numărul soluțiilor pentru
+% problemă.
 safeMisionari(_, _) :- fail.
-
 
 % TODO
 % parseState/3
 % parseState(+State, -Mal, -NM_Est, -NC_Est, -NM_Vest, -NC_Vest)
-% Întoarce în ultimele 5 argumente malul unde este barca și numerele de
-% misionari / canibali de pe malul estic, respectiv vestic, în starea
-% dată.
+% Primește o stare și întoarce în ultimele 5 argumente malul unde este barca 
+% și numerele de misionari / canibali de pe malul estic, respectiv vestic, în 
+% starea dată.
 parseState( _, _, _, _, _, _) :- fail.
-
 
 % TODO
 % initial_state(misionari, -State)
@@ -174,13 +176,11 @@ parseState( _, _, _, _, _, _) :- fail.
 % ales.
 initial_state(misionari, _) :- fail.
 
-
 % TODO
 % final_state(misionari, +State)
 % Verifică dacă starea dată este stare finală pentru problema
 % misionarilor.
 final_state(misionari, _) :- fail.
-
 
 % TODO
 % next_state(misionari, +S1, -S2)
@@ -188,8 +188,8 @@ final_state(misionari, _) :- fail.
 % Toate soluțiile predicatului next_state pentru o stare S1 dată trebuie
 % să fie toate posibilele stări următoare S2 în care se poate ajunge din
 % S1.
-next_state(misionari, _, _) :- fail.
 
+next_state(misionari, _, _) :- fail.
 
 % dacă solve(misionari, Sol) eșuează, folosiți
 % tracksolve(misionari, Sol) pentru a inspecta construcția soluției.
@@ -252,20 +252,7 @@ do_bfs(Solution):-
 %% nodurilor vizitate până la găsirea soluției.
 %% Toate cele 3 liste vor avea elementele în forma pereche (Nod, Părinte).
 
-bfs([(FinalNode,Parent)|_], Closed, [(FinalNode, Parent)|Closed]):-
-        final_node(FinalNode), !.
-bfs([(CurrentNode,_)|Rest], Closed, Solution):-
-        % nu explorăm noduri care sunt deja închise
-        member((CurrentNode,_), Closed),
-        !,
-        bfs(Rest, Closed, Solution).
-bfs([(CurrentNode,Parent)|Rest], Closed, Solution):-
-        % găsim toți copiii lui CurrentNode
-        findall((Node, CurrentNode), edge(CurrentNode, Node), Children),
-        % îi adăugăm la frontieră
-        append(Rest, Children, NewFrontier),
-        % continuăm
-        bfs(NewFrontier, [(CurrentNode,Parent)|Closed], Solution).
+bfs(_,_) :- fail.
 
 
 %% TODO
@@ -278,16 +265,7 @@ bfs([(CurrentNode,Parent)|Rest], Closed, Solution):-
 %% de la nodul final. Pentru fiecare nod căutați părintele lui în Discovered,
 %% până ajungeți la nodul inițial.
 
-extract_path(Discovered, Solution):-
-        final_node(Node0),
-        extract_path(Discovered, [Node0], Solution).
-
-extract_path(Discovered, [Node | Other], [Node | Other]):-
-        member((Node,nil), Discovered), !.
-
-extract_path(Discovered, [Node | Other], Solution):-
-        member((Node,Next), Discovered),
-        extract_path(Discovered, [Next, Node | Other], Solution).
+extract_path(_,_) :- fail.
 
 check2:- tests([
             exp("bfs([(a,nil)], [], R)", [
@@ -347,33 +325,6 @@ check4 :- tests([
                                 [[a,b,c,e,f,g,d],[h,i,j,k,l],[m],[n,o,q,r,s,p,t,u,v]]])
           ]).
 
-
-exercitiul(5, [3, puncte]).
-
-% se dă un graph cu nodurile numere de la 1 la 10, și muchiile date mai
-% jos.
-graph(NN) :- findall(N, between(1, 10, N), NN).
-
-edges(1, [2, 10]).
-edges(3, [5, 8, 10]). edges(5, [6]). edges(4, [6, 7, 8]).
-edges(8, [3, 8, 9]). edges(6, [2, 5, 9, 10]).
-
-% TODO
-% span/1
-% span(-Trees)
-% Întoarce o listă de arbori.
-% Fiecare arbore este reprezentat prin nodul său rădăcină.
-% Fiecare nod este reprezentat ca o listă care în primul element are
-% valoarea nodului iar restul elementelor sunt reprezentările nodurilor
-% sale copii.
-% E.g. Arborele cu a rădăcină, având pe b și c copii, iar b având un
-% copil d, este reprezentat ca [a, [b, [d]], [c]].
-span(_) :- fail.
-
-
-check5 :- tests([
-          exp('span(Trees)', ['Trees', [[1,[2],[10]],[3,[5,[6,[9]]],[8]],[4,[7]]]])
-          ]).
 
 %% --------------------------------------------
 %% teste specifice pentru problemele de căutare

@@ -1,0 +1,279 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% MatPlotLib and Random Cheat Sheet
+%
+% Edited by Michelle Cristina de Sousa Baltazar
+%
+% http://matplotlib.org/api/pyplot_summary.html
+% http://matplotlib.org/users/pyplot_tutorial.html
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\documentclass[a3paper]{article}
+\usepackage[landscape]{geometry}
+\usepackage{url}
+\usepackage{multicol}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{tikz}
+\usetikzlibrary{decorations.pathmorphing}
+\usepackage{amsmath,amssymb}
+\usepackage{hyperref}
+
+\usepackage{colortbl}
+\usepackage{xcolor}
+\usepackage{mathtools}
+\usepackage{amsmath,amssymb}
+\usepackage{enumitem}
+
+% Mihnea
+\usepackage{textcomp} % \textquotesingle: Racket: '(1 2 3)
+\usepackage{couriers}
+\usepackage{listings}
+\lstset{
+	numbers			= left,
+	numberstyle		= \tiny,
+    numbersep       = 5pt,
+	captionpos		= b,
+	breaklines		= true,
+	basicstyle		= \ttfamily\footnotesize, 
+	tabsize			= 4,
+	escapeinside	= {~}{~},
+}
+\lstdefinelanguage{Racket}{
+  morekeywords=[1]{define, define-syntax, define-macro, lambda, define-stream, stream-lambda},
+  morekeywords=[2]{begin, call-with-current-continuation, call/cc,
+    call-with-input-file, call-with-output-file, case, cond,
+    do, else, for-each, if,
+    let*, let, let-syntax, letrec, letrec-syntax,
+    let-values, let*-values,
+    and, or, not, delay, force,
+    quasiquote, quote, unquote, unquote-splicing,
+    map, fold, syntax, syntax-rules, eval, environment },
+  morekeywords=[3]{import, export},
+  alsodigit=!\$\%&*+-./:<=>?@^_~,
+  sensitive=true,
+  morecomment=[l]{;},
+  morecomment=[s]{\#|}{|\#},
+  morestring=[b]",
+  basicstyle=\footnotesize\ttfamily,
+  keywordstyle=\color[rgb]{0,.3,.7},
+  commentstyle=\color[rgb]{0.133,0.545,0.133},
+  stringstyle={\color[rgb]{0.75,0.49,0.07}},
+  upquote=true,
+  breaklines=true,
+  breakatwhitespace=true,
+  literate=*{`}{{`}}{1}
+}
+
+\title{Prolog Cheatsheet}
+\usepackage[brazilian]{babel}
+\usepackage[utf8]{inputenc}
+
+\advance\topmargin-1.0in
+\advance\textheight3in
+\advance\textwidth3in
+\advance\oddsidemargin-1.5in
+\advance\evensidemargin-1.5in
+\parindent0pt
+\parskip1pt
+\newcommand{\hr}{\centerline{\rule{3.5in}{1pt}}}
+%\colorbox[HTML]{e4e4e4}{\makebox[\textwidth-2\fboxsep][l]{texto}
+\begin{document}
+
+\begin{center}{\huge{\textbf{Prolog CheatSheet}}}\\
+{\large Laborator 12}
+\end{center}
+
+\begin{multicols*}{3}
+
+\tikzstyle{mybox} = [draw=black, fill=white, very thick,
+    rectangle, rounded corners, inner sep=10pt, inner ysep=10pt]
+\tikzstyle{fancytitle} =[fill=black, text=white, font=\bfseries]
+
+% Mihnea
+\tikzstyle{mybox_code} = [mybox, draw = orange, fill=sandybrown]
+\tikzstyle{fancytitle_code} = [fancytitle, fill = orange]
+
+\definecolor{almond}{rgb}{0.94, 0.87, 0.8}
+\definecolor{apricot}{rgb}{0.98, 0.81, 0.69}
+\definecolor{atomictangerine}{rgb}{1.0, 0.6, 0.4}
+\definecolor{sandybrown}{rgb}{0.96, 0.64, 0.38}
+\definecolor{buff}{rgb}{0.94, 0.86, 0.51}
+
+\definecolor{persianred}{rgb}{0.8, 0.2, 0.2}
+\definecolor{papayawhip}{rgb}{1.0, 0.94, 0.84}
+\tikzstyle{mybox_persianred} = [mybox, draw = persianred, fill=papayawhip]
+\tikzstyle{fancytitle_persianred} = [fancytitle, fill = persianred]
+
+\definecolor{whitesmoke}{rgb}{0.96, 0.96, 0.96}
+\definecolor{wenge}{rgb}{0.39, 0.33, 0.32}
+\tikzstyle{mybox_blue} = [mybox, draw = wenge, fill=whitesmoke]
+\tikzstyle{fancytitle_blue} = [fancytitle, fill = wenge]
+
+\definecolor{cerise}{rgb}{0.87, 0.19, 0.39}
+\definecolor{mistyrose}{rgb}{1.0, 0.89, 0.88}
+\tikzstyle{mybox_cerise} = [mybox, draw = cerise, fill=mistyrose]
+\tikzstyle{fancytitle_cerise} = [fancytitle, fill = cerise]
+
+\definecolor{pinegreen}{rgb}{0.0, 0.47, 0.44}
+\definecolor{bubbles}{rgb}{0.91, 1.0, 1.0}
+\tikzstyle{mybox_pinegreen} = [mybox, draw = pinegreen, fill=bubbles]
+\tikzstyle{fancytitle_pinegreen} = [fancytitle, fill = pinegreen]
+
+\definecolor{cream}{rgb}{1.0, 0.99, 0.82}
+\definecolor{mikadoyellow}{rgb}{1.0, 0.77, 0.05}
+\tikzstyle{mybox_mikadoyellow} = [mybox, draw = mikadoyellow, fill=cream]
+\tikzstyle{fancytitle_mikadoyellow} = [fancytitle, fill = mikadoyellow]
+
+\definecolor{cornsilk}{rgb}{1.0, 0.97, 0.86}
+\tikzstyle{mybox_orange} = [mybox, draw = orange, fill=cornsilk]
+\tikzstyle{fancytitle_orange} = [fancytitle, fill = orange]
+
+\definecolor{aliceblue}{rgb}{0.94, 0.97, 1.0}
+\definecolor{seagreen}{rgb}{0.18, 0.55, 0.34}
+\tikzstyle{mybox_seagreen} = [mybox, draw = seagreen, fill=aliceblue]
+\tikzstyle{fancytitle_seagreen} = [fancytitle, fill = seagreen]
+
+\definecolor{jazzberryjam}{rgb}{0.65, 0.04, 0.37}
+\definecolor{almond}{rgb}{0.94, 0.87, 0.8}
+\tikzstyle{mybox_jazzberryjam} = [mybox, draw = jazzberryjam, fill=almond]
+\tikzstyle{fancytitle_jazzberryjam} = [fancytitle, fill = jazzberryjam]
+
+\definecolor{amaranth}{rgb}{0.9, 0.17, 0.31}
+\definecolor{bisque}{rgb}{1.0, 0.89, 0.77}
+\tikzstyle{mybox_amaranth} = [mybox, draw = amaranth, fill=bisque]
+\tikzstyle{fancytitle_amaranth} = [fancytitle, fill = amaranth]
+
+\definecolor{carminered}{rgb}{1.0, 0.0, 0.22}
+\definecolor{blanchedalmond}{rgb}{1.0, 0.92, 0.8}
+\tikzstyle{mybox_carminered} = [mybox, draw = amaranth, fill=blanchedalmond]
+\tikzstyle{fancytitle_carminered} = [fancytitle, fill = carminered]
+
+\definecolor{midnightgreen}{rgb}{0.0, 0.29, 0.33}
+\definecolor{lavendermist}{rgb}{0.9, 0.9, 0.98}
+\tikzstyle{mybox_midnightgreen} = [mybox, draw = midnightgreen, fill=lavendermist]
+\tikzstyle{fancytitle_midnightgreen} = [fancytitle, fill = midnightgreen]
+
+\definecolor{indigo}{rgb}{0.29, 0.0, 0.51}
+\definecolor{isabelline}{rgb}{0.96, 0.94, 0.93}
+\tikzstyle{mybox_indigo} = [mybox, draw = indigo, fill=isabelline]
+\tikzstyle{fancytitle_indigo} = [fancytitle, fill = indigo]
+
+\definecolor{russet}{rgb}{0.5, 0.27, 0.11}
+\definecolor{ivory}{rgb}{1.0, 1.0, 0.94}
+\tikzstyle{mybox_russet} = [mybox, draw = russet, fill=ivory]
+\tikzstyle{fancytitle_russet} = [fancytitle, fill = russet]
+
+\definecolor{neongreen}{rgb}{0.12, 0.58, 0.02}
+\definecolor{splashedwhite}{rgb}{0.9, 0.99, 0.9}
+\tikzstyle{mybox_neongreen} = [mybox, draw = neongreen, fill=splashedwhite]
+\tikzstyle{fancytitle_neongreen} = [fancytitle, fill = neongreen]
+
+%---------------------------------------------------------------------------------
+
+
+\begin{tikzpicture}
+\node [mybox_seagreen] (box){%
+    \begin{minipage}{0.3\textwidth}
+    	{\centering\bf\small\color{seagreen} findall/3  \\}
+
+\begin{lstlisting}[language=Prolog, numbers=none]
+findall(+Template, +Goal, -Bag)
+\end{lstlisting}
+\begin{small}
+Predicatul findall creează o listă de instanțieri ale lui Template care satisfac Goal și apoi unifică rezultatul cu Bag
+\end{small}
+\begin{lstlisting}[language=Prolog, numbers=none]
+higherThan(Numbers, Element, Result):-
+    findall(X, (member(X, Numbers), X > Element), Result).
+?- higherThan([1, 2, 7, 9, 11], 5, X).
+X = [7, 9, 11]
+
+?- findall([X, SqX], (member(X, [1,2,7,9,15]), X > 5, SqX is X ** 2), Result). % ~în argumentul Template putem construi structuri mai complexe~
+Result = [[7, 49], [9, 81], [15, 225]].
+
+\end{lstlisting}
+\end{minipage}
+};
+
+\node[fancytitle_seagreen, right=10pt] at (box.north west) {Aflarea tuturor soluțiilor pentru satisfacerea unui scop};
+\end{tikzpicture}
+
+
+\begin{tikzpicture}
+\node [mybox_pinegreen] (box){%
+\begin{minipage}{0.3\textwidth}
+    	{\centering\bf\small\color{seagreen} bagof/3  \\}
+
+\begin{lstlisting}[language=Prolog, numbers=none]
+bagof(+Template, +Goal, -Bag)
+\end{lstlisting}
+\begin{small}
+Predicatul bagof este asemănător cu predicatul findall, cu excepția faptului că predicatul bagof construiește câte o listă separată pentru fiecare instanțiere diferită a variabilelor din Goal (fie că ele sunt numite sau sunt înlocuite cu underscore.
+\end{small}
+\begin{lstlisting}[language=Prolog, numbers=none]
+are(andrei,laptop,1). are(andrei,pix,5). are(andrei,ghiozdan,2).
+are(radu,papagal,1). are(radu,ghiozdan,1). are(radu,laptop,2).
+are(ana, telefon, 3). are(ana, masina, 1).
+
+?- findall(X, are(_, X, _), Bag).
+Bag = [laptop, pix, ghiozdan, papagal, ghiozdan, laptop, telefon, masina]. % ~laptop și ghiozdan apar de două ori pentru că sunt două posibile legări pentru persoană și pentru cantitate~
+
+?- bagof(X, are(andrei, X, _), Bag).
+Bag = [laptop] ;
+Bag = [ghiozdan] ;
+Bag = [pix].
+% ~bagof creează câte o soluție pentru fiecare posibilă legare pentru cantitate. Putem aici folosi operatorul existențial ~^
+?- bagof(X, C^are(andrei, X, C), Bag).
+Bag = [laptop, pix, ghiozdan]. % ~am cerut lui bagof să pună toate soluțiile indiferent de legarea lui C în același grup~
+
+?- bagof(X, C^are(P, X, C), Bag).
+P = ana, Bag = [telefon, masina] ;
+P = andrei, Bag = [laptop, pix, ghiozdan] ;
+P = radu, Bag = [papagal, ghiozdan, laptop].
+\end{lstlisting}
+
+Dacă aplicăm operatorul existențial pe toate variabilele libere din scop, rezultatul este identic cu cel al lui \texttt{findall}.
+\begin{lstlisting}[language=Prolog, numbers=none]
+?- bagof(X, X^P^C^are(P, X, C), Bag).
+Bag = [laptop, pix, ghiozdan, papagal, ghiozdan, laptop, telefon, masina].
+\end{lstlisting}
+\end{minipage}
+};
+
+\node[fancytitle_seagreen, right=10pt] at (box.north west) {Aflarea tuturor soluțiilor pentru satisfacerea unui scop};
+\end{tikzpicture}
+
+
+\begin{tikzpicture}
+\node [mybox_pinegreen] (box){%
+\begin{minipage}{0.3\textwidth}
+    	{\centering\bf\small\color{seagreen} setof/3 \\}
+
+
+\begin{lstlisting}[language=Prolog, numbers=none]
+setof(+Template, +Goal, -Bag)
+\end{lstlisting}
+\begin{small}
+Predicatul setof este asemănător cu bagof, dar sortează rezultatul (și elimină duplicatele) folosind sort/2.
+\end{small}
+\begin{lstlisting}[language=Prolog, numbers=none]
+?- setof(X, C^are(P, X, C), Bag).
+P = ana, Bag = [masina, telefon] ; %~se observă sortarea~
+P = andrei, Bag = [ghiozdan, laptop, pix] ;
+P = radu, Bag = [ghiozdan, laptop, papagal].
+
+?- setof(X, P^C^are(P, X, C), Bag).%~ setof elimină duplicatele~
+Bag = [ghiozdan, laptop, masina, papagal, pix, telefon]. 
+\end{lstlisting}
+\end{minipage}
+};
+
+\node[fancytitle_seagreen, right=10pt] at (box.north west) {Aflarea tuturor soluțiilor pentru satisfacerea unui scop};
+\end{tikzpicture}
+
+
+\end{multicols*}
+\end{document}
+Contact GitHub API Training Shop Blog About
+© 2016 GitHub, Inc. Terms Privacy Security Status Help

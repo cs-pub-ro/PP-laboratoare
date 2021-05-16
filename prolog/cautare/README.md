@@ -94,17 +94,6 @@ mecanismul general de căutare A\*, astfel:
   - dacă starea aleasă nu este în Discovered sau dacă noul cost calculat al acesteia este mai mic decât cel din Discovered, se adaugă în acesta, apoi va fi introdusă în coada de priorități (Frontier) cu prioritatea fiind costul cu care a fost adaugată în Discovered + valoarea dată de euristică din starea curentă până în cea finală
   - căutarea continuă din starea aflată la începutul cozii, până se întâlneşte o stare finală
 
-## Aflarea tuturor soluțiilor pentru satisfacerea unui scop
-
-Prolog oferă un set special de predicate care pot construi liste din toate soluțiile de satisfacere a unui scop. Acestea sunt extrem de utile deoarece altfel este complicată culegerea informațiilor la revenirea din backtracking (o alternativă este prezentată în secțiunea următoare, mai mult în laboratorul viitor).
-
-### findall(+Template, +Goal, -Bag)
-
-Predicatul `findall` pune în Bag câte un element Template pentru fiecare soluție a expresiei `Goal`. Desigur, predicatul este util atunci când `Goal` și `Template` au variabile comune. De exemplu:
-```prolog
-even(Numbers, Even):- findall(X,(member(X, Numbers), X mod 2 =:= 0), Even).
-?- even([1,2,3,4,5,6,7,8,9], Even). Even = [2, 4, 6, 8]. 
-```
 
 ## Resurse
 
