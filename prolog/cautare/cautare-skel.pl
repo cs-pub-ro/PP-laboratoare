@@ -184,14 +184,14 @@ parseState( _, _, _, _, _, _) :- false.
 % initial_state(misionari, -State)
 % Determină starea inițială pentru problema misionarilor, în formatul
 % ales.
-% Hint Barca și cei 6(3 canibali, 3 misionari) se află inițial pe un mal
+% Hint Barca și cei 6(3 canibali, 3 misionari) se află inițial pe malul estic
 initial_state(misionari, _) :- false.
 
 % TODO
 % final_state(misionari, +State)
 % Verifică dacă starea dată este stare finală pentru problema
 % misionarilor.
-% Hint Barca și cei 6(3 canibali, 3 misionari) se află pe malul opus
+% Hint Barca și cei 6(3 canibali, 3 misionari) se află pe malul vestic
 final_state(misionari, _) :- false.
 
 % TODO
@@ -274,11 +274,11 @@ do_bfs(Solution):-
 %%
 %% Pași de urmat
 %% Căutarea începe de la nodul inițial dat (a) care n-are predecesor 
-%% Se generează apoi toate nodurile accesibile din nodul curent (exista)
-%%      un arc de la nod la vecin (folosiți edge pentru a genera nodurile)
+%% Se generează apoi toate nodurile accesibile din nodul curent (exista
+%%      un arc de la nod la vecin). Folosiți edge pentru a genera nodurile vecine
 %% Se adaugă toate aceste noduri la coada(lista) de stări încă nevizitate - Frontier
-%% căutarea continuă din starea aflată la începutul frontierei, până se întâlneşte 
-%%      o stare finală (am ajuns la nodu final dat - h)
+%% Căutarea continuă din starea aflată la începutul frontierei, până se întâlneşte 
+%%      o stare finală (am ajuns la nodul final dat - h)
 bfs(_,_) :- false.
 
 
@@ -329,11 +329,6 @@ arc(n, [o, p]). arc(o, [q, r, s]). arc(p, [t, u, v]).
 % Folosind predicatul arc generați noduri copil ale nodului curent și adăugați în
 % restul listei de parcurs (Rest). Folosiți apoi lista rezultat pentru  a genera restul 
 % listei soluție
-parc([], []).
-parc([N | Rest], [N | Parc]) :- \+ arc(N, _), parc(Rest, Parc).
-parc([N | Rest], [N | Parc]) :- arc(N, Children),
-        append(Children, Rest, L),
-        parc(L, Parc).
 
 preorder(_, _) :- fail.
 
