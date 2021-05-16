@@ -1,280 +1,331 @@
 %% -------------------------------------------------------------
 %% -------------------------------------------------------------
-
-%% -- BACKTRACKING ATUNCI CÂND CUNOAȘTEM LUNGIMEA SOLUȚIEI --
-
-%%% 1. (2p)
-%% Înțelegeți predicatele solve_queens/1, template/1 și correct/1.
-%% Observați că lipsește definiția predicatului safe/2.
-
-%% template/1
-%% template(?List)
-%% List are forma unei soluții pentru problema celor opt regine.
-%% Lungimea soluției este cunoscută și fixă.
-template([1/_, 2/_, 3/_, 4/_, 5/_, 6/_, 7/_, 8/_]).
-
-%% correct/1
-%% correct(?Solution)
-%% Solution reprezintă o soluție validă pentru problema celor opt regine.
-correct([]):-!.
-correct([X/Y|Others]):-
-        correct(Others),
-        member(Y, [1, 2, 3, 4, 5, 6, 7, 8]),
-        safe(X/Y, Others).
-
-%% solve_queens/1
-%% solve_queens(-Solution)
-%% Solution este o soluție a problemei celor opt regine.
-solve_queens(S):-template(S), correct(S).
-
-%% Scrieți predicatul safe/2 utilizat în rezolvarea problemei celor opt regine.
-%% Predicatul va avea antetul safe(+X/Y, +Others) cu semnificația că se verifică
-%% dacă plasarea reginei de coloana X pe linia Y nu se atacă cu o altă regină
-%% din lista Others. Aceasta are forma [X1/Y1, X2/ Y2/ ...].
-
-%% safe/2
-%% safe(+X/Y, +Others)
-
-safe(_, []):-!.
-safe(X1/Y1, [X2/Y2 | Others]):-
-        % o regină este safe față de o alta dacă
-        X1 =\= X2, % nu sunt pe aceeași coloană
-        Y1 =\= Y2, % nu sunt pe aceeași linie
-        X1 - Y1 =\= X2 - Y2, % nu sunt pe aceeași diagonală
-        X1 + Y1 =\= X2 + Y2,
-        safe(X1/Y1, Others).
-
-check1:-
-    tests(1, [
-        \+ safe(7/1, [8/1]),
-        \+ safe(7/1, [8/2]),
-        safe(7/1, [8/3]),
-        \+ safe(7/5, [8/4]),
-        safe(7/3, [8/5]),
-        safe(4/1, [5/3, 6/5, 7/2, 8/4]),
-        \+ safe(4/1, [5/4, 6/2, 7/7, 8/5]),
-        safe(1/4, [2/6, 3/8, 4/2, 5/7, 6/1, 7/3, 8/5]),
-        (   findall(Sol, solve_queens(Sol), All), length(All, L), L == 92)
-          ]).
-
-%% Întrebați-l pe Prolog "solve_queens(Sol)" pentru a vizualiza soluțiile.
+:- discontiguous exercitiul/2, initial_state/2, final_state/2, next_state/3.
 
 %% -------------------------------------------------------------
 %% -------------------------------------------------------------
 
 %% -- BACKTRACKING ATUNCI CÂND NU CUNOAȘTEM LUNGIMEA SOLUȚIEI --
+exercitiul(0, []).
 
-%%% 2. (6p)
-%% Înțelegeți cum funcționeză predicatele solve și search pentru rezolvarea
-%% unei probleme de căutare în spațiul stărilor. Observați utilizarea
-%% predicatelor initial_state/1, final_state/1 și next_state/2.
-
-search([CurrentState|Other], Solution):-
-        final_state(CurrentState),
-        !,
-        reverse([CurrentState|Other], Solution).
-
-search([CurrentState|Other], Solution):-
-        next_state(CurrentState, NextState),
-        \+ member(NextState, Other),
-        search([NextState,CurrentState|Other], Solution).
-
-solve(Solution):-
-        initial_state(State),
-        search([State], Solution).
-
-%% Exemplu: problema țăranului, a lupului, a caprei și a verzei.
+%% Problema țăranului, a lupului, a caprei și a verzei.
+%% Un țăran, ducând la târg un lup, o capră şi o varză ajunge 
+%% în dreptul unui râu pe care trebuie să-l treacă. Cum va proceda el, ştiind că:
+%% - lupul mănâncă capra şi capra mănâncă varza;
+%% - el nu poate să-i treacă pe toţi o dată şi nici câte doi;
 %% Vom reprezenta o stare astfel:
-%% state(MalBarcă, MalȚăran, MalLup, MalCapră, MalVarză)
+%% state(MalTaran, Lista-cu-cine-este-pe-malul-cu-taranul)
+%%
+%% Vom da acestei probleme numele 'taran'.
+%% NOTĂ: implementarea se putea face doar cu 2 clauze pentru  next_state
 
 opus(est, vest).
 opus(vest, est).
 
-%%initial_state(state(est, est, est, est, est)).
+%% TODO
+%% safeTaran/1
+%% safeTaran(+Lista-cu-cine-este-pe-malul-opus-taranului)
+%% Verifică dacă cine rămâne pe malul opus este în siguranță
+%% De exemplu o lista formată din [lup, capra] nu respectă
+%% constrângerea setată de problemă
+safeTaran(_) :- false.
+safeTaran([]).
+safeTaran([_]).
+safeTaran(Cine) :- sort(Cine, [lup, varza]).
 
-%%final_state(state(_, vest, vest, vest, vest)).
+allTaran([capra, lup, varza]).
 
+initial_state(taran, state(est, Cine)) :- allTaran(Cine).
+
+final_state(taran, state(vest, Cine)) :- allTaran(All), sort(Cine, All).
 
 %% Taranul calatoreste singur
-%%next_state(state(MalBarca1, MalBarca1, MalLup, MalCapra, MalVarza),
-%%           state(MalBarca2, MalBarca2, MalLup, MalCapra, MalVarza)):-
-%%        opus(MalBarca1, MalBarca2),
-%%        opus(MalLup, MalCapra),
-%%        opus(MalCapra, MalVarza).
+next_state(taran, state(MalTaran1, Cine1), state(MalTaran2, Cine2)) :-
+        allTaran(All),
+        % pe celălalt mal sunt cei care nu sunt pe malul cu țăranul.
+        setMinus(All, Cine1, Cine2),
+        % cine rămâne pe vechiul mal este ok.
+        safeTaran(Cine1),
+        % țăranul merge pe celălalt mal.
+        opus(MalTaran1, MalTaran2).
 
-%% Taranul calatoreste cu lupul
-%%next_state(state(MalBarca1, MalBarca1, MalBarca1, MalCapra, MalVarza),
-%%           state(MalBarca2, MalBarca2, MalBarca2, MalCapra, MalVarza)):-
-%%        opus(MalBarca1, MalBarca2),
-%%        opus(MalCapra, MalVarza).
+%% Țăranul călătorește cu lupul
+next_state(taran, state(MalTaran1, Cine1), state(MalTaran2, Cine2)) :-
+        allTaran(All),
+        % lupul este pe același mal cu țăranul, inițial.
+        member(lup, Cine1),
+        % pe celălalt mal sunt cei care nu sunt pe malul cu țăranul.
+        setMinus(All, Cine1, Cine2A),
+        % pe malul unde ajunge țăranul ajunge și lupul.
+        Cine2 = [lup | Cine2A],
+        % cine rămâne pe vechiul mal este ok.
+        setMinus(All, Cine2, Ramas), safeTaran(Ramas),
+        % țăranul merge pe celălalt mal.
+        opus(MalTaran1, MalTaran2).
 
-%% Taranul calatoreste cu capra
-%%next_state(state(MalBarca1, MalBarca1, MalLup, MalBarca1, MalVarza),
-%%           state(MalBarca2, MalBarca2, MalLup, MalBarca2, MalVarza)):-
-%%        opus(MalBarca1, MalBarca2).
+%% Țăranul călătorește cu varza
+next_state(taran, state(MalTaran1, Cine1), state(MalTaran2, Cine2)) :-
+        allTaran(All),
+        % varza este pe același mal cu țăranul, inițial.
+        member(varza, Cine1),
+        % pe celălalt mal sunt cei care nu sunt pe malul cu țăranul.
+        setMinus(All, Cine1, Cine2A),
+        % pe malul unde ajunge țăranul ajunge și varza.
+        Cine2 = [varza | Cine2A],
+        % cine rămâne pe vechiul mal este ok.
+        setMinus(All, Cine2, Ramas), safeTaran(Ramas),
+        % țăranul merge pe celălalt mal.
+        opus(MalTaran1, MalTaran2).
 
-%% Taranul calatoreste cu varza
-%%next_state(state(MalBarca1, MalBarca1, MalLup, MalCapra, MalBarca1),
-%%           state(MalBarca2, MalBarca2, MalLup, MalCapra, MalBarca2)):-
-%%        opus(MalBarca1, MalBarca2),
-%%        opus(MalLup, MalCapra).
+%% Țăranul călătorește cu capra
+next_state(taran, state(MalTaran1, Cine1), state(MalTaran2, Cine2)) :-
+        allTaran(All),
+        % capra este pe același mal cu țăranul, inițial.
+        member(capra, Cine1),
+        % pe celălalt mal sunt cei care nu sunt pe malul cu țăranul.
+        setMinus(All, Cine1, Cine2A),
+        % pe malul unde ajunge țăranul ajunge și capra.
+        Cine2 = [capra | Cine2A],
+        % cine rămâne pe vechiul mal este ok.
+        setMinus(All, Cine2, Ramas), safeTaran(Ramas),
+        % țăranul merge pe celălalt mal.
+        opus(MalTaran1, MalTaran2).
 
-
-
-%% Rescrieți predicatele initial_state/1, final_state/1, și next_state/2 pentru
-%% a rezolva problema soților geloși.
-
-%% Pentru o mai bună structură, implementați întâi predicatele boat/1
-%% și safe/1 detaliate mai jos.
-
-%% Problema Soților Geloși
-%% Fie un râu cu două maluri, trei cupluri și o barcă. Barca și cele trei
-%% cupluri se află inițial pe un mal, iar scopul este ca toți să ajungă pe
-%% malul opus. Barca are capacitate de maximum două persoane și nu poate
-%% călători fără nicio persoană. Găsiți o secvență de traversări, astfel
-%% încât nicio femeie să nu poată fi în prezența altor bărbați, decât dacă
-%% soțul acesteia este prezent.
-
-%% Predicate utile: sort/2, @</2 (vedeți help)
-
-%% Atenție, nu lăsați în spațiul de lucru predicatele pentru ambele
-%% probleme!
-
-% married(?Woman, ?Man)
-married(1, a).
-married(2, b).
-married(3, c).
-% woman(?Woman)
-woman(W) :- married(W, _).
-% man(?Man)
-man(M) :- married(_, M).
-
-% people(-AllPeople)
-% Obține lista cu toate persoanele.
-allPeople(AllPeople) :- findall(Person, (married(Person, _) ; married(_, Person)), AllPeople).
-
-% setMinus(+From, +ToRemove, -Result)
-% calculează diferența de mulțimi From \ ToRemove
-setMinus(From, ToRemove, Result) :-
-        findall(E, (member(E, From), \+ member(E, ToRemove)), Result).
-
-% setPlus(+A, +B, -Result
-% concatenează A și B în Result (Atenție! nu elimină duplicate)
+% setPlus(+A, +B, -Result)
+% concatenează A și B în Result (Atenție! nu elimină duplicate).
 setPlus(A, B, Result) :- append(A, B, Result).
 
 % subSet(+Smaller, +Bigger)
-% Verifică dacă setul Smaller este inclus în sau egal cu setul Bigger
-subSet([], []).
-subSet(Smaller, [_|Bigger]) :- subSet(Smaller, Bigger).
-subSet([E|Smaller], [E|Bigger]) :- subSet(Smaller, Bigger).
+% Verifică dacă setul Smaller este inclus în sau egal cu setul Bigger.
+% https://www.swi-prolog.org/pldoc/man?predicate=subset/2
+subSet(A, B) :- subset(A, B).
 
-% boat/1
-% boat(?People)
-% o listă de 1 sau două persoane care pot merge împreună în barcă.
-% boat(_) :- fail.
+% setMinus(+From, +ToRemove, -Result)
+% Produce în result lista elementelor din From care nu sunt în ToRemove.
+% https://www.swi-prolog.org/pldoc/doc_for?object=subtract/3
+setMinus(From, ToRemove, Result) :- subtract(From, ToRemove, Result).
 
-% în barcă se pot afla
-boat([F]) :- woman(F). % o femeie
-boat([M]) :- man(M). % un bărbat
-boat([F, M]) :- married(F, M). % un cuplu
-boat([F1, F2]) :- woman(F1), woman(F2), F1 @< F2. % 2 femei diferite, sortate
-boat([M1, M2]) :- man(M1), man(M2), M1 @< M2. % 2 bărbați diferiți, sortați
+%% Predicatele solve/2 și search/3 sunt folosite pentru
+%% rezolvarea unei probleme de căutare în spațiul stărilor. 
+%% Fiecare dintre predicate ia ca prim argument problema
+%% pe care o rezolvăm.
+%% Observațiutilizarea predicatelor initial_state/2, final_state/2 și
+%% next_state/3. 
 
-% safe/1
-% safe(+PeopleList)
-% verifică dacă persoanele din listă pot sta pe același mal.
-% safe(_) :- fail.
+%% search(+Pb, +StariVizitate, -Sol)
+search(Pb, [CurrentState|Other], Solution) :-
+        final_state(Pb, CurrentState),
+        !,
+        reverse([CurrentState|Other], Solution).
 
-% un grup de oameni este valid în raport cu problema dacă
-% nu există niciun bărbat în grup
-safe(People) :- \+ (man(MX), member(MX, People)), !.
-% sau, dacă există un bărbat,
-safe(People) :- man(MX), member(MX, People), !,
-        % toate femeile din grup au soțul în acest grup
-        forall((woman(W), member(W, People), married(W, M)),
-                        member(M, People)).
+search(Pb, [CurrentState|Other], Solution) :-
+        next_state(Pb, CurrentState, NextState),
+        \+ member(NextState, Other),
+        search(Pb, [NextState,CurrentState|Other], Solution).
 
-initial_state(state(est, P)) :- allPeople(P).
-final_state(state(vest, P)) :- allPeople(P).
+%% solve(+Pb, -Sol)
+solve(Pb, Solution):-
+        initial_state(Pb, State),
+        search(Pb, [State], Solution).
 
-% reprezentare a stării ca maulul pe care este barca și persoanele care
-% sunt pe malul cu barca.
+% Vizualizați soluțiile cu
+% solve(taran, Sol), validSol(taran, Sol).
+
+
+check0 :- tests([
+              % a - c
+              ech('safeTaran([X, Y])', ['X = lup', 'Y = varza']),
+              chk(safeTaran([_])),
+              chk(safeTaran([]))
+        ]).
+
+
+exercitiul(1, []).
+
+%% Problema Misionarilor și Canibalilor
+%% ====================================
+%% Fie un râu cu două maluri, trei misionari, trei canibali și o
+%% barcă. Barca și cei 6 se află inițial pe un mal, iar
+%% scopul este ca toți să ajungă pe malul opus. Barca are capacitate de
+%% maximum două persoane și nu poate călători fără nicio persoană.
+%% Găsiți o secvență de traversări, astfel încât nicăieri să nu existe
+%% mai mulți canibali decât misionari (pot exista însă pe un mal doar
+%% canibali).
+%%
+%% Primul pas este definirea unui format pentru starea problemei.
+%% Pentru a reprezenta malul puteți folosi constantele est si vest 
+%% folosite anterior.
+%% Ce informații ar trebui să conțină starea? Este suficient să conțină 
+%% malul și numărul de canibali, respectiv misionari de pe acesta?
+%%
+%% Scrieți predicatele initial_state, final_state, și next_state
+%% pentru problema misionarilor.
+%%
+%% Pentru o mai bună structură, implementați întâi predicatele boat/2
+%% și safeMisionari/2 detaliate mai jos.
+%%
+%% Predicate utile: sort/2, @</2 (vedeți help)
+
+
+% TODO
+% boat/2
+% boat(-NM, -NC)
+% Posibilele combinații de număr de misionari și canibali care pot
+% călători cu barca, unde NM este numărul de misionari, iar NC numărul 
+% de canibali din bancă
 %
-% La o trecere avem așa:
-% People1 sunt persoanele de pe malul de unde a plecat barca (malul 1),
-% înainte ca aceasta să plece; People2 sunt persoanele de pe malul unde
-% ajunge barca (malul 2), după ce aceasta a ajuns.
-next_state(state(Mal1, People1), state(Mal2, People2)) :-
-        % barca trece de pe un mal pe altul
+% Nu uitați ca barca are capacitate de maximum două persoane și nu poate 
+% călători fără nicio persoană.
+% Ex boat(2, 0)
+boat(_, _) :- false.
+boat(0, 1).
+boat(0, 2).
+boat(1, 0).
+boat(2, 0).
+boat(1, 1).
+
+% TODO
+% safe/2
+% safe(+NM, +NC)
+% Verifică dacă numărul dat de misionari și canibali pot fi pe același
+% mal (să nu existe mai mulți canibali decât misionari)
+% Atenție la de câte ori este adevărat safeMisionari pentru diverse
+% valori ale argumentelor - poate influența numărul soluțiilor pentru
+% problemă.
+safeMisionari(_, _) :- false.
+safeMisionari(0, _).
+safeMisionari(M, C) :- M > 0, M >= C.
+
+% TODO
+% parseState/3
+% parseState(+State, -Mal, -NM_Est, -NC_Est, -NM_Vest, -NC_Vest)
+% Primește o stare și întoarce în ultimele 5 argumente malul unde este barca 
+% și numerele de misionari / canibali de pe malul estic, respectiv vestic, în 
+% starea dată.
+parseState( _, _, _, _, _, _) :- fail.
+parseState(state(est, M, C), est, M, C, OM, OC) :- !,
+        OM is 3 - M, OC is 3 - C.
+parseState(state(vest, M, C), vest, OM, OC, M, C) :-
+        OM is 3 - M, OC is 3 - C.
+
+% TODO
+% initial_state(misionari, -State)
+% Determină starea inițială pentru problema misionarilor, în formatul
+% ales.
+% Hint Barca și cei 6(3 canibali, 3 misionari) se află inițial pe malul estic
+initial_state(misionari, _) :- false.
+initial_state(misionari, state(est, 3 ,3)).
+
+% TODO
+% final_state(misionari, +State)
+% Verifică dacă starea dată este stare finală pentru problema
+% misionarilor.
+% Hint Barca și cei 6(3 canibali, 3 misionari) se află pe malul vestic
+final_state(misionari, _) :- false.
+final_state(misionari, state(vest, 3, 3)).
+
+
+% TODO
+% next_state(misionari, +S1, -S2)
+% Produce o stare următoare S2 a stării curente S1.
+% Toate soluțiile predicatului next_state pentru o stare S1 dată trebuie
+% să fie toate posibilele stări următoare S2 în care se poate ajunge din
+% S1.
+% Hinturi
+%   - Consecință - malul se schimba (folosiți predicatul opus pentru validare)
+%   - Tranziția dintr-o stare în alta se realizează printr-o traversare
+%     validă cu barca (folosiți predicatul boat)
+%   - Atât pe malul estic cât și cel vestic constrângerea este respectată, și anume
+%     nu există mai mulți canibali decât misionari (folosiți predicatul safeMisionari
+%     pentru validare). Pentru a calcula numărul de canibali/misionari de pe malul opus
+%     ce formulă puteți folosi știind ca numărul total de canibali/misionari este 3?
+
+next_state(misionari, _, _) :- false.
+next_state(misionari, state(Mal1, M1, C1), state(Mal2, M2, C2)) :-
         opus(Mal1, Mal2),
-        allPeople(All),
-        % în barcă trec un grup valid de persoane
-        boat(Boat),
-        % persoanele care trec erau toate printre cei de pe malul inițial (1)
-        subSet(Boat, People1),
-        % People12 sunt persoanele care rămân pe malul 1
-        setMinus(People1, Boat, People12),
-        % People2 sunt persoanele de pe malul 2 înainte de ajungerea bărcii
-        setMinus(All, People1, People2),
-        % People22 sunt oamenii de pe malul 2, după ce ajunge barca
-        setPlus(People2, Boat, People22),
-        % verificăm că după ce trece barca grupurile de persoane sunt 'safe'
-        safe(People12), safe(People22),
-        % sortăm People22 pentru a evita mai multe stări identice cu reprezentare diferită
-        sort(People22, People2).
-        %format("~w -~w-> ~w~n", [state(Mal1, People1), Boat, state(Mal2, People2)]).
+        boat(MB, CB), MB =< M1, CB =< C1,
+        M2 is 3 - M1 + MB, C2 is 3 - C1 + CB,
+        OM2 is 3 - M2, OC2 is 3 - C2,
+        safeMisionari(M2, C2),
+        safeMisionari(OM2, OC2).
 
 
-check2L :- tests(2/a, [
-                  boat([1]),
-                  boat([b]),
-                  boat([1, 2]),
-                  boat([b, c]),
-                  boat([1, a]),
-                  boat([3, c]),
-                  \+ boat([1, b]),
-                  \+ boat([3, a]),
-                  (   findall(B, boat(B), L), length(L, LL), LL == 15 ),
-                  safe([2, 3, a, b, c]),
-                  safe([1, 2, 3]),
-                  safe([1]),
-                  safe([1, 2, a, b]),
-                  \+ safe([1, 2, b, c]),
-                  \+ safe([2, c]),
-                  (   allPeople(P), setof(S, (subSet(S, P), safe(S)), L2),
-                      length(L2, LL2), LL2 == 34 ),
-                  (   allPeople(P), setof(S, (subSet(S, P), \+ safe(S)), L3),
-                      length(L3, LL3), LL3 == 30 ),
-                  (   allPeople(P), findall(S, (subSet(S, P), safe(S)), L4),
-                      length(L4, LL4), LL4 == 34 ),
-                  (   solve(X), length(X, LSol), LSol == 12)
-                 ]).
-check2 :- check2L,
-        tests(2/b, [(   findall(Sol, (solve(Sol), length(Sol, 12)), MinSols),
-                      length(MinSols, Len), Len == 486)
-                  ]).
+% dacă solve(misionari, Sol) eșuează, folosiți
+% tracksolve(misionari, Sol) pentru a inspecta construcția soluției.
+
+check1 :- tests([
+              % a - c
+              ckA('boat', [(1, 0), (1, 1), (2, 0)]),
+              ech('boat(X, Y)', ['X + Y > 0', '(X >= Y ; X == 0)', 'X + Y =< 2']),
+              nsl('boat(X, Y)', 'X/Y', 5),
+              % d - h
+         0.2, chk(safeMisionari(3, 3)),
+         0.2, chk(safeMisionari(3, 2)),
+         0.2, chk(safeMisionari(0, 3)),
+         0.2, uck(safeMisionari(2, 3)),
+         0.2, uck(safeMisionari(1, 3)),
+              % i - k
+              chk(initial_state(misionari, _)),
+              exp('initial_state(misionari, S), parseState(S, M, ME, CE, MV, CV)',
+                  ['M', est, 'ME', 3, 'CE', 3, 'MV', 0, 'CV', 0]),
+              exp('initial_state(misionari, S), next_state(misionari, S, S1)',
+                  [cond('parseState(S1, _, _, _, _, _)')]),
+              % l - n
+           2, exp('solve(misionari, Sol)', [cond('validSol(misionari, Sol)')]),
+           2, ech('solve(misionari, Sol)', ['validSol(misionari, Sol)']),
+           2, nsl('solve(misionari, Sol)', 'Sol', 4)
+          ]).
+
 
 %% -------------------------------------------------------------
 %% -------------------------------------------------------------
+exercitiul(2, []).
+%% Parcurgere BFS  grafuri
 
-%%% 3 (4p)
-%% 3a (2p)
-%% Implementați un predicat bfs/3 care să descrie un mecanism de căutare în
-%% lățime într-un graf. Se dau predicatele initial_node/1, final_node/1 și
-%% edge/2. Observați similaritatea cu initial_state/1, final_state/1 și
-%% next_state/2.
+edge(a,b). edge(a,c). edge(a,d).
+edge(c,e). edge(c,f).
+edge(d,h).
+edge(e,a). edge(e,g).
+edge(f,a). edge(f,g).
+edge(g,h).
+
+initial_node(a).
+final_node(h).
+
 
 do_bfs(Solution):-
-        initial_node(StartNode),
-        bfs([(StartNode,nil)], [], Discovered),
-        extract_path(Discovered, Solution).
+    initial_node(StartNode),
+    bfs([(StartNode,nil)], [], Discovered),
+    extract_path(Discovered, Solution).
+
+%% TODO
+%% Implementați un predicat bfs/3 care să descrie un mecanism de căutare în
+%% lățime într-un graf. Se dau predicatele initial_node/1, final_node/1 și
+%% edge/2. Observați similaritatea cu initial_state/2, final_state/2 și
+%% next_state/2.
 
 %% bfs/3
 %% bfs(+Frontier, +Closed, -Solution)
-%% Frontier reprezintă coada nodurilor ce vor fi explorate, Closed reprezintă
+%% Frontier reprezintă coada nodurilor ce vor fi explorate(nevizitate), Closed reprezintă
 %% lista nodurilor vizitate deja, iar Solution va reprezenta lista finală a
 %% nodurilor vizitate până la găsirea soluției.
 %% Toate cele 3 liste vor avea elementele în forma pereche (Nod, Părinte).
+%%
+%% Pași de urmat
+%% Căutarea începe de la nodul inițial dat (a) care n-are predecesor 
+%% Se generează apoi toate nodurile accesibile din nodul curent (exista
+%%      un arc de la nod la vecin). Folosiți predicatul getNeighb definit mai jos 
+%%      pentru a genera nodurile vecine
+%% Se adaugă toate aceste noduri la coada(lista) de stări încă nevizitate - Frontier
+%% Căutarea continuă din starea aflată la începutul frontierei, până se întâlneşte 
+%%      o stare finală (am ajuns la nodul final dat - h)
+
+% Întoarce în  Result nodurile vecine ale nodului X primit ca parametru
+% Exemplu utilizare: getNeighb(a, [], Result). 
+getNeighb(X, Acc, Result) :- edge(X,Y), \+ memberchk((Y,_), Acc), !, getNeighb(X, [(Y,X)|Acc], Result).
+getNeighb(_, Acc, Result) :- reverse(Acc, Result).
+
+bfs(_,_,_) :- false.
 
 bfs([(FinalNode,Parent)|_], Closed, [(FinalNode, Parent)|Closed]):-
         final_node(FinalNode), !.
@@ -285,14 +336,14 @@ bfs([(CurrentNode,_)|Rest], Closed, Solution):-
         bfs(Rest, Closed, Solution).
 bfs([(CurrentNode,Parent)|Rest], Closed, Solution):-
         % găsim toți copiii lui CurrentNode
-        findall((Node, CurrentNode), edge(CurrentNode, Node), Children),
+        getNeighb(CurrentNode, [], Children),
         % îi adăugăm la frontieră
         append(Rest, Children, NewFrontier),
         % continuăm
         bfs(NewFrontier, [(CurrentNode,Parent)|Closed], Solution).
 
 
-%% 3b (BONUS - 2p)
+%% TODO
 %% extract_path/2
 %% extract_path(Discovered, Solution)
 %% Solution reprezintă calea de la nodul inițial la cel final extrasă din
@@ -313,93 +364,503 @@ extract_path(Discovered, [Node | Other], Solution):-
         member((Node,Next), Discovered),
         extract_path(Discovered, [Next, Node | Other], Solution).
 
-%%% Testare
-
-edge(a,b). edge(a,c). edge(a,d).
-edge(c,e). edge(c,f).
-edge(d,h).
-edge(e,a). edge(e,g).
-edge(f,a). edge(f,g).
-edge(g,h).
-
-initial_node(a).
-final_node(h).
-
-check3a:-
-		bfs([(a,nil)], [], R),
-        R == [(h, d), (f, c), (e, c), (d, a), (c, a), (b, a), (a, nil)],
-        writeln('.Exercițiul 3a rezolvat corect!'),
-        !.
-check3b:-
-		extract_path([(h, d), (f, c), (e, c), (d, a), (c, a), (b, a), (a, nil)], R),
-        R == [a, d, h],
-        writeln('.Exercițiul 3b (BONUS) rezolvat corect!'),
-        !.
+check2:- tests([
+            exp("bfs([(a,nil)], [], R)", [
+                set('R', [(h, d), (f, c), (e, c), (d, a), (c, a), (b, a), (a, nil)])]),
+            exp("extract_path([(h, d), (f, c), (e, c), (d, a), (c, a), (b, a), (a, nil)], R)", [
+                set('R', [a, d, h])])
+        ]).
 
 %% -------------------------------------------------------------
 %% -------------------------------------------------------------
+%% Arbori BONUS
 
-%%% 4. BONUS. (3p)
-%% BFS poate fi folosit pentru a testa dacă un graf este bipartit. Căutarea
-%% începe pe rând din fiecare nod și etichetează alternativ cu 0 sau 1 fiecare
-%% nod descoperit. De exemplu, nodul de start are eticheta 0, toți vecinii săi
-%% primesc eticheta 1, vecinii acestora primesc iarăși 0 etc. Dacă la un moment
-%% dat un nod are vecini cu aceeași etichetă ca a lui, atunci graful nu e bipartit.
-%% Scrieți un predicat bipartite care testează dacă graful dat prin fapte de tip
-%% nod(Nod) și arc(Sursă, Destinație) este bipartit.
+exercitiul(3, []).
 
-%% bipartite/0
+%% Se dau următoarele fapte ce descriu arcele unei păduri de arbori
+%% ATENȚIE: Fiecare nod poate avea acum oricâți copii.
 
-not_bipartite([(Node, Partition)|Rest], Visited):-
-	findall(Kid, (arc(Node, Kid), (member((Kid, Partition), Rest) ; member((Kid, Partition), Visited))), [_|_]), !.
-not_bipartite([(Node, Partition)|Rest], Visited):-
-	OtherPartition is 1 - Partition,
-	findall((Kid, OtherPartition), (arc(Node, Kid), \+member((Kid, _), Rest), \+member((Kid, _), Visited)), Next),
-	append(Rest, Next, Queue),
-	not_bipartite(Queue, [(Node, Partition)|Visited]).
+nod(a). nod(b). nod(c). nod(d). nod(e). nod(f). nod(g).
+nod(h). nod(i). nod(j). nod(k). nod(l).
+nod(m).
+nod(n). nod(o). nod(p). nod(q). nod(r). nod(s). nod(t). nod(u). nod(v).
 
-bipartite:-
-	\+ (nod(Node), not_bipartite([(Node, 0)], [])).
+arc(a, [b, c, d]). arc(c, [e, g]). arc(e, [f]).
+arc(h, [i]). arc(i, [j, k, l]).
+arc(n, [o, p]). arc(o, [q, r, s]). arc(p, [t, u, v]).
 
-%%% Testare
-nod(a). nod(b). nod(c). nod(d). nod(e). nod(f). nod(g). nod(h).
-arc(a,b). arc(b,a). arc(a,d). arc(d,a). arc(a,e). arc(e,a).
-arc(b,c). arc(c,b). arc(b,f). arc(f,b).
-arc(c,d). arc(d,c). arc(c,g). arc(g,c).
-arc(d,h). arc(h,d). % arc(f, a).
-arc(e,f). arc(f,e). arc(e,h). arc(h,e).
-arc(f,g). arc(g,f).
-arc(g,h). arc(h,g).
+% TODO
+% preorder/2
+% preorder(+N, -Parc)
+% Întoarce în Parc o listă de noduri rezultate din parcurgerea în
+% preordine începând din nodul N.
+% Hint - definiți un predicat auxiliar care primește lista de noduri
+% de vizitat (de forma [N|Rest]) și Parc(listă de noduri rezultate din parcurgere)
+% Folosind predicatul arc generați noduri copil ale nodului curent și adăugați în
+% restul listei de parcurs (Rest). Folosiți apoi lista rezultat pentru  a genera restul 
+% listei soluție
 
-check4:-
-        bipartite,
-        writeln('.Exercițiul BONUS rezolvat corect!'),
-        !.
-%% -------------------------------------------------------------
-%% -------------------------------------------------------------
+preorder(_, _) :- fail.
+preorder(N, Parc) :- parc([N], Parc).
 
-:- dynamic punct/2.
+parc([], []).
+parc([N | Rest], [N | Parc]) :- \+ arc(N, _), parc(Rest, Parc).
+parc([N | Rest], [N | Parc]) :- arc(N, Children),
+        append(Children, Rest, L),
+        parc(L, Parc).
 
-tests(Ex, [], _) :- !, format('Exercitiul ~w a fost rezolvat corect.~n', [Ex]).
-tests(Ex, [T | R], Idx) :-
-        Idx1 is Idx + 1,
-        (   call(T), !, write('.'), tests(Ex, R, Idx1);
-        format('Esec la exercitiul ~w testul ~w: ~n    ~w~n',
-               [Ex, Idx1, T]),
-            !, fail).
-tests(Ex, L) :- tests(Ex, L, 0).
+check3 :- tests([
+          exp('preorder(a, P)', ['P', [a, b, c, e, f, g, d]]),
+          exp('preorder(n, P)', ['P', [n, o, q, r, s, p, t, u, v]])
+          ]).
 
-check:-
-        retractall(punct(_, _)),
-        once((check1, assert(punct(1, 2)) ; assert(punct(1, 0)))),
-        once((check2, assert(punct(2, 6)) ; assert(punct(2, 0)))),
-        once((check3a, assert(punct(31, 2)) ; assert(punct(31, 0)))),
-        once((check3b, assert(punct(32, 2)) ; assert(punct(32, 0)))),
-        once((check4, assert(punct(4, 3)) ; assert(punct(4, 0)))),
-        fail.
 
-check:-
+exercitiul(4, [2, puncte]).
+% Dată fiind funcția nodes, parcurgeți toată pădurea de arbori.
+
+% nodes(+Acc, -Result)
+% Întoarce în Result toate nodurile din pădurea de arbori.
+nodes(Acc, Result) :- nod(N), \+ memberchk(N, Acc), !, nodes([N|Acc], Result).
+nodes(Acc, Result) :- reverse(Acc, Result).
+
+% TODO
+% trees/1
+% trees(-Trees)
+% Întoarce în trees o listă în care fiecare element este parcurgerea
+% unui arbore.
+% Folosiți predicatul nodes pentru a  obtine toate nodurile din pădurea
+% de arbori. Pentru fiecare nod generați o parcurgere folosind predicatul 
+% definit anterior. Eliminați folosind setMinus nodurile din NN care apar
+% în parcurgerea curentă.
+trees(_) :- false.
+trees(Trees) :- nodes([], NN), parcAll(NN, Trees).
+
+parcAll([], []).
+parcAll([N | Todo], [ParcN | ParcRest]) :-
+        preorder(N, ParcN),
+        setMinus(Todo, ParcN, Rest),
+        parcAll(Rest, ParcRest).
+
+check4 :- tests([
+              exp('trees(TT)', ['TT',
+                                [[a,b,c,e,f,g,d],[h,i,j,k,l],[m],[n,o,q,r,s,p,t,u,v]]])
+          ]).
+
+%% --------------------------------------------
+%% teste specifice pentru problemele de căutare
+%% --------------------------------------------
+
+
+tracksearch(Pb, [CurrentState|Other], Solution) :-
+        final_state(Pb, CurrentState),
+        !,
+        write('DONE.'), nl,
+        reverse([CurrentState|Other], Solution).
+
+tracksearch(Pb, [CurrentState|Other], Solution) :-
+        format('Finding next state from ~w ... ', [CurrentState]),
+        next_state(Pb, CurrentState, NextState),
+        format('Try state: ~w ...', [NextState]),
+        trackmember(NextState, Other),
+        reverse([NextState,CurrentState|Other], Prog), print_progress(Pb, Prog),
+        tracksearch(Pb, [NextState,CurrentState|Other], Solution).
+trackmember(State, Other) :- \+ member(State, Other), !, write('continue...'), nl.
+trackmember(_, _) :- write('already visited'), nl, nl, fail.
+
+print_progress(misionari, [_]).
+print_progress(misionari, [S1, S2 | Rest]) :-
+        parseState(S1, M1, ME1, CE1, MV1, CV1),
+        parseState(S2, _, ME2, CE2, MV2, CV2),
+        (   M1 == est, !, MB is ME1 - ME2, CB is CE1 - CE2,
+            format('~w M  ~w C  ~10| v~~~~~~~~  ~10| ~w M  ~w C ~30| ~w~n',
+                   [ME1, CE1, MV1, CV1, S1]),
+            format('~8| ~w M  ~w C ->~n', [MB, CB]),
+            format('~w M  ~w C  ~10| ~~~~~~~~v  ~10| ~w M  ~w C ~30| ~w~n',
+                   [ME2, CE2, MV2, CV2, S2])
+        ;   MB is MV1 - MV2, CB is CV1 - CV2,
+            format('~w M  ~w C  ~10| ~~~~~~~~v  ~10| ~w M  ~w C ~30| ~w~n',
+                   [ME1, CE1, MV1, CV1, S1]),
+            format('~7| <- ~w M  ~w C ~n', [MB, CB]),
+            format('~w M  ~w C  ~10| v~~~~~~~~  ~10| ~w M  ~w C ~30| ~w~n',
+                   [ME2, CE2, MV2, CV2, S2])
+        ),
+        print_progress(misionari, [S2 | Rest]).
+tracksolve(Pb, Solution) :-
+        write('====================================================='), nl,
+        write('====================================================='), nl,
+        write('====================================================='), nl,
+        initial_state(Pb, State),
+        parseState(State, _, ME, CE, MV, CV),
+        format('~w M ~w C v~~~~ ~w M ~w C~n', [ME, CE, MV, CV]),
+        tracksearch(Pb, [State], Solution).
+
+err(Sol, Msg, Value) :-
+        format('~n~n Solutia: ~n'),
+        (   is_list(Sol) -> forall(member(E, Sol), format('~w~n', [E]))),
+        format('~w: ~w.~n', [Msg, Value]), fail.
+
+validSol(Pb, Sol) :- %format('~n~n Solutia: ~n'),
+        (   \+ is_list(Sol), !, err(Sol, 'Solutia nu este o lista', Sol)
+        ;   !, forall(member(E, Sol), validState(Pb, Sol, E))
+        , validTransitions(Pb, Sol, Sol), last(Sol, Last), validFinal(Pb, Sol, Last)).
+validSol(Pb, Sol) :- format('INTERN: caz invalid validSol ~w: ~w~n', [Pb, Sol]), fail.
+
+validMal(_, _, _, 0, _) :- !.
+validMal(_, _, _, M, C) :- M >= C, !.
+validMal(Sol, S, Mal, M, C) :-
+        swritef(Msg, 'Numar incorect de misionari/canibali %w/%w pe malul %wic in starea',
+               [M, C, Mal]),
+        err(Sol, Msg, S).
+validState(taran, Sol, S) :- allTaran(All),
+        (   S = state(Mal, Elements),
+            (   \+ member(Mal, [est, vest]), err(Sol, 'Mal invalid', Mal)
+            ;   (\+ subSet(Elements, All), setMinus(Elements, All, Inv),
+                err(Sol, 'Elemente invalide', Inv)
+                ;   setMinus(All, Elements, OtherSide), validOther(Sol, OtherSide)))
+        ;   err(Sol, 'Stare in format incorect', S)).
+validState(misionari, Sol, S) :-
+        (   parseState(S, M, ME, CE, MV, CV), !,
+            (   member(M, [est, vest]), !,
+                (   ME + MV =:= 3, CE + CV =:= 3, !,
+                    validMal(Sol, S, est, ME, CE), validMal(Sol, S, vest, MV, CV)
+                ;   err(Sol, 'numar incorect de persoane in stare', S)
+                )
+            ;   err(Sol, 'mal incorect in stare', M/S)
+            )
+        ;   err(Sol, 'parseState a esuat pentru', S)
+        ).
+validState(_, Sol, S) :- err(Sol, 'INTERN: caz invalid validState', S).
+validOther(_, []) :- !.
+validOther(_, [_]) :- !.
+validOther(_, L) :- sort(L, [lup, varza]), !.
+validOther(Sol, L) :- member(lup, L), member(capra, L), !, err(Sol, 'Lupul mananca capra', L).
+validOther(Sol, L) :- member(varza, L), member(capra, L), !, err(Sol, 'Capra mananca varza', L).
+validOther(Sol, L) :- err(Sol, 'INTERN: caz invalid validOthers', L).
+validTransitions(_, _, [_]) :- !.
+validTransitions(taran, Sol, [S1, S2 | Rest]) :- !,
+        S1 = state(Mal1, _Cine1), S2 = state(Mal2, _Cine2),
+        (   \+ opus(Mal1, Mal2), !, err(Sol, 'nu sunt opuse:', [Mal1, Mal2])
+        ;   validTransitions(taran, Sol, [S2 | Rest])). % not fully checked
+validTransitions(misionari, Sol, [S1, S2 | Rest]) :- !,
+        parseState(S1, Mal1, ME1, CE1, MV1, CV1), parseState(S2, Mal2, ME2, CE2, MV2, CV2),
+        (   \+ opus(Mal1, Mal2), !, err(Sol, 'nu sunt opuse:', [Mal1, Mal2])
+        ;
+        (   Mal1 == est, !, validBoat(misionari, Sol, S1, S2, ME1, CE1, ME2, CE2)
+        ;   validBoat(misionari, Sol, S1, S2, MV1, CV1, MV2, CV2)
+        )), validTransitions(misionari, Sol, [S2 | Rest]).
+validTransitions(_, Sol, Rest) :- err(Sol, 'INTERN: caz invalid validTransitions', Rest).
+validBoat(misionari, Sol, S1, S2, M1, C1, M2, C2) :-
+        MB is M1 - M2, CB is C1 - C2,
+        (   MB + CB > 0, MB + CB =< 2, (MB == 0, !; MB >= CB), !
+        ;   swritef(Msg, 'numar incorect de misionari/canibali %w/%w in barca intre starile',
+                    [MB, CB]), err(Sol, Msg, S1/S2)
+        ).
+validFinal(taran, Sol, state(Mal, Elements)) :- allTaran(All),
+        (   Mal \= vest, !, err(Sol, 'Nu ajunge pe malul vestic la sfarsit', Mal)
+        ;   ( \+ sort(Elements, All), setMinus(All, Elements, Miss),
+            !, err(Sol, 'Nu au ajuns', Miss/Elements), fail
+            ; !, true)).
+validFinal(misionari, Sol, S) :- parseState(S, Mal, _, _, MV, CV),
+        (   Mal \= vest, !, err(Sol, 'Nu ajunge pe malul vestic la sfarsit', Mal)
+        ;   ( MV \= 3, CV \= 3, !, err(Sol, 'Au ajuns doar', MV/CV), fail
+            ; !, true)).
+validFinal(_, Sol, S) :- err(Sol, 'INTERN: caz invalid validFinal', S).
+
+
+%% ----------------------------------------
+%% ----------------------------------------
+%% Tester
+
+% pentru vmchecker, trebuie pentru fiecare segment de testare să existe:
+% o afirmație vmpoints(<ID_segment>, <Număr_puncte_segment>)
+% o afirmație tt(<ID_segment>, <Listă_teste>)
+% Trebuie ca test_mode(vmchecker) să fie adevărat.
+
+% pentru quickchecking (la laborator), trebuie ca pentru fiecare
+% exercițiu să existe:
+% o afirmație exercitiul(<ID>, [<Număr puncte>, alte, comentarii])
+% o afirmație check<ID>(tests(<Listă_teste>))
+% e.g. dacă există exercitiul(5), trebuie să existe și check5(...)
+%
+% Tipurile de teste sunt prezentate în tester.pl, în cadrul predicatului
+% testtest/0.
+
+testtimelimit(5). % in seconds
+
+%test_points(show). % uncomment to show points in non-vmchecker mode.
+test_points(hide) :- test_mode(vmchecker); \+ test_points(show).
+
+%test_mode(vmchecker). % uncomment to activate the vmchecker mode.
+test_mode(quickcheck) :- \+ test_mode(vmchecker).
+
+:-dynamic(punct/2).
+:-dynamic(current/1).
+%:-clean.
+
+clean :- retractall(punct(_, _)), retractall(current(_)).
+
+% -----------------
+
+% runs quickcheck tests
+check :-
+        clean,
+        forall(exercitiul(Ex,_),
+               (   atom_concat(check, Ex, Ck),
+                   retractall(current(_)), assert(current(Ex)),
+                   once(call(Ck)) ; true)),
         findall(P, punct(_, P), L),
         sum_list(L, S),
-        format('Punctaj total: ~f~n',[S]).
+        (   test_points(show),
+            format('Punctaj total: ~f~n',[S])
+        ;   true),
+        clean.
 
+% entry point for quick check; handles checking all exercises or just
+% one.
+tests(Tests) :- (   current(_), ! ; retractall(punct(_, _))),
+        (   current(Ex), !, (exercitiul(Ex, [Pts | _]), !, Total is Pts
+                            ;
+                            exercitiul(Ex, []), Total is 0)
+        ;   Total is 100, Ex = none
+        ),
+        tests(Tests, Total, Ex, Score),
+        (   current(Ex), assert(punct(Ex, Score)), !
+        ;   format('Rezolvat ~0f%.~n', [Score])
+        ), !.
+tests(_) :- failure(unknown, 'INTERN: tests/1 failed').
+
+
+% ---------------
+% general testing
+
+% unified entry point for testing; computes fractions, computes if
+% exercise is not done, and starts per-test iteration.
+tests(Tests, TotalPoints, Ex, Score) :- %trace,
+    total_units(Tests, TF, Ck/AllCheck, UCk/AllUCk, Others/AllOthers),
+    %format('Total units: ~w~n', [TF]),
+    (   isNotDone(Ck/AllCheck, UCk/AllUCk, Others/AllOthers), !,
+        (   Ex == none, !
+        ;   ( test_mode(vmchecker), !, format("+0.00 ~10t  ") ; true ),
+            format("[~w] Nerezolvat.~n", [Ex])
+        ),
+        Score = 0
+    ;   Unit is TotalPoints / TF,
+        tests(Tests, Ex, 1, Unit, 0, Score)
+    ), !.
+tests(_, _, Ex, _) :- failure(Ex, 'INTERN: tests/4 failed').
+
+isNotDone(0/TC, TU/TU, 0/TO) :- (TO > 0, !; TC > 0).
+% otherwise, probably done
+
+% iterates through tests, handles test index, generates test id, adds
+% points
+tests([], _, _, _, Points, Points) :- !.
+tests([wait|R], Ex, Idx, Unit, PointsIn, PointsOut) :- !,
+    tests(R, Ex, Idx, Unit, PointsIn, PointsOut).
+tests([Fraction, T|R], Ex, Idx, Unit, PointsIn, PointsOut) :-
+        number(Fraction), !, test(T, Ex, Idx, Fraction, Unit, PointsIn, PointsOut1),
+        tests(R, Ex, Idx+1, Unit, PointsOut1, PointsOut).
+tests([T|R], Ex, Idx, Unit, PointsIn, PointsOut) :-
+        test(T, Ex, Idx, 1, Unit, PointsIn, PointsOut1),
+        tests(R, Ex, Idx+1, Unit, PointsOut1, PointsOut).
+tests(_, Ex, _, _, _, _) :- failure(Ex, 'INTERN: tests/6 failed').
+
+total_units([], 0, 0/0, 0/0, 0/0).
+total_units([wait, P, _|R], Tot, A, B, C) :-
+    number(P), !, total_units([counted|R], TotR, A, B, C), Tot is TotR + P.
+total_units([wait, _|R], Tot, CO/TCO, UO/TUO, OO/TOO) :- !,
+    total_units(R, TotR, CO/TCO, UO/TUO, OO/TOO), Tot is TotR + 1.
+total_units([P, T|R], Tot, A, B, C) :-
+    number(P), !, total_units([counted, T|R], TotR, A, B, C), Tot is TotR + P.
+total_units([counted, T|R], Tot, CO/TCO, UO/TUO, OO/TOO) :- !, %trace,
+    test(T, dry, dry, _, _, 0, P),
+    (   ( T = chk(_), ! ; T = ckA(_, _) ), !, TA = 1,
+        (   P > 0, A = 1, !; A = 0 )
+    ;   TA = 0, A = 0),
+    (   ( T = uck(_), ! ; T = nsl(_, _, 0) ), !, TB = 1,
+        (   P > 0, B = 1, !; B = 0 )
+    ;   TB = 0, B = 0),
+    (   T \= chk(_), T \= ckA(_, _), T \= uck(_), T \= ech(_, _), T \= nsl(_, _, 0), !,
+        TD = 1, (   P > 0, D = 1, !; D = 0 )
+    ;   TD = 0, D = 0),
+    total_units(R, TotR, C/TC, U/TU, O/TO), Tot is TotR,
+    CO is C+A, TCO is TC+TA, UO is U+B, TUO is TU+TB, OO is O+D, TOO is TO+TD.
+total_units(TT, Tot, A, B, C) :-
+    !, total_units([counted|TT], TotR, A, B, C), Tot is TotR + 1.
+
+test(T, NEx, Idx, Fraction, Unit, PointsIn, PointsOut) :-
+        (   NEx == dry, !, Ex = dry, TimeLimit = 0.1
+        ;   testtimelimit(TimeLimit),
+            IdxI is Idx + 96, char_code(CEx, IdxI),
+            (   NEx == none, !, swritef(Ex, '%w|', [CEx])
+            ;   swritef(Ex, '[%w|%w]', [NEx, CEx]))
+        ),
+        swritef(MTime, 'limita de %w secunde depasita', [TimeLimit]),
+        (   catch(
+                catch(call_with_time_limit(TimeLimit, once(test(Ex, T))),
+                      time_limit_exceeded,
+                      except(Ex, MTime)
+                     ),
+                Expt,
+                (   swritef(M, 'exceptie: %w', [Expt]), except(Ex, M))
+            ),
+            !, success(Ex, Fraction, Unit, Points),
+            PointsOut is PointsIn + Points
+        ; PointsOut = PointsIn).
+test(_, Ex, Idx, _, _, _, _) :- failure(Ex/Idx, 'INTERN: test/7 failed').
+
+success(dry, _, _, 1) :- !.
+success(Ex, Fraction, Unit, Score) :-
+    Score is Fraction * Unit,
+    %format('~w ~w ~w ~w~n', [Ex, Fraction, Unit, Score]),
+    (   test_mode(vmchecker), !,
+        format('+~2f ~10t  ~w Corect.~n', [Score, Ex])
+    ;
+    (   test_points(show),
+        format('~w[OK] Corect. +~2f.~n', [Ex, Score])
+    ;   format('~w[OK] Corect.~n', [Ex])
+    )).
+failure(dry, _) :- !, fail.
+failure(Ex, M) :-
+        (   test_mode(vmchecker), !,
+            format('+0.00 ~10t  ~w ~w~n', [Ex, M]), fail
+        ;   format('~w[--] ~w~n', [Ex, M]), fail).
+except(dry, _) :- !, fail.
+except(Ex, M) :-
+        (   test_mode(vmchecker), !,
+            format('+0.00 ~10t ~w Exception: ~w~n', [Ex, M]), fail
+        ;   format('~w[/-] ~w~n', [Ex, M]), fail).
+
+test(Ex, chk(P)) :- !, testCall(Ex, P).
+test(Ex, uck(P)) :- !, testCall(Ex, \+ P).
+test(Ex, exp(Text, ExpList)) :- !,
+    read_term_from_atom(Text, P, [variable_names(Vars)]),
+    testCall(Ex, P, Text), testExp(Ex, Text, Vars, ExpList).
+test(_, ckA(_, [])) :- !.
+test(Ex, ckA(Pred, [Test|Tests])) :- !,
+    swritef(S, '%w(%w)', [Pred, Test]),
+    read_term_from_atom(S, P, []),
+    testCall(Ex, P, S), test(Ex, ckA(Pred, Tests)).
+test(_, ech(_, [])) :- !.
+test(Ex, ech(Text, [Cond|Conds])) :- !,
+    swritef(S, '%w|%w', [Text, Cond]),
+    read_term_from_atom(S, P|Q, [variable_names(Vars)]),
+    forall(P, (
+               swritef(Msg, '%w pentru soluția %w a predicatului %w', [Cond, Vars, Text]),
+               testCall(Ex, Q, Msg))),
+    test(Ex, ech(Text, Conds)).
+test(Ex, nsl(Text, Tmplt, N)) :- !,
+    swritef(S, 'findall(%w, %w, TheList)', [Tmplt, Text]),
+    read_term_from_atom(S, P, [variable_names(Vars)]),
+    testCall(Ex, P, S), testNSols(Ex, Text, Vars, N).
+test(Ex, sls(Text, Tmplt, Sols)) :- !,
+    swritef(S, 'findall(%w, %w, TheList)', [Tmplt, Text]),
+    read_term_from_atom(S, P, [variable_names(Vars)]),
+    testCall(Ex, P, S), testSols(Ex, Text, Vars, Sols).
+test(Ex, sSO(Text, Tmplt, Sols)) :- !,
+    swritef(S, 'setof(%w, %w, TheList)', [Tmplt, Text]),
+    read_term_from_atom(S, P, [variable_names(Vars)]),
+    testCall(Ex, P, S), testSols(Ex, Text, Vars, Sols).
+test(Ex, _) :- failure(Ex, 'INTERN: Test necunoscut').
+
+% Pentru exercițiul Ex, evaluează clauza Do, dată ca termen.
+% Opțional, în mesajul de eroare interogarea poate fi afișată ca
+% parametrul Text.
+testCall(Ex, Do) :- swritef(Text, '%q', [Do]), testCall(Ex, Do, Text).
+testCall(Ex, Do, Text) :-
+        catch((call(Do), !
+              ;   !, swritef(M, 'Interogarea %w a esuat.', [Text]), failure(Ex, M)
+              ), Exc,
+              (swritef(M, 'Interogarea %w a produs exceptie: %w', [Text, Exc]),
+              except(Ex, M))
+             ).
+
+testExp(_, _, _, []) :- !.
+testExp(Ex, Text, Vars, [v(Var) | Rest]) :- !,
+    (   getVal(Var, Vars, V), !,
+        (   var(V), !, testExp(Ex, Text, Vars, Rest) ;
+            swritef(M, 'Interogarea %w leaga %w (la valoarea %w) dar nu ar fi trebuit legata.',
+                    [Text, Var, V]), failure(Ex, M)
+        )
+    ;
+    swritef(M, 'INTERN: Interogarea %w nu contine variabila %w.', [Text, Var]),
+    failure(Ex, M)
+    ).
+testExp(Ex, Text, Vars, [set(Var, Set) | Rest]) :- !,
+    (   getVal(Var, Vars, V), !,
+        testSet(Ex, Text, 'intoarce', V, Set),
+        testExp(Ex, Text, Vars, Rest)
+    ;
+    swritef(M, 'INTERN: Interogarea %w nu contine variabila %w.', [Text, Var]),
+    failure(Ex, M)
+    ).
+testExp(Ex, Text, Vars, [setU(Var, Set) | Rest]) :- !,
+    (   getVal(Var, Vars, V), !,
+        testSetU(Ex, Text, 'intoarce', V, Set),
+        testExp(Ex, Text, Vars, Rest)
+    ;
+    swritef(M, 'INTERN: Interogarea %w nu contine variabila %w.', [Text, Var]),
+    failure(Ex, M)
+    ).
+testExp(Ex, Text, Vars, [cond(Cond) | Rest]) :- !,
+    swritef(S, "(%w, %w)", [Text, Cond]),
+    read_term_from_atom(S, P, []),
+    (
+        call(P), !, testExp(Ex, Text, Vars, Rest)
+        ;
+        swritef(M, 'Dupa interogarea %w conditia %w nu este adevarata.', [Text, Cond]),
+        failure(Ex, M)
+    ).
+testExp(Ex, Text, Vars, [Var, Val | Rest]) :- !,
+    (   getVal(Var, Vars, V), !,
+        (   V == Val, !, testExp(Ex, Text, Vars, Rest) ;
+            swritef(M, 'Interogarea %w leaga %w la %w in loc de %w.',
+                    [Text, Var, V, Val]), failure(Ex, M)
+        )
+    ;
+    swritef(M, 'INTERN: Interogarea %w nu contine variabila %w.', [Text, Var]),
+    failure(Ex, M)
+    ).
+testExp(Ex, _, _, [X | _]) :- !,
+        swritef(M, 'INTERN: element necunoscut pentru exp: %w', [X]),
+        failure(Ex, M).
+testExp(Ex, _, _, X) :- !,
+        swritef(M, 'INTERN: format gresit pentru exp: %w', [X]),
+        failure(Ex, M).
+
+testNSols(Ex, Text, Vars, N) :-
+    (   getVal('TheList', Vars, V), length(V, NSols), !,
+        (   NSols =:= N, !
+        ;   swritef(M, 'Numarul de solutii pentru %w este %w in loc de %w.',
+                    [Text, NSols, N]), failure(Ex, M)
+        )
+    ;   failure(Ex, 'INTERNAL: nu avem variabila TheList sau aceasta nu este lista.')
+    ).
+
+testSols(Ex, Text, Vars, Sols) :-
+    (   getVal('TheList', Vars, V), !,
+        testSet(Ex, Text, 'are ca solutii', V, Sols)
+    ;   failure(Ex, 'INTERNAL: nu avem variabila TheList sau aceasta nu este lista.')
+    ).
+
+testSetU(Ex, Text, TypeText, SetG, SetE) :- sort(SetG, SetGUnique),
+    testSet(Ex, Text, TypeText, SetGUnique, SetE).
+testSet(Ex, Text, TypeText, SetG, SetE) :-
+    msort(SetG, SetGSorted), msort(SetE, SetESorted),
+    (   SetGSorted == SetESorted, ! ;
+        testSetMinus(SetG, SetE, TooMuch),
+        testSetMinus(SetE, SetG, TooLittle),
+        (   TooMuch == [], TooLittle == [], !,
+            M1 = 'vezi duplicate'
+        ;   swritef(M1, '%w sunt in plus, %w lipsesc', [TooMuch, TooLittle])
+        ),
+        swritef(M,
+                'Interogarea %w %w %w dar se astepta %w (%w)',
+                [Text, TypeText, SetG, SetE, M1]), failure(Ex, M)
+    ).
+
+testSetMinus(From, ToRemove, Result) :-
+        findall(E, (member(E, From), \+ member(E, ToRemove)), Result).
+
+getVal(Var, [Var=Val | _], Val) :- !.
+getVal(Var, [_ | Vars], Val) :- getVal(Var, Vars, Val).

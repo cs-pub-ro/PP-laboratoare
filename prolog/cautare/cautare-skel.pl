@@ -2,98 +2,33 @@
 %% -------------------------------------------------------------
 :- discontiguous exercitiul/2, initial_state/2, final_state/2, next_state/3.
 
-%% -- BACKTRACKING ATUNCI CÂND CUNOAȘTEM LUNGIMEA SOLUȚIEI --
-exercitiul(1, [2, puncte]).
-%% Înțelegeți predicatele solve_latin/1, template/1 și correct/1.
-%% Observați că lipsește definiția predicatului safe/2.
-
-%% template/1
-%% template(?List)
-%% List are forma unei soluții pentru problema pătratului latin.
-%% Lungimea soluției este cunoscută și fixă.
-template([1/1/_, 1/2/_, 1/3/_, 2/1/_, 2/2/_, 2/3/_, 3/1/_, 3/2/_, 3/3/_]).
-
-%% correct/1
-%% correct(?Solution)
-%% Solution reprezintă o soluție validă pentru problemă.
-correct([]):-!.
-correct([X/Y/S|Others]):-
-        correct(Others),
-        member(S, [a, b, c]),
-        safe(X/Y/S, Others).
-
-%% solve_latin/1
-%% solve_latin(-Solution)
-%% Solution este o soluție a problemei pătratului latin.
-solve_latin(S):-template(S), correct(S).
-
-%% Scrieți predicatul safe/2 utilizat în rezolvarea problemei.
-%% Predicatul verifică dacă plasarea simbolului S pe coloana X
-%% și linia Y este validă în raport cu lista Others. Aceasta
-%% are forma [X1/Y1/S1, X2/Y2/S2 ...].
-
-%% TODO
-%% safe/2
-%% safe(+X/Y/S, +Others)
-
-safe(_, _):-fail.
-
-
-check1 :- tests([
-              uck(safe(1/1/a, [1/3/a])),
-              uck(safe(1/2/b, [3/2/b])),
-              chk(safe(2/2/b, [1/1/b, 3/3/b, 2/1/a, 2/3/c, 1/2/a])),
-              chk(safe(1/1/a, [1/2/b, 1/3/c, 2/1/c, 2/2/a, 2/3/b, 3/1/b, 3/2/c, 3/3/a])),
-              uck(safe(3/2/b, [1/2/b, 1/3/c, 2/1/c, 2/2/a, 2/3/b, 3/1/b, 3/3/a])),
-              chk(safe(3/2/c, [1/1/a, 1/2/b, 1/3/c, 2/1/c, 2/2/a, 2/3/b, 3/1/b, 3/3/a])),
-              nsl('(Sol=[1/1/a, 1/2/b, 1/3/c, 2/1/c, 2/2/a, 2/3/b, 3/1/_, 3/2/_, 3/3/_],
-                        solve_latin(Sol))', 'Sol', 512),
-              nsl('(Sol=[1/1/a, 1/2/b, 1/3/c, 2/1/_, 2/2/_, 2/3/_, 3/1/_, 3/2/_, 3/3/_],
-                        solve_latin(Sol))', 'Sol', 1024),
-              nsl('solve_latin(Sol)', 'Sol', 6144)
-          ]).
-
-%% Întrebați-l pe Prolog "solve_latin(Sol)" pentru a vizualiza
-%% soluțiile.
-
 %% -------------------------------------------------------------
 %% -------------------------------------------------------------
 
 %% -- BACKTRACKING ATUNCI CÂND NU CUNOAȘTEM LUNGIMEA SOLUȚIEI --
-exercitiul(2, [6, puncte]).
-%% Înțelegeți cum funcționeză predicatele solve/2 și search/3 pentru
-%% rezolvarea unei probleme de căutare în spațiul stărilor. Observați
-%% utilizarea predicatelor initial_state/2, final_state/2 și
-%% next_state/3. fiecare dintre predicate ia ca prim argument problema
-%% pe care o rezolvăm.
+exercitiul(0, []).
 
-search(Pb, [CurrentState|Other], Solution) :-
-        final_state(Pb, CurrentState),
-        !,
-        reverse([CurrentState|Other], Solution).
-
-search(Pb, [CurrentState|Other], Solution) :-
-        next_state(Pb, CurrentState, NextState),
-        \+ member(NextState, Other),
-        search(Pb, [NextState,CurrentState|Other], Solution).
-
-solve(Pb, Solution):-
-        initial_state(Pb, State),
-        search(Pb, [State], Solution).
-
-%% Exemplu: problema țăranului, a lupului, a caprei și a verzei.
+%% Problema țăranului, a lupului, a caprei și a verzei.
+%% Un țăran, ducând la târg un lup, o capră şi o varză ajunge 
+%% în dreptul unui râu pe care trebuie să-l treacă. Cum va proceda el, ştiind că:
+%% - lupul mănâncă capra şi capra mănâncă varza;
+%% - el nu poate să-i treacă pe toţi o dată şi nici câte doi;
 %% Vom reprezenta o stare astfel:
 %% state(MalTaran, Lista-cu-cine-este-pe-malul-cu-taranul)
+%%
 %% Vom da acestei probleme numele 'taran'.
 %% NOTĂ: implementarea se putea face doar cu 2 clauze pentru  next_state
 
 opus(est, vest).
 opus(vest, est).
 
-safeTaran([]).
-safeTaran([_]).
-safeTaran(Cine) :- sort(Cine, [lup, varza]).
-
+%% TODO
+%% safeTaran/1
+%% safeTaran(+Lista-cu-cine-este-pe-malul-opus-taranului)
+%% Verifică dacă cine rămâne pe malul opus este în siguranță
+%% De exemplu o lista formată din [lup, capra] nu respectă
+%% constrângerea setată de problemă
+safeTaran(_) :- false.
 
 allTaran([capra, lup, varza]).
 
@@ -152,23 +87,56 @@ next_state(taran, state(MalTaran1, Cine1), state(MalTaran2, Cine2)) :-
         setMinus(All, Cine2, Ramas), safeTaran(Ramas),
         % țăranul merge pe celălalt mal.
         opus(MalTaran1, MalTaran2).
-
-%% vizualizați soluțiile cu
-% solve(taran, Sol), validSol(taran, Sol).
-
+        
 % setPlus(+A, +B, -Result)
 % concatenează A și B în Result (Atenție! nu elimină duplicate).
 setPlus(A, B, Result) :- append(A, B, Result).
 
 % subSet(+Smaller, +Bigger)
 % Verifică dacă setul Smaller este inclus în sau egal cu setul Bigger.
-subSet(A, B) :- forall(member(X, A), member(X, B)).
+% https://www.swi-prolog.org/pldoc/man?predicate=subset/2
+subSet(A, B) :- subset(A, B).
 
 % setMinus(+From, +ToRemove, -Result)
 % Produce în result lista elementelor din From care nu sunt în ToRemove.
-setMinus(From, ToRemove, Result) :-
-        findall(E, (member(E, From), \+ member(E, ToRemove)), Result).
+% https://www.swi-prolog.org/pldoc/doc_for?object=subtract/3
+setMinus(From, ToRemove, Result) :- subtract(From, ToRemove, Result).
 
+
+%% Predicatele solve/2 și search/3 sunt folosite pentru
+%% rezolvarea unei probleme de căutare în spațiul stărilor. 
+%% Fiecare dintre predicate ia ca prim argument problema
+%% pe care o rezolvăm.
+%% Observațiutilizarea predicatelor initial_state/2, final_state/2 și
+%% next_state/3. 
+
+%% search(+Pb, +StariVizitate, -Sol)
+search(Pb, [CurrentState|Other], Solution) :-
+        final_state(Pb, CurrentState),
+        !,
+        reverse([CurrentState|Other], Solution).
+
+search(Pb, [CurrentState|Other], Solution) :-
+        next_state(Pb, CurrentState, NextState),
+        \+ member(NextState, Other),
+        search(Pb, [NextState,CurrentState|Other], Solution).
+
+%% solve(+Pb, -Sol)
+solve(Pb, Solution):-
+        initial_state(Pb, State),
+        search(Pb, [State], Solution).
+
+% Vizualizați soluțiile cu
+% solve(taran, Sol), validSol(taran, Sol).
+
+check0 :- tests([
+              % a - c
+              ech('safeTaran([X, Y])', ['X = lup', 'Y = varza']),
+              chk(safeTaran([_])),
+              chk(safeTaran([]))
+        ]).
+
+exercitiul(1, []).
 
 %% Problema Misionarilor și Canibalilor
 %% ====================================
@@ -179,13 +147,19 @@ setMinus(From, ToRemove, Result) :-
 %% Găsiți o secvență de traversări, astfel încât nicăieri să nu existe
 %% mai mulți canibali decât misionari (pot exista însă pe un mal doar
 %% canibali).
-
+%%
+%% Primul pas este definirea unui format pentru starea problemei.
+%% Pentru a reprezenta malul puteți folosi constantele est si vest 
+%% folosite anterior.
+%% Ce informații ar trebui să conțină starea? Este suficient să conțină 
+%% malul și numărul de canibali, respectiv misionari de pe acesta?
+%%
 %% Scrieți predicatele initial_state, final_state, și next_state
 %% pentru problema misionarilor.
-
+%%
 %% Pentru o mai bună structură, implementați întâi predicatele boat/2
 %% și safeMisionari/2 detaliate mai jos.
-
+%%
 %% Predicate utile: sort/2, @</2 (vedeți help)
 
 
@@ -193,39 +167,45 @@ setMinus(From, ToRemove, Result) :-
 % boat/2
 % boat(-NM, -NC)
 % Posibilele combinații de număr de misionari și canibali care pot
-% călători cu barca.
+% călători cu barca, unde NM este numărul de misionari, iar NC numărul 
+% de canibali din bancă
+%
+% Nu uitați ca barca are capacitate de maximum două persoane și nu poate 
+% călători fără nicio persoană.
+% Ex boat(2, 0)
 boat(_, _) :- fail.
 
 % TODO
 % safe/2
 % safe(+NM, +NC)
 % Verifică dacă numărul dat de misionari și canibali pot fi pe același
-% mal.
-safeMisionari(_, _) :- fail.
-
+% mal (să nu existe mai mulți canibali decât misionari)
+% Atenție la de câte ori este adevărat safeMisionari pentru diverse
+% valori ale argumentelor - poate influența numărul soluțiilor pentru
+% problemă.
+safeMisionari(_, _) :- false.
 
 % TODO
 % parseState/3
 % parseState(+State, -Mal, -NM_Est, -NC_Est, -NM_Vest, -NC_Vest)
-% Întoarce în ultimele 5 argumente malul unde este barca și numerele de
-% misionari / canibali de pe malul estic, respectiv vestic, în starea
-% dată.
-parseState( _, _, _, _, _, _) :- fail.
-
+% Primește o stare și întoarce în ultimele 5 argumente malul unde este barca 
+% și numerele de misionari / canibali de pe malul estic, respectiv vestic, în 
+% starea dată.
+parseState( _, _, _, _, _, _) :- false.
 
 % TODO
 % initial_state(misionari, -State)
 % Determină starea inițială pentru problema misionarilor, în formatul
 % ales.
-initial_state(misionari, _) :- fail.
-
+% Hint Barca și cei 6(3 canibali, 3 misionari) se află inițial pe malul estic
+initial_state(misionari, _) :- false.
 
 % TODO
 % final_state(misionari, +State)
 % Verifică dacă starea dată este stare finală pentru problema
 % misionarilor.
-final_state(misionari, _) :- fail.
-
+% Hint Barca și cei 6(3 canibali, 3 misionari) se află pe malul vestic
+final_state(misionari, _) :- false.
 
 % TODO
 % next_state(misionari, +S1, -S2)
@@ -233,13 +213,21 @@ final_state(misionari, _) :- fail.
 % Toate soluțiile predicatului next_state pentru o stare S1 dată trebuie
 % să fie toate posibilele stări următoare S2 în care se poate ajunge din
 % S1.
-next_state(misionari, _, _) :- fail.
+% Hinturi
+%   - Consecință - malul se schimba (folosiți predicatul opus pentru validare)
+%   - Tranziția dintr-o stare în alta se realizează printr-o traversare
+%     validă cu barca (folosiți predicatul boat)
+%   - Atât pe malul estic cât și cel vestic constrângerea este respectată, și anume
+%     nu există mai mulți canibali decât misionari (folosiți predicatul safeMisionari
+%     pentru validare). Pentru a calcula numărul de canibali/misionari de pe malul opus
+%     ce formulă puteți folosi știind ca numărul total de canibali/misionari este 3?
 
+next_state(misionari, _, _) :- false.
 
 % dacă solve(misionari, Sol) eșuează, folosiți
 % tracksolve(misionari, Sol) pentru a inspecta construcția soluției.
 
-check2 :- tests([
+check1 :- tests([
               % a - c
               ckA('boat', [(1, 0), (1, 1), (2, 0)]),
               ech('boat(X, Y)', ['X + Y > 0', '(X >= Y ; X == 0)', 'X + Y =< 2']),
@@ -265,10 +253,80 @@ check2 :- tests([
 
 %% -------------------------------------------------------------
 %% -------------------------------------------------------------
-exercitiul(3, [2, puncte]).
+exercitiul(2, []).
+%% Parcurgere BFS  grafuri
 
-%% Se dau următoarele fapte ce descriu arcele unei păduri de arbori,
-%% bazat pe exercițiul de la laboratorul trecut.
+edge(a,b). edge(a,c). edge(a,d).
+edge(c,e). edge(c,f).
+edge(d,h).
+edge(e,a). edge(e,g).
+edge(f,a). edge(f,g).
+edge(g,h).
+
+initial_node(a).
+final_node(h).
+
+
+do_bfs(Solution):-
+    initial_node(StartNode),
+    bfs([(StartNode,nil)], [], Discovered),
+    extract_path(Discovered, Solution).
+
+%% TODO
+%% Implementați un predicat bfs/3 care să descrie un mecanism de căutare în
+%% lățime într-un graf. Se dau predicatele initial_node/1, final_node/1 și
+%% edge/2. Observați similaritatea cu initial_state/2, final_state/2 și
+%% next_state/2.
+
+%% bfs/3
+%% bfs(+Frontier, +Closed, -Solution)
+%% Frontier reprezintă coada nodurilor ce vor fi explorate(nevizitate), Closed reprezintă
+%% lista nodurilor vizitate deja, iar Solution va reprezenta lista finală a
+%% nodurilor vizitate până la găsirea soluției.
+%% Toate cele 3 liste vor avea elementele în forma pereche (Nod, Părinte).
+%%
+%% Pași de urmat
+%% Căutarea începe de la nodul inițial dat (a) care n-are predecesor 
+%% Se generează apoi toate nodurile accesibile din nodul curent (exista
+%%      un arc de la nod la vecin). Folosiți predicatul getNeighb definit mai jos 
+%%      pentru a genera nodurile vecine
+%% Se adaugă toate aceste noduri la coada(lista) de stări încă nevizitate - Frontier
+%% Căutarea continuă din starea aflată la începutul frontierei, până se întâlneşte 
+%%      o stare finală (am ajuns la nodul final dat - h)
+
+% Întoarce în  Result nodurile vecine ale nodului X primit ca parametru
+% Exemplu utilizare: getNeighb(a, [], Result). 
+getNeighb(X, Acc, Result) :- edge(X,Y), \+ memberchk((Y,_), Acc), !, getNeighb(X, [(Y,X)|Acc], Result).
+getNeighb(_, Acc, Result) :- reverse(Acc, Result).
+
+bfs(_,_,_) :- false.
+
+%% TODO
+%% extract_path/2
+%% extract_path(Discovered, Solution)
+%% Solution reprezintă calea de la nodul inițial la cel final extrasă din
+%% lista nodurilor vizitate (dată sub formă de perechi (Nod, Părinte).
+
+%% Hint: folosiți un predicat auxiliar pentru a construi calea plecând
+%% de la nodul final. Pentru fiecare nod căutați părintele lui în Discovered,
+%% până ajungeți la nodul inițial.
+
+extract_path(_,_) :- false.
+
+check2:- tests([
+            exp("bfs([(a,nil)], [], R)", [
+                set('R', [(h, d), (f, c), (e, c), (d, a), (c, a), (b, a), (a, nil)])]),
+            exp("extract_path([(h, d), (f, c), (e, c), (d, a), (c, a), (b, a), (a, nil)], R)", [
+                set('R', [a, d, h])])
+        ]).
+
+%% -------------------------------------------------------------
+%% -------------------------------------------------------------
+%% Arbori BONUS
+
+exercitiul(3, []).
+
+%% Se dau următoarele fapte ce descriu arcele unei păduri de arbori
 %% ATENȚIE: Fiecare nod poate avea acum oricâți copii.
 
 nod(a). nod(b). nod(c). nod(d). nod(e). nod(f). nod(g).
@@ -284,7 +342,13 @@ arc(n, [o, p]). arc(o, [q, r, s]). arc(p, [t, u, v]).
 % preorder/2
 % preorder(+N, -Parc)
 % Întoarce în Parc o listă de noduri rezultate din parcurgerea în
-% preordine începând din noudl N.
+% preordine începând din nodul N.
+% Hint - definiți un predicat auxiliar care primește lista de noduri
+% de vizitat (de forma [N|Rest]) și Parc(listă de noduri rezultate din parcurgere)
+% Folosind predicatul arc generați noduri copil ale nodului curent și adăugați în
+% restul listei de parcurs (Rest). Folosiți apoi lista rezultat pentru  a genera restul 
+% listei soluție
+
 preorder(_, _) :- fail.
 
 check3 :- tests([
@@ -296,15 +360,20 @@ check3 :- tests([
 exercitiul(4, [2, puncte]).
 % Dată fiind funcția nodes, parcurgeți toată pădurea de arbori.
 
-% nodes(-NN)
-% Întoarce în NN toate nodurile din pădurea de arbori.
-nodes(NN) :- findall(N, nod(N), NN).
+% nodes(+Acc, -Result)
+% Întoarce în Result toate nodurile din pădurea de arbori.
+nodes(Acc, Result) :- nod(N), \+ memberchk(N, Acc), !, nodes([N|Acc], Result).
+nodes(Acc, Result) :- reverse(Acc, Result).
 
 % TODO
 % trees/1
 % trees(-Trees)
 % Întoarce în trees o listă în care fiecare element este parcurgerea
 % unui arbore.
+% Folosiți predicatul nodes pentru a  obtine toate nodurile din pădurea
+% de arbori. Pentru fiecare nod generați o parcurgere folosind predicatul 
+% definit anterior. Eliminați folosind setMinus nodurile din NN care apar
+% în parcurgerea curentă.
 trees(_) :- fail.
 
 
@@ -312,35 +381,6 @@ check4 :- tests([
               exp('trees(TT)', ['TT',
                                 [[a,b,c,e,f,g,d],[h,i,j,k,l],[m],[n,o,q,r,s,p,t,u,v]]])
           ]).
-
-
-exercitiul(5, [3, puncte]).
-
-% se dă un graph cu nodurile numere de la 1 la 10, și muchiile date mai
-% jos.
-graph(NN) :- findall(N, between(1, 10, N), NN).
-
-edges(1, [2, 10]).
-edges(3, [5, 8, 10]). edges(5, [6]). edges(4, [6, 7, 8]).
-edges(8, [3, 8, 9]). edges(6, [2, 5, 9, 10]).
-
-% TODO
-% span/1
-% span(-Trees)
-% Întoarce o listă de arbori.
-% Fiecare arbore este reprezentat prin nodul său rădăcină.
-% Fiecare nod este reprezentat ca o listă care în primul element are
-% valoarea nodului iar restul elementelor sunt reprezentările nodurilor
-% sale copii.
-% E.g. Arborele cu a rădăcină, având pe b și c copii, iar b având un
-% copil d, este reprezentat ca [a, [b, [d]], [c]].
-span(_) :- fail.
-
-
-check5 :- tests([
-          exp('span(Trees)', ['Trees', [[1,[2],[10]],[3,[5,[6,[9]]],[8]],[4,[7]]]])
-          ]).
-
 
 
 %% --------------------------------------------
@@ -464,12 +504,30 @@ validFinal(misionari, Sol, S) :- parseState(S, Mal, _, _, MV, CV),
 validFinal(_, Sol, S) :- err(Sol, 'INTERN: caz invalid validFinal', S).
 
 
-
 %% ----------------------------------------
 %% ----------------------------------------
+%% Tester
 
-testtimelimit(5). % în secunde
+% pentru vmchecker, trebuie pentru fiecare segment de testare să existe:
+% o afirmație vmpoints(<ID_segment>, <Număr_puncte_segment>)
+% o afirmație tt(<ID_segment>, <Listă_teste>)
+% Trebuie ca test_mode(vmchecker) să fie adevărat.
 
+% pentru quickchecking (la laborator), trebuie ca pentru fiecare
+% exercițiu să existe:
+% o afirmație exercitiul(<ID>, [<Număr puncte>, alte, comentarii])
+% o afirmație check<ID>(tests(<Listă_teste>))
+% e.g. dacă există exercitiul(5), trebuie să existe și check5(...)
+%
+% Tipurile de teste sunt prezentate în tester.pl, în cadrul predicatului
+% testtest/0.
+
+testtimelimit(5). % in seconds
+
+%test_points(show). % uncomment to show points in non-vmchecker mode.
+test_points(hide) :- test_mode(vmchecker); \+ test_points(show).
+
+%test_mode(vmchecker). % uncomment to activate the vmchecker mode.
 test_mode(quickcheck) :- \+ test_mode(vmchecker).
 
 :-dynamic(punct/2).
@@ -478,123 +536,64 @@ test_mode(quickcheck) :- \+ test_mode(vmchecker).
 
 clean :- retractall(punct(_, _)), retractall(current(_)).
 
-testtest(5).
-testtest(6).
-testtest(9).
-testtest(a, 5).
-testtest(b, _).
-testtest(d, [2, 1, 3]).
-testtest(e, [2, 1, 3, 1, 2]).
-testtest(1, 2, 3).
-testtest(c, X, X).
-testtest(d, 5, excepting) :- X is 5 / 0, write(X).
-testtest(d, 5, limitless) :-  testtest(d, 5, limitless).
+% -----------------
 
-testtest :- tests([
-               % chk(P) ("check") verifică evaluarea cu succes a lui P
-               chk(testtest(5)), % a
-               chk(testtest(6)), % b % eșuează
-               % uck(P) ("uncheck") verifică evaluarea cu eșec a lui P
-               uck(testtest(6)), % c
-               uck(testtest(5)), % d % eșuează
-               % exp(P, Exps) ("expect") verifică evaluarea cu succes a lui P și a unor condiții
-               % P este dat ca șir de caractere pentru o verificare și afișare mai bune.
-               % Condițiile sunt evaluate pe rând și independent unele de altele.
-               % Dacă în lista de condiții avem un nume de variabilă,
-               % se verifică că aceasta a fost legat la valoarea care urmează imediat în listă.
-               % valoarea de verificat nu poate conține variabile din interogare
-               % (pentru asta folosiți cond, vezi mai jos).
-               exp('testtest(X, X)', ['X', b]), % e
-               exp('testtest(X, Y, Z)', ['X', 1, 'Y', 2, 'Z', 3]), % f
-               exp('testtest(X, X)', ['X', a]), % g % eșuează
-               % Dacă în lista de condiții avem v('Var'), se verifică că Var a rămas nelegată.
-               exp('testtest(b, Y)', [v('Y')]), % h
-               exp('testtest(a, Y)', [v('Y')]), % i % eșuează
-               % Dacă în lista de condiții avem cond('P'), se verifică că P este adevărat.
-               % Diversele condiții din structuri cond diferite se verifică independent.
-               exp('testtest(c, X, X)', [v('X'), cond('X==X')]), % j
-               % Dacă în lista de condiții avem set('V', Set), se verifică că V este legată la mulțimea Set.
-               % Duplicatele contează.
-               exp('testtest(d, L)', [set('L', [1, 2, 3]), 'L', [1, 2, 3]]), % k % eșuează pe a 2a condiție
-               exp('testtest(d, L)', [set('L', [2, 3, 4, 5])]), % l
-               exp('testtest(e, L)', [set('L', [1, 2, 3])]), % m
-               % setU funcționează la fel, dar ignoră duplicatele.
-               exp('testtest(e, L)', [setU('L', [1, 2, 3])]), % n
-               % ckA(P, Argss) ("check all") verifică evaluarea cu succes a lui P pe fiecare dintre variantele de argumente din Argss.
-               % e.g. dacă P este pred, iar Argss este [(1, a, []), (2, b, [5])],
-               % se vor evalua atomii pred(1, a, []) și pred(2, b, [5]).
-               ckA('testtest', [(a, 5), (b, 1), (b, 3), (b, 4)]), %o
-               ckA('testtest', [(a, 5), (c, 1), (c, 3), (b, 4)]), %p
-               % ech(P, Conds) ("each") verifică dacă condițiile țin pentru fiecare dintre soluțiile lui P
-               ech('testtest(X)', ['X < 10', 'X > 3']), % q
-               ech('testtest(X)', ['X > 3', 'X > 5']), % r
-               % nsl(P, Template, NSols) ("N Solutions") verifică dacă lungimea lui L din findall(P, Template, L) este NSols
-               2, nsl('testtest(X, Y)', '(X, Y)', 4), % s
-               % testul de mai sus valorează de 2 ori mai mult decât celelalte
-
-               % sls(P, Template, Sols) ("Solutions") verifică dacă findall(P, Template, L) leagă L la aceeași mulțime cu Sols.
-               % Duplicatele contează
-               2, sls('testtest(X, X)', '(X, X)', [(b, b)]), % t
-               % testul de mai sus valorează de 2 ori mai mult decât celelalte
-
-               sls('testtest(X, Y)', '(X, Y)', [(b, 5)]), % u
-               % gestionare exceptii
-               chk(testtest(d, 5, excepting)),
-               % gestionare limita de timp
-               chk(testtest(d, 5, limitless))
-           ]).
-
-% aceasta va fi ordinea de testare
-vmpoints(1, 5).
-vmpoints(T, 2.5) :- member(T, ['2a', '2b']).
-
-% entry point (for users) for vm tests.
-vmtest(T) :-
-        vmtest(T, Score),
-        format('Total: ~w.', [Score]).
-
-% performes a vm test, outputs score.
-vmtest(T, Score) :-
-        once(vmpoints(T, Pts)),
-        tt(T, TestList),
-        tests(TestList, Pts, T, Score).
-
-tt(1, [
-       chk(testtest(5)),
-       chk(testtest(6)),
-       uck(testtest(6)),
-       uck(testtest(5))
-       ]).
-tt('2a', [
-       exp('testtest(X, X)', ['X', b])
-   ]).
-tt('2b', [
-       exp('testtest(X, Y, Z)', ['X', 1, 'Y', 2, 'Z', 3]),
-       exp('testtest(X, X)', ['X', a])
-   ]).
-
+% runs quickcheck tests
+check :-
+        clean,
+        forall(exercitiul(Ex,_),
+               (   atom_concat(check, Ex, Ck),
+                   retractall(current(_)), assert(current(Ex)),
+                   once(call(Ck)) ; true)),
+        findall(P, punct(_, P), L),
+        sum_list(L, S),
+        (   test_points(show),
+            format('Punctaj total: ~f~n',[S])
+        ;   true),
+        clean.
 
 % entry point for quick check; handles checking all exercises or just
 % one.
 tests(Tests) :- (   current(_), ! ; retractall(punct(_, _))),
-        (   current(Ex), !, exercitiul(Ex, [Pts | _]), Total is Pts
-        ;   Total is 100
+        (   current(Ex), !, (exercitiul(Ex, [Pts | _]), !, Total is Pts
+                            ;
+                            exercitiul(Ex, []), Total is 0)
+        ;   Total is 100, Ex = none
         ),
-        tests(Tests, Total, none, Score),
+        tests(Tests, Total, Ex, Score),
         (   current(Ex), assert(punct(Ex, Score)), !
         ;   format('Rezolvat ~0f%.~n', [Score])
         ), !.
 tests(_) :- failure(unknown, 'INTERN: tests/1 failed').
 
-tests(Tests, TotalPoints, Ex, Score) :-
-    total_units(Tests, TF),
-    Unit is TotalPoints / TF,
-    tests(Tests, Ex, 1, Unit, 0, Score), !.
+
+% ---------------
+% general testing
+
+% unified entry point for testing; computes fractions, computes if
+% exercise is not done, and starts per-test iteration.
+tests(Tests, TotalPoints, Ex, Score) :- %trace,
+    total_units(Tests, TF, Ck/AllCheck, UCk/AllUCk, Others/AllOthers),
+    %format('Total units: ~w~n', [TF]),
+    (   isNotDone(Ck/AllCheck, UCk/AllUCk, Others/AllOthers), !,
+        (   Ex == none, !
+        ;   ( test_mode(vmchecker), !, format("+0.00 ~10t  ") ; true ),
+            format("[~w] Nerezolvat.~n", [Ex])
+        ),
+        Score = 0
+    ;   Unit is TotalPoints / TF,
+        tests(Tests, Ex, 1, Unit, 0, Score)
+    ), !.
 tests(_, _, Ex, _) :- failure(Ex, 'INTERN: tests/4 failed').
+
+isNotDone(0/TC, TU/TU, 0/TO) :- (TO > 0, !; TC > 0).
+% otherwise, probably done
 
 % iterates through tests, handles test index, generates test id, adds
 % points
 tests([], _, _, _, Points, Points) :- !.
+tests([wait|R], Ex, Idx, Unit, PointsIn, PointsOut) :- !,
+    tests(R, Ex, Idx, Unit, PointsIn, PointsOut).
 tests([Fraction, T|R], Ex, Idx, Unit, PointsIn, PointsOut) :-
         number(Fraction), !, test(T, Ex, Idx, Fraction, Unit, PointsIn, PointsOut1),
         tests(R, Ex, Idx+1, Unit, PointsOut1, PointsOut).
@@ -603,40 +602,70 @@ tests([T|R], Ex, Idx, Unit, PointsIn, PointsOut) :-
         tests(R, Ex, Idx+1, Unit, PointsOut1, PointsOut).
 tests(_, Ex, _, _, _, _) :- failure(Ex, 'INTERN: tests/6 failed').
 
-total_units([], 0).
-total_units([P, _|R], Tot) :- number(P), !, total_units(R, TotR), Tot is TotR + P.
-total_units([_|R], Tot) :- total_units(R, TotR), Tot is TotR + 1.
+total_units([], 0, 0/0, 0/0, 0/0).
+total_units([wait, P, _|R], Tot, A, B, C) :-
+    number(P), !, total_units([counted|R], TotR, A, B, C), Tot is TotR + P.
+total_units([wait, _|R], Tot, CO/TCO, UO/TUO, OO/TOO) :- !,
+    total_units(R, TotR, CO/TCO, UO/TUO, OO/TOO), Tot is TotR + 1.
+total_units([P, T|R], Tot, A, B, C) :-
+    number(P), !, total_units([counted, T|R], TotR, A, B, C), Tot is TotR + P.
+total_units([counted, T|R], Tot, CO/TCO, UO/TUO, OO/TOO) :- !, %trace,
+    test(T, dry, dry, _, _, 0, P),
+    (   ( T = chk(_), ! ; T = ckA(_, _) ), !, TA = 1,
+        (   P > 0, A = 1, !; A = 0 )
+    ;   TA = 0, A = 0),
+    (   ( T = uck(_), ! ; T = nsl(_, _, 0) ), !, TB = 1,
+        (   P > 0, B = 1, !; B = 0 )
+    ;   TB = 0, B = 0),
+    (   T \= chk(_), T \= ckA(_, _), T \= uck(_), T \= ech(_, _), T \= nsl(_, _, 0), !,
+        TD = 1, (   P > 0, D = 1, !; D = 0 )
+    ;   TD = 0, D = 0),
+    total_units(R, TotR, C/TC, U/TU, O/TO), Tot is TotR,
+    CO is C+A, TCO is TC+TA, UO is U+B, TUO is TU+TB, OO is O+D, TOO is TO+TD.
+total_units(TT, Tot, A, B, C) :-
+    !, total_units([counted|TT], TotR, A, B, C), Tot is TotR + 1.
 
 test(T, NEx, Idx, Fraction, Unit, PointsIn, PointsOut) :-
-        IdxI is Idx + 96, char_code(CEx, IdxI),
-        (   NEx == none, !, swritef(Ex, '%w|', [CEx]) ; swritef(Ex, '[%w|%w]', [NEx, CEx])),
-        testtimelimit(Time), swritef(MTime, 'limita de %w secunde depasita', [Time]),
+        (   NEx == dry, !, Ex = dry, TimeLimit = 0.1
+        ;   testtimelimit(TimeLimit),
+            IdxI is Idx + 96, char_code(CEx, IdxI),
+            (   NEx == none, !, swritef(Ex, '%w|', [CEx])
+            ;   swritef(Ex, '[%w|%w]', [NEx, CEx]))
+        ),
+        swritef(MTime, 'limita de %w secunde depasita', [TimeLimit]),
         (   catch(
-                catch(call_with_time_limit(Time, once(test(Ex, T))),
+                catch(call_with_time_limit(TimeLimit, once(test(Ex, T))),
                       time_limit_exceeded,
                       except(Ex, MTime)
                      ),
                 Expt,
-                (   swritef(M, 'exceptie: %w', [Expt]),
-                except(Ex, M))
+                (   swritef(M, 'exceptie: %w', [Expt]), except(Ex, M))
             ),
             !, success(Ex, Fraction, Unit, Points),
             PointsOut is PointsIn + Points
         ; PointsOut = PointsIn).
 test(_, Ex, Idx, _, _, _, _) :- failure(Ex/Idx, 'INTERN: test/7 failed').
 
+success(dry, _, _, 1) :- !.
 success(Ex, Fraction, Unit, Score) :-
     Score is Fraction * Unit,
+    %format('~w ~w ~w ~w~n', [Ex, Fraction, Unit, Score]),
     (   test_mode(vmchecker), !,
-        format('+~2f ~10t ~w Corect.~n', [Score, Ex])
-    ;   format('~w[OK] Corect. +~2f.~n', [Ex, Score])).
+        format('+~2f ~10t  ~w Corect.~n', [Score, Ex])
+    ;
+    (   test_points(show),
+        format('~w[OK] Corect. +~2f.~n', [Ex, Score])
+    ;   format('~w[OK] Corect.~n', [Ex])
+    )).
+failure(dry, _) :- !, fail.
 failure(Ex, M) :-
         (   test_mode(vmchecker), !,
-            format('+0.0 ~10t  ~w ~w~n', [Ex, M]), fail
+            format('+0.00 ~10t  ~w ~w~n', [Ex, M]), fail
         ;   format('~w[--] ~w~n', [Ex, M]), fail).
+except(dry, _) :- !, fail.
 except(Ex, M) :-
         (   test_mode(vmchecker), !,
-            format('+0.0 ~10t ~w Exception: ~w~n', [Ex, M]), fail
+            format('+0.00 ~10t ~w Exception: ~w~n', [Ex, M]), fail
         ;   format('~w[/-] ~w~n', [Ex, M]), fail).
 
 test(Ex, chk(P)) :- !, testCall(Ex, P).
@@ -753,8 +782,9 @@ testSols(Ex, Text, Vars, Sols) :-
 
 testSetU(Ex, Text, TypeText, SetG, SetE) :- sort(SetG, SetGUnique),
     testSet(Ex, Text, TypeText, SetGUnique, SetE).
-testSet(Ex, Text, TypeText, SetG, SetE) :- msort(SetG, SetGSorted),
-    (   SetGSorted == SetE, ! ;
+testSet(Ex, Text, TypeText, SetG, SetE) :-
+    msort(SetG, SetGSorted), msort(SetE, SetESorted),
+    (   SetGSorted == SetESorted, ! ;
         testSetMinus(SetG, SetE, TooMuch),
         testSetMinus(SetE, SetG, TooLittle),
         (   TooMuch == [], TooLittle == [], !,
@@ -771,24 +801,3 @@ testSetMinus(From, ToRemove, Result) :-
 
 getVal(Var, [Var=Val | _], Val) :- !.
 getVal(Var, [_ | Vars], Val) :- getVal(Var, Vars, Val).
-
-check :-
-        clean,
-        forall(exercitiul(Ex, _),
-               (   atom_concat(check, Ex, Ck),
-                   retractall(current(_)), assert(current(Ex)),
-                   once(call(Ck)) ; true)),
-        findall(P, punct(_, P), L),
-        sum_list(L, S),
-        format('Punctaj total: ~f~n',[S]),
-        clean.
-
-vmtest :- checkVm.
-checkVm :-
-        clean,
-        findall(T:Score, (tt(T, _), vmtest(T, Score)), Results),
-        findall(Score, member(_:Score, Results), Scores),
-        sum_list(Scores, S),
-        format('Total: ~w~n', [S]),
-        clean.
-
