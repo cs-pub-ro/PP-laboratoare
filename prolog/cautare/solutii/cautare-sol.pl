@@ -97,12 +97,13 @@ setPlus(A, B, Result) :- append(A, B, Result).
 
 % subSet(+Smaller, +Bigger)
 % Verifică dacă setul Smaller este inclus în sau egal cu setul Bigger.
-subSet(A, B) :- forall(member(X, A), member(X, B)).
+% https://www.swi-prolog.org/pldoc/man?predicate=subset/2
+subSet(A, B) :- subset(A, B).
 
 % setMinus(+From, +ToRemove, -Result)
 % Produce în result lista elementelor din From care nu sunt în ToRemove.
-setMinus(From, ToRemove, Result) :-
-        findall(E, (member(E, From), \+ member(E, ToRemove)), Result).
+% https://www.swi-prolog.org/pldoc/doc_for?object=subtract/3
+setMinus(From, ToRemove, Result) :- subtract(From, ToRemove, Result).
 
 %% Predicatele solve/2 și search/3 sunt folosite pentru
 %% rezolvarea unei probleme de căutare în spațiul stărilor. 
@@ -444,3 +445,422 @@ check4 :- tests([
               exp('trees(TT)', ['TT',
                                 [[a,b,c,e,f,g,d],[h,i,j,k,l],[m],[n,o,q,r,s,p,t,u,v]]])
           ]).
+
+%% --------------------------------------------
+%% teste specifice pentru problemele de căutare
+%% --------------------------------------------
+
+
+tracksearch(Pb, [CurrentState|Other], Solution) :-
+        final_state(Pb, CurrentState),
+        !,
+        write('DONE.'), nl,
+        reverse([CurrentState|Other], Solution).
+
+tracksearch(Pb, [CurrentState|Other], Solution) :-
+        format('Finding next state from ~w ... ', [CurrentState]),
+        next_state(Pb, CurrentState, NextState),
+        format('Try state: ~w ...', [NextState]),
+        trackmember(NextState, Other),
+        reverse([NextState,CurrentState|Other], Prog), print_progress(Pb, Prog),
+        tracksearch(Pb, [NextState,CurrentState|Other], Solution).
+trackmember(State, Other) :- \+ member(State, Other), !, write('continue...'), nl.
+trackmember(_, _) :- write('already visited'), nl, nl, fail.
+
+print_progress(misionari, [_]).
+print_progress(misionari, [S1, S2 | Rest]) :-
+        parseState(S1, M1, ME1, CE1, MV1, CV1),
+        parseState(S2, _, ME2, CE2, MV2, CV2),
+        (   M1 == est, !, MB is ME1 - ME2, CB is CE1 - CE2,
+            format('~w M  ~w C  ~10| v~~~~~~~~  ~10| ~w M  ~w C ~30| ~w~n',
+                   [ME1, CE1, MV1, CV1, S1]),
+            format('~8| ~w M  ~w C ->~n', [MB, CB]),
+            format('~w M  ~w C  ~10| ~~~~~~~~v  ~10| ~w M  ~w C ~30| ~w~n',
+                   [ME2, CE2, MV2, CV2, S2])
+        ;   MB is MV1 - MV2, CB is CV1 - CV2,
+            format('~w M  ~w C  ~10| ~~~~~~~~v  ~10| ~w M  ~w C ~30| ~w~n',
+                   [ME1, CE1, MV1, CV1, S1]),
+            format('~7| <- ~w M  ~w C ~n', [MB, CB]),
+            format('~w M  ~w C  ~10| v~~~~~~~~  ~10| ~w M  ~w C ~30| ~w~n',
+                   [ME2, CE2, MV2, CV2, S2])
+        ),
+        print_progress(misionari, [S2 | Rest]).
+tracksolve(Pb, Solution) :-
+        write('====================================================='), nl,
+        write('====================================================='), nl,
+        write('====================================================='), nl,
+        initial_state(Pb, State),
+        parseState(State, _, ME, CE, MV, CV),
+        format('~w M ~w C v~~~~ ~w M ~w C~n', [ME, CE, MV, CV]),
+        tracksearch(Pb, [State], Solution).
+
+err(Sol, Msg, Value) :-
+        format('~n~n Solutia: ~n'),
+        (   is_list(Sol) -> forall(member(E, Sol), format('~w~n', [E]))),
+        format('~w: ~w.~n', [Msg, Value]), fail.
+
+validSol(Pb, Sol) :- %format('~n~n Solutia: ~n'),
+        (   \+ is_list(Sol), !, err(Sol, 'Solutia nu este o lista', Sol)
+        ;   !, forall(member(E, Sol), validState(Pb, Sol, E))
+        , validTransitions(Pb, Sol, Sol), last(Sol, Last), validFinal(Pb, Sol, Last)).
+validSol(Pb, Sol) :- format('INTERN: caz invalid validSol ~w: ~w~n', [Pb, Sol]), fail.
+
+validMal(_, _, _, 0, _) :- !.
+validMal(_, _, _, M, C) :- M >= C, !.
+validMal(Sol, S, Mal, M, C) :-
+        swritef(Msg, 'Numar incorect de misionari/canibali %w/%w pe malul %wic in starea',
+               [M, C, Mal]),
+        err(Sol, Msg, S).
+validState(taran, Sol, S) :- allTaran(All),
+        (   S = state(Mal, Elements),
+            (   \+ member(Mal, [est, vest]), err(Sol, 'Mal invalid', Mal)
+            ;   (\+ subSet(Elements, All), setMinus(Elements, All, Inv),
+                err(Sol, 'Elemente invalide', Inv)
+                ;   setMinus(All, Elements, OtherSide), validOther(Sol, OtherSide)))
+        ;   err(Sol, 'Stare in format incorect', S)).
+validState(misionari, Sol, S) :-
+        (   parseState(S, M, ME, CE, MV, CV), !,
+            (   member(M, [est, vest]), !,
+                (   ME + MV =:= 3, CE + CV =:= 3, !,
+                    validMal(Sol, S, est, ME, CE), validMal(Sol, S, vest, MV, CV)
+                ;   err(Sol, 'numar incorect de persoane in stare', S)
+                )
+            ;   err(Sol, 'mal incorect in stare', M/S)
+            )
+        ;   err(Sol, 'parseState a esuat pentru', S)
+        ).
+validState(_, Sol, S) :- err(Sol, 'INTERN: caz invalid validState', S).
+validOther(_, []) :- !.
+validOther(_, [_]) :- !.
+validOther(_, L) :- sort(L, [lup, varza]), !.
+validOther(Sol, L) :- member(lup, L), member(capra, L), !, err(Sol, 'Lupul mananca capra', L).
+validOther(Sol, L) :- member(varza, L), member(capra, L), !, err(Sol, 'Capra mananca varza', L).
+validOther(Sol, L) :- err(Sol, 'INTERN: caz invalid validOthers', L).
+validTransitions(_, _, [_]) :- !.
+validTransitions(taran, Sol, [S1, S2 | Rest]) :- !,
+        S1 = state(Mal1, _Cine1), S2 = state(Mal2, _Cine2),
+        (   \+ opus(Mal1, Mal2), !, err(Sol, 'nu sunt opuse:', [Mal1, Mal2])
+        ;   validTransitions(taran, Sol, [S2 | Rest])). % not fully checked
+validTransitions(misionari, Sol, [S1, S2 | Rest]) :- !,
+        parseState(S1, Mal1, ME1, CE1, MV1, CV1), parseState(S2, Mal2, ME2, CE2, MV2, CV2),
+        (   \+ opus(Mal1, Mal2), !, err(Sol, 'nu sunt opuse:', [Mal1, Mal2])
+        ;
+        (   Mal1 == est, !, validBoat(misionari, Sol, S1, S2, ME1, CE1, ME2, CE2)
+        ;   validBoat(misionari, Sol, S1, S2, MV1, CV1, MV2, CV2)
+        )), validTransitions(misionari, Sol, [S2 | Rest]).
+validTransitions(_, Sol, Rest) :- err(Sol, 'INTERN: caz invalid validTransitions', Rest).
+validBoat(misionari, Sol, S1, S2, M1, C1, M2, C2) :-
+        MB is M1 - M2, CB is C1 - C2,
+        (   MB + CB > 0, MB + CB =< 2, (MB == 0, !; MB >= CB), !
+        ;   swritef(Msg, 'numar incorect de misionari/canibali %w/%w in barca intre starile',
+                    [MB, CB]), err(Sol, Msg, S1/S2)
+        ).
+validFinal(taran, Sol, state(Mal, Elements)) :- allTaran(All),
+        (   Mal \= vest, !, err(Sol, 'Nu ajunge pe malul vestic la sfarsit', Mal)
+        ;   ( \+ sort(Elements, All), setMinus(All, Elements, Miss),
+            !, err(Sol, 'Nu au ajuns', Miss/Elements), fail
+            ; !, true)).
+validFinal(misionari, Sol, S) :- parseState(S, Mal, _, _, MV, CV),
+        (   Mal \= vest, !, err(Sol, 'Nu ajunge pe malul vestic la sfarsit', Mal)
+        ;   ( MV \= 3, CV \= 3, !, err(Sol, 'Au ajuns doar', MV/CV), fail
+            ; !, true)).
+validFinal(_, Sol, S) :- err(Sol, 'INTERN: caz invalid validFinal', S).
+
+
+%% ----------------------------------------
+%% ----------------------------------------
+%% Tester
+
+% pentru vmchecker, trebuie pentru fiecare segment de testare să existe:
+% o afirmație vmpoints(<ID_segment>, <Număr_puncte_segment>)
+% o afirmație tt(<ID_segment>, <Listă_teste>)
+% Trebuie ca test_mode(vmchecker) să fie adevărat.
+
+% pentru quickchecking (la laborator), trebuie ca pentru fiecare
+% exercițiu să existe:
+% o afirmație exercitiul(<ID>, [<Număr puncte>, alte, comentarii])
+% o afirmație check<ID>(tests(<Listă_teste>))
+% e.g. dacă există exercitiul(5), trebuie să existe și check5(...)
+%
+% Tipurile de teste sunt prezentate în tester.pl, în cadrul predicatului
+% testtest/0.
+
+testtimelimit(5). % in seconds
+
+%test_points(show). % uncomment to show points in non-vmchecker mode.
+test_points(hide) :- test_mode(vmchecker); \+ test_points(show).
+
+%test_mode(vmchecker). % uncomment to activate the vmchecker mode.
+test_mode(quickcheck) :- \+ test_mode(vmchecker).
+
+:-dynamic(punct/2).
+:-dynamic(current/1).
+%:-clean.
+
+clean :- retractall(punct(_, _)), retractall(current(_)).
+
+% -----------------
+
+% runs quickcheck tests
+check :-
+        clean,
+        forall(exercitiul(Ex,_),
+               (   atom_concat(check, Ex, Ck),
+                   retractall(current(_)), assert(current(Ex)),
+                   once(call(Ck)) ; true)),
+        findall(P, punct(_, P), L),
+        sum_list(L, S),
+        (   test_points(show),
+            format('Punctaj total: ~f~n',[S])
+        ;   true),
+        clean.
+
+% entry point for quick check; handles checking all exercises or just
+% one.
+tests(Tests) :- (   current(_), ! ; retractall(punct(_, _))),
+        (   current(Ex), !, (exercitiul(Ex, [Pts | _]), !, Total is Pts
+                            ;
+                            exercitiul(Ex, []), Total is 0)
+        ;   Total is 100, Ex = none
+        ),
+        tests(Tests, Total, Ex, Score),
+        (   current(Ex), assert(punct(Ex, Score)), !
+        ;   format('Rezolvat ~0f%.~n', [Score])
+        ), !.
+tests(_) :- failure(unknown, 'INTERN: tests/1 failed').
+
+
+% ---------------
+% general testing
+
+% unified entry point for testing; computes fractions, computes if
+% exercise is not done, and starts per-test iteration.
+tests(Tests, TotalPoints, Ex, Score) :- %trace,
+    total_units(Tests, TF, Ck/AllCheck, UCk/AllUCk, Others/AllOthers),
+    %format('Total units: ~w~n', [TF]),
+    (   isNotDone(Ck/AllCheck, UCk/AllUCk, Others/AllOthers), !,
+        (   Ex == none, !
+        ;   ( test_mode(vmchecker), !, format("+0.00 ~10t  ") ; true ),
+            format("[~w] Nerezolvat.~n", [Ex])
+        ),
+        Score = 0
+    ;   Unit is TotalPoints / TF,
+        tests(Tests, Ex, 1, Unit, 0, Score)
+    ), !.
+tests(_, _, Ex, _) :- failure(Ex, 'INTERN: tests/4 failed').
+
+isNotDone(0/TC, TU/TU, 0/TO) :- (TO > 0, !; TC > 0).
+% otherwise, probably done
+
+% iterates through tests, handles test index, generates test id, adds
+% points
+tests([], _, _, _, Points, Points) :- !.
+tests([wait|R], Ex, Idx, Unit, PointsIn, PointsOut) :- !,
+    tests(R, Ex, Idx, Unit, PointsIn, PointsOut).
+tests([Fraction, T|R], Ex, Idx, Unit, PointsIn, PointsOut) :-
+        number(Fraction), !, test(T, Ex, Idx, Fraction, Unit, PointsIn, PointsOut1),
+        tests(R, Ex, Idx+1, Unit, PointsOut1, PointsOut).
+tests([T|R], Ex, Idx, Unit, PointsIn, PointsOut) :-
+        test(T, Ex, Idx, 1, Unit, PointsIn, PointsOut1),
+        tests(R, Ex, Idx+1, Unit, PointsOut1, PointsOut).
+tests(_, Ex, _, _, _, _) :- failure(Ex, 'INTERN: tests/6 failed').
+
+total_units([], 0, 0/0, 0/0, 0/0).
+total_units([wait, P, _|R], Tot, A, B, C) :-
+    number(P), !, total_units([counted|R], TotR, A, B, C), Tot is TotR + P.
+total_units([wait, _|R], Tot, CO/TCO, UO/TUO, OO/TOO) :- !,
+    total_units(R, TotR, CO/TCO, UO/TUO, OO/TOO), Tot is TotR + 1.
+total_units([P, T|R], Tot, A, B, C) :-
+    number(P), !, total_units([counted, T|R], TotR, A, B, C), Tot is TotR + P.
+total_units([counted, T|R], Tot, CO/TCO, UO/TUO, OO/TOO) :- !, %trace,
+    test(T, dry, dry, _, _, 0, P),
+    (   ( T = chk(_), ! ; T = ckA(_, _) ), !, TA = 1,
+        (   P > 0, A = 1, !; A = 0 )
+    ;   TA = 0, A = 0),
+    (   ( T = uck(_), ! ; T = nsl(_, _, 0) ), !, TB = 1,
+        (   P > 0, B = 1, !; B = 0 )
+    ;   TB = 0, B = 0),
+    (   T \= chk(_), T \= ckA(_, _), T \= uck(_), T \= ech(_, _), T \= nsl(_, _, 0), !,
+        TD = 1, (   P > 0, D = 1, !; D = 0 )
+    ;   TD = 0, D = 0),
+    total_units(R, TotR, C/TC, U/TU, O/TO), Tot is TotR,
+    CO is C+A, TCO is TC+TA, UO is U+B, TUO is TU+TB, OO is O+D, TOO is TO+TD.
+total_units(TT, Tot, A, B, C) :-
+    !, total_units([counted|TT], TotR, A, B, C), Tot is TotR + 1.
+
+test(T, NEx, Idx, Fraction, Unit, PointsIn, PointsOut) :-
+        (   NEx == dry, !, Ex = dry, TimeLimit = 0.1
+        ;   testtimelimit(TimeLimit),
+            IdxI is Idx + 96, char_code(CEx, IdxI),
+            (   NEx == none, !, swritef(Ex, '%w|', [CEx])
+            ;   swritef(Ex, '[%w|%w]', [NEx, CEx]))
+        ),
+        swritef(MTime, 'limita de %w secunde depasita', [TimeLimit]),
+        (   catch(
+                catch(call_with_time_limit(TimeLimit, once(test(Ex, T))),
+                      time_limit_exceeded,
+                      except(Ex, MTime)
+                     ),
+                Expt,
+                (   swritef(M, 'exceptie: %w', [Expt]), except(Ex, M))
+            ),
+            !, success(Ex, Fraction, Unit, Points),
+            PointsOut is PointsIn + Points
+        ; PointsOut = PointsIn).
+test(_, Ex, Idx, _, _, _, _) :- failure(Ex/Idx, 'INTERN: test/7 failed').
+
+success(dry, _, _, 1) :- !.
+success(Ex, Fraction, Unit, Score) :-
+    Score is Fraction * Unit,
+    %format('~w ~w ~w ~w~n', [Ex, Fraction, Unit, Score]),
+    (   test_mode(vmchecker), !,
+        format('+~2f ~10t  ~w Corect.~n', [Score, Ex])
+    ;
+    (   test_points(show),
+        format('~w[OK] Corect. +~2f.~n', [Ex, Score])
+    ;   format('~w[OK] Corect.~n', [Ex])
+    )).
+failure(dry, _) :- !, fail.
+failure(Ex, M) :-
+        (   test_mode(vmchecker), !,
+            format('+0.00 ~10t  ~w ~w~n', [Ex, M]), fail
+        ;   format('~w[--] ~w~n', [Ex, M]), fail).
+except(dry, _) :- !, fail.
+except(Ex, M) :-
+        (   test_mode(vmchecker), !,
+            format('+0.00 ~10t ~w Exception: ~w~n', [Ex, M]), fail
+        ;   format('~w[/-] ~w~n', [Ex, M]), fail).
+
+test(Ex, chk(P)) :- !, testCall(Ex, P).
+test(Ex, uck(P)) :- !, testCall(Ex, \+ P).
+test(Ex, exp(Text, ExpList)) :- !,
+    read_term_from_atom(Text, P, [variable_names(Vars)]),
+    testCall(Ex, P, Text), testExp(Ex, Text, Vars, ExpList).
+test(_, ckA(_, [])) :- !.
+test(Ex, ckA(Pred, [Test|Tests])) :- !,
+    swritef(S, '%w(%w)', [Pred, Test]),
+    read_term_from_atom(S, P, []),
+    testCall(Ex, P, S), test(Ex, ckA(Pred, Tests)).
+test(_, ech(_, [])) :- !.
+test(Ex, ech(Text, [Cond|Conds])) :- !,
+    swritef(S, '%w|%w', [Text, Cond]),
+    read_term_from_atom(S, P|Q, [variable_names(Vars)]),
+    forall(P, (
+               swritef(Msg, '%w pentru soluția %w a predicatului %w', [Cond, Vars, Text]),
+               testCall(Ex, Q, Msg))),
+    test(Ex, ech(Text, Conds)).
+test(Ex, nsl(Text, Tmplt, N)) :- !,
+    swritef(S, 'findall(%w, %w, TheList)', [Tmplt, Text]),
+    read_term_from_atom(S, P, [variable_names(Vars)]),
+    testCall(Ex, P, S), testNSols(Ex, Text, Vars, N).
+test(Ex, sls(Text, Tmplt, Sols)) :- !,
+    swritef(S, 'findall(%w, %w, TheList)', [Tmplt, Text]),
+    read_term_from_atom(S, P, [variable_names(Vars)]),
+    testCall(Ex, P, S), testSols(Ex, Text, Vars, Sols).
+test(Ex, sSO(Text, Tmplt, Sols)) :- !,
+    swritef(S, 'setof(%w, %w, TheList)', [Tmplt, Text]),
+    read_term_from_atom(S, P, [variable_names(Vars)]),
+    testCall(Ex, P, S), testSols(Ex, Text, Vars, Sols).
+test(Ex, _) :- failure(Ex, 'INTERN: Test necunoscut').
+
+% Pentru exercițiul Ex, evaluează clauza Do, dată ca termen.
+% Opțional, în mesajul de eroare interogarea poate fi afișată ca
+% parametrul Text.
+testCall(Ex, Do) :- swritef(Text, '%q', [Do]), testCall(Ex, Do, Text).
+testCall(Ex, Do, Text) :-
+        catch((call(Do), !
+              ;   !, swritef(M, 'Interogarea %w a esuat.', [Text]), failure(Ex, M)
+              ), Exc,
+              (swritef(M, 'Interogarea %w a produs exceptie: %w', [Text, Exc]),
+              except(Ex, M))
+             ).
+
+testExp(_, _, _, []) :- !.
+testExp(Ex, Text, Vars, [v(Var) | Rest]) :- !,
+    (   getVal(Var, Vars, V), !,
+        (   var(V), !, testExp(Ex, Text, Vars, Rest) ;
+            swritef(M, 'Interogarea %w leaga %w (la valoarea %w) dar nu ar fi trebuit legata.',
+                    [Text, Var, V]), failure(Ex, M)
+        )
+    ;
+    swritef(M, 'INTERN: Interogarea %w nu contine variabila %w.', [Text, Var]),
+    failure(Ex, M)
+    ).
+testExp(Ex, Text, Vars, [set(Var, Set) | Rest]) :- !,
+    (   getVal(Var, Vars, V), !,
+        testSet(Ex, Text, 'intoarce', V, Set),
+        testExp(Ex, Text, Vars, Rest)
+    ;
+    swritef(M, 'INTERN: Interogarea %w nu contine variabila %w.', [Text, Var]),
+    failure(Ex, M)
+    ).
+testExp(Ex, Text, Vars, [setU(Var, Set) | Rest]) :- !,
+    (   getVal(Var, Vars, V), !,
+        testSetU(Ex, Text, 'intoarce', V, Set),
+        testExp(Ex, Text, Vars, Rest)
+    ;
+    swritef(M, 'INTERN: Interogarea %w nu contine variabila %w.', [Text, Var]),
+    failure(Ex, M)
+    ).
+testExp(Ex, Text, Vars, [cond(Cond) | Rest]) :- !,
+    swritef(S, "(%w, %w)", [Text, Cond]),
+    read_term_from_atom(S, P, []),
+    (
+        call(P), !, testExp(Ex, Text, Vars, Rest)
+        ;
+        swritef(M, 'Dupa interogarea %w conditia %w nu este adevarata.', [Text, Cond]),
+        failure(Ex, M)
+    ).
+testExp(Ex, Text, Vars, [Var, Val | Rest]) :- !,
+    (   getVal(Var, Vars, V), !,
+        (   V == Val, !, testExp(Ex, Text, Vars, Rest) ;
+            swritef(M, 'Interogarea %w leaga %w la %w in loc de %w.',
+                    [Text, Var, V, Val]), failure(Ex, M)
+        )
+    ;
+    swritef(M, 'INTERN: Interogarea %w nu contine variabila %w.', [Text, Var]),
+    failure(Ex, M)
+    ).
+testExp(Ex, _, _, [X | _]) :- !,
+        swritef(M, 'INTERN: element necunoscut pentru exp: %w', [X]),
+        failure(Ex, M).
+testExp(Ex, _, _, X) :- !,
+        swritef(M, 'INTERN: format gresit pentru exp: %w', [X]),
+        failure(Ex, M).
+
+testNSols(Ex, Text, Vars, N) :-
+    (   getVal('TheList', Vars, V), length(V, NSols), !,
+        (   NSols =:= N, !
+        ;   swritef(M, 'Numarul de solutii pentru %w este %w in loc de %w.',
+                    [Text, NSols, N]), failure(Ex, M)
+        )
+    ;   failure(Ex, 'INTERNAL: nu avem variabila TheList sau aceasta nu este lista.')
+    ).
+
+testSols(Ex, Text, Vars, Sols) :-
+    (   getVal('TheList', Vars, V), !,
+        testSet(Ex, Text, 'are ca solutii', V, Sols)
+    ;   failure(Ex, 'INTERNAL: nu avem variabila TheList sau aceasta nu este lista.')
+    ).
+
+testSetU(Ex, Text, TypeText, SetG, SetE) :- sort(SetG, SetGUnique),
+    testSet(Ex, Text, TypeText, SetGUnique, SetE).
+testSet(Ex, Text, TypeText, SetG, SetE) :-
+    msort(SetG, SetGSorted), msort(SetE, SetESorted),
+    (   SetGSorted == SetESorted, ! ;
+        testSetMinus(SetG, SetE, TooMuch),
+        testSetMinus(SetE, SetG, TooLittle),
+        (   TooMuch == [], TooLittle == [], !,
+            M1 = 'vezi duplicate'
+        ;   swritef(M1, '%w sunt in plus, %w lipsesc', [TooMuch, TooLittle])
+        ),
+        swritef(M,
+                'Interogarea %w %w %w dar se astepta %w (%w)',
+                [Text, TypeText, SetG, SetE, M1]), failure(Ex, M)
+    ).
+
+testSetMinus(From, ToRemove, Result) :-
+        findall(E, (member(E, From), \+ member(E, ToRemove)), Result).
+
+getVal(Var, [Var=Val | _], Val) :- !.
+getVal(Var, [_ | Vars], Val) :- getVal(Var, Vars, Val).

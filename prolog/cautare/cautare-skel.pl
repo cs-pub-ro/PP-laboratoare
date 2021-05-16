@@ -87,19 +87,21 @@ next_state(taran, state(MalTaran1, Cine1), state(MalTaran2, Cine2)) :-
         setMinus(All, Cine2, Ramas), safeTaran(Ramas),
         % țăranul merge pe celălalt mal.
         opus(MalTaran1, MalTaran2).
-
+        
 % setPlus(+A, +B, -Result)
 % concatenează A și B în Result (Atenție! nu elimină duplicate).
 setPlus(A, B, Result) :- append(A, B, Result).
 
 % subSet(+Smaller, +Bigger)
 % Verifică dacă setul Smaller este inclus în sau egal cu setul Bigger.
-subSet(A, B) :- forall(member(X, A), member(X, B)).
+% https://www.swi-prolog.org/pldoc/man?predicate=subset/2
+subSet(A, B) :- subset(A, B).
 
 % setMinus(+From, +ToRemove, -Result)
 % Produce în result lista elementelor din From care nu sunt în ToRemove.
-setMinus(From, ToRemove, Result) :-
-        findall(E, (member(E, From), \+ member(E, ToRemove)), Result).
+% https://www.swi-prolog.org/pldoc/doc_for?object=subtract/3
+setMinus(From, ToRemove, Result) :- subtract(From, ToRemove, Result).
+
 
 %% Predicatele solve/2 și search/3 sunt folosite pentru
 %% rezolvarea unei probleme de căutare în spațiul stărilor. 
