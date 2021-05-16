@@ -26,7 +26,7 @@ opus(vest, est).
 %% safeTaran/1
 %% safeTaran(+)
 %% Verifică dacă cine rămâne pe vechiul mal este în siguranță
-safeTaran :- fail.
+safeTaran(_) :- false.
 
 allTaran([capra, lup, varza]).
 
@@ -170,7 +170,7 @@ boat(_, _) :- fail.
 % Atenție la de câte ori este adevărat safeMisionari pentru diverse
 % valori ale argumentelor - poate influența numărul soluțiilor pentru
 % problemă.
-safeMisionari(_, _) :- fail.
+safeMisionari(_, _) :- false.
 
 % TODO
 % parseState/3
@@ -178,21 +178,21 @@ safeMisionari(_, _) :- fail.
 % Primește o stare și întoarce în ultimele 5 argumente malul unde este barca 
 % și numerele de misionari / canibali de pe malul estic, respectiv vestic, în 
 % starea dată.
-parseState( _, _, _, _, _, _) :- fail.
+parseState( _, _, _, _, _, _) :- false.
 
 % TODO
 % initial_state(misionari, -State)
 % Determină starea inițială pentru problema misionarilor, în formatul
 % ales.
 % Hint Barca și cei 6(3 canibali, 3 misionari) se află inițial pe un mal
-initial_state(misionari, _) :- fail.
+initial_state(misionari, _) :- false.
 
 % TODO
 % final_state(misionari, +State)
 % Verifică dacă starea dată este stare finală pentru problema
 % misionarilor.
 % Hint Barca și cei 6(3 canibali, 3 misionari) se află pe malul opus
-final_state(misionari, _) :- fail.
+final_state(misionari, _) :- false.
 
 % TODO
 % next_state(misionari, +S1, -S2)
@@ -209,7 +209,7 @@ final_state(misionari, _) :- fail.
 %     pentru validare). Pentru a calcula numărul de canibali/misionari de pe malul opus
 %     ce formulă puteți folosi știind ca numărul total de canibali/misionari este 3?
 
-next_state(misionari, _, _) :- fail.
+next_state(misionari, _, _) :- false.
 
 % dacă solve(misionari, Sol) eșuează, folosiți
 % tracksolve(misionari, Sol) pentru a inspecta construcția soluției.
@@ -279,7 +279,7 @@ do_bfs(Solution):-
 %% Se adaugă toate aceste noduri la coada(lista) de stări încă nevizitate - Frontier
 %% căutarea continuă din starea aflată la începutul frontierei, până se întâlneşte 
 %%      o stare finală (am ajuns la nodu final dat - h)
-bfs(_,_) :- fail.
+bfs(_,_) :- false.
 
 
 %% TODO
@@ -292,7 +292,7 @@ bfs(_,_) :- fail.
 %% de la nodul final. Pentru fiecare nod căutați părintele lui în Discovered,
 %% până ajungeți la nodul inițial.
 
-extract_path(_,_) :- fail.
+extract_path(_,_) :- false.
 
 check2:- tests([
             exp("bfs([(a,nil)], [], R)", [
@@ -786,4 +786,3 @@ testSetMinus(From, ToRemove, Result) :-
 
 getVal(Var, [Var=Val | _], Val) :- !.
 getVal(Var, [_ | Vars], Val) :- getVal(Var, Vars, Val).
-

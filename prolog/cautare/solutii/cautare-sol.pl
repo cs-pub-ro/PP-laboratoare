@@ -26,7 +26,7 @@ opus(vest, est).
 %% safeTaran/1
 %% safeTaran(+)
 %% Verifică dacă cine rămâne pe vechiul mal este în siguranță
-safeTaran :- fail.
+safeTaran(_) :- false.
 safeTaran([]).
 safeTaran([_]).
 safeTaran(Cine) :- sort(Cine, [lup, varza]).
@@ -47,7 +47,7 @@ next_state(taran, state(MalTaran1, Cine1), state(MalTaran2, Cine2)) :-
         % țăranul merge pe celălalt mal.
         opus(MalTaran1, MalTaran2).
 
-%% Taranul calatoreste cu lupul
+%% Țăranul călătorește cu lupul
 next_state(taran, state(MalTaran1, Cine1), state(MalTaran2, Cine2)) :-
         allTaran(All),
         % lupul este pe același mal cu țăranul, inițial.
@@ -61,7 +61,7 @@ next_state(taran, state(MalTaran1, Cine1), state(MalTaran2, Cine2)) :-
         % țăranul merge pe celălalt mal.
         opus(MalTaran1, MalTaran2).
 
-%% Taranul calatoreste cu varza
+%% Țăranul călătorește cu varza
 next_state(taran, state(MalTaran1, Cine1), state(MalTaran2, Cine2)) :-
         allTaran(All),
         % varza este pe același mal cu țăranul, inițial.
@@ -75,7 +75,7 @@ next_state(taran, state(MalTaran1, Cine1), state(MalTaran2, Cine2)) :-
         % țăranul merge pe celălalt mal.
         opus(MalTaran1, MalTaran2).
 
-%% Taranul calatoreste cu capra
+%% Țăranul călătorește cu capra
 next_state(taran, state(MalTaran1, Cine1), state(MalTaran2, Cine2)) :-
         allTaran(All),
         % capra este pe același mal cu țăranul, inițial.
@@ -163,7 +163,7 @@ solve(Pb, Solution):-
 % Nu uitați ca barca are capacitate de maximum două persoane și nu poate 
 % călători fără nicio persoană.
 % Ex boat(2, 0)
-boat(_, _) :- fail.
+boat(_, _) :- false.
 boat(0, 1).
 boat(0, 2).
 boat(1, 0).
@@ -178,7 +178,7 @@ boat(1, 1).
 % Atenție la de câte ori este adevărat safeMisionari pentru diverse
 % valori ale argumentelor - poate influența numărul soluțiilor pentru
 % problemă.
-safeMisionari(_, _) :- fail.
+safeMisionari(_, _) :- false.
 safeMisionari(0, _).
 safeMisionari(M, C) :- M > 0, M >= C.
 
@@ -199,7 +199,7 @@ parseState(state(vest, M, C), vest, OM, OC, M, C) :-
 % Determină starea inițială pentru problema misionarilor, în formatul
 % ales.
 % Hint Barca și cei 6(3 canibali, 3 misionari) se află inițial pe un mal
-initial_state(misionari, _) :- fail.
+initial_state(misionari, _) :- false.
 initial_state(misionari, state(est, 3 ,3)).
 
 % TODO
@@ -207,7 +207,7 @@ initial_state(misionari, state(est, 3 ,3)).
 % Verifică dacă starea dată este stare finală pentru problema
 % misionarilor.
 % Hint Barca și cei 6(3 canibali, 3 misionari) se află pe malul opus
-final_state(misionari, _) :- fail.
+final_state(misionari, _) :- false.
 final_state(misionari, state(vest, 3, 3)).
 
 
@@ -226,7 +226,7 @@ final_state(misionari, state(vest, 3, 3)).
 %     pentru validare). Pentru a calcula numărul de canibali/misionari de pe malul opus
 %     ce formulă puteți folosi știind ca numărul total de canibali/misionari este 3?
 
-next_state(misionari, _, _) :- fail.
+next_state(misionari, _, _) :- false.
 next_state(misionari, state(Mal1, M1, C1), state(Mal2, M2, C2)) :-
         opus(Mal1, Mal2),
         boat(MB, CB), MB =< M1, CB =< C1,
@@ -409,7 +409,7 @@ nodes(NN) :- findall(N, nod(N), NN).
 % de arbori. Pentru fiecare nod generați o parcurgere folosind predicatul 
 % definit anterior. Eliminați folosind setMinus nodurile din NN care apar
 % în parcurgerea curentă.
-trees(_) :- fail.
+trees(_) :- false.
 trees(Trees) :- nodes(NN), parcAll(NN, Trees).
 parcAll([], []).
 parcAll([N | Todo], [ParcN | ParcRest]) :-
