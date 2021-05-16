@@ -19,10 +19,14 @@ exercitiul(1, []).
 opus(est, vest).
 opus(vest, est).
 
+%% TODO
+%% safeTaran/1
+%% safeTaran(+)
+%% Verifică dacă cine rămâne pe vechiul mal este safe
+safeTaran :- fail.
 safeTaran([]).
 safeTaran([_]).
 safeTaran(Cine) :- sort(Cine, [lup, varza]).
-
 
 allTaran([capra, lup, varza]).
 
@@ -95,16 +99,14 @@ subSet(A, B) :- forall(member(X, A), member(X, B)).
 setMinus(From, ToRemove, Result) :-
         findall(E, (member(E, From), \+ member(E, ToRemove)), Result).
 
-%% TODO 
-%% Implementați predicatele solve/2 și search/3 pentru
+%% Predicatele solve/2 și search/3 sunt folosite pentru
 %% rezolvarea unei probleme de căutare în spațiul stărilor. 
 %% Fiecare dintre predicate ia ca prim argument problema
 %% pe care o rezolvăm.
-%% Utilizați predicatelor initial_state/2, final_state/2 și
+%% Observațiutilizarea predicatelor initial_state/2, final_state/2 și
 %% next_state/3. 
 
 %% search(+Pb, +StariVizitate, -Sol)
-search(_,_,_) :- fail.
 search(Pb, [CurrentState|Other], Solution) :-
         final_state(Pb, CurrentState),
         !,
@@ -114,15 +116,13 @@ search(Pb, [CurrentState|Other], Solution) :-
         next_state(Pb, CurrentState, NextState),
         \+ member(NextState, Other),
         search(Pb, [NextState,CurrentState|Other], Solution).
+
 %% solve(+Pb, -Sol)
-solve(_,_) :- fail.
-
-
 solve(Pb, Solution):-
         initial_state(Pb, State),
         search(Pb, [State], Solution).
 
-% vizualizați soluțiile cu
+% Vizualizați soluțiile cu
 % solve(taran, Sol), validSol(taran, Sol).
 
 %% Problema Misionarilor și Canibalilor
