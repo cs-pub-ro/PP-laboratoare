@@ -138,7 +138,8 @@ check0 :- tests([
               chk(safeTaran([capra])),
               chk(safeTaran([varza])),
               exp('S = [_, _], safeTaran(S)',
-                  [set('S', ['lup', 'varza'])])
+                  [set('S', ['lup', 'varza'])]),
+              uck(safeTaran([_, _, _]))
         ]).
 
 

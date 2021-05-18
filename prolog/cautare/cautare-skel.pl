@@ -136,7 +136,8 @@ check0 :- tests([
               chk(safeTaran([capra])),
               chk(safeTaran([varza])),
               exp('S = [_, _], safeTaran(S)',
-                  [set('S', ['lup', 'varza'])])
+                  [set('S', ['lup', 'varza'])]),
+              uck(safeTaran([_, _, _]))
         ]).
 
 exercitiul(1, []).
@@ -176,7 +177,7 @@ exercitiul(1, []).
 % Nu uitați ca barca are capacitate de maximum două persoane și nu poate
 % călători fără nicio persoană.
 % Ex boat(2, 0)
-boat(_, _) :- fail.
+boat(_, _) :- false.
 
 % TODO
 % safe/2
