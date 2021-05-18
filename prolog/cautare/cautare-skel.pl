@@ -9,7 +9,7 @@
 exercitiul(0, []).
 
 %% Problema țăranului, a lupului, a caprei și a verzei.
-%% Un țăran, ducând la târg un lup, o capră şi o varză ajunge 
+%% Un țăran, ducând la târg un lup, o capră şi o varză ajunge
 %% în dreptul unui râu pe care trebuie să-l treacă. Cum va proceda el, ştiind că:
 %% - lupul mănâncă capra şi capra mănâncă varza;
 %% - el nu poate să-i treacă pe toţi o dată şi nici câte doi;
@@ -29,6 +29,7 @@ opus(vest, est).
 %% De exemplu o lista formată din [lup, capra] nu respectă
 %% constrângerea setată de problemă
 safeTaran(_) :- false.
+
 
 allTaran([capra, lup, varza]).
 
@@ -87,7 +88,7 @@ next_state(taran, state(MalTaran1, Cine1), state(MalTaran2, Cine2)) :-
         setMinus(All, Cine2, Ramas), safeTaran(Ramas),
         % țăranul merge pe celălalt mal.
         opus(MalTaran1, MalTaran2).
-        
+
 % setPlus(+A, +B, -Result)
 % concatenează A și B în Result (Atenție! nu elimină duplicate).
 setPlus(A, B, Result) :- append(A, B, Result).
@@ -104,11 +105,11 @@ setMinus(From, ToRemove, Result) :- subtract(From, ToRemove, Result).
 
 
 %% Predicatele solve/2 și search/3 sunt folosite pentru
-%% rezolvarea unei probleme de căutare în spațiul stărilor. 
+%% rezolvarea unei probleme de căutare în spațiul stărilor.
 %% Fiecare dintre predicate ia ca prim argument problema
 %% pe care o rezolvăm.
 %% Observați utilizarea predicatelor initial_state/2, final_state/2 și
-%% next_state/3. 
+%% next_state/3.
 
 %% search(+Pb, +StariVizitate, -Sol)
 search(Pb, [CurrentState|Other], Solution) :-
@@ -134,7 +135,7 @@ check0 :- tests([
               chk(safeTaran([lup])),
               chk(safeTaran([capra])),
               chk(safeTaran([varza])),
-              ech('S == [_, _], safeTaran(S)',
+              exp('S == [_, _], safeTaran(S)',
                   [set('S', ['lup', 'varza'])])
         ]).
 
@@ -151,9 +152,9 @@ exercitiul(1, []).
 %% canibali).
 %%
 %% Primul pas este definirea unui format pentru starea problemei.
-%% Pentru a reprezenta malul puteți folosi constantele est si vest 
+%% Pentru a reprezenta malul puteți folosi constantele est si vest
 %% folosite anterior.
-%% Ce informații ar trebui să conțină starea? Este suficient să conțină 
+%% Ce informații ar trebui să conțină starea? Este suficient să conțină
 %% malul și numărul de canibali, respectiv misionari de pe acesta?
 %%
 %% Scrieți predicatele initial_state, final_state, și next_state
@@ -169,10 +170,10 @@ exercitiul(1, []).
 % boat/2
 % boat(-NM, -NC)
 % Posibilele combinații de număr de misionari și canibali care pot
-% călători cu barca, unde NM este numărul de misionari, iar NC numărul 
+% călători cu barca, unde NM este numărul de misionari, iar NC numărul
 % de canibali din bancă
 %
-% Nu uitați ca barca are capacitate de maximum două persoane și nu poate 
+% Nu uitați ca barca are capacitate de maximum două persoane și nu poate
 % călători fără nicio persoană.
 % Ex boat(2, 0)
 boat(_, _) :- fail.
@@ -190,8 +191,8 @@ safeMisionari(_, _) :- false.
 % TODO
 % parseState/3
 % parseState(+State, -Mal, -NM_Est, -NC_Est, -NM_Vest, -NC_Vest)
-% Primește o stare și întoarce în ultimele 5 argumente malul unde este barca 
-% și numerele de misionari / canibali de pe malul estic, respectiv vestic, în 
+% Primește o stare și întoarce în ultimele 5 argumente malul unde este barca
+% și numerele de misionari / canibali de pe malul estic, respectiv vestic, în
 % starea dată.
 parseState( _, _, _, _, _, _) :- false.
 
@@ -288,16 +289,16 @@ do_bfs(Solution):-
 %% Toate cele 3 liste vor avea elementele în forma pereche (Nod, Părinte).
 %%
 %% Pași de urmat
-%% Căutarea începe de la nodul inițial dat (a) care n-are predecesor 
+%% Căutarea începe de la nodul inițial dat (a) care n-are predecesor
 %% Se generează apoi toate nodurile accesibile din nodul curent (exista
-%%      un arc de la nod la vecin). Folosiți predicatul getNeighb definit mai jos 
+%%      un arc de la nod la vecin). Folosiți predicatul getNeighb definit mai jos
 %%      pentru a genera nodurile vecine
 %% Se adaugă toate aceste noduri la coada(lista) de stări încă nevizitate - Frontier
-%% Căutarea continuă din starea aflată la începutul frontierei, până se întâlneşte 
+%% Căutarea continuă din starea aflată la începutul frontierei, până se întâlneşte
 %%      o stare finală (am ajuns la nodul final dat - h)
 
 % Întoarce în  Result nodurile vecine ale nodului X primit ca parametru
-% Exemplu utilizare: getNeighb(a, [], Result). 
+% Exemplu utilizare: getNeighb(a, [], Result).
 getNeighb(X, Acc, Result) :- edge(X,Y), \+ memberchk((Y,_), Acc), !, getNeighb(X, [(Y,X)|Acc], Result).
 getNeighb(_, Acc, Result) :- reverse(Acc, Result).
 
@@ -348,7 +349,7 @@ arc(n, [o, p]). arc(o, [q, r, s]). arc(p, [t, u, v]).
 % Hint - definiți un predicat auxiliar care primește lista de noduri
 % de vizitat (de forma [N|Rest]) și Parc(listă de noduri rezultate din parcurgere)
 % Folosind predicatul arc generați noduri copil ale nodului curent și adăugați în
-% restul listei de parcurs (Rest). Folosiți apoi lista rezultat pentru  a genera restul 
+% restul listei de parcurs (Rest). Folosiți apoi lista rezultat pentru  a genera restul
 % listei soluție
 
 preorder(_, _) :- fail.
@@ -373,7 +374,7 @@ nodes(Acc, Result) :- reverse(Acc, Result).
 % Întoarce în trees o listă în care fiecare element este parcurgerea
 % unui arbore.
 % Folosiți predicatul nodes pentru a  obtine toate nodurile din pădurea
-% de arbori. Pentru fiecare nod generați o parcurgere folosind predicatul 
+% de arbori. Pentru fiecare nod generați o parcurgere folosind predicatul
 % definit anterior. Eliminați folosind setMinus nodurile din NN care apar
 % în parcurgerea curentă.
 trees(_) :- fail.
