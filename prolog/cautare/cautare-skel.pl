@@ -195,6 +195,8 @@ safeMisionari(_, _) :- false.
 % Primește o stare și întoarce în ultimele 5 argumente malul unde este barca
 % și numerele de misionari / canibali de pe malul estic, respectiv vestic, în
 % starea dată.
+% Hint: nu este nevoie să reprezentați în stare numărul de misionari de
+% pe ambele maluri, știți că în total sunt 3. La fel și la canibali.
 parseState( _, _, _, _, _, _) :- false.
 
 % TODO

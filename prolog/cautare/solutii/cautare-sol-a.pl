@@ -206,7 +206,10 @@ safeMisionari(M, C) :- M > 0, M >= C.
 % și numerele de misionari / canibali de pe malul estic, respectiv vestic, în
 % starea dată.
 parseState( _, _, _, _, _, _) :- fail.
-parseState(Mal/ME/CE/MV/CV, Mal, ME, CE, MV, CV).
+parseState(state(est, M, C), est, M, C, OM, OC) :- !,
+        OM is 3 - M, OC is 3 - C.
+parseState(state(vest, M, C), vest, OM, OC, M, C) :-
+        OM is 3 - M, OC is 3 - C.
 
 % TODO
 % initial_state(misionari, -State)
@@ -214,7 +217,7 @@ parseState(Mal/ME/CE/MV/CV, Mal, ME, CE, MV, CV).
 % ales.
 % Hint Barca și cei 6(3 canibali, 3 misionari) se află inițial pe malul estic
 initial_state(misionari, _) :- false.
-initial_state(misionari,est/3/3/0/0).
+initial_state(misionari, state(est, 3 ,3)).
 
 % TODO
 % final_state(misionari, +State)
@@ -222,7 +225,7 @@ initial_state(misionari,est/3/3/0/0).
 % misionarilor.
 % Hint Barca și cei 6(3 canibali, 3 misionari) se află pe malul vestic
 final_state(misionari, _) :- false.
-final_state(misionari, vest/0/0/3/3).
+final_state(misionari, state(vest, 3, 3)).
 
 
 % TODO
@@ -241,18 +244,13 @@ final_state(misionari, vest/0/0/3/3).
 %     ce formulă puteți folosi știind ca numărul total de canibali/misionari este 3?
 
 next_state(misionari, _, _) :- false.
-next_state(misionari, est/ME/CE/MV/CV, vest/ME2/CE2/MV2/CV2) :-
-        boat(MB, CB), MB =< ME, CB =< CE,
-        ME2 is ME - MB, CE2 is CE - CB,
-        MV2 is MV + MB, CV2 is CV + CB,
-        safeMisionari(ME2, CE2),
-        safeMisionari(MV2, CV2).
-next_state(misionari, vest/ME/CE/MV/CV, est/ME2/CE2/MV2/CV2) :-
-        boat(MB, CB), MB =< MV, CB =< CV,
-        ME2 is ME + MB, CE2 is CE + CB,
-        MV2 is MV - MB, CV2 is CV - CB,
-        safeMisionari(ME2, CE2),
-        safeMisionari(MV2, CV2).
+next_state(misionari, state(Mal1, M1, C1), state(Mal2, M2, C2)) :-
+        opus(Mal1, Mal2),
+        boat(MB, CB), MB =< M1, CB =< C1,
+        M2 is 3 - M1 + MB, C2 is 3 - C1 + CB,
+        OM2 is 3 - M2, OC2 is 3 - C2,
+        safeMisionari(M2, C2),
+        safeMisionari(OM2, OC2).
 
 
 % dacă solve(misionari, Sol) eșuează, folosiți
