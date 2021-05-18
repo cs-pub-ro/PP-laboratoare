@@ -135,7 +135,7 @@ check0 :- tests([
               chk(safeTaran([lup])),
               chk(safeTaran([capra])),
               chk(safeTaran([varza])),
-              exp('S == [_, _], safeTaran(S)',
+              exp('S = [_, _], safeTaran(S)',
                   [set('S', ['lup', 'varza'])])
         ]).
 
