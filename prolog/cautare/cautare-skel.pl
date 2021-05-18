@@ -190,7 +190,7 @@ boat(_, _) :- false.
 safeMisionari(_, _) :- false.
 
 % TODO
-% parseState/3
+% parseState/6
 % parseState(+State, -Mal, -NM_Est, -NC_Est, -NM_Vest, -NC_Vest)
 % Primește o stare și întoarce în ultimele 5 argumente malul unde este barca
 % și numerele de misionari / canibali de pe malul estic, respectiv vestic, în
