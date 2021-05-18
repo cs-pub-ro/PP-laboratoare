@@ -437,13 +437,13 @@ tracksolve(Pb, Solution) :-
         format('~w M ~w C v~~~~ ~w M ~w C~n', [ME, CE, MV, CV]),
         tracksearch(Pb, [State], Solution).
 
-err(Sol, Msg, Value) :-
+err(Sol, Msg, Value, Pb) :-
         format('~n~n Solutia: ~n'),
         (   is_list(Sol) -> forall(member(E, Sol), format('~w~n', [E]))),
-        format('~w: ~w.~n', [Msg, Value]), fail.
+        format('~w: ~w (in ~w).~n', [Msg, Value, Pb]), fail.
 
 validSol(Pb, Sol) :- %format('~n~n Solutia: ~n'),
-        (   \+ is_list(Sol), !, err(Sol, 'Solutia nu este o lista', Sol)
+        (   \+ is_list(Sol), !, err(Sol, 'Solutia nu este o lista', Sol, Pb)
         ;   !, forall(member(E, Sol), validState(Pb, Sol, E))
         , validTransitions(Pb, Sol, Sol), last(Sol, Last), validFinal(Pb, Sol, Last)).
 validSol(Pb, Sol) :- format('INTERN: caz invalid validSol ~w: ~w~n', [Pb, Sol]), fail.
@@ -453,61 +453,63 @@ validMal(_, _, _, M, C) :- M >= C, !.
 validMal(Sol, S, Mal, M, C) :-
         swritef(Msg, 'Numar incorect de misionari/canibali %w/%w pe malul %wic in starea',
                [M, C, Mal]),
-        err(Sol, Msg, S).
+        err(Sol, Msg, S, misionari).
 validState(taran, Sol, S) :- allTaran(All),
         (   S = state(Mal, Elements),
-            (   \+ member(Mal, [est, vest]), err(Sol, 'Mal invalid', Mal)
+            (   \+ member(Mal, [est, vest]), err(Sol, 'Mal invalid', Mal, taran)
             ;   (\+ subSet(Elements, All), setMinus(Elements, All, Inv),
-                err(Sol, 'Elemente invalide', Inv)
+                err(Sol, 'Elemente invalide', Inv, taran)
                 ;   setMinus(All, Elements, OtherSide), validOther(Sol, OtherSide)))
-        ;   err(Sol, 'Stare in format incorect', S)).
+        ;   err(Sol, 'Stare in format incorect', S, taran)).
 validState(misionari, Sol, S) :-
         (   parseState(S, M, ME, CE, MV, CV), !,
             (   member(M, [est, vest]), !,
                 (   ME + MV =:= 3, CE + CV =:= 3, !,
                     validMal(Sol, S, est, ME, CE), validMal(Sol, S, vest, MV, CV)
-                ;   err(Sol, 'numar incorect de persoane in stare', S)
+                ;   err(Sol, 'numar incorect de persoane in stare', S, misionari)
                 )
-            ;   err(Sol, 'mal incorect in stare', M/S)
+            ;   err(Sol, 'mal incorect in stare', M/S, misionari)
             )
-        ;   err(Sol, 'parseState a esuat pentru', S)
+        ;   err(Sol, 'parseState a esuat pentru', S, misionari)
         ).
-validState(_, Sol, S) :- err(Sol, 'INTERN: caz invalid validState', S).
+validState(Pb, Sol, S) :- err(Sol, 'INTERN: caz invalid validState', S, Pb).
 validOther(_, []) :- !.
 validOther(_, [_]) :- !.
 validOther(_, L) :- sort(L, [lup, varza]), !.
-validOther(Sol, L) :- member(lup, L), member(capra, L), !, err(Sol, 'Lupul mananca capra', L).
-validOther(Sol, L) :- member(varza, L), member(capra, L), !, err(Sol, 'Capra mananca varza', L).
-validOther(Sol, L) :- err(Sol, 'INTERN: caz invalid validOthers', L).
+validOther(Sol, L) :- member(lup, L), member(capra, L), !,
+        err(Sol, 'Lupul mananca capra', L, taran).
+validOther(Sol, L) :- member(varza, L), member(capra, L), !,
+        err(Sol, 'Capra mananca varza', L, taran).
+validOther(Sol, L) :- err(Sol, 'INTERN: caz invalid validOthers', L, taran).
 validTransitions(_, _, [_]) :- !.
 validTransitions(taran, Sol, [S1, S2 | Rest]) :- !,
         S1 = state(Mal1, _Cine1), S2 = state(Mal2, _Cine2),
-        (   \+ opus(Mal1, Mal2), !, err(Sol, 'nu sunt opuse:', [Mal1, Mal2])
+        (   \+ opus(Mal1, Mal2), !, err(Sol, 'nu sunt opuse:', [Mal1, Mal2], taran)
         ;   validTransitions(taran, Sol, [S2 | Rest])). % not fully checked
 validTransitions(misionari, Sol, [S1, S2 | Rest]) :- !,
         parseState(S1, Mal1, ME1, CE1, MV1, CV1), parseState(S2, Mal2, ME2, CE2, MV2, CV2),
-        (   \+ opus(Mal1, Mal2), !, err(Sol, 'nu sunt opuse:', [Mal1, Mal2])
+        (   \+ opus(Mal1, Mal2), !, err(Sol, 'nu sunt opuse:', [Mal1, Mal2], misionari)
         ;
         (   Mal1 == est, !, validBoat(misionari, Sol, S1, S2, ME1, CE1, ME2, CE2)
         ;   validBoat(misionari, Sol, S1, S2, MV1, CV1, MV2, CV2)
         )), validTransitions(misionari, Sol, [S2 | Rest]).
-validTransitions(_, Sol, Rest) :- err(Sol, 'INTERN: caz invalid validTransitions', Rest).
+validTransitions(Pb, Sol, Rest) :- err(Sol, 'INTERN: caz invalid validTransitions', Rest, Pb).
 validBoat(misionari, Sol, S1, S2, M1, C1, M2, C2) :-
         MB is M1 - M2, CB is C1 - C2,
         (   MB + CB > 0, MB + CB =< 2, (MB == 0, !; MB >= CB), !
         ;   swritef(Msg, 'numar incorect de misionari/canibali %w/%w in barca intre starile',
-                    [MB, CB]), err(Sol, Msg, S1/S2)
+                    [MB, CB]), err(Sol, Msg, S1/S2, misionari)
         ).
 validFinal(taran, Sol, state(Mal, Elements)) :- allTaran(All),
-        (   Mal \= vest, !, err(Sol, 'Nu ajunge pe malul vestic la sfarsit', Mal)
+        (   Mal \= vest, !, err(Sol, 'Nu ajunge pe malul vestic la sfarsit', Mal, taran)
         ;   ( \+ sort(Elements, All), setMinus(All, Elements, Miss),
-            !, err(Sol, 'Nu au ajuns', Miss/Elements), fail
+            !, err(Sol, 'Nu au ajuns', Miss/Elements, taran), fail
             ; !, true)).
 validFinal(misionari, Sol, S) :- parseState(S, Mal, _, _, MV, CV),
-        (   Mal \= vest, !, err(Sol, 'Nu ajunge pe malul vestic la sfarsit', Mal)
-        ;   ( MV \= 3, CV \= 3, !, err(Sol, 'Au ajuns doar', MV/CV), fail
+        (   Mal \= vest, !, err(Sol, 'Nu ajunge pe malul vestic la sfarsit', Mal, misionari)
+        ;   ( MV \= 3, CV \= 3, !, err(Sol, 'Au ajuns doar', MV/CV, misionari), fail
             ; !, true)).
-validFinal(_, Sol, S) :- err(Sol, 'INTERN: caz invalid validFinal', S).
+validFinal(Pb, Sol, S) :- err(Sol, 'INTERN: caz invalid validFinal', S, Pb).
 
 
 %% ----------------------------------------
