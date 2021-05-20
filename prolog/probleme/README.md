@@ -67,5 +67,5 @@ false.
 ```
 
 ## Resurse
+-   [Cheatsheet](https://github.com/cs-pub-ro/PP-laboratoare/blob/master/prolog/probleme/prolog_cheatsheet_3.pdf)
 
-` * `
