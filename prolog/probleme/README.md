@@ -18,7 +18,7 @@ Predicatul `findall` pune în `Bag` câte un element Template pentru fiecare sol
 even(Numbers, Even):-
     findall(X,(member(X, Numbers), X mod 2 =:= 0), Even).
 
-?- even([1,2,3,4,5,6,7,8,9], Even). Even = [2, 4, 6, 8].
+?- even([1, 2, 3, 4, 5, 6, 7, 8, 9], Even). Even = [2, 4, 6, 8].
 ```
 
 ### bagof(+Template, +Goal, -Bag)
@@ -26,8 +26,8 @@ even(Numbers, Even):-
 Predicatul `bagof` seamănă cu `findall`, diferența fiind că `bagof` construiește câte o listă `Bag` pentru fiecare instanțiere diferită a variabilelor libere din `Goal`.
 
 ```prolog 
-digits([1,2,3,4,5,6,7,8,9]).
-numbers([4,7,9,14,15,18,24,28,33,35]).
+digits([1, 2, 3, 4, 5, 6, 7, 8, 9]).
+numbers([4, 7, 9, 14, 15, 18, 24, 28, 33, 35]).
 
 multiples(D,L):-
     digits(Digits),  
@@ -52,6 +52,21 @@ Pentru a evita *gruparea* soluțiilor pentru fiecare valoare separată a variabi
 
 Predicatul `setof/3` are aceeași comportare cu `bagof/3`, dar cu diferența că soluțiile găsite sunt sortate și se elimină duplicatele.
 
+### forall(+Cond, +Action)
+Predicatul `forall/2` verifică dacă pentru orice legare din `Cond`, care reprezintă un domeniu ce conține legări de variabile, se pot îndeplini condițiile din `Action`.
+
+Exemple:
+```prolog
+?- forall(member(X,[2, 4, 6]), X mod 2 =:= 0).
+true.
+
+?- forall(member(X,[2, 4, 3, 6]), X mod 2 =:= 0).
+false.
+
+?- forall(member(X, [6, 12, 18]), (X mod 2 =:= 0, X mod 3 =:= 0)).
+true.
+```
+
 ## Câteva observații asupra purității
 
 În logica de ordinul întâi clauzele `p(A,B) ^ q(A,B)` și `q(A,B) ^ p(A,B)` sunt echivalente. Ordinea termenilor dintr-o conjuncție (sau disjuncție) nu influențează valoarea de adevăr a clauzei.
@@ -67,5 +82,5 @@ false.
 ```
 
 ## Resurse
--   [Cheatsheet](https://github.com/cs-pub-ro/PP-laboratoare/blob/master/prolog/probleme/prolog_cheatsheet_3.pdf)
+- [Cheatsheet](https://github.com/cs-pub-ro/PP-laboratoare/blob/master/prolog/probleme/prolog_cheatsheet_3.pdf)
 
