@@ -63,7 +63,8 @@ Predicatul `setof/3` are aceeași comportare cu `bagof/3`, dar cu diferența că
 X = Y.
 
 ?- X == Y, X = Y. 
-false. 
+false.
+```
 
 ## Resurse
 
