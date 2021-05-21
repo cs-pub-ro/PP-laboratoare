@@ -23,7 +23,7 @@ even(Numbers, Even):-
 
 ### bagof(+Template, +Goal, -Bag)
 
-Predicatul `bagof` seamănă cu `findall`, diferența fiind că `bagof` construiește câte o listă `Bag` pentru fiecare instanțiere diferită a variabilelor libere din `Goal`.
+Predicatul `bagof` seamănă cu `findall`, diferența fiind că `bagof` construiește câte o listă `Bag` pentru fiecare instanțiere diferită a variabilelor libere (nelegate) din `Goal` care nu se găsesc în `Template`.
 
 ```prolog 
 digits([1, 2, 3, 4, 5, 6, 7, 8, 9]).
