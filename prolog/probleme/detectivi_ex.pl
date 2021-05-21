@@ -71,7 +71,9 @@ inarmat(paul, sabie).
 % adevărat pentru fiecare suspect al problemei noastre.
 exercitiul(1, []).
 
-suspect(_Nume:_Marca:_Arma) :- false.
+%% suspect/1
+%% suspect(Nume:Marca:Arma)
+suspect(_:_:_) :- false.
 
 check1:- tests([
              exp('setof(Nume_Marca_Arma, suspect(Nume_Marca_Arma), All)', [set('All', [aurel:ford:sabie, bogdan:bmw:pistol,
@@ -88,7 +90,9 @@ check1:- tests([
 % au pușcă.
 exercitiul(2, []).
 
-au_pusca(_ListaNume) :- false.
+%% au_pusca/1
+%% au_pusca(?ListaNume)
+au_pusca(_) :- false.
 
 check2:- tests([
              exp('au_pusca(ListaNume)', [set('ListaNume', [irina, laura])])
@@ -102,9 +106,13 @@ check2:- tests([
 % Arma, respectiv mașina de tipul Marca.
 exercitiul(3, []).
 
-au_arma(_Arma, _ListaNume) :- false.
+%% au_arma/2
+%% au_arma(?Arma, ?ListaNume)
+au_arma(_, _) :- false.
 
-au_marca(_Marca, _ListaNume) :- false.
+%% au_marca/2
+%% au_marca(?Marca, ?ListaNume)
+au_marca(_, _) :- false.
 
 check3:- tests([
              exp('au_arma(pistol, Pistolari)', [set('Pistolari', [bogdan, george])]),
@@ -122,7 +130,9 @@ check3:- tests([
 % de conducători de bmw.
 exercitiul(4, []).
 
-arme_bmw(_ListaArme) :- false.
+%% arme_bmw/1
+%% arme_bmw(?ListaArme)
+arme_bmw(_) :- false.
 
 check4:- tests([
              exp('arme_bmw(Arme)', [set('Arme', [arbaleta, grenada, pistol])])
@@ -135,7 +145,9 @@ check4:- tests([
 % armelor deținute de conducători de mașini de tipul Marca.
 exercitiul(5, []).
 
-arme_marca(_Marca, _ListaArme) :- false.
+%% arme_marca/2
+%% arme_marca(?Marca, ?ListaArme)
+arme_marca(_, _) :- false.
 
 check5:- tests([
              exp('arme_marca(bmw, ArmeBmw)', [set('ArmeBmw', [arbaleta, grenada, pistol])]),
@@ -151,7 +163,9 @@ check5:- tests([
 % de rezolvarea exercițiului 5. Nu folosiți length/2.
 exercitiul(6, []).
 
-marci_arma_unica(_ListaMarci) :- false.
+%% marci_arma_unica/1
+%% marci_arma_unica(?ListaMarci)
+marci_arma_unica(_) :- false.
 
 check6:- tests([
              exp('marci_arma_unica(ListaMarci)', [set('ListaMarci', [mercedes, opel, seat])])
@@ -195,7 +209,9 @@ check6:- tests([
 % nu indică în mod unic un anumit individ.
 exercitiul(7, []).
 
-suspect1(_Nume:_Marca:_Arma) :- false.
+%% suspect1/1
+%% suspect1(?Nume:?Marca:?Arma)
+suspect1(_:_:_) :- false.
 
 check7:- tests([
              exp('setof(Nume_Marca_Arma, suspect1(Nume_Marca_Arma), All)',
@@ -220,7 +236,9 @@ check7:- tests([
 % corespunde primei replici.
 exercitiul(8, []).
 
-suspect2(_Nume:_Marca:_Arma) :- false.
+%% suspect2/1
+%% suspect2(?Nume:?Marca:?Arma)
+suspect2(_:_:_) :- false.
 
 check8:- tests([
              exp('setof(Nume_Marca_Arma, suspect2(Nume_Marca_Arma), All)',
@@ -244,7 +262,9 @@ check8:- tests([
 % corespunde primelor două replici.
 exercitiul(9, []).
 
-suspect3(_Nume:_Marca:_Arma) :- false.
+%% suspect3/1
+%% suspect3(?Nume:?Marca:?Arma)
+suspect3(_:_:_) :- false.
 
 check9:- tests([
              exp('setof(Nume_Marca_Arma, suspect3(Nume_Marca_Arma), All)',
@@ -267,7 +287,9 @@ check9:- tests([
 % corespunde primelor trei replici.
 exercitiul(10, []).
 
-suspect4(_Nume:_Marca:_Arma) :- false.
+%% suspect4/1
+%% suspect4(?Nume:?Marca:?Arma)
+suspect4(_:_:_) :- false.
 
 check10:- tests([
              exp('setof(Nume_Marca_Arma, suspect4(Nume_Marca_Arma), All)',
@@ -289,7 +311,9 @@ check10:- tests([
 % corespunde primelor patru replici.
 exercitiul(11, []).
 
-suspect5(_Nume:_Marca:_Arma) :- false.
+%% suspect5/1
+%% suspect5(?Nume:?Marca:?Arma)
+suspect5(_:_:_) :- false.
 
 check11:- tests([
              exp('setof(Nume_Marca_Arma, suspect5(Nume_Marca_Arma), All)',
@@ -310,7 +334,9 @@ check11:- tests([
 % corespunde primelor cinci replici.
 exercitiul(12, []).
 
-suspect6(_Nume:_Marca:_Arma) :- false.
+%% suspect6/1
+%% suspect6(?Nume:?Marca:?Arma)
+suspect6(_:_:_) :- false.
 
 check12:- tests([
              exp('setof(Nume_Marca_Arma, suspect6(Nume_Marca_Arma), All)',

@@ -71,6 +71,8 @@ inarmat(paul, sabie).
 % adevărat pentru fiecare suspect al problemei noastre.
 exercitiul(1, []).
 
+%% suspect/1
+%% suspect(?Nume:?Marca:?Arma)
 suspect(Nume:Marca:Arma) :- conduce(Nume, Marca), inarmat(Nume, Arma).
 
 check1:- tests([
@@ -88,6 +90,8 @@ check1:- tests([
 % au pușcă.
 exercitiul(2, []).
 
+%% au_pusca/1
+%% au_pusca(?ListaNume)
 au_pusca(ListaNume) :- findall(X, inarmat(X, pusca), ListaNume).
 
 check2:- tests([
@@ -102,8 +106,12 @@ check2:- tests([
 % Arma, respectiv mașina de tipul Marca.
 exercitiul(3, []).
 
+%% au_arma/2
+%% au_arma(?Arma, ?ListaNume)
 au_arma(Arma, ListaNume) :- findall(X, inarmat(X, Arma), ListaNume).
 
+%% au_marca/2
+%% au_marca(?Marca, ?ListaNume)
 au_marca(Marca, ListaNume) :- bagof(X, conduce(X, Marca), ListaNume).
 
 check3:- tests([
@@ -122,6 +130,8 @@ check3:- tests([
 % de conducători de bmw.
 exercitiul(4, []).
 
+%% arme_bmw/1
+%% arme_bmw(?ListaArme)
 arme_bmw(ListaArme) :- setof(Arma, N^suspect(N:bmw:Arma), ListaArme).
 % dar merge și findall(Arma, suspect(_:bmw:Arma), ListaArme).
 
@@ -136,6 +146,8 @@ check4:- tests([
 % armelor deținute de conducători de mașini de tipul Marca.
 exercitiul(5, []).
 
+%% arme_marca/2
+%% arme_marca(?Marca, ?ListaArme)
 arme_marca(Marca, ListaArme) :- setof(Arma, N^suspect(N:Marca:Arma), ListaArme).
 % dar merge și findall(Arma, suspect(_:Marca:Arma), ListaArme).
 
@@ -153,6 +165,8 @@ check5:- tests([
 % de rezolvarea exercițiului 5. Nu folosiți length/2.
 exercitiul(6, []).
 
+%% marci_arma_unica/1
+%% marci_arma_unica(?ListaMarci)
 marci_arma_unica(ListaMarci) :-
     % toate mărcile care indică o singură armă (toți cei care conduc
     % mașina de marca M folosesc o aceeași armă
@@ -200,6 +214,8 @@ check6:- tests([
 % nu indică în mod unic un anumit individ.
 exercitiul(7, []).
 
+%% suspect1/1
+%% suspect1(?Nume:?Marca:?Arma)
 suspect1(Nume:Marca:Arma) :-
     suspect(Nume:Marca:Arma),
     arme_marca(Marca, Arme),
@@ -230,6 +246,8 @@ check7:- tests([
 % corespunde primei replici.
 exercitiul(8, []).
 
+%% suspect2/1
+%% suspect2(?Nume:?Marca:?Arma)
 suspect2(Nume:Marca:Arma) :-
     suspect1(Nume:Marca:Arma),
     % sunt cel puțin 2 suspecți pentru care predicatul suspect1 este adevărat
@@ -258,6 +276,8 @@ check8:- tests([
 % corespunde primelor două replici.
 exercitiul(9, []).
 
+%% suspect3/1
+%% suspect3(?Nume:?Marca:?Arma)
 suspect3(Nume:Marca:Arma) :-
     suspect2(Nume:Marca:Arma),
     % sunt cel puțin 2 suspecți pentru care predicatul suspect2 este adevărat
@@ -285,6 +305,8 @@ check9:- tests([
 % corespunde primelor trei replici.
 exercitiul(10, []).
 
+%% suspect4/1
+%% suspect4(?Nume:?Marca:?Arma)
 suspect4(Nume:Marca:Arma) :-
     suspect3(Nume:Marca:Arma),
     % sunt cel puțin 2 suspecți pentru care predicatul suspect3 este adevărat
@@ -311,6 +333,8 @@ check10:- tests([
 % corespunde primelor patru replici.
 exercitiul(11, []).
 
+%% suspect5/1
+%% suspect5(?Nume:?Marca:?Arma)
 suspect5(Nume:Marca:Arma) :-
     suspect4(Nume:Marca:Arma),
     % este un singur suspect pentru care predicatul suspect4 este adevărat
@@ -337,6 +361,8 @@ check11:- tests([
 % corespunde primelor cinci replici.
 exercitiul(12, []).
 
+%% suspect6/1
+%% suspect6(?Nume:?Marca:?Arma)
 suspect6(Nume:Marca:Arma) :-
     suspect5(Nume:Marca:Arma),
     % este un singur suspect pentru care predicatul suspect5 este adevărat
