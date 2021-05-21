@@ -45,8 +45,8 @@ D = 7, L = [7, 14, 28, 35] ;
 D = 8, L = [24] ;
 D = 9, L = [9, 18].
 ```
-<<<<<<< HEAD
 
+Aici, variabilele `D` și `N` din `Goal` nu sunt legate, dar `N` apare în `Template`, astfel că rezultatele (soluțiile pentru `L`) vor fi separate după posibilele legări pentru `D`.
 Pentru a evita *gruparea* soluțiilor pentru fiecare valoare separată a variabilelor ce apar în scopul lui `bagof/3` se poate folosi construcția `Var^Goal`.
 
 Exemple:
@@ -121,10 +121,6 @@ Bag = [laptop, pix, ghiozdan] ;
 C = radu,
 Bag = [papagal, ghiozdan, laptop].
 ```
-=======
-Aici, variabilele `D` și `N` din `Goal` nu sunt legate, dar `N` apare în `Template`, astfel că rezultatele (soluțiile pentru `L`) vor fi separate după posibilele legări pentru `D`.
-Pentru a evita *gruparea* soluțiilor pentru fiecare valoare separată a variabilelor ce apar în scopul lui `bagof/3` se poate folosi construcția `Var^Goal`
->>>>>>> 4b1ee9a22dbf5d47ae4472b1ca742d51a445efec
 
 ### setof(+Template, +Goal, -Bag)
 
