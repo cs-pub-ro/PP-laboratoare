@@ -45,7 +45,7 @@ D = 7, L = [7, 14, 28, 35] ;
 D = 8, L = [24] ;
 D = 9, L = [9, 18].
 ```
-
+Aici, variabilele `D` și `N` din `Goal` nu sunt legate, dar `N` apare în `Template`, astfel că rezultatele (soluțiile pentru `L`) vor fi separate după posibilele legări pentru `D`.
 Pentru a evita *gruparea* soluțiilor pentru fiecare valoare separată a variabilelor ce apar în scopul lui `bagof/3` se poate folosi construcția `Var^Goal`
 
 ### setof(+Template, +Goal, -Bag)
@@ -83,4 +83,3 @@ false.
 
 ## Resurse
 - [Cheatsheet](https://github.com/cs-pub-ro/PP-laboratoare/blob/master/prolog/probleme/prolog_cheatsheet_3.pdf)
-
