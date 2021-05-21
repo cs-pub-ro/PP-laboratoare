@@ -46,11 +46,148 @@ D = 8, L = [24] ;
 D = 9, L = [9, 18].
 ```
 
-Pentru a evita *gruparea* soluțiilor pentru fiecare valoare separată a variabilelor ce apar în scopul lui `bagof/3` se poate folosi construcția `Var^Goal`
+Pentru a evita *gruparea* soluțiilor pentru fiecare valoare separată a variabilelor ce apar în scopul lui `bagof/3` se poate folosi construcția `Var^Goal`.
+
+Exemple:
+```prolog
+are(andrei, laptop, 1). 
+are(andrei, pix, 5). 
+are(andrei, ghiozdan, 2).
+are(radu, papagal, 1). 
+are(radu, ghiozdan, 1). 
+are(radu, laptop, 2).
+are(ana, telefon, 3). 
+are(ana, masina, 1).
+
+?- bagof(X, are(andrei, X, _), Bag).
+Bag = [laptop] ;
+Bag = [ghiozdan] ;
+Bag = [pix].
+
+?- bagof(X, C^are(C, X, _), Bag).
+Bag = [laptop, papagal, ghiozdan, masina] ;
+Bag = [ghiozdan, laptop] ;
+Bag = [telefon] ;
+Bag = [pix].
+
+?- bagof(X, P^C^are(C, X, P), Bag).
+Bag = [laptop, pix, ghiozdan, papagal, ghiozdan, laptop, telefon, masina].
+
+?- bagof(X, are(C, X, _), Bag).
+C = ana,
+Bag = [masina] ;
+C = ana,
+Bag = [telefon] ;
+C = andrei,
+Bag = [laptop] ;
+C = andrei,
+Bag = [ghiozdan] ;
+C = andrei,
+Bag = [pix] ;
+C = radu,
+Bag = [papagal, ghiozdan] ;
+C = radu,
+Bag = [laptop].
+
+?- bagof(X, are(C, X, P), Bag).
+C = ana,
+P = 1,
+Bag = [masina] ;
+C = ana,
+P = 3,
+Bag = [telefon] ;
+C = andrei,
+P = 1,
+Bag = [laptop] ;
+C = andrei,
+P = 2,
+Bag = [ghiozdan] ;
+C = andrei,
+P = 5,
+Bag = [pix] ;
+C = radu,
+P = 1,
+Bag = [papagal, ghiozdan] ;
+C = radu,
+P = 2,
+Bag = [laptop].
+
+?- bagof(X, P^are(C, X, P), Bag).
+C = ana,
+Bag = [telefon, masina] ;
+C = andrei,
+Bag = [laptop, pix, ghiozdan] ;
+C = radu,
+Bag = [papagal, ghiozdan, laptop].
+```
 
 ### setof(+Template, +Goal, -Bag)
 
 Predicatul `setof/3` are aceeași comportare cu `bagof/3`, dar cu diferența că soluțiile găsite sunt sortate și se elimină duplicatele.
+
+Exemple:
+```prolog
+?- setof(X, are(andrei, X, _), Bag).
+Bag = [laptop] ;
+Bag = [ghiozdan] ;
+Bag = [pix].
+
+?- setof(X, C^are(C, X, _), Bag).
+Bag = [ghiozdan, laptop, masina, papagal] ;
+Bag = [ghiozdan, laptop] ;
+Bag = [telefon] ;
+Bag = [pix].
+
+?- setof(X, P^C^are(C, X, P), Bag).
+Bag = [ghiozdan, laptop, masina, papagal, pix, telefon].
+
+?- setof(X, are(C, X, _), Bag).
+C = ana,
+Bag = [masina] ;
+C = ana,
+Bag = [telefon] ;
+C = andrei,
+Bag = [laptop] ;
+C = andrei,
+Bag = [ghiozdan] ;
+C = andrei,
+Bag = [pix] ;
+C = radu,
+Bag = [ghiozdan, papagal] ;
+C = radu,
+Bag = [laptop].
+
+?- setof(X, are(C, X, P), Bag).
+C = ana,
+P = 1,
+Bag = [masina] ;
+C = ana,
+P = 3,
+Bag = [telefon] ;
+C = andrei,
+P = 1,
+Bag = [laptop] ;
+C = andrei,
+P = 2,
+Bag = [ghiozdan] ;
+C = andrei,
+P = 5,
+Bag = [pix] ;
+C = radu,
+P = 1,
+Bag = [ghiozdan, papagal] ;
+C = radu,
+P = 2,
+Bag = [laptop].
+
+?- setof(X, P^are(C, X, P), Bag).
+C = ana,
+Bag = [masina, telefon] ;
+C = andrei,
+Bag = [ghiozdan, laptop, pix] ;
+C = radu,
+Bag = [ghiozdan, laptop, papagal].
+```
 
 ### forall(+Cond, +Action)
 Predicatul `forall/2` verifică dacă pentru orice legare din `Cond`, care reprezintă un domeniu ce conține legări de variabile, se pot îndeplini condițiile din `Action`.
