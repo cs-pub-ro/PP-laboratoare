@@ -23,7 +23,7 @@ even(Numbers, Even):-
 
 ### bagof(+Template, +Goal, -Bag)
 
-Predicatul `bagof` seamănă cu `findall`, diferența fiind că `bagof` construiește câte o listă `Bag` pentru fiecare instanțiere diferită a variabilelor libere din `Goal`.
+Predicatul `bagof` seamănă cu `findall`, diferența fiind că `bagof` construiește câte o listă `Bag` pentru fiecare instanțiere diferită a variabilelor libere (nelegate) din `Goal` care nu se găsesc în `Template`.
 
 ```prolog 
 digits([1, 2, 3, 4, 5, 6, 7, 8, 9]).
@@ -45,6 +45,7 @@ D = 7, L = [7, 14, 28, 35] ;
 D = 8, L = [24] ;
 D = 9, L = [9, 18].
 ```
+<<<<<<< HEAD
 
 Pentru a evita *gruparea* soluțiilor pentru fiecare valoare separată a variabilelor ce apar în scopul lui `bagof/3` se poate folosi construcția `Var^Goal`.
 
@@ -120,6 +121,10 @@ Bag = [laptop, pix, ghiozdan] ;
 C = radu,
 Bag = [papagal, ghiozdan, laptop].
 ```
+=======
+Aici, variabilele `D` și `N` din `Goal` nu sunt legate, dar `N` apare în `Template`, astfel că rezultatele (soluțiile pentru `L`) vor fi separate după posibilele legări pentru `D`.
+Pentru a evita *gruparea* soluțiilor pentru fiecare valoare separată a variabilelor ce apar în scopul lui `bagof/3` se poate folosi construcția `Var^Goal`
+>>>>>>> 4b1ee9a22dbf5d47ae4472b1ca742d51a445efec
 
 ### setof(+Template, +Goal, -Bag)
 
@@ -220,4 +225,3 @@ false.
 
 ## Resurse
 - [Cheatsheet](https://github.com/cs-pub-ro/PP-laboratoare/blob/master/prolog/probleme/prolog_cheatsheet_3.pdf)
-
