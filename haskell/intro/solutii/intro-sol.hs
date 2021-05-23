@@ -299,7 +299,7 @@ sumOfSquaredEvens = foldl' (\acc x -> trace ("add " ++ show x) (acc + x)) 0 squa
 -- Verificare: check9
 check9 :: TestData
 check9 = tests_ 9
-    [ testManually "To be experimented in ghci console" True ]
+    [ testManually "trace în consolă" True ]
 
 {-
     10. Scrieți o funcție "infiniteApply" care primește ca parametru o funcție "f"
