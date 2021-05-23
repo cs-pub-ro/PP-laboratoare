@@ -221,3 +221,5 @@ false.
 
 ## Resurse
 - [Cheatsheet](https://github.com/cs-pub-ro/PP-laboratoare/blob/master/prolog/probleme/prolog_cheatsheet_3.pdf)
+- [Schelet](https://ocw.cs.pub.ro/courses/_media/pp/21/laboratoare/prolog/probleme-skel.zip)
+- [Soluții](https://ocw.cs.pub.ro/courses/_media/pp/21/laboratoare/prolog/probleme-sol.zip)
