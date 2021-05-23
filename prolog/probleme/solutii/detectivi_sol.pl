@@ -67,11 +67,12 @@ inarmat(ovidiu, maceta).
 inarmat(paul, sabie).
 
 % ----------------------------------------------------------------------------
-% 1. (1p) Scrieți un predicat suspect(Nume:Marca:Arma) care să fie
+% 1. Scrieți un predicat suspect(Nume:Marca:Arma) care să fie
 % adevărat pentru fiecare suspect al problemei noastre.
-exercitiul(1, [1, puncte]).
+exercitiul(1, []).
 
-%suspect(_Nume:_Marca:_Arma) :- fail.
+%% suspect/1
+%% suspect(?Nume:?Marca:?Arma)
 suspect(Nume:Marca:Arma) :- conduce(Nume, Marca), inarmat(Nume, Arma).
 
 check1:- tests([
@@ -84,12 +85,13 @@ check1:- tests([
           ]).
 
 % ----------------------------------------------------------------------------
-% 2. (1p) Scrieți un predicat au_pusca(-ListaNume) care să fie
+% 2. Scrieți un predicat au_pusca(-ListaNume) care să fie
 % adevărat atunci când ListaNume este lista cu numele tuturor celor care
 % au pușcă.
-exercitiul(2, [1, puncte]).
+exercitiul(2, []).
 
-%% au_pusca([_ListaNume]) :- fail.
+%% au_pusca/1
+%% au_pusca(?ListaNume)
 au_pusca(ListaNume) :- findall(X, inarmat(X, pusca), ListaNume).
 
 check2:- tests([
@@ -98,16 +100,18 @@ check2:- tests([
 
 
 % ----------------------------------------------------------------------------
-% 3. (1p) Scrieți predicatele au_arma(+Arma, -ListaNume)
+% 3. Scrieți predicatele au_arma(+Arma, -ListaNume)
 % și au_marca(+Arma, -ListaNume), care să fie adevărate atunci când
 % ListaNume este lista cu numele tuturor celor care au arma de tipul
 % Arma, respectiv mașina de tipul Marca.
-exercitiul(3, [1, puncte]).
+exercitiul(3, []).
 
-%au_arma(_Arma, _ListaNume) :- fail.
+%% au_arma/2
+%% au_arma(?Arma, ?ListaNume)
 au_arma(Arma, ListaNume) :- findall(X, inarmat(X, Arma), ListaNume).
 
-%au_marca(_Marca, _ListaNume) :- fail.
+%% au_marca/2
+%% au_marca(?Marca, ?ListaNume)
 au_marca(Marca, ListaNume) :- bagof(X, conduce(X, Marca), ListaNume).
 
 check3:- tests([
@@ -121,12 +125,13 @@ check3:- tests([
           ]).
 
 % ----------------------------------------------------------------------------
-% 4. (1.5p) Scrieți un predicat arme_bmw(ListaArme) care să fie adevărat
+% 4. Scrieți un predicat arme_bmw(ListaArme) care să fie adevărat
 % atunci când ListaArme reprezintă mulțimea tuturor armelor deținute
 % de conducători de bmw.
-exercitiul(4, [1.5, puncte]).
+exercitiul(4, []).
 
-%arme_bmw(_ListaArme) :- fail.
+%% arme_bmw/1
+%% arme_bmw(?ListaArme)
 arme_bmw(ListaArme) :- setof(Arma, N^suspect(N:bmw:Arma), ListaArme).
 % dar merge și findall(Arma, suspect(_:bmw:Arma), ListaArme).
 
@@ -136,12 +141,13 @@ check4:- tests([
 
 
 % ----------------------------------------------------------------------------
-% 5. (1.5p) Scrieți un predicat arme_marca(Marca, ListaArme) care să
+% 5. Scrieți un predicat arme_marca(Marca, ListaArme) care să
 % fie adevărat atunci când ListaArme reprezintă mulțimea tuturor
 % armelor deținute de conducători de mașini de tipul Marca.
-exercitiul(5, [1.5, puncte]).
+exercitiul(5, []).
 
-%arme_marca(_Marca, _ListaArme) :- fail.
+%% arme_marca/2
+%% arme_marca(?Marca, ?ListaArme)
 arme_marca(Marca, ListaArme) :- setof(Arma, N^suspect(N:Marca:Arma), ListaArme).
 % dar merge și findall(Arma, suspect(_:Marca:Arma), ListaArme).
 
@@ -153,13 +159,14 @@ check5:- tests([
           ]).
 
 % ----------------------------------------------------------------------------
-% 6. (2p) Scrie un predicat marci_arma_unica(ListaMarci) care să afișeze
+% 6. Scrie un predicat marci_arma_unica(ListaMarci) care să afișeze
 % lista mașinilor pentru care lista armelor pe care le dețin
 % conducătorii unei mărci conține un singur element. Hint: folosiți-vă
 % de rezolvarea exercițiului 5. Nu folosiți length/2.
-exercitiul(6, [2, puncte]).
+exercitiul(6, []).
 
-marci_arma_unica(_ListaMarci) :- fail.%marci_arma_unica(_ListaMarci) :- fail.
+%% marci_arma_unica/1
+%% marci_arma_unica(?ListaMarci)
 marci_arma_unica(ListaMarci) :-
     % toate mărcile care indică o singură armă (toți cei care conduc
     % mașina de marca M folosesc o aceeași armă
@@ -201,13 +208,14 @@ check6:- tests([
 % pentru care nu există mai multe posibilități.
 
 % ----------------------------------------------------------------------------
-% 7. (2.5p) Scrie un predicat suspect1/1 care este adevărat doar pentru
+% 7. Scrie un predicat suspect1/1 care este adevărat doar pentru
 % numele suspecților care respectă condiția impusă de replica
 % Detectivului A: niciuna dintre armele asociate cu mașina suspectului
 % nu indică în mod unic un anumit individ.
-exercitiul(7, [2.5, puncte]).
+exercitiul(7, []).
 
-%suspect1(Nume:Marca:Arma) :- suspect(Nume:Marca:Arma). % TODO
+%% suspect1/1
+%% suspect1(?Nume:?Marca:?Arma)
 suspect1(Nume:Marca:Arma) :-
     suspect(Nume:Marca:Arma),
     arme_marca(Marca, Arme),
@@ -230,15 +238,16 @@ check7:- tests([
 %
 % Detectivul A: Nici eu nu știu!
 %
-% 8. (1.5p) Scrie un predicat suspect2/1 care este adevărat doar pentru
+% 8. Scrie un predicat suspect2/1 care este adevărat doar pentru
 % numele suspecților care respectă condiția impusă de replica
 % Detectivului A: marca nu indică unic un individ.
 %
 % Atenție: informația ce trebuie filtrată acum este cea care
 % corespunde primei replici.
-exercitiul(8, [1.5, puncte]).
+exercitiul(8, []).
 
-%suspect2(Nume:Marca:Arma) :- suspect1(Nume:Marca:Arma). % TODO
+%% suspect2/1
+%% suspect2(?Nume:?Marca:?Arma)
 suspect2(Nume:Marca:Arma) :-
     suspect1(Nume:Marca:Arma),
     % sunt cel puțin 2 suspecți pentru care predicatul suspect1 este adevărat
@@ -259,15 +268,16 @@ check8:- tests([
 %
 % Detectivul B: Nici eu nu știu!
 %
-% 9. (1p) Scrie un predicat suspect3/1 care este adevărat doar pentru
+% 9. Scrie un predicat suspect3/1 care este adevărat doar pentru
 % numele suspecților care respectă condiția impusă de replica
 % Detectivului B: arma nu identifică unic un individ.
 %
 % Atenție: informația ce trebuie filtrată acum este cea care
 % corespunde primelor două replici.
-exercitiul(9, [1, puncte]).
+exercitiul(9, []).
 
-%suspect3(Nume:Marca:Arma) :- suspect2(Nume:Marca:Arma). % TODO
+%% suspect3/1
+%% suspect3(?Nume:?Marca:?Arma)
 suspect3(Nume:Marca:Arma) :-
     suspect2(Nume:Marca:Arma),
     % sunt cel puțin 2 suspecți pentru care predicatul suspect2 este adevărat
@@ -287,15 +297,16 @@ check9:- tests([
 %
 % Detectivul A: Eu tot nu știu!
 %
-% 10. (1p) Scrie un predicat suspect4/1 care este adevărat doar pentru
+% 10. Scrie un predicat suspect4/1 care este adevărat doar pentru
 % numele suspecților care respectă condiția impusă de replica
 % Detectivului A.
 %
 % Atenție: informația ce trebuie filtrată acum este cea care
 % corespunde primelor trei replici.
-exercitiul(10, [1, puncte]).
+exercitiul(10, []).
 
-%suspect4(Nume:Marca:Arma) :- suspect3(Nume:Marca:Arma). %TODO
+%% suspect4/1
+%% suspect4(?Nume:?Marca:?Arma)
 suspect4(Nume:Marca:Arma) :-
     suspect3(Nume:Marca:Arma),
     % sunt cel puțin 2 suspecți pentru care predicatul suspect3 este adevărat
@@ -314,15 +325,16 @@ check10:- tests([
 %
 % Detectivul B: Eu am aflat!
 %
-% 11. (0.5p) Scrie un predicat suspect5/1 care este adevărat doar pentru
+% 11. Scrie un predicat suspect5/1 care este adevărat doar pentru
 % numele suspecților care respectă condiția impusă de replica
 % Detectivului B.
 %
 % Atenție: informația ce trebuie filtrată acum este cea care
 % corespunde primelor patru replici.
-exercitiul(11, [0.5, puncte]).
+exercitiul(11, []).
 
-%suspect5(Nume:Marca:Arma) :- suspect4(Nume:Marca:Arma). % TODO
+%% suspect5/1
+%% suspect5(?Nume:?Marca:?Arma)
 suspect5(Nume:Marca:Arma) :-
     suspect4(Nume:Marca:Arma),
     % este un singur suspect pentru care predicatul suspect4 este adevărat
@@ -341,15 +353,16 @@ check11:- tests([
 %
 % Detectivul A: Și eu am aflat!
 %
-% 12. (0.5p) Scrie un predicat suspect6/1 care este adevărat doar pentru
+% 12. Scrie un predicat suspect6/1 care este adevărat doar pentru
 % numele suspecților care respectă condiția impusă de replica
 % Detectivului A.
 %
 % Atenție: informația ce trebuie filtrată acum este cea care
 % corespunde primelor cinci replici.
-exercitiul(12, [0.5, puncte]).
+exercitiul(12, []).
 
-%% suspect6(Nume:Marca:Arma) :- suspect5(Nume:Marca:Arma). % TODO
+%% suspect6/1
+%% suspect6(?Nume:?Marca:?Arma)
 suspect6(Nume:Marca:Arma) :-
     suspect5(Nume:Marca:Arma),
     % este un singur suspect pentru care predicatul suspect5 este adevărat
@@ -364,9 +377,28 @@ check12:- tests([
           ]).
 %% ----------------------------------------
 %% ----------------------------------------
+%% Tester
 
-testtimelimit(5). % în secunde
+% pentru vmchecker, trebuie pentru fiecare segment de testare să existe:
+% o afirmație vmpoints(<ID_segment>, <Număr_puncte_segment>)
+% o afirmație tt(<ID_segment>, <Listă_teste>)
+% Trebuie ca test_mode(vmchecker) să fie adevărat.
 
+% pentru quickchecking (la laborator), trebuie ca pentru fiecare
+% exercițiu să existe:
+% o afirmație exercitiul(<ID>, [<Număr puncte>, alte, comentarii])
+% o afirmație check<ID>(tests(<Listă_teste>))
+% e.g. dacă există exercitiul(5), trebuie să existe și check5(...)
+%
+% Tipurile de teste sunt prezentate în tester.pl, în cadrul predicatului
+% testtest/0.
+
+testtimelimit(5). % in seconds
+
+%test_points(show). % uncomment to show points in non-vmchecker mode.
+test_points(hide) :- test_mode(vmchecker); \+ test_points(show).
+
+%test_mode(vmchecker). % uncomment to activate the vmchecker mode.
 test_mode(quickcheck) :- \+ test_mode(vmchecker).
 
 :-dynamic(punct/2).
@@ -375,124 +407,64 @@ test_mode(quickcheck) :- \+ test_mode(vmchecker).
 
 clean :- retractall(punct(_, _)), retractall(current(_)).
 
-testtest(5).
-testtest(6).
-testtest(9).
-testtest(a, 5).
-testtest(b, _).
-testtest(d, [2, 1, 3]).
-testtest(e, [2, 1, 3, 1, 2]).
-testtest(1, 2, 3).
-testtest(c, X, X).
-testtest(d, 5, excepting) :- X is 5 / 0, write(X).
-testtest(d, 5, limitless) :-  testtest(d, 5, limitless).
+% -----------------
 
-testtest :- tests([
-               % chk(P) ("check") verifică evaluarea cu succes a lui P
-               chk(testtest(5)), % a
-               chk(testtest(6)), % b % eșuează
-               % uck(P) ("uncheck") verifică evaluarea cu eșec a lui P
-               uck(testtest(6)), % c
-               uck(testtest(5)), % d % eșuează
-               % exp(P, Exps) ("expect") verifică evaluarea cu succes a lui P și a unor condiții
-               % P este dat ca șir de caractere pentru o verificare și afișare mai bune.
-               % Condițiile sunt evaluate pe rând și independent unele de altele.
-               % Dacă în lista de condiții avem un nume de variabilă,
-               % se verifică că aceasta a fost legat la valoarea care urmează imediat în listă.
-               % valoarea de verificat nu poate conține variabile din interogare
-               % (pentru asta folosiți cond, vezi mai jos).
-               exp('testtest(X, X)', ['X', b]), % e
-               exp('testtest(X, Y, Z)', ['X', 1, 'Y', 2, 'Z', 3]), % f
-               exp('testtest(X, X)', ['X', a]), % g % eșuează
-               % Dacă în lista de condiții avem v('Var'), se verifică că Var a rămas nelegată.
-               exp('testtest(b, Y)', [v('Y')]), % h
-               exp('testtest(a, Y)', [v('Y')]), % i % eșuează
-               % Dacă în lista de condiții avem cond('P'), se verifică că P este adevărat.
-               % Diversele condiții din structuri cond diferite se verifică independent.
-               exp('testtest(c, X, X)', [v('X'), cond('X==X')]), % j
-               % Dacă în lista de condiții avem set('V', Set), se verifică că V este legată la mulțimea Set.
-               % Duplicatele contează.
-               exp('testtest(d, L)', [set('L', [1, 2, 3]), 'L', [1, 2, 3]]), % k % eșuează pe a 2a condiție
-               exp('testtest(d, L)', [set('L', [2, 3, 4, 5])]), % l
-               exp('testtest(e, L)', [set('L', [1, 2, 3])]), % m
-               % setU funcționează la fel, dar ignoră duplicatele.
-               exp('testtest(e, L)', [setU('L', [1, 2, 3])]), % n
-               % ckA(P, Argss) ("check all") verifică evaluarea cu succes a lui P pe fiecare dintre variantele de argumente din Argss.
-               % e.g. dacă P este pred, iar Argss este [(1, a, []), (2, b, [5])],
-               % se vor evalua atomii pred(1, a, []) și pred(2, b, [5]).
-               ckA('testtest', [(a, 5), (b, 1), (b, 3), (b, 4)]), %o
-               ckA('testtest', [(a, 5), (c, 1), (c, 3), (b, 4)]), %p
-               % ech(P, Conds) ("each") verifică dacă condițiile țin pentru fiecare dintre soluțiile lui P
-               ech('testtest(X)', ['X < 10', 'X > 3']), % q
-               ech('testtest(X)', ['X > 3', 'X > 5']), % r
-               % nsl(P, Template, NSols) ("N Solutions") verifică dacă lungimea lui L din findall(P, Template, L) este NSols
-               2, nsl('testtest(X, Y)', '(X, Y)', 4), % s
-               % testul de mai sus valorează de 2 ori mai mult decât celelalte
-
-               % sls(P, Template, Sols) ("Solutions") verifică dacă findall(P, Template, L) leagă L la aceeași mulțime cu Sols.
-               % Duplicatele contează
-               2, sls('testtest(X, X)', '(X, X)', [(b, b)]), % t
-               % testul de mai sus valorează de 2 ori mai mult decât celelalte
-
-               sls('testtest(X, Y)', '(X, Y)', [(b, 5)]), % u
-               % gestionare exceptii
-               chk(testtest(d, 5, excepting)),
-               % gestionare limita de timp
-               chk(testtest(d, 5, limitless))
-           ]).
-
-% aceasta va fi ordinea de testare
-vmpoints(1, 5).
-vmpoints(T, 2.5) :- member(T, ['2a', '2b']).
-
-% entry point (for users) for vm tests.
-vmtest(T) :-
-        vmtest(T, Score),
-        format('Total: ~w.', [Score]).
-
-% performes a vm test, outputs score.
-vmtest(T, Score) :-
-        once(vmpoints(T, Pts)),
-        tt(T, TestList),
-        tests(TestList, Pts, T, Score).
-
-tt(1, [
-       chk(testtest(5)),
-       chk(testtest(6)),
-       uck(testtest(6)),
-       uck(testtest(5))
-       ]).
-tt('2a', [
-       exp('testtest(X, X)', ['X', b])
-   ]).
-tt('2b', [
-       exp('testtest(X, Y, Z)', ['X', 1, 'Y', 2, 'Z', 3]),
-       exp('testtest(X, X)', ['X', a])
-   ]).
-
+% runs quickcheck tests
+check :-
+        clean,
+        forall(exercitiul(Ex,_),
+               (   atom_concat(check, Ex, Ck),
+                   retractall(current(_)), assert(current(Ex)),
+                   once(call(Ck)) ; true)),
+        findall(P, punct(_, P), L),
+        sum_list(L, S),
+        (   test_points(show),
+            format('Punctaj total: ~f~n',[S])
+        ;   true),
+        clean.
 
 % entry point for quick check; handles checking all exercises or just
 % one.
 tests(Tests) :- (   current(_), ! ; retractall(punct(_, _))),
-        (   current(Ex), !, exercitiul(Ex, [Pts | _]), Total is Pts
+        (   current(Ex), !, (exercitiul(Ex, [Pts | _]), !, Total is Pts
+                            ;
+                            exercitiul(Ex, []), Total is 0)
         ;   Total is 100, Ex = none
         ),
         tests(Tests, Total, Ex, Score),
         (   current(Ex), assert(punct(Ex, Score)), !
         ;   format('Rezolvat ~0f%.~n', [Score])
         ), !.
-
 tests(_) :- failure(unknown, 'INTERN: tests/1 failed').
 
-tests(Tests, TotalPoints, Ex, Score) :-
-    total_units(Tests, TF),
-    Unit is TotalPoints / TF,
-    tests(Tests, Ex, 1, Unit, 0, Score), !.
+
+% ---------------
+% general testing
+
+% unified entry point for testing; computes fractions, computes if
+% exercise is not done, and starts per-test iteration.
+tests(Tests, TotalPoints, Ex, Score) :- %trace,
+    total_units(Tests, TF, Ck/AllCheck, UCk/AllUCk, Others/AllOthers),
+    %format('Total units: ~w~n', [TF]),
+    (   isNotDone(Ck/AllCheck, UCk/AllUCk, Others/AllOthers), !,
+        (   Ex == none, !
+        ;   ( test_mode(vmchecker), !, format("+0.00 ~10t  ") ; true ),
+            format("[~w] Nerezolvat.~n", [Ex])
+        ),
+        Score = 0
+    ;   Unit is TotalPoints / TF,
+        tests(Tests, Ex, 1, Unit, 0, Score)
+    ), !.
 tests(_, _, Ex, _) :- failure(Ex, 'INTERN: tests/4 failed').
+
+isNotDone(0/TC, TU/TU, 0/TO) :- (TO > 0, !; TC > 0).
+% otherwise, probably done
 
 % iterates through tests, handles test index, generates test id, adds
 % points
 tests([], _, _, _, Points, Points) :- !.
+tests([wait|R], Ex, Idx, Unit, PointsIn, PointsOut) :- !,
+    tests(R, Ex, Idx, Unit, PointsIn, PointsOut).
 tests([Fraction, T|R], Ex, Idx, Unit, PointsIn, PointsOut) :-
         number(Fraction), !, test(T, Ex, Idx, Fraction, Unit, PointsIn, PointsOut1),
         tests(R, Ex, Idx+1, Unit, PointsOut1, PointsOut).
@@ -501,40 +473,70 @@ tests([T|R], Ex, Idx, Unit, PointsIn, PointsOut) :-
         tests(R, Ex, Idx+1, Unit, PointsOut1, PointsOut).
 tests(_, Ex, _, _, _, _) :- failure(Ex, 'INTERN: tests/6 failed').
 
-total_units([], 0).
-total_units([P, _|R], Tot) :- number(P), !, total_units(R, TotR), Tot is TotR + P.
-total_units([_|R], Tot) :- total_units(R, TotR), Tot is TotR + 1.
+total_units([], 0, 0/0, 0/0, 0/0).
+total_units([wait, P, _|R], Tot, A, B, C) :-
+    number(P), !, total_units([counted|R], TotR, A, B, C), Tot is TotR + P.
+total_units([wait, _|R], Tot, CO/TCO, UO/TUO, OO/TOO) :- !,
+    total_units(R, TotR, CO/TCO, UO/TUO, OO/TOO), Tot is TotR + 1.
+total_units([P, T|R], Tot, A, B, C) :-
+    number(P), !, total_units([counted, T|R], TotR, A, B, C), Tot is TotR + P.
+total_units([counted, T|R], Tot, CO/TCO, UO/TUO, OO/TOO) :- !, %trace,
+    test(T, dry, dry, _, _, 0, P),
+    (   ( T = chk(_), ! ; T = ckA(_, _) ), !, TA = 1,
+        (   P > 0, A = 1, !; A = 0 )
+    ;   TA = 0, A = 0),
+    (   ( T = uck(_), ! ; T = nsl(_, _, 0) ), !, TB = 1,
+        (   P > 0, B = 1, !; B = 0 )
+    ;   TB = 0, B = 0),
+    (   T \= chk(_), T \= ckA(_, _), T \= uck(_), T \= ech(_, _), T \= nsl(_, _, 0), !,
+        TD = 1, (   P > 0, D = 1, !; D = 0 )
+    ;   TD = 0, D = 0),
+    total_units(R, TotR, C/TC, U/TU, O/TO), Tot is TotR,
+    CO is C+A, TCO is TC+TA, UO is U+B, TUO is TU+TB, OO is O+D, TOO is TO+TD.
+total_units(TT, Tot, A, B, C) :-
+    !, total_units([counted|TT], TotR, A, B, C), Tot is TotR + 1.
 
 test(T, NEx, Idx, Fraction, Unit, PointsIn, PointsOut) :-
-        IdxI is Idx + 96, char_code(CEx, IdxI),
-        (   NEx == none, !, swritef(Ex, '%w|', [CEx]) ; swritef(Ex, '[%w|%w]', [NEx, CEx])),
-        testtimelimit(Time), swritef(MTime, 'limita de %w secunde depasita', [Time]),
+        (   NEx == dry, !, Ex = dry, TimeLimit = 0.1
+        ;   testtimelimit(TimeLimit),
+            IdxI is Idx + 96, char_code(CEx, IdxI),
+            (   NEx == none, !, swritef(Ex, '%w|', [CEx])
+            ;   swritef(Ex, '[%w|%w]', [NEx, CEx]))
+        ),
+        swritef(MTime, 'limita de %w secunde depasita', [TimeLimit]),
         (   catch(
-                catch(call_with_time_limit(Time, once(test(Ex, T))),
+                catch(call_with_time_limit(TimeLimit, once(test(Ex, T))),
                       time_limit_exceeded,
                       except(Ex, MTime)
                      ),
                 Expt,
-                (   swritef(M, 'exceptie: %w', [Expt]),
-                except(Ex, M))
+                (   swritef(M, 'exceptie: %w', [Expt]), except(Ex, M))
             ),
             !, success(Ex, Fraction, Unit, Points),
             PointsOut is PointsIn + Points
         ; PointsOut = PointsIn).
 test(_, Ex, Idx, _, _, _, _) :- failure(Ex/Idx, 'INTERN: test/7 failed').
 
+success(dry, _, _, 1) :- !.
 success(Ex, Fraction, Unit, Score) :-
     Score is Fraction * Unit,
+    %format('~w ~w ~w ~w~n', [Ex, Fraction, Unit, Score]),
     (   test_mode(vmchecker), !,
-        format('+~2f ~10t ~w Corect.~n', [Score, Ex])
-    ;   format('~w[OK] Corect. +~2f.~n', [Ex, Score])).
+        format('+~2f ~10t  ~w Corect.~n', [Score, Ex])
+    ;
+    (   test_points(show),
+        format('~w[OK] Corect. +~2f.~n', [Ex, Score])
+    ;   format('~w[OK] Corect.~n', [Ex])
+    )).
+failure(dry, _) :- !, fail.
 failure(Ex, M) :-
         (   test_mode(vmchecker), !,
-            format('+0.0 ~10t  ~w ~w~n', [Ex, M]), fail
+            format('+0.00 ~10t  ~w ~w~n', [Ex, M]), fail
         ;   format('~w[--] ~w~n', [Ex, M]), fail).
+except(dry, _) :- !, fail.
 except(Ex, M) :-
         (   test_mode(vmchecker), !,
-            format('+0.0 ~10t ~w Exception: ~w~n', [Ex, M]), fail
+            format('+0.00 ~10t ~w Exception: ~w~n', [Ex, M]), fail
         ;   format('~w[/-] ~w~n', [Ex, M]), fail).
 
 test(Ex, chk(P)) :- !, testCall(Ex, P).
@@ -651,13 +653,14 @@ testSols(Ex, Text, Vars, Sols) :-
 
 testSetU(Ex, Text, TypeText, SetG, SetE) :- sort(SetG, SetGUnique),
     testSet(Ex, Text, TypeText, SetGUnique, SetE).
-testSet(Ex, Text, TypeText, SetG, SetE) :- msort(SetG, SetGSorted),
-    (   SetGSorted == SetE, ! ;
+testSet(Ex, Text, TypeText, SetG, SetE) :-
+    msort(SetG, SetGSorted), msort(SetE, SetESorted),
+    (   SetGSorted == SetESorted, ! ;
         testSetMinus(SetG, SetE, TooMuch),
         testSetMinus(SetE, SetG, TooLittle),
         (   TooMuch == [], TooLittle == [], !,
             M1 = 'vezi duplicate'
-        ;   swritef(M1, '\n%w sunt in plus,\n%w lipsesc', [TooMuch, TooLittle])
+        ;   swritef(M1, '%w sunt in plus, %w lipsesc', [TooMuch, TooLittle])
         ),
         swritef(M,
                 'Interogarea %w %w %w dar se astepta %w (%w)',
@@ -670,22 +673,3 @@ testSetMinus(From, ToRemove, Result) :-
 getVal(Var, [Var=Val | _], Val) :- !.
 getVal(Var, [_ | Vars], Val) :- getVal(Var, Vars, Val).
 
-check :-
-        clean,
-        forall(exercitiul(Ex, _),
-               (   atom_concat(check, Ex, Ck),
-                   retractall(current(_)), assert(current(Ex)),
-                   once(call(Ck)) ; true)),
-        findall(P, punct(_, P), L),
-        sum_list(L, S),
-        format('Punctaj total: ~f~n',[S]),
-        clean.
-
-vmtest :- checkVm.
-checkVm :-
-        clean,
-        findall(T:Score, (tt(T, _), vmtest(T, Score)), Results),
-        findall(Score, member(_:Score, Results), Scores),
-        sum_list(Scores, S),
-        format('Total: ~w~n', [S]),
-        clean.

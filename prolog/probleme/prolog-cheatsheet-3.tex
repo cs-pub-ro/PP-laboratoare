@@ -272,8 +272,33 @@ Bag = [ghiozdan, laptop, masina, papagal, pix, telefon].
 \node[fancytitle_seagreen, right=10pt] at (box.north west) {Aflarea tuturor soluțiilor pentru satisfacerea unui scop};
 \end{tikzpicture}
 
+\begin{tikzpicture}
+\node [mybox_pinegreen] (box){%
+\begin{minipage}{0.3\textwidth}
+    	{\centering\bf\small\color{seagreen} forall/2 \\}
+
+
+\begin{lstlisting}[language=Prolog, numbers=none]
+forall(+Cond, +Action)
+\end{lstlisting}
+\begin{small}
+Predicatul forall verifică dacă pentru orice legare din Cond, care reprezintă un domeniu ce conține legări de variabile, se pot îndeplini condițiile din Action.
+\end{small}
+\begin{lstlisting}[language=Prolog, numbers=none]
+?- forall(member(X,[2, 4, 6]), X mod 2 =:= 0).
+true.
+
+?- forall(member(X,[2, 4, 3, 6]), X mod 2 =:= 0).
+false.
+
+?- forall(member(X, [6, 12, 18]), (X mod 2 =:= 0, X mod 3 =:= 0)).
+true. 
+\end{lstlisting}
+\end{minipage}
+};
+
+\node[fancytitle_seagreen, right=10pt] at (box.north west) {Aflarea tuturor soluțiilor pentru satisfacerea unui scop};
+\end{tikzpicture}
 
 \end{multicols*}
 \end{document}
-Contact GitHub API Training Shop Blog About
-© 2016 GitHub, Inc. Terms Privacy Security Status Help
