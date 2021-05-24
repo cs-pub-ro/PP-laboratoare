@@ -72,7 +72,7 @@ inarmat(paul, sabie).
 exercitiul(1, []).
 
 %% suspect/1
-%% suspect(Nume:Marca:Arma)
+%% suspect(?Nume:?Marca:?Arma)
 suspect(_:_:_) :- false.
 
 check1:- tests([
@@ -91,7 +91,7 @@ check1:- tests([
 exercitiul(2, []).
 
 %% au_pusca/1
-%% au_pusca(?ListaNume)
+%% au_pusca(-ListaNume)
 au_pusca(_) :- false.
 
 check2:- tests([
@@ -107,11 +107,11 @@ check2:- tests([
 exercitiul(3, []).
 
 %% au_arma/2
-%% au_arma(?Arma, ?ListaNume)
+%% au_arma(+Arma, -ListaNume)
 au_arma(_, _) :- false.
 
 %% au_marca/2
-%% au_marca(?Marca, ?ListaNume)
+%% au_marca(+Arma, -ListaNume)
 au_marca(_, _) :- false.
 
 check3:- tests([
@@ -131,7 +131,7 @@ check3:- tests([
 exercitiul(4, []).
 
 %% arme_bmw/1
-%% arme_bmw(?ListaArme)
+%% arme_bmw(-ListaArme)
 arme_bmw(_) :- false.
 
 check4:- tests([
@@ -146,7 +146,7 @@ check4:- tests([
 exercitiul(5, []).
 
 %% arme_marca/2
-%% arme_marca(?Marca, ?ListaArme)
+%% arme_marca(+Marca, -ListaArme)
 arme_marca(_, _) :- false.
 
 check5:- tests([
@@ -164,7 +164,7 @@ check5:- tests([
 exercitiul(6, []).
 
 %% marci_arma_unica/1
-%% marci_arma_unica(?ListaMarci)
+%% marci_arma_unica(-ListaMarci)
 marci_arma_unica(_) :- false.
 
 check6:- tests([
