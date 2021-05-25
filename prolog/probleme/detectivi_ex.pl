@@ -111,7 +111,7 @@ exercitiul(3, []).
 au_arma(_, _) :- false.
 
 %% au_marca/2
-%% au_marca(+Arma, -ListaNume)
+%% au_marca(+Marca, -ListaNume)
 au_marca(_, _) :- false.
 
 check3:- tests([
@@ -121,7 +121,7 @@ check3:- tests([
              exp('au_marca(bmw, NuSemnalizeaza)', [set('NuSemnalizeaza', [bogdan, cosmin, eugen])]),
              exp('au_marca(dacia, ConducDacie)', [set('ConducDacie', [florin, irina])]),
              exp('au_marca(seat, ConducSeat)', [set('ConducSeat', [laura])]),
-             exp('findall(_, au_marca(X,Y), L)',  [cond(length(L, 9))])
+             exp('findall(_, au_marca(X,Y), L)',  [cond('length(L, 9)')])
           ]).
 
 % ----------------------------------------------------------------------------
