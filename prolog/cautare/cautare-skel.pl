@@ -393,54 +393,88 @@ check4 :- tests([
 %% teste specifice pentru problemele de căutare
 %% --------------------------------------------
 
+err(Sol, Msg, Value, Pb) :-
+        format('~n~n Solutia: ~n'),
+        (   is_list(Sol) -> forall(member(E, Sol), format('~w~n', [E]))),
+        format('~w: ~w (in ~w).~n', [Msg, Value, Pb]), fail.
+
+tracksolve(Pb, Solution) :-
+        write('====================================================='), nl,
+        write('====================================================='), nl,
+        write('====================================================='), nl,
+        initial_state(Pb, State),
+        printState(Pb, State),
+        tracksearch(Pb, [State], Solution).
 
 tracksearch(Pb, [CurrentState|Other], Solution) :-
         final_state(Pb, CurrentState),
         !,
         write('DONE.'), nl,
         reverse([CurrentState|Other], Solution).
-
 tracksearch(Pb, [CurrentState|Other], Solution) :-
         format('Finding next state from ~w ... ', [CurrentState]),
         next_state(Pb, CurrentState, NextState),
         format('Try state: ~w ...', [NextState]),
         trackmember(NextState, Other),
-        reverse([NextState,CurrentState|Other], Prog), print_progress(Pb, Prog),
+        reverse([NextState,CurrentState|Other], Prog),
+        print_progress(Pb, Prog),
         tracksearch(Pb, [NextState,CurrentState|Other], Solution).
+tracksearch(_,  [CurrentState|_], _) :-
+        format('No other next state found from ~w ...~n ', [CurrentState]),
+        fail.
+
 trackmember(State, Other) :- \+ member(State, Other), !, write('continue...'), nl.
 trackmember(_, _) :- write('already visited'), nl, nl, fail.
 
-print_progress(misionari, [_]).
-print_progress(misionari, [S1, S2 | Rest]) :-
-        parseState(S1, M1, ME1, CE1, MV1, CV1),
-        parseState(S2, _, ME2, CE2, MV2, CV2),
-        (   M1 == est, !, MB is ME1 - ME2, CB is CE1 - CE2,
-            format('~w M  ~w C  ~10| v~~~~~~~~  ~10| ~w M  ~w C ~30| ~w~n',
-                   [ME1, CE1, MV1, CV1, S1]),
-            format('~8| ~w M  ~w C ->~n', [MB, CB]),
-            format('~w M  ~w C  ~10| ~~~~~~~~v  ~10| ~w M  ~w C ~30| ~w~n',
-                   [ME2, CE2, MV2, CV2, S2])
-        ;   MB is MV1 - MV2, CB is CV1 - CV2,
-            format('~w M  ~w C  ~10| ~~~~~~~~v  ~10| ~w M  ~w C ~30| ~w~n',
-                   [ME1, CE1, MV1, CV1, S1]),
-            format('~7| <- ~w M  ~w C ~n', [MB, CB]),
-            format('~w M  ~w C  ~10| v~~~~~~~~  ~10| ~w M  ~w C ~30| ~w~n',
-                   [ME2, CE2, MV2, CV2, S2])
-        ),
-        print_progress(misionari, [S2 | Rest]).
-tracksolve(Pb, Solution) :-
-        write('====================================================='), nl,
-        write('====================================================='), nl,
-        write('====================================================='), nl,
-        initial_state(Pb, State),
-        parseState(State, _, ME, CE, MV, CV),
-        format('~w M ~w C v~~~~ ~w M ~w C~n', [ME, CE, MV, CV]),
-        tracksearch(Pb, [State], Solution).
+print_progress(_, [_]).
+print_progress(Pb, [S1, S2 | Rest]) :-
+        printState(Pb, S1),
+        printTransition(Pb, S1, S2),
+        printState(Pb, S2), !,
+        writeln(""),
+        print_progress(Pb, [S2 | Rest]).
+print_progress(Pb, [S1, S2 | States]) :-
+        err([S1, S2 | States],
+            "INTERN: caz invalid print_progress", (S1, S2), Pb).
 
-err(Sol, Msg, Value, Pb) :-
-        format('~n~n Solutia: ~n'),
-        (   is_list(Sol) -> forall(member(E, Sol), format('~w~n', [E]))),
-        format('~w: ~w (in ~w).~n', [Msg, Value, Pb]), fail.
+printTransition(taran, state(M1, Elems1), state(_, Elems2)) :-
+        allTaran(All), setMinus(All, Elems1, Others),
+        setMinus(Elems2, Others, Boat),
+        (   Boat = [InBoat], !; Boat = [], InBoat = "-"),
+        (   M1 == est, !, format('~17| taran + ~w -> ~n', [InBoat])
+        ;   M1 == vest, format('~17| <- taran + ~w ~n', [InBoat])
+        ), !.
+printTransition(misionari, S1, S2) :-
+        parseState(S1, M1, ME1, CE1, _, _),
+        parseState(S2, _, ME2, CE2, _, _),
+        M1 == est, !,
+        MB is ME1 - ME2, CB is CE1 - CE2,
+        format('~10| ~w M  ~w C ->~n', [MB, CB]).
+printTransition(misionari, S1, S2) :-
+        parseState(S1, M1, _, _, MV1, CV1),
+        parseState(S2, _, _, _, MV2, CV2),
+        M1 == vest, !,
+        MB is MV1 - MV2, CB is CV1 - CV2,
+        format('~10| <- ~w M  ~w C~n', [MB, CB]).
+printTransition(Pb, S1, S2) :-
+        err([], "INTERN: caz invalid printTransition", (S1, S2), Pb).
+
+printState(taran, state(Mal, Elems)) :-
+        allTaran(All), setMinus(All, Elems, Others),
+        (   Mal == est, !,
+            format('~w ~20| v~~~~ ~35| ~w ~n', [Elems, Others])
+        ;
+            Mal == vest,
+            format('~w ~20| ~~~~v ~35| ~w ~n', [Others, Elems])
+        ), !.
+printState(misionari, State) :-
+        parseState(State, est, ME, CE, MV, CV), !,
+        format('~w M ~w C ~15| v~~~~ ~25| ~w M ~w C~n', [ME, CE, MV, CV]).
+printState(misionari, State) :-
+        parseState(State, vest, ME, CE, MV, CV), !,
+        format('~w M ~w C ~15| ~~~~v ~25| ~w M ~w C~n', [ME, CE, MV, CV]).
+printState(Pb, State) :-
+        err([], "INTERN: caz invalid printState", State, Pb).
 
 validSol(Pb, Sol) :- %format('~n~n Solutia: ~n'),
         (   \+ is_list(Sol), !, err(Sol, 'Solutia nu este o lista', Sol, Pb)
