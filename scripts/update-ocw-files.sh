@@ -3,7 +3,7 @@
 rm -rf .tmp/
 mkdir -p .tmp/
 NAMESPACE='pp/21/laboratoare'
-src_files=`git diff --name-only HEAD | xargs dirname | grep -E "schelet|solutii" | uniq`
+src_files=`git diff --name-only HEAD~1 HEAD | xargs dirname | grep -E "schelet|solutii" | uniq`
 
 for file in $src_files
 do
