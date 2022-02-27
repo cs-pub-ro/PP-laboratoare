@@ -4,9 +4,11 @@ on:
     branches:
       - master
     paths:
-      - '*/*/*/*.*'
+      - '*/*/*/*.rkt'
+      - '*/*/*/*.hs'
+      - '*/*/*/*.pl'
 jobs:
-  publish_labs:
+  publish_code:
     runs-on: ubuntu-20.04
     env:
       USERNAME: ${{ secrets.PP_BOT_USERNAME }}
