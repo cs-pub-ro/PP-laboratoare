@@ -120,7 +120,7 @@
 ;;      (respectați mereu tipul întors de funcție: trebuie să fie număr, listă, bool, etc.?)
 ;;    - gândiți-vă cum valorile întoarse pe cazul de bază sunt preluate de funcție pentru a calcula
 ;;      rezultatul final
-;; c) Care este apelul recursiv (e obligatoriu să aveți minim unul), și care este formula prin care 
+;; c) Care este apelul recursiv (e obligatoriu să aveți minim unul), și care este formula prin care
 ;;    din apelul recursiv se obține rezultatul final?
 
 (define (all-palindromes? n Bases)
@@ -131,7 +131,7 @@
 
 
 (exercițiul 6.0 : 0 puncte)
-;; Dacă nu ați făcut-o deja, încercați să înlocuiți if sau cond de mai sus cu o combinație 
+;; Dacă nu ați făcut-o deja, încercați să înlocuiți if sau cond de mai sus cu o combinație
 ;; de operatori logici (and, or, not).
 ;; Apoi testați-vă singuri funcția (fără check-expect, doar rulați-o pe o listă aleasă de voi).
 
@@ -169,7 +169,7 @@
 
 (exercițiul 9 : 3 puncte BONUS)
 ;; Să se găsească cea mai lungă porțiune continuă a unui număr care este palindrom.
-;; Dacă există mai multe asemenea porțiuni, întoarceți una (oarecare) dintre ele. 
+;; Dacă există mai multe asemenea porțiuni, întoarceți una (oarecare) dintre ele.
 
 ;; Funcție ajutătoare care transformă o listă de cifre în număr
 (define (list->num L) (foldl (lambda (dig num) (+ dig (* 10 num))) 0 L))
