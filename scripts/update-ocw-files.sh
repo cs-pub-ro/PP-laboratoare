@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+python -m pip install dokuwiki
 
 rm -rf .tmp/
 mkdir -p .tmp/
