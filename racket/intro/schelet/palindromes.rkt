@@ -1,5 +1,5 @@
 #lang racket
-; test
+
 ; ignorați următoarele linii de cod.
 (define show-defaults 2) ; câte exerciții la care s-au întors rezultate default să fie arătate detaliat
 (define prepend #f) (define nopoints #t) (define name-ex '(testul testele trecut exercițiul)) ; variante: '(exercițiul exercițiile rezolvat exercițiul) sau '(testul testele trecut exercițiul) sau '(task taskurile rezolvat capitolul)
