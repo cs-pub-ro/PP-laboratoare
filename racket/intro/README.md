@@ -261,7 +261,7 @@ Limbajul ne permite să condensăm definirea unei funcții cu legarea ei la un n
 (define (append2 l1 l2) (append l2 l1)) (append2 '(1 2 3) '(4 5 6)) ; întoarce lista (4 5 6 1 2 3)
 ```
 
-Putem oricând scrie `λ` în loc de `lambda` (folosind `Ctrl+\`).
+Putem oricând scrie `λ` în loc de `lambda` (folosind `Ctrl + \`).
 
 ## Funcții utile
 
@@ -361,23 +361,12 @@ Trecem axiomele în cod Racket:
 
 ## Referinţe
 
-  - [Documentație
-    Racket](http://docs.racket-lang.org/reference/index.html "wikilink"),
-    în special funcțiile pentru [valori
-    booleene](http://docs.racket-lang.org/reference/booleans.html "wikilink"),
-    [numere](http://docs.racket-lang.org/reference/numbers.html "wikilink")
-    și
-    [perechi/liste](http://docs.racket-lang.org/reference/pairs.html "wikilink")
-  - [Programare
-    funcțională](https://en.wikipedia.org/wiki/Functional_programming "wikilink")
+  - [Documentație Racket](http://docs.racket-lang.org/reference/index.html "wikilink"), în special funcțiile pentru [valori booleene](http://docs.racket-lang.org/reference/booleans.html "wikilink"), [numere](http://docs.racket-lang.org/reference/numbers.html "wikilink") și [perechi/liste](http://docs.racket-lang.org/reference/pairs.html "wikilink")
+  - [Programare funcțională](https://en.wikipedia.org/wiki/Functional_programming "wikilink")
   - [Recursivitate](https://en.wikipedia.org/wiki/Recursive "wikilink")
   - [Lisp](https://en.wikipedia.org/wiki/Lisp_programming_language "wikilink")
   - [Racket](https://en.wikipedia.org/wiki/Racket_(programming_language) "wikilink")
-  - [Tipare
-    dinamică](https://en.wikipedia.org/wiki/Dynamic_typing#Dynamic_typing "wikilink")
-  - [Tipare
-    strong](https://en.wikipedia.org/wiki/Strong_typing "wikilink")
-  - [Evaluare
-    aplicativă](https://en.wikipedia.org/wiki/Eager_evaluation "wikilink")
-  - [Scheme coding
-    style](https://www.gnu.org/software/mit-scheme/documentation/stable/mit-scheme-user/Coding-style.html "wikilink")
+  - [Tipare dinamică](https://en.wikipedia.org/wiki/Dynamic_typing#Dynamic_typing "wikilink")
+  - [Tipare strong](https://en.wikipedia.org/wiki/Strong_typing "wikilink")
+  - [Evaluare aplicativă](https://en.wikipedia.org/wiki/Eager_evaluation "wikilink")
+  - [Scheme coding style](https://www.gnu.org/software/mit-scheme/documentation/stable/mit-scheme-user/Coding-style.html "wikilink")
