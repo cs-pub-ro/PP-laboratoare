@@ -181,6 +181,6 @@
     ; verific recursiv restul elementelor din listă
     (else (common-suffix-helper (rest L1) (rest L2) '()))))
       
-    
+
  ;(common-suffix '(1 2 3 4 5 6 7) '(1 2 3 9 10 12 5 6))
  ;(common-suffix '(1 2 3 4 5 6 7) '(1 2 3 9 10 12 5 6 7))
