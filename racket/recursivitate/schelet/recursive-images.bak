@@ -2219,7 +2219,7 @@
 255 255 -1 -1 4 1 #"\0"
 0 -1 1 #"\0"
 1.0 0 92 -1 -1 -1 -1 -1 0 0 0 0 0 0 0.0 0.0 0.0 1.0 1.0 1.0 0 0 0 0 0 0
--1 -1           0 3386 0 28 3 16 #"#lang racket/gui"
+-1 -1           0 3391 0 28 3 16 #"#lang racket/gui"
 0 0 24 29 1 #"\n"
 0 0 24 29 1 #"\n"
 0 0 17 3 40 #"; ignora\310\233i urm\304\203toarele linii de cod..."
@@ -5861,7 +5861,8 @@
 0 0 17 3 1 #" "
 0 0 17 3 1 #"a"
 0 0 17 3 1 #" "
-0 0 17 3 14 #"treia culoare)"
+0 0 17 3 5 #"treia"
+0 0 17 3 9 #" culoare)"
 0 0 24 29 1 #"\n"
 0 0 17 3 128
 (91
@@ -5871,28 +5872,29 @@
 ) 0 0 24 29 1 #"\n"
 0 0 17 3 12 #";; Sugestii:"
 0 0 24 29 1 #"\n"
-0 0 17 3 111
+0 0 17 3 27 #";; - Pentru lipirea a dou\304\203"
+0 0 17 3 84
 (92
- #";; - Pentru lipirea a dou\xC4\x83 imagini pe vertical\xC4\x83 pute"
- #"\xC8\x9Bi folosi functia above: (above upper_image lower_image)"
+ #" imagini pe vertical\xC4\x83 pute\xC8\x9Bi folosi functia above: (abo"
+ #"ve upper_image lower_image)"
 ) 0 0 24 29 1 #"\n"
-0 0 17 3 114
+0 0 17 3 22 #";; - Pentru lipirea a "
+0 0 17 3 92
 (93
- #";; - Pentru lipirea a dou\xC4\x83 imagini pe orizontal\xC4\x83 pute"
- #"\xC8\x9Bi folosi func\xC8\x9Bia beside: (beside left_image right_imag"
- #"e)"
+ #"dou\xC4\x83 imagini pe orizontal\xC4\x83 pute\xC8\x9Bi folosi func"
+ #"\xC8\x9Bia beside: (beside left_image right_image)"
 ) 0 0 24 29 1 #"\n"
 0 0 17 3 114
 (94
  #";; - Pentru ob\xC8\x9Binerea triunghiului pute\xC8\x9Bi folosi: (abov"
  #"e triunghi_sus (beside triunghi_stange triunghi_dreapta))"
 ) 0 0 24 29 1 #"\n"
-0 0 17 3 130
+0 0 17 3 110
 (95
  #";;  - Pentru a desena un triunghi echilateral verde de latur\xC4\x83 "
- #"20 ve\xC8\x9Bi folosi urm\xC4\x83toarea comand\xC4\x83: (triangle 20 "
- #"\"solid\" \"green\")"
-) 0 0 24 29 1 #"\n"
+ #"20 ve\xC8\x9Bi folosi urm\xC4\x83toarea comand\xC4\x83: (triangle"
+) 0 0 17 3 20 #" 20 \"solid\" \"green\")"
+0 0 24 29 1 #"\n"
 0 0 17 3 84
 (96
  #";; Exemplu: L = 50; colors = [\"green\", \"cyan\", \"purple\", \"yell"
@@ -5974,34 +5976,35 @@
 0 0 24 29 1 #"\n"
 0 0 17 3 24 #";; Hints - recursivitate"
 0 0 24 29 1 #"\n"
-0 0 17 3 26 #";; 1) cazul n = 0 -> se \303\256"
-0 0 17 3 62
-#"ntoarce tringhiul desenat cu prima culoare din lista de culori"
-0 0 24 29 1 #"\n"
-0 0 17 3 97
+0 0 17 3 87
 (100
+ #";; 1) cazul n = 0 -> se intoarce tringhiul desenat cu prima culoare d"
+ #"in lista de culori"
+) 0 0 24 29 1 #"\n"
+0 0 17 3 97
+(101
  #";; 2) cazul general (n > 0) -> construim un triunghi folosind trei tr"
  #"iunghiuri, in felul urmator:"
 ) 0 0 24 29 1 #"\n"
 0 0 17 3 138
-(101
+(102
  #";;       - se genereaz\xC4\x83 triunghiul de sus, de latur\xC4\x83 L/"
  #"2, folosind prima culoare din list\xC4\x83, \xC8\x99i imaginea format"
  #"\xC4\x83 din triunghiul de sus"
 ) 0 0 24 29 1 #"\n"
 0 0 17 3 112
-(102
+(103
  #";; este lipit\xC4\x83 vertical de imaginea format\xC4\x83 de celelalt"
  #"e 2 triunghiuri (generate jos), folosind func\xC8\x9Bia above"
 ) 0 0 24 29 1 #"\n"
 0 0 17 3 142
-(103
+(104
  #";;       - se genereaz\xC4\x83 cele dou\xC4\x83 tringhiuri de jos, de"
  #" latur\xC4\x83 L/2, folosind a doua \xC8\x99i a treia culoare din lis"
  #"t\xC4\x83 (care este circular\xC4\x83!),"
 ) 0 0 24 29 1 #"\n"
 0 0 17 3 74
-(104
+(105
  #";; iar imaginile formate de cele dou\xC4\x83 triunghiuri sunt alipite"
  #" orizontal,"
 ) 0 0 24 29 1 #"\n"
@@ -6037,7 +6040,8 @@
 0 0 17 3 1 #" "
 0 0 17 3 10 #"men\310\233ionat"
 0 0 17 3 1 #" "
-0 0 17 3 8 #"mai sus)"
+0 0 17 3 3 #"mai"
+0 0 17 3 5 #" sus)"
 0 0 24 29 1 #"\n"
 0 0 24 29 1 #"\n"
 0 0 24 3 1 #"("
@@ -6089,7 +6093,7 @@
 0 0 14 3 2 #"is"
 0 0 24 3 1 #" "
 0 6           4 21 7995
-(105
+(106
  #"(#(struct:overlay #(struct:translate 25.0 0 #(struct:overlay #(struct"
  #":translate 12.5 0 #(struct:overlay #(struct:translate 6.25 0 #(struct"
  #":translate -0.0 10.825317547305485 #(struct:polygon (#(struct:pulled-"
@@ -6233,7 +6237,7 @@
 0 0 14 3 2 #"is"
 0 0 24 3 1 #" "
 0 6           4 21 23831
-(106
+(107
  #"(#(struct:overlay #(struct:translate 25.0 0 #(struct:overlay #(struct"
  #":translate 12.5 0 #(struct:overlay #(struct:translate 6.25 0 #(struct"
  #":overlay #(struct:translate 3.125 0 #(struct:translate -0.0 5.4126587"
@@ -6610,7 +6614,7 @@
 0 0 14 3 2 #"is"
 0 0 24 3 1 #" "
 0 6           4 21 71864
-(107
+(108
  #"(#(struct:overlay #(struct:translate 25.0 0 #(struct:overlay #(struct"
  #":translate 12.5 0 #(struct:overlay #(struct:translate 6.25 0 #(struct"
  #":overlay #(struct:translate 3.125 0 #(struct:overlay #(struct:transla"
@@ -7689,7 +7693,7 @@
 0 0 14 3 2 #"is"
 0 0 24 3 1 #" "
 0 6           4 21 217121
-(108
+(109
  #"(#(struct:overlay #(struct:translate 30.0 0 #(struct:overlay #(struct"
  #":translate 15.0 0 #(struct:overlay #(struct:translate 7.5 0 #(struct:"
  #"overlay #(struct:translate 3.75 0 #(struct:overlay #(struct:translate"
@@ -10878,19 +10882,19 @@
 0 0 24 3 1 #")"
 0 0 24 29 1 #"\n"
 0 0 17 3 81
-(109
+(110
  #";; Pornind de la o list\xC4\x83 de imagini, \xC8\x99i de la o imagine"
  #" ini\xC8\x9Bial\xC4\x83, construi\xC8\x9Bi"
 ) 0 0 24 29 1 #"\n"
 0 0 17 3 81
-(110
+(111
  #";; o unic\xC4\x83 imagine, rezultat\xC4\x83 prin suprapunerea tuturor"
  #" imaginilor, \xC3\xAEn maniera"
 ) 0 0 24 29 1 #"\n"
 0 0 17 3 14 #";; urm\304\203toare:"
 0 0 24 29 1 #"\n"
 0 0 17 3 57
-(111
+(112
  #";; * prima imagine din list\xC4\x83 deasupra imaginii ini\xC8\x9Biale"
 ) 0 0 24 29 1 #"\n"
 0 0 17 3 52
@@ -10902,7 +10906,7 @@
 #";; * ultima imagine din list\304\203 deasupra rezultatului."
 0 0 24 29 1 #"\n"
 0 0 17 3 74
-(112
+(113
  #";; Numele func\xC8\x9Biei este 'overlay->', pentru a indica sensul de"
  #" parcurgere"
 ) 0 0 24 29 1 #"\n"
@@ -10913,12 +10917,12 @@
 0 0 17 3 15 #";; Restric\310\233ii:"
 0 0 24 29 1 #"\n"
 0 0 17 3 72
-(113
+(114
  #";; - se va folosi  func\xC8\x9Bia predefinit\xC4\x83 (overlay <deasup"
  #"ra> <dedesubt>)"
 ) 0 0 24 29 1 #"\n"
 0 0 17 3 73
-(114
+(115
  #";; - dac\xC4\x83 lista de imagini este vid\xC4\x83, se va returna ima"
  #"ginea ini\xC8\x9Bial\xC4\x83"
 ) 0 0 24 29 1 #"\n"
@@ -10952,7 +10956,7 @@
 0 0 14 3 2 #"is"
 0 0 24 3 1 #" "
 0 6           4 21 5590
-(115
+(116
  #"(#(struct:overlay #(struct:translate 42.6393202250021 44.223164628247"
  #"46 #(struct:translate 22.360679774997905 61.55367074350507 #(struct:p"
  #"olygon (#(struct:pulled-point 0 0 0 0 0 0) #(struct:pulled-point 0 0 "
@@ -11053,12 +11057,12 @@
 0 0 24 3 1 #")"
 0 0 24 29 1 #"\n"
 0 0 17 3 71
-(116
+(117
  #";; Implementa\xC8\x9Bi sortarea prin interclasare (merge sort) pentru"
  #" imagini"
 ) 0 0 24 29 1 #"\n"
 0 0 17 3 78
-(117
+(118
  #";; Sortarea trebuie s\xC4\x83 fie \xC3\xAEn ordine descresc\xC4\x83to"
  #"are, cu func\xC8\x9Bia de ordine:"
 ) 0 0 24 29 1 #"\n"
@@ -11066,18 +11070,13 @@
 #";; img1 < img2 = (image-height img1) < (image-height img2)"
 0 0 24 29 1 #"\n"
 0 0 17 3 103
-(118
+(119
  #";; \xC3\x8En cazul \xC3\xAEn care \xC3\xAEn\xC4\x83l\xC8\x9Bimile ima"
  #"ginilor sunt egale, se va compara l\xC4\x83\xC8\x9Bimea folosind imag"
  #"e-width"
 ) 0 0 24 29 1 #"\n"
 0 0 17 3 20 #";; Axiome mergesort:"
 0 0 24 29 1 #"\n"
-0 0 17 3 57
-(119
- #";; mergesort [] = [] - o list\xC4\x83 goal\xC4\x83 este deja sortat"
- #"\xC4\x83"
-) 0 0 24 29 1 #"\n"
 0 0 17 3 67
 (120
  #";; mergesort [x] = [x]  - o list\xC4\x83 cu un element este deja sort"
@@ -11392,7 +11391,8 @@
 0 0 17 3 8 #"Deoarece"
 0 0 17 3 1 #" "
 0 0 17 3 5 #"dorim"
-0 0 17 3 31 #" s\304\203 cre\304\203m toate submul\310\233imile"
+0 0 17 3 1 #" "
+0 0 17 3 30 #"s\304\203 cre\304\203m toate submul\310\233imile"
 0 0 24 29 1 #"\n"
 0 0 17 3 48
 #";; trebuie s\304\203 lu\304\203m \303\256n calcul ambele variante."
@@ -11404,7 +11404,8 @@
  #"\x83! Astfel"
 ) 0 0 17 3 1 #","
 0 0 17 3 1 #" "
-0 0 17 3 29 #"rezultatul unui apel recursiv"
+0 0 17 3 10 #"rezultatul"
+0 0 17 3 19 #" unui apel recursiv"
 0 0 24 29 1 #"\n"
 0 0 17 3 8 #";; poate"
 0 0 17 3 1 #" "
@@ -11414,7 +11415,8 @@
 0 0 17 3 1 #" "
 0 0 17 3 5 #"drept"
 0 0 17 3 21 #" rezultat intermediar"
-0 0 17 3 20 #" pentru un alt apel."
+0 0 17 3 1 #" "
+0 0 17 3 19 #"pentru un alt apel."
 0 0 24 29 1 #"\n"
 0 0 17 3 2 #";;"
 0 0 24 29 1 #"\n"
