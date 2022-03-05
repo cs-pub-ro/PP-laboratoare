@@ -48,11 +48,11 @@
 ;;
 ;; - avansul în recursivitate are loc de O(n) ori, când are loc și calculul propriu-zis
 ;; - nu se efectuează operații pe revenirea din recursivitate
-;; - ca și mai sus, o partedin timpul rulării e dedicat înmulțirii de numere mari
+;; - ca și mai sus, o parte din timpul rulării e dedicat înmulțirii de numere mari
 ;; - un anumit nivel de recursivitate se întâlnește o singură dată cu problema, 
 ;;   o dă mai departe în formă simplificată și poate uita de ea imediat!
 ;; - de aceea această formă de recursivitate se numește "pe coadă" - 
-;;   pentru că apelul recursiv este ultimul lucru carese întâmplă (este la coadă)
+;;   pentru că apelul recursiv este ultimul lucru care se întâmplă (este la coadă)
 
 ;; Rulați această funcție factorial pe numere din ce în ce mai mari.
 ;; Observați durata de rulare.
