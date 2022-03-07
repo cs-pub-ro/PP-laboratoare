@@ -1,4 +1,4 @@
-# Haskell: Programare point-free, evaluare leneșă și list comprehensions
+# Haskell: Evaluare leneșă, programare point-free și list comprehensions
 
 -   Data publicării: 05.04.2022
 -   Data ultimei modificări: 05.04.2022
