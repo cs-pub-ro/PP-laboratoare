@@ -52,6 +52,42 @@ unor funcții particulare din funcții mai generale:
 (define inc-curry (add-curry 1))
 ```
 
+### Transformarea funcțiilor curry în funcții uncurry și invers
+1. Funcție curry -> uncurry
+	Dacă vrem să transmitem odată toți parametrii unei funcții curry
+	atunci vom primi o eroare de tip "arity mismatch".
+	
+	De exemplu, apelul `(add-curry 1 2)` va genera eroarea
+	"add-curry: arity mismatch; expected: 1; given: 2" pentru că add-curry
+	este o funcție care primește un singur parametru x și întoarce o altă
+	funcție. Un apel corect este de forma:
+```lisp
+((add-curry 1) 2) ; întoarce valoarea 3
+```
+
+	Un alt mod de rezolvare a acestei probleme este prin transformarea
+	funcției add-curry într-o variantă uncurry:
+```lisp
+(define converted-add-curry
+  (lambda (x y)
+    ((add-curry x) y)))
+
+(converted-add-curry 1 2) ; întoarce valoarea 3
+```
+
+2. Funcție uncurry -> curry
+	Orice funcție uncurry poate fi transformată ușor într-o funcție curry
+	prin intercalarea de funcții anonime care să primească treptat fiecare
+	parametru în parte. De exemplu pentru add-uncurry:
+```lisp
+(define converted-add-uncurry
+  (lambda (x)
+    (lambda (y)(add-uncurry x y))))
+  
+(converted-add-uncurry 1) ; întoarce o funcție cu un singur parametru
+                          ; care incrementează valoarea acestuia
+```
+
 ## Reutilizare de cod
 
 În secvența de cod de mai jos sunt implementate două funcții. Prima
