@@ -233,7 +233,41 @@ check5 = tests_ 5
             [else (merge (merge-sort (fst-half L)) (merge-sort (snd-half L)))])))
 -}
 
+merge :: [Int] -> [Int] -> [Int]
+merge [] l = l
+merge l [] = l
+merge (x1:l1) (x2:l2) = if x1 <= x2 then x1 : (merge l1 (x2:l2)) else x2 : (merge (x1:l1) l2)
+
+mergeSort :: [Int] -> [Int]
+mergeSort lst = 
+    let fstHalf l = take (quot (length l) 2) l
+        sndHalf l = drop (quot (length l) 2) l
+    in
+        case lst of
+            [] -> []
+            [x] -> lst
+            _ -> merge (mergeSort (fstHalf lst)) (mergeSort (sndHalf lst))
+
+mergeSort2 :: [Int] -> [Int]
+mergeSort2 lst = case lst of
+    [] -> []
+    [x] -> lst
+    _ -> merge (mergeSort (fstHalf lst)) (mergeSort (sndHalf lst))
+    where
+        fstHalf l = take (quot (length l) 2) l
+        sndHalf l = drop (quot (length l) 2) l
+
+check6 :: TestData
+check6 = tests_ 6
+    [ testVal "mergeSort [1, 5, 2, 0, 3, 5, 10, 7, -1]" [-1,0,1,2,3,5,5,7,10] $ mergeSort [1, 5, 2, 0, 3, 5, 10, 7, -1]
+    , testVal "mergeSort []" [] $ mergeSort []
+    , testVal "mergeSort [1]" [1] $ mergeSort [1]
+    , testVal "mergeSort2 [1, 5, 2, 0, 3, 5, 10, 7, -1]" [-1,0,1,2,3,5,5,7,10] $ mergeSort2 [1, 5, 2, 0, 3, 5, 10, 7, -1]
+    , testVal "mergeSort2 []" [] $ mergeSort2 []
+    , testVal "mergeSort2 [1]" [1] $ mergeSort2 [1]
+    ]
+
 {-
 Helpers for testing :) You can also run check1, check2 etc independently
 -}
-check = quickCheck False [check1, check2, check3, check4, check5]
+check = quickCheck False [check1, check2, check3, check4, check5, check6]

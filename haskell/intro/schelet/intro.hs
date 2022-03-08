@@ -206,7 +206,28 @@ check5 = tests_ 5
             [else (merge (merge-sort (fst-half L)) (merge-sort (snd-half L)))])))
 -}
 
+merge :: [Int] -> [Int] -> [Int]
+merge [] l = undefined
+merge l [] = undefined
+merge (x1:l1) (x2:l2) = undefined
+
+mergeSort :: [Int] -> [Int]
+mergeSort lst = undefined
+
+mergeSort2 :: [Int] -> [Int]
+mergeSort2 lst = undefined
+
+check6 :: TestData
+check6 = tests_ 6
+    [ testVal "mergeSort [1, 5, 2, 0, 3, 5, 10, 7, -1]" [-1,0,1,2,3,5,5,7,10] $ mergeSort [1, 5, 2, 0, 3, 5, 10, 7, -1]
+    , testVal "mergeSort []" [] $ mergeSort []
+    , testVal "mergeSort [1]" [1] $ mergeSort [1]
+    , testVal "mergeSort2 [1, 5, 2, 0, 3, 5, 10, 7, -1]" [-1,0,1,2,3,5,5,7,10] $ mergeSort2 [1, 5, 2, 0, 3, 5, 10, 7, -1]
+    , testVal "mergeSort2 []" [] $ mergeSort2 []
+    , testVal "mergeSort2 [1]" [1] $ mergeSort2 [1]
+    ]
+
 {-
 Helpers for testing :) You can also run check1, check2 etc independently
 -}
-check = quickCheck False [check1, check2, check3, check4, check5]
+check = quickCheck False [check1, check2, check3, check4, check5, check6]
