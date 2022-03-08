@@ -228,6 +228,45 @@ check6 = tests_ 6
     ]
 
 {-
+    7. Traduceți codul Racket de mai jos în Haskell în două moduri:
+      1) folosind let - isNumberEven
+      2) folosind where - isNumberEven2
+
+        (define (is-number-even? number)
+        (letrec ((is-even (λ (n)
+                            (if (zero? n)
+                                #t
+                                (is-odd (sub1 n)))))
+                (is-odd (λ (n)
+                            (if (zero? n)
+                                #f
+                                (is-even (sub1 n)))))) (if (>= number 0)
+                                                            (is-even number)
+                                                            (is-even (* -1 number)))))
+
+-}
+
+isNumberEven :: Int -> Bool
+isNumberEven number = undefined
+
+isNumberEven2 :: Int -> Bool
+isNumberEven2 number = undefined
+
+check7 :: TestData
+check7 = tests_ 7
+    [ testVal "isNumberEven 2" True $ isNumberEven 2
+    , testVal "isNumberEven 3" False $ isNumberEven 3
+    , testVal "isNumberEven 0" True $ isNumberEven 0
+    , testVal "isNumberEven (-2)" True $ isNumberEven (-2)
+    , testVal "isNumberEven (-3)" False $ isNumberEven (-3)
+    , testVal "isNumberEven2 2" True $ isNumberEven2 2
+    , testVal "isNumberEven2 3" False $ isNumberEven2 3
+    , testVal "isNumberEven2 0" True $ isNumberEven2 0
+    , testVal "isNumberEven2 (-2)" True $ isNumberEven2 (-2)
+    , testVal "isNumberEven2 (-3)" False $ isNumberEven2 (-3)
+    ]
+
+{-
 Helpers for testing :) You can also run check1, check2 etc independently
 -}
-check = quickCheck False [check1, check2, check3, check4, check5, check6]
+check = quickCheck False [check1, check2, check3, check4, check5, check6, check7]
