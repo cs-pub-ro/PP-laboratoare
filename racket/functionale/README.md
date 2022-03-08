@@ -178,6 +178,47 @@ curry pentru a putea fi aplicată pe un singur parametru. Astfel, putem
 vedea utilitatea folosirii funcțiilor curry în scopul reutilizării de
 cod.
 
+### Alt exemplu de reutilizare a codului pentru o matrice
+Definim matrix ca o listă de liste în care fiecare listă reprezintă
+cifrele unui număr natural (ex: '(1 2 3) este reprezentarea lui 123).
+```lisp
+(define matrix '((1 2 3) (4 5 6) (7 8 9)))
+```
+
+Vom defini funcția to-number care formează numărul asociat unei liste.
+Pentru ușurință, definim și funcția auxiliară to-number-helper care se
+folosește de un acumulator pentru a calcula numărul.
+```lisp
+(define (to-number-helper L num)
+  (if (null? L)
+      num
+      (to-number-helper (cdr L) (+ (* num 10) (car L)))))
+
+(define (to-number L)
+  (to-number-helper L 0))
+
+(to-number '(1 2 3))
+```
+
+Pentru a transforma fiecare linie în numărul asociat atunci trebuie să
+ne definim o nouă funcție to-numbers care apelează funcția to-number
+pentru fiecare listă în parte.
+```lisp
+(define (to-numbers M)
+  (if (null? M)
+      '()
+      (cons (to-number (car M)) (to-numbers (cdr M)))))
+
+(to-numbers matrix) ; '(123 456 789)
+```
+
+Funcția anterioară poate fi rescrisă folosind general-func:
+```lisp
+(define (to-numbers L) (general-func to-number L))
+
+(to-numbers matrix) ; '(123 456 789)
+```
+
 ## Funcționale
 
 Funcționalele (în engleză higher order functions) sunt funcții care
