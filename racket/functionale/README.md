@@ -65,8 +65,8 @@ unor funcții particulare din funcții mai generale:
 ((add-curry 1) 2) ; întoarce valoarea 3
 ```
 
-	Un alt mod de rezolvare a acestei probleme este prin transformarea
-	funcției add-curry într-o variantă uncurry:
+	Un mod de rezolvare a acestei probleme este prin transformarea
+	funcției add-curry într-o funcție uncurry:
 ```lisp
 (define converted-add-curry
   (lambda (x y)
@@ -82,7 +82,8 @@ unor funcții particulare din funcții mai generale:
 ```lisp
 (define converted-add-uncurry
   (lambda (x)
-    (lambda (y)(add-uncurry x y))))
+    (lambda (y)
+      (add-uncurry x y))))
   
 (converted-add-uncurry 1) ; întoarce o funcție cu un singur parametru
                           ; care incrementează valoarea acestuia
