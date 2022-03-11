@@ -52,6 +52,43 @@ unor funcții particulare din funcții mai generale:
 (define inc-curry (add-curry 1))
 ```
 
+### Transformarea funcțiilor curry în funcții uncurry și invers
+1. Funcție curry -> uncurry
+	Dacă vrem să transmitem odată toți parametrii unei funcții curry
+	atunci vom primi o eroare de tip "arity mismatch".
+	
+	De exemplu, apelul `(add-curry 1 2)` va genera eroarea
+	"add-curry: arity mismatch; expected: 1; given: 2" pentru că add-curry
+	este o funcție care primește un singur parametru x și întoarce o altă
+	funcție. Un apel corect este de forma:
+```lisp
+((add-curry 1) 2) ; întoarce valoarea 3
+```
+
+	Un mod de rezolvare a acestei probleme este prin transformarea
+	funcției add-curry într-o funcție uncurry:
+```lisp
+(define converted-add-curry
+  (lambda (x y)
+    ((add-curry x) y)))
+
+(converted-add-curry 1 2) ; întoarce valoarea 3
+```
+
+2. Funcție uncurry -> curry
+	Orice funcție uncurry poate fi transformată ușor într-o funcție curry
+	prin intercalarea de funcții anonime care să primească treptat fiecare
+	parametru în parte. De exemplu pentru add-uncurry:
+```lisp
+(define converted-add-uncurry
+  (lambda (x)
+    (lambda (y)
+      (add-uncurry x y))))
+  
+(converted-add-uncurry 1) ; întoarce o funcție cu un singur parametru
+                          ; care incrementează valoarea acestuia
+```
+
 ## Reutilizare de cod
 
 În secvența de cod de mai jos sunt implementate două funcții. Prima
@@ -141,6 +178,47 @@ Este important de observat faptul că funcția de adunare trebuie să fie
 curry pentru a putea fi aplicată pe un singur parametru. Astfel, putem
 vedea utilitatea folosirii funcțiilor curry în scopul reutilizării de
 cod.
+
+### Alt exemplu de reutilizare a codului pentru o matrice
+Definim matrix ca o listă de liste în care fiecare listă reprezintă
+cifrele unui număr natural (ex: '(1 2 3) este reprezentarea lui 123).
+```lisp
+(define matrix '((1 2 3) (4 5 6) (7 8 9)))
+```
+
+Vom defini funcția to-number care formează numărul asociat unei liste.
+Pentru ușurință, definim și funcția auxiliară to-number-helper care se
+folosește de un acumulator pentru a calcula numărul.
+```lisp
+(define (to-number-helper L num)
+  (if (null? L)
+      num
+      (to-number-helper (cdr L) (+ (* num 10) (car L)))))
+
+(define (to-number L)
+  (to-number-helper L 0))
+
+(to-number '(1 2 3))
+```
+
+Pentru a transforma fiecare linie în numărul asociat atunci trebuie să
+ne definim o nouă funcție to-numbers care apelează funcția to-number
+pentru fiecare listă în parte.
+```lisp
+(define (to-numbers M)
+  (if (null? M)
+      '()
+      (cons (to-number (car M)) (to-numbers (cdr M)))))
+
+(to-numbers matrix) ; '(123 456 789)
+```
+
+Funcția anterioară poate fi rescrisă folosind general-func:
+```lisp
+(define (to-numbers L) (general-func to-number L))
+
+(to-numbers matrix) ; '(123 456 789)
+```
 
 ## Funcționale
 
