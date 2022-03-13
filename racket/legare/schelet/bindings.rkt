@@ -1,9 +1,10 @@
 #lang racket
 ; ignorați următoarele linii de cod...
 (define (sum numbers) (foldr + 0 numbers))
+(define (number->list num) (map (lambda (c) (- (char->integer c) (char->integer #\0))) (string->list (number->string num))))
+
 (define (count-call value) (set! call-number (add1 call-number)) value) (define (reset) (set! call-number 0)) (define call-number 0)
 (define (check-calls wanted) (lambda (r) (or (eq? r 'your-code-here) (= call-number wanted) (if (= wanted 1) (format "a fost construit apelând de ~s ori în loc de o singură dată" call-number) (format "a fost construit apelând de ~s ori în loc de ~s ori" call-number wanted)))))
-(define (number->list num) (map (lambda (c) (- (char->integer c) (char->integer #\0))) (string->list (number->string num))))
 (define show-defaults 2) ; câte exerciții la care s-au întors rezultate default să fie arătate detaliat
 (define prepend #f) (define nopoints #t) (define name-ex '(testul testele trecut exercițiul)) ; variante: '(exercițiul exercițiile rezolvat exercițiul) sau '(testul testele trecut exercițiul) sau '(task taskurile rezolvat capitolul)
 (define default-results `(#f 0 () your-code-here)) (define (default-result r) (set! default-results (cons r default-results))) (define : 'separator) (define punct 'string) (define puncte 'string) (define BONUS 'string) (define exerciții 'string)
@@ -92,6 +93,7 @@
 
 (check (distance '(9 . 12)  '(12 . 16)) is 5)
 
+
 (exercițiul 4 : 1 puncte)
 ;; Fie f(x) o funcție oarecare,
 ;; Calculați valorile funcției f(x), a <= x <= b cu pasul step.
@@ -104,6 +106,7 @@
 
 (check% 'a 1/2  (compute-f-with-step (lambda (x) (* x x)) 0 4 1) is '(0 1 4 9 16))
 (check% 'b 1/2  (compute-f-with-step (lambda (x) (+ (* 2 x) 1)) 0 4 1) is '(1 3 5 7 9))
+
 
 (exercițiul 5 : 1 puncte)
 ;; Funcția num-concat primește două numere și le concatenează.
@@ -122,6 +125,7 @@
 (check% 'a 1/2 (num-concat 1 2) is 12)
 (check% 'b 1/2 (num-concat 33 674) is 33674)
 
+
 (exercițiul 6 : 3 puncte)
 ;; Definiți funcția compute-perimeter care primește un poligon reprezentat
 ;; printr-o listă de puncte și calculează perimetrul acestuia.
@@ -138,6 +142,7 @@
 (check% 'b 1/4 (compute-perimeter (list '(2 . 0) '(0 . 0) '(0 . 2) '(2 . 2))) is 8)
 (check% 'c 1/4 (compute-perimeter (list '(2 . 5) '(5 . 43) '(43 . 43))) is 132.01993654258658)
 (check% 'd 1/4 (compute-perimeter (list '(2 . 2) '(4 . 5) '(0 . 3) '(4 . 3) '(3 . 1))) is 15.727968770336455)
+
 
 (exercițiul 7 : 2 puncte)
 ;; Se dau 3 secvențe separate printr-un separator.
@@ -156,6 +161,7 @@
 
 (check% 'a 1/2 (3-sequence-max '(1 0 2 0 3) 0) is 3)
 (check% 'b 1/2 (3-sequence-max '(2 3 4 0 4 105 6 0 54 5) 4) is 170)
+
 
 (exercițiul 8 : 2 puncte BONUS)
 ;; Redefiniți funcția num-concat pentru a funcționa pe oricâte numere.
@@ -181,6 +187,7 @@
 (check% 'a 1/2 (find-all-suffixes 1234) is '(1234 234 34 4))
 (check% 'b 1/2 (find-all-suffixes 56789462782) is '(56789462782 6789462782 789462782 89462782 9462782 462782 62782 2782 782 82 2))
 
+
 (exercițiul 9 : 1 puncte BONUS)
 ;; Automatele finite sunt un formalism matematic util pentru a descrie
 ;; în mod abstract (matematic) procese, sunt folosite des în computer science
@@ -197,8 +204,9 @@
 
 (check% 'a 1/4 (run 0 9 add1) is (range 10))
 (check% 'b 1/4 (run 9 0 sub1) is (reverse (range 10)))
-(check% 'b 1/4 (run 0 20 (compose add1 add1)) is (filter even? (range 21)))
-(check% 'b 1/4 (run 2 65536 (lambda (x) (* x x))) is '(2 4 16 256 65536))
+(check% 'c 1/4 (run 0 20 (compose add1 add1)) is (filter even? (range 21)))
+(check% 'd 1/4 (run 2 65536 (lambda (x) (* x x))) is '(2 4 16 256 65536))
+
 
 (exercițiul 10 : 2 puncte BONUS)
 ;; Folosindu-vă de exerciţiile anterioare generați numărul de lungime k
@@ -210,7 +218,7 @@
 (define (generate-number k x)
   'your-code-here)
 
-(check% 'c 1/2 (generate-number 3 2) is 258)
-(check% 'd 1/2 (generate-number 3 3) is 369)
+(check% 'a 1/2 (generate-number 3 2) is 258)
+(check% 'b 1/2 (generate-number 3 3) is 369)
 
 (sumar)
