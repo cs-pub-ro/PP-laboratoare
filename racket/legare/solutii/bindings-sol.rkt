@@ -240,7 +240,10 @@
 ;; Restricții: Folosiți let.
 ;; generate-number:: întreg x întreg -> întreg
 (define (generate-number k x)
-  (list-num-concat (run x (+ x (* k (- k 1))) (λ (x) (+ x k)))))
+  (let ((initial-state (+ x (* k 0)))
+        (final-state   (+ x (* k (- k 1))))
+        (next          (λ (x) (+ x k))))
+  (list-num-concat (run initial-state final-state next))))
 
 (check% 'a 1/2 (generate-number 3 2) is 258)
 (check% 'b 1/2 (generate-number 3 3) is 369)
