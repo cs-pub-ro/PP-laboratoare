@@ -1,11 +1,8 @@
 #lang racket
 ; ignorați următoarele linii de cod...
 (define (sum numbers) (foldr + 0 numbers))
-(define count-magic 0)
-(define (magic-number) (set! count-magic (+ count-magic 1)) 42)
-(define (magic-segment) (set! count-magic (+ count-magic 1)) (cons '(2 . 2)  '(6 . 7)))
-(define (get-start-point x) (set! count-magic (+ count-magic 1)) (car x))
-(define (get-end-point x) (set! count-magic (+ count-magic 1)) (cdr x))
+(define (count-call value) (set! call-number (add1 call-number)) value) (define (reset) (set! call-number 0)) (define call-number 0)
+(define (check-calls wanted) (lambda (r) (or (eq? r 'your-code-here) (= call-number wanted) (if (= wanted 1) (format "a fost construit apelând de ~s ori în loc de o singură dată" call-number) (format "a fost construit apelând de ~s ori în loc de ~s ori" call-number wanted)))))
 (define (number->list num) (map (lambda (c) (- (char->integer c) (char->integer #\0))) (string->list (number->string num))))
 (define show-defaults 2) ; câte exerciții la care s-au întors rezultate default să fie arătate detaliat
 (define prepend #f) (define nopoints #t) (define name-ex '(testul testele trecut exercițiul)) ; variante: '(exercițiul exercițiile rezolvat exercițiul) sau '(testul testele trecut exercițiul) sau '(task taskurile rezolvat capitolul)
@@ -52,15 +49,10 @@
 (define (compute-square-area get-length)
   'your-code-here)
 
-(let ([num-of-calls ((lambda () (compute-square-area magic-number) count-magic))])
-(check% 'a 1/4 (compute-square-area (lambda () 1)) is 1)
-(when (= num-of-calls 1)
-(check% 'b 1/4 (compute-square-area (lambda () 3932)) is 15460624)
-(check% 'c 1/4 (compute-square-area (lambda () 2788)) is 7772944)
-(check% 'd 1/4 (compute-square-area (lambda () 198.2522)) is 39303.93480483999)
- )
-)
-(set! count-magic 0)
+(check% 'a 1/4 (compute-square-area (lambda () (count-call 1))) is 1 (check-calls 1))(reset)
+(check% 'b 1/4 (compute-square-area (lambda () (count-call 3932))) is 15460624 (check-calls 1))(reset)
+(check% 'c 1/4 (compute-square-area (lambda () (count-call 2788))) is 7772944 (check-calls 1))(reset)
+(check% 'd 1/4 (compute-square-area (lambda () (count-call 198.2522))) is 39303.93480483999 (check-calls 1))(reset)
 
 
 (exercițiul 2 : 1 puncte)
@@ -81,17 +73,13 @@
 (define (compute-length get-line-segment get-start-point get-end-point)
   'your-code-here)
 
-
-(let ([num-of-calls ((lambda () (compute-length magic-segment get-start-point get-end-point) count-magic))])
-  (check% 'a 1/5 num-of-calls is 3)
-  (let ([fn-binding (lambda (x) (compute-length (lambda () x) get-start-point get-end-point))])
-    (check% 'b 1/5 (fn-binding (cons '(9 . 12)  '(12 . 16))) is 5)
-    (check% 'c 1/5 (fn-binding (cons '(10 . 10)  '(94 . 197))) is 205)
-    (check% 'd 1/5 (fn-binding (cons '(23 . 54)  '(7632 . 5457))) is 9332.164272021791)
-    (check% 'e 1/5 (fn-binding (cons '(658 . 665)  '(32343 . 31246))) is 44035.63086864999)
-    )
+(let ([fn-binding (lambda (x) (compute-length (lambda () (count-call x)) (lambda (s) (count-call (car s))) (lambda (s) (count-call (cdr s)))))])
+  (check% 'a 1/4 (fn-binding (cons '(9 . 12) '(12 . 16))) is 5 (check-calls 3))(reset)
+  (check% 'b 1/4 (fn-binding (cons '(10 . 10) '(94 . 197))) is 205 (check-calls 3))(reset)
+  (check% 'c 1/4 (fn-binding (cons '(23 . 54) '(7632 . 5457))) is 9332.164272021791 (check-calls 3))(reset)
+  (check% 'd 1/4 (fn-binding (cons '(658 . 665) '(32343 . 31246))) is 44035.63086864999 (check-calls 3))(reset)
 )
-(set! count-magic 0)
+
 
 (exercițiul 3 : 1 puncte)
 ;; Definiți funcția distance care calculează distanța
