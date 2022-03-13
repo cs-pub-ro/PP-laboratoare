@@ -148,7 +148,8 @@
 ;; => secvența de sumă maximă este 205
 ;; Restricții: Nu folosiți fold/apply.
 ;;             Folosiți let-values/let*-values.
-;; Hint:: Uitați-vă peste splitf-at.
+;; Hint: Uitați-vă peste splitf-at.
+;;       Există deja definită în laborator funcția sum pentru suma elementelor unei liste.
 ;; 3-sequence-max:: listă de numere x orice -> număr
 (define (3-sequence-max numbers separator)
   'your-code-here)
@@ -185,13 +186,12 @@
 ;; în mod abstract (matematic) procese, sunt folosite des în computer science
 ;; și le veți întâlni (le-ați întâlnit) la CN, LFA și alte materii.
 ;; În acest exercițiu vom reprezenta un automat finit prin 3 elemente:
-;;    initial-state => o stare inițială din care automatul pornește
-;;    final-state => o stare finală în care automatul se oprește
-;;    next => o funcție care primește o stare și decide care e următoarea stare.
+;;  - initial-state => o stare inițială din care automatul pornește
+;;  - final-state => o stare finală în care automatul se oprește
+;;  - next => o funcție care primește o stare și decide care e următoarea stare.
 ;; Restricții: Trebuie să folosiți named let.
-;; run:: stare x stare x funcție -> listă de stări
 ;; Funcția întoarce o listă ce cuprinde toate stările automatului
-
+;; run:: stare x stare x funcție -> listă de stări
 (define (run initial-state final-state next)
   'your-code-here)
 
@@ -204,6 +204,7 @@
 ;; Folosindu-vă de exerciţiile anterioare generați numărul de lungime k
 ;; pentru care orice cifră de pe poziția i se poate obține
 ;; folosind formula i*k+x.
+;; Cifrele sunt numerotate de la 0, pornind de la cea mai din stânga.
 ;; Restricții: Folosiți let.
 ;; generate-number:: întreg x întreg -> întreg
 (define (generate-number k x)
