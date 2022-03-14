@@ -185,8 +185,8 @@ exemplele de mai jos:
 ```lisp
 (letrec
    ((even-length?
-     (lambda (L)                    ; even-length? este o închidere funcțională  
-       (if (null? L)                ; deci corpul funcției nu este evaluat la  
+     (lambda (L)                    ; even-length? este o funcție, iar
+       (if (null? L)                ; corpul unei funcții nu este evaluat la
            #t                       ; momentul definirii ei  
            (odd-length? (cdr L))))) ; deci nu e o problemă că încă nu știm cine e odd-length?  
     (odd-length?   
