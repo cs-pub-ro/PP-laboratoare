@@ -45,7 +45,7 @@
 ;; nulară ce returnează un număr, reprezentând latura unui pătrat;
 ;; compute-square-area trebuie să calculeze aria acelui pătrat.
 ;; Restricții: Aplicați get-length o singură dată.
-;;             Nu puteți folosi `exp`/`expt`
+;;             Nu puteți folosi `exp`/`expt`.
 ;; compute-square-area:: funcție -> real
 (define (compute-square-area get-length)
   (let ((l (get-length)))
@@ -105,7 +105,7 @@
 ;; Calculați valorile funcției f(x), a <= x <= b cu pasul step.
 ;; Restricții: Folosiți named let.
 ;;             Nu apelați recursiv `compute-f-with-step`.
-;;             Nu folosiți functionale.
+;;             Nu folosiți funcționale.
 ;; compute-f-with-step:: funcție x număr x număr x număr -> list
 (define (compute-f-with-step f a b step)
   (let iter ((x a))
@@ -124,8 +124,8 @@
 ;;   3322
 ;; Suprascrieți procedura `+` doar în contextul local pentru
 ;; a realiza concatenarea dintre două numere.
-;; Hint: `string-append` concatenează două string-uri
-;; Hint: Puteți folosi funcțiile `number->string` și `string->number`
+;; Hint: `string-append` concatenează două string-uri.
+;;       Puteți folosi funcțiile `number->string` și `string->number`.
 ;; num-concat:: număr x număr -> număr
 (define (num-concat x y)
   (let ((+ (λ (x y) (string->number (string-append (number->string x) (number->string y))))))
@@ -138,11 +138,9 @@
 (exercițiul 6 : 3 puncte)
 ;; Definiți funcția compute-perimeter care primește un poligon reprezentat
 ;; printr-o listă de puncte și calculează perimetrul acestuia.
-;; Atenție: Nu aveți voie să definiți funcții ajutătoare în exteriorul funcției compute-perimeter.
-;;          Nu aveți voie să folosiți funcționale.
-;; Hint: Folosiți-vă de funcția distance
 ;; Restricții: Nu definiți funcții ajutătoare în exteriorul funcției compute-perimeter.
 ;;             Nu folosiți funcționale.
+;; Hint: Folosiți-vă de funcția distance.
 ;; compute-perimeter:: listă de perechi -> număr
 (define (compute-perimeter points)
   (let ((start (car points)))
