@@ -38,7 +38,7 @@
 ;; nu există o rețetă universală, această abilitate se dezvoltă
 ;; de-a lungul anilor de scris cod zilnic.
 
-(sunt 10 exerciții)
+(sunt 11 exerciții)
 
 (exercițiul 1 : 1 puncte)
 ;; Funcția compute-square-area primește ca argument o funcție
@@ -159,6 +159,27 @@
 
 (check% 'a 1/2 (3-sequence-max '(1 0 2 0 3) 0) is 3)
 (check% 'b 1/2 (3-sequence-max '(2 3 4 0 4 105 6 0 54 5) 4) is 170)
+
+
+; TODO Schimbă numărul exercițiului sau poziția lui.
+(exercițiul 11 : 2 puncte)
+;; Ne dorim să simulăm un joc simplu în doi jucători. Cei doi jucători manâncă,
+;; pe rând, bomboane dintr-o grămadă ce conține `candies` bomboane.
+;; Primul jucător (să îl numim "player") poate mânca doar o bomboană sau două
+;; într-o singură tură. Al doilea jucător ("opponent") poate mânca exact două
+;; sau trei bomboane într-o singură tură (atenție: dacă mai există o singură
+;; bomboană în grămadă, nu o poate mânca).
+;; Jocul se sfârșește atunci când unul din ei nu își poate termina tura, acesta
+;; pierzând. Dacă ambii joacă "inteligent", poate primul jucător să câștige?
+;; Hint: Modelați comportamentele celor doi prin funcții separate.
+;; Restricție: Nu definiți funcții în exteriorul player-wins?. Folosiți letrec.
+(define (player-wins? candies)
+  'your-code-here)
+
+(check% 'a 1/4 (player-wins? 2) is #t)
+(check% 'b 1/4 (player-wins? 4) is #f)
+(check% 'c 1/4 (player-wins? 17) is #t)
+(check% 'd 1/4 (player-wins? 32) is #f)
 
 
 (exercițiul 8 : 2 puncte BONUS)
