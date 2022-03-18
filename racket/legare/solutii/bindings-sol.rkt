@@ -38,7 +38,7 @@
 ;; nu există o rețetă universală, această abilitate se dezvoltă
 ;; de-a lungul anilor de scris cod zilnic.
 
-(sunt 11 exerciții)
+(sunt 10 exerciții)
 
 (exercițiul 1 : 1 puncte)
 ;; Funcția compute-square-area primește ca argument o funcție
@@ -85,7 +85,7 @@
   (check% 'b 1/4 (fn-binding (cons '(10 . 10) '(94 . 197))) is 205 (check-calls 3))(reset)
   (check% 'c 1/4 (fn-binding (cons '(23 . 54) '(7632 . 5457))) is 9332.164272021791 (check-calls 3))(reset)
   (check% 'd 1/4 (fn-binding (cons '(658 . 665) '(32343 . 31246))) is 44035.63086864999 (check-calls 3))(reset)
-)
+  )
 
 
 (exercițiul 3 : 1 puncte)
@@ -100,42 +100,7 @@
 (check% 'a 0.25 (distance '(9 . 12)  '(12 . 16)) is 5)
 
 
-(exercițiul 4 : 1 puncte)
-;; Fie f(x) o funcție oarecare,
-;; Calculați valorile funcției f(x), a <= x <= b cu pasul step.
-;; Restricții: Folosiți named let.
-;;             Nu apelați recursiv `compute-f-with-step`.
-;;             Nu folosiți funcționale.
-;; compute-f-with-step:: funcție x număr x număr x număr -> list
-(define (compute-f-with-step f a b step)
-  (let iter ((x a))
-    (if (> x b)
-        '()
-        (cons (f x) (iter (+ x step))))))
-
-(check% 'a 1/2  (compute-f-with-step (lambda (x) (* x x)) 0 4 1) is '(0 1 4 9 16))
-(check% 'b 1/2  (compute-f-with-step (lambda (x) (+ (* 2 x) 1)) 0 4 1) is '(1 3 5 7 9))
-
-
-(exercițiul 5 : 1 puncte)
-;; Funcția num-concat primește două numere și le concatenează.
-;; ex:
-;;   > (num-concat 33 22)
-;;   3322
-;; Suprascrieți procedura `+` doar în contextul local pentru
-;; a realiza concatenarea dintre două numere.
-;; Hint: `string-append` concatenează două string-uri.
-;;       Puteți folosi funcțiile `number->string` și `string->number`.
-;; num-concat:: număr x număr -> număr
-(define (num-concat x y)
-  (let ((+ (λ (x y) (string->number (string-append (number->string x) (number->string y))))))
-    (+ x y)));; Nu stergeți această linie.
-
-(check% 'a 1/2 (num-concat 1 2) is 12)
-(check% 'b 1/2 (num-concat 33 674) is 33674)
-
-
-(exercițiul 6 : 3 puncte)
+(exercițiul 4 : 3 puncte)
 ;; Definiți funcția compute-perimeter care primește un poligon reprezentat
 ;; printr-o listă de puncte și calculează perimetrul acestuia.
 ;; Restricții: Nu folosiți funcționale.
@@ -149,38 +114,13 @@
           (+ d (distance (car points) start))
           (iter (cdr points) (+ d (distance (car points) (cadr points))))))))
 
-
 (check% 'a 1/4 (compute-perimeter (list '(1 . 0) '(0 . 0) '(0 . 1) '(1 . 1))) is 4)
 (check% 'b 1/4 (compute-perimeter (list '(2 . 0) '(0 . 0) '(0 . 2) '(2 . 2))) is 8)
 (check% 'c 1/4 (compute-perimeter (list '(2 . 5) '(5 . 43) '(43 . 43))) is 132.01993654258658)
 (check% 'd 1/4 (compute-perimeter (list '(2 . 2) '(4 . 5) '(0 . 3) '(4 . 3) '(3 . 1))) is 15.727968770336455)
 
 
-(exercițiul 7 : 2 puncte)
-;; Se dau 3 secvențe separate printr-un separator.
-;; Definiți funcția `3-sequence-max` care găsește
-;; suma secvenței de sumă maximă.
-;; ex:
-;; (1 2 3 0 3 5 4 0 5 200) cu separatorul 0
-;; => secvența de sumă maximă este 205
-;; Restricții: Nu folosiți fold/apply.
-;;             Folosiți let-values/let*-values.
-;; Hint: Uitați-vă peste splitf-at.
-;;       Există deja definită în laborator funcția `sum` pentru suma elementelor unei liste.
-;; 3-sequence-max:: listă de numere x orice -> număr
-(define (3-sequence-max numbers separator)
-  (let ([pred (lambda (x) (not (equal? x separator)))])
-    (let*-values ([(left rest1) (splitf-at numbers pred)]
-                  [(mid rest2) (splitf-at (cdr rest1) pred)]
-                  [(right) (cdr rest2)])
-      (max (sum left) (sum mid) (sum right)))))
-
-(check% 'a 1/2 (3-sequence-max '(1 0 2 0 3) 0) is 3)
-(check% 'b 1/2 (3-sequence-max '(2 3 4 0 4 105 6 0 54 5) 4) is 170)
-
-
-; TODO Schimbă numărul exercițiului sau poziția lui.
-(exercițiul 11 : 2 puncte)
+(exercițiul 5 : 2 puncte)
 ;; Ne dorim să simulăm un joc simplu în doi jucători. Cei doi jucători manâncă,
 ;; pe rând, bomboane dintr-o grămadă ce conține `candies` bomboane.
 ;; Primul jucător (să îl numim "player") poate mânca doar o bomboană sau două
@@ -210,6 +150,47 @@
 (check% 'b 1/4 (player-wins? 4) is #f)
 (check% 'c 1/4 (player-wins? 17) is #t)
 (check% 'd 1/4 (player-wins? 32) is #f)
+
+
+(exercițiul 6 : 2 puncte)
+;; Se dau 3 secvențe separate printr-un separator.
+;; Definiți funcția `3-sequence-max` care găsește
+;; suma secvenței de sumă maximă.
+;; ex:
+;; (1 2 3 0 3 5 4 0 5 200) cu separatorul 0
+;; => secvența de sumă maximă este 205
+;; Restricții: Nu folosiți fold/apply.
+;;             Folosiți let-values/let*-values.
+;; Hint: Uitați-vă peste splitf-at.
+;;       Există deja definită în laborator funcția `sum` pentru suma elementelor unei liste.
+;; 3-sequence-max:: listă de numere x orice -> număr
+(define (3-sequence-max numbers separator)
+  (let ([pred (lambda (x) (not (equal? x separator)))])
+    (let*-values ([(left rest1) (splitf-at numbers pred)]
+                  [(mid rest2) (splitf-at (cdr rest1) pred)]
+                  [(right) (cdr rest2)])
+      (max (sum left) (sum mid) (sum right)))))
+
+(check% 'a 1/2 (3-sequence-max '(1 0 2 0 3) 0) is 3)
+(check% 'b 1/2 (3-sequence-max '(2 3 4 0 4 105 6 0 54 5) 4) is 170)
+
+
+(exercițiul 7 : 1 puncte)
+;; Funcția num-concat primește două numere și le concatenează.
+;; ex:
+;;   > (num-concat 33 22)
+;;   3322
+;; Suprascrieți procedura `+` doar în contextul local pentru
+;; a realiza concatenarea dintre două numere.
+;; Hint: `string-append` concatenează două string-uri.
+;;       Puteți folosi funcțiile `number->string` și `string->number`.
+;; num-concat:: număr x număr -> număr
+(define (num-concat x y)
+  (let ((+ (λ (x y) (string->number (string-append (number->string x) (number->string y))))))
+    (+ x y)));; Nu stergeți această linie.
+
+(check% 'a 1/2 (num-concat 1 2) is 12)
+(check% 'b 1/2 (num-concat 33 674) is 33674)
 
 
 (exercițiul 8 : 2 puncte BONUS)
@@ -274,7 +255,7 @@
   (let ((initial-state (+ x (* k 0)))
         (final-state   (+ x (* k (- k 1))))
         (next          (λ (x) (+ x k))))
-  (list-num-concat (run initial-state final-state next))))
+    (list-num-concat (run initial-state final-state next))))
 
 (check% 'a 1/2 (generate-number 3 2) is 258)
 (check% 'b 1/2 (generate-number 3 3) is 369)
