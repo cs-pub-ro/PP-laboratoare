@@ -138,8 +138,8 @@
 (exercițiul 6 : 3 puncte)
 ;; Definiți funcția compute-perimeter care primește un poligon reprezentat
 ;; printr-o listă de puncte și calculează perimetrul acestuia.
-;; Restricții: Nu definiți funcții ajutătoare în exteriorul funcției compute-perimeter.
-;;             Nu folosiți funcționale.
+;; Restricții: Nu folosiți funcționale.
+;;             Folosiți named let.
 ;; Hint: Folosiți-vă de funcția distance.
 ;; compute-perimeter:: listă de perechi -> număr
 (define (compute-perimeter points)
@@ -166,7 +166,7 @@
 ;; Restricții: Nu folosiți fold/apply.
 ;;             Folosiți let-values/let*-values.
 ;; Hint: Uitați-vă peste splitf-at.
-;;       Există deja definită în laborator funcția sum pentru suma elementelor unei liste.
+;;       Există deja definită în laborator funcția `sum` pentru suma elementelor unei liste.
 ;; 3-sequence-max:: listă de numere x orice -> număr
 (define (3-sequence-max numbers separator)
   (let ([pred (lambda (x) (not (equal? x separator)))])
@@ -187,10 +187,13 @@
 ;; într-o singură tură. Al doilea jucător ("opponent") poate mânca exact două
 ;; sau trei bomboane într-o singură tură (atenție: dacă mai există o singură
 ;; bomboană în grămadă, nu o poate mânca).
-;; Jocul se sfârșește atunci când unul din ei nu își poate termina tura, acesta
+;; Jocul se sfârșește atunci când unul din ei nu își poate efectua tura, acesta
 ;; pierzând. Dacă ambii joacă "inteligent", poate primul jucător să câștige?
+;; Mai clar, știm că un jucător poate câștiga dacă poate mânca bomboane în
+;; tura curentă și are cel puțin o "mutare" pentru care adversarul nu câștigă.
 ;; Hint: Modelați comportamentele celor doi prin funcții separate.
 ;; Restricție: Nu definiți funcții în exteriorul player-wins?. Folosiți letrec.
+;; player-wins?:: întreg -> boolean
 (define (player-wins? candies)
   (letrec
       ([player (lambda (candies)
@@ -211,7 +214,7 @@
 
 (exercițiul 8 : 2 puncte BONUS)
 ;; Redefiniți funcția num-concat pentru a funcționa pe oricâte numere.
-;; Restricții: Nu folosiți `num-concat`
+;; Restricții: Nu folosiți `num-concat`.
 ;;             Folosiți funcționale.
 ;; Înțelegeți cum vă poate ajuta programarea funcțională?
 ;; Cum ar arăta o suprascriere echivalentă într-un limbaj procedural?
