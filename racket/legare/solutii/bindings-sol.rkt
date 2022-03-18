@@ -194,13 +194,13 @@
 (define (player-wins? candies)
   (letrec
       ([player (lambda (candies)
-                 (if (<= candies 0) #f
-                     (or (not (opponent (- candies 1)))
-                         (not (opponent (- candies 2))))))]
+                 (and (> candies 0)
+                      (or (not (opponent (- candies 1)))
+                          (not (opponent (- candies 2))))))]
        [opponent (lambda (candies)
-                   (if (<= candies 1) #f
-                       (or (not (player (- candies 2)))
-                           (not (player (- candies 3))))))])
+                   (and (> candies 1)
+                        (or (not (player (- candies 2)))
+                            (not (player (- candies 3))))))])
     (player candies)))
 
 (check% 'a 1/4 (player-wins? 2) is #t)
