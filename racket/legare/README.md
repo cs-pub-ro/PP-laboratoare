@@ -151,7 +151,7 @@ codul ar fi generat eroare.
 identificatorul `a` este legat la valoarea `1`. Faptul că în contextul
 în care se apelează funcția `f` `a` este legat la valoarea `2` nu are
 importanță. Comparați acest comportament cu exemplul din secțiunea
-[Legare dinamică](#legare-dinamică), de mai sus.
+[Legare dinamică](#legare_dinamică), de mai sus.
 
 ### let*
 
@@ -261,12 +261,12 @@ momentul dorit, aplicând această expresie (aici pe 0 argumente).
 ## Resurse
 
   - [Documentație Racket](https://docs.racket-lang.org/reference/let.html "wikilink")
-  - [Exerciții rezolvate și propuse](https://ocw.cs.pub.ro/courses/_media/pp/22/laboratoare/racket/legare-schelet.zip)
+  - [Schelet](https://ocw.cs.pub.ro/courses/_media/pp/22/laboratoare/racket/legare-schelet.zip)
   - [Soluții](https://ocw.cs.pub.ro/courses/_media/pp/22/laboratoare/racket/legare-solutii.zip)
-  - [Cheatsheet Laboratorul 4](https://github.com/cs-pub-ro/PP-laboratoare/raw/master/racket/functionale/functionale-cheatsheet.pdf)
+  - [Cheatsheet Laboratorul 4](https://github.com/cs-pub-ro/PP-laboratoare/raw/master/racket/legare/legare-cheatsheet.pdf)
 
 ## Referințe
 
   - [Lexical Binding](https://www.cs.oberlin.edu/~bob/cs275.spring14/Examples%20and%20Notes/February/Februrary%2028/Lexical%20and%20Dynamic%20Binding.pdf "wikilink")
-  - [legare statica vs legare dinamica](https://www.emacswiki.org/emacs/DynamicBindingVsLexicalBinding "wikilink")
+  - [Legare statică vs Legare dinamică](https://www.emacswiki.org/emacs/DynamicBindingVsLexicalBinding "wikilink")
   - [Name, scope, binding](http://www.cs.iusb.edu/~danav/teach/c311/c311_3_scope.html "wikilink")
