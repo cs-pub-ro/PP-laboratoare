@@ -1,6 +1,7 @@
 # Racket: Legarea variabilelor. Închideri funcționale
 
-  - Data publicării: 22.03.2021
+  - Data publicării: 19.03.2022
+  - Data ultimei modificări: 19.03.2022
 
 ## Obiective
 
@@ -26,7 +27,7 @@ cuvinte, domeniul de vizibilitate al variabilei x este
         reprezentat de porțiunile din program în care aceasta poate fi
         accesată (este vizibilă).
 
-**Exemplu:** Domeniul de vizibilitate pentru variabila a este
+**Exemplu:** Domeniul de vizibilitate pentru variabila `a` este
         format din liniile de cod `{9, 10, 11, 12, 13, 14}`
         {{domeniu\_vizibilitate.png?800 |}}
 
@@ -47,13 +48,13 @@ dat de toate variabilele şi valorile acestora, vizibile în acel punct.
 
 în engleză: [Name binding](https://en.wikipedia.org/wiki/Name_binding "wikilink")
 
-O variabilă poate fi reprezentantă printr-o pereche dintre un
+O variabilă poate fi reprezentată printr-o pereche dintre un
 identificator şi valoarea acesteia la un moment dat. 
 
 ```
 int random_number = 42;
-//       |          |
-//       |          |-------► valoarea variabilei la un moment dat.`
+//       │          │
+//       │          └───────► valoarea variabilei la un moment dat.
 //       ▼
 //  "random_number" este valoarea identificatorului.
 ```
@@ -65,7 +66,7 @@ Nu confundați assignment-ul unei variabile cu legarea, citiți [această explic
 
 Legarea poate fi de două tipuri:
 
-  - dinamică - toți identificatorii şi valorile varabilelor sunt puse
+  - dinamică - toți identificatorii şi valorile variabilelor sunt puse
     într-un context global
   - statică - pentru fiecare legare se creează un nou context de
     identificatori şi valori.
@@ -74,21 +75,21 @@ Legarea poate fi de două tipuri:
 variabile ce vor fi vizibile în corpul *let*-ului. 
 ```lisp
 (let ((x 2))
-     (;; x este vizibil aici si are valoarea 2;;))`  
+     (;; x este vizibil aici si are valoarea 2;;))
 ``````
 
 ## Legare statică
 
 Este folosită în majoritatea limbajelor de programare din motive
-istorice (ALGOL 60/ALGOL 58/Fortran o folosesc) dar și din motive
+istorice (ALGOL 60 / ALGOL 58 / Fortran o folosesc) dar și din motive
 pragmatice: este ușor de interpretat de către oameni și calculatoare.
 
 Legarea statică creează un nou domeniu de vizibilitate (scope) pentru o
 variabilă, în funcţie de contextul lexical al programului (partea
 programului care este evaluată), așa că în literatura de specialitate se
-mai numește **lexical scoping** / **lexical binding**
+mai numește **lexical scoping** / **lexical binding**.
 
-In racket `let` face legare statică:
+În Racket `let` face legare statică:
 {{lexical-binding-example.png?800 |}}
 
 ## Legare dinamică
@@ -106,7 +107,7 @@ Observați că același apel de funcție cu aceiași parametri întoarce
 rezultate diferite în funcție de contextul global =\> **introduce efecte laterale**, de aceea editarea contextului global cu `define` este
 interzisă în Racket.
 
-## Legare in racket. Construcţii pentru legare
+## Legare in Racket. Construcţii pentru legare
 
 ### let
 
@@ -114,7 +115,7 @@ interzisă în Racket.
 anterior este echivalent cu:
 
 ```lisp
-((lambda (<id1> ...<idn>)
+((lambda (<id1>...<idn>)
     <expr1>  
     ...
     <exprn>)
@@ -123,7 +124,7 @@ anterior este echivalent cu:
 <valn>)
 ```
 
-Corpul unui `let` conține una sau mai multe expresii (`<expr1> ...<exprn>` în exemplul de mai sus). Acestea sunt evaluate în ordine, iar
+Corpul unui `let` conține una sau mai multe expresii (`<expr1>...<exprn>` în exemplul de mai sus). Acestea sunt evaluate în ordine, iar
 rezultatul întors de `let` este rezultatul evaluării ultimei expresii.
 
 Iată și câteva exemple: 
@@ -150,7 +151,7 @@ codul ar fi generat eroare.
 identificatorul `a` este legat la valoarea `1`. Faptul că în contextul
 în care se apelează funcția `f` `a` este legat la valoarea `2` nu are
 importanță. Comparați acest comportament cu exemplul din secțiunea
-//Legare dinamică//, de mai jos.
+[Legare dinamică](#legare-dinamică), de mai sus.
 
 ### let*
 
@@ -185,8 +186,8 @@ exemplele de mai jos:
 ```lisp
 (letrec
    ((even-length?
-     (lambda (L)                    ; even-length? este o închidere funcțională  
-       (if (null? L)                ; deci corpul funcției nu este evaluat la  
+     (lambda (L)                    ; even-length? este o funcție, iar
+       (if (null? L)                ; corpul unei funcții nu este evaluat la
            #t                       ; momentul definirii ei  
            (odd-length? (cdr L))))) ; deci nu e o problemă că încă nu știm cine e odd-length?  
     (odd-length?   
@@ -260,9 +261,10 @@ momentul dorit, aplicând această expresie (aici pe 0 argumente).
 ## Resurse
 
   - [Documentație Racket](https://docs.racket-lang.org/reference/let.html "wikilink")
-  - [Exerciții rezolvate și propuse](https://ocw.cs.pub.ro/courses/_media/pp/21/laboratoare/racket/legare.zip)
-  - [Soluții](https://ocw.cs.pub.ro/courses/_media/pp/21/laboratoare/racket/legare-sol.zip)
+  - [Exerciții rezolvate și propuse](https://ocw.cs.pub.ro/courses/_media/pp/22/laboratoare/racket/legare-schelet.zip)
+  - [Soluții](https://ocw.cs.pub.ro/courses/_media/pp/22/laboratoare/racket/legare-solutii.zip)
   - [Cheatsheet Laboratorul 4](https://github.com/cs-pub-ro/PP-laboratoare/raw/master/racket/functionale/functionale-cheatsheet.pdf)
+
 ## Referințe
 
   - [Lexical Binding](https://www.cs.oberlin.edu/~bob/cs275.spring14/Examples%20and%20Notes/February/Februrary%2028/Lexical%20and%20Dynamic%20Binding.pdf "wikilink")
