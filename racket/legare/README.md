@@ -1,6 +1,7 @@
 # Racket: Legarea variabilelor. Închideri funcționale
 
-  - Data publicării: 22.03.2021
+  - Data publicării: 19.03.2022
+  - Data ultimei modificări: 19.03.2022
 
 ## Obiective
 
@@ -260,9 +261,10 @@ momentul dorit, aplicând această expresie (aici pe 0 argumente).
 ## Resurse
 
   - [Documentație Racket](https://docs.racket-lang.org/reference/let.html "wikilink")
-  - [Exerciții rezolvate și propuse](https://ocw.cs.pub.ro/courses/_media/pp/21/laboratoare/racket/legare.zip)
-  - [Soluții](https://ocw.cs.pub.ro/courses/_media/pp/21/laboratoare/racket/legare-sol.zip)
+  - [Exerciții rezolvate și propuse](https://ocw.cs.pub.ro/courses/_media/pp/22/laboratoare/racket/legare-schelet.zip)
+  - [Soluții](https://ocw.cs.pub.ro/courses/_media/pp/22/laboratoare/racket/legare-solutii.zip)
   - [Cheatsheet Laboratorul 4](https://github.com/cs-pub-ro/PP-laboratoare/raw/master/racket/functionale/functionale-cheatsheet.pdf)
+
 ## Referințe
 
   - [Lexical Binding](https://www.cs.oberlin.edu/~bob/cs275.spring14/Examples%20and%20Notes/February/Februrary%2028/Lexical%20and%20Dynamic%20Binding.pdf "wikilink")
