@@ -83,6 +83,12 @@ check3 = tests_ 3
 
 {-
     4. Experimentați în consolă funcționalitățile funcției "trace", aplicată în funcțiile "evens", "squaredEvens" și "sumOfSquaredEvens".
+
+    Funcția "trace" primește doi parametri: un mesaj și o expresie. Rezultatul este dat de al doilea parametru (evaluarea expresiei),
+    iar mesajul e afișat în momentul în care se forțează evaluarea aplicației lui trace.
+
+    Notă: e folosit foldl' în loc de foldl pentru că primul forțează evaluarea la fiecare actualizare a acumulatorului.
+    Cu foldl, toată suma ar fi calculată de-abia la sfârșit.
 -}
 evens :: [Int]
 evens = filter (\x -> trace ("even? " ++ show x) (even x)) [0..9]
@@ -106,7 +112,9 @@ check4 = tests_ 4
       x0, f x0, f (f x0), f (f (f x0)), ...
     
     Când testați funcția, fiți pregătiți să apăsați CTRL + C deoarece evaluarea
-    aplicației va genera mult ouput.
+    aplicației va genera mult output sau să folosiți take.
+
+    Notă: această funcție este echivalentă cu funcția iterate.
  -}
 
 infiniteApply :: (Double -> Double) -> Double -> [Double]
