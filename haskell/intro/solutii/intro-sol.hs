@@ -224,9 +224,10 @@ check5 = tests_ 5
             [else (cons (car L2) (merge L1 (cdr L2)))]))
 
         (define (merge-sort L)
-        (let
-            ((fst-half (λ (lst) (take lst (quotient (length lst) 2))))
-            (snd-half (λ (lst) (drop lst (quotient (length lst) 2)))))
+        (let*
+            ((compute-half (λ (f lst) (f lst (quotient (length lst) 2))))
+            (fst-half (λ (lst) (compute-half take lst)))
+            (snd-half (λ (lst) (compute-half drop lst))))
         (cond
             [(null? L) '()]
             [(null? (cdr L)) L]
@@ -240,8 +241,9 @@ merge (x1:l1) (x2:l2) = if x1 <= x2 then x1 : (merge l1 (x2:l2)) else x2 : (merg
 
 mergeSort :: [Int] -> [Int]
 mergeSort lst = 
-    let fstHalf l = take (quot (length l) 2) l
-        sndHalf l = drop (quot (length l) 2) l
+    let computeHalf f l = f (quot (length l) 2) l
+        fstHalf l = computeHalf take l
+        sndHalf l = computeHalf drop l
     in
         case lst of
             [] -> []
@@ -254,8 +256,9 @@ mergeSort2 lst = case lst of
     [x] -> lst
     _ -> merge (mergeSort (fstHalf lst)) (mergeSort (sndHalf lst))
     where
-        fstHalf l = take (quot (length l) 2) l
-        sndHalf l = drop (quot (length l) 2) l
+        computeHalf f l = f (quot (length l) 2) l
+        fstHalf l = computeHalf take l
+        sndHalf l = computeHalf drop l
 
 check6 :: TestData
 check6 = tests_ 6

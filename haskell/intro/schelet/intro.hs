@@ -197,9 +197,10 @@ check5 = tests_ 5
             [else (cons (car L2) (merge L1 (cdr L2)))]))
 
         (define (merge-sort L)
-        (let
-            ((fst-half (λ (lst) (take lst (quotient (length lst) 2))))
-            (snd-half (λ (lst) (drop lst (quotient (length lst) 2)))))
+        (let*
+            ((compute-half (λ (f lst) (f lst (quotient (length lst) 2))))
+            (fst-half (λ (lst) (compute-half take lst)))
+            (snd-half (λ (lst) (compute-half drop lst))))
         (cond
             [(null? L) '()]
             [(null? (cdr L)) L]
