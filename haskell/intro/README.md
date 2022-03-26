@@ -1,7 +1,7 @@
 # Haskell: Introducere
 
--   Data publicării: 05.04.2021
--   Data ultimei modificări: 05.04.2021
+-   Data publicării: 28.03.2021
+-   Data ultimei modificări: 28.03.2021
 
 ## Obiective
 

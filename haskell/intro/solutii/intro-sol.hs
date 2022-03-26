@@ -216,14 +216,14 @@ check5 = tests_ 5
       1) folosind let - mergeSort
       2) folosind where - mergeSort2
 
-        (define (merge L1 L2)
+    (define (merge L1 L2)
         (cond
             [(null? L1) L2]
             [(null? L2) L1]
             [(<= (car L1) (car L2)) (cons (car L1) (merge (cdr L1) L2))]
             [else (cons (car L2) (merge L1 (cdr L2)))]))
 
-        (define (merge-sort L)
+    (define (merge-sort L)
         (let*
             ((compute-half (λ (f lst) (f lst (quotient (length lst) 2))))
             (fst-half (λ (lst) (compute-half take lst)))
@@ -272,48 +272,46 @@ check6 = tests_ 6
 
 {-
     7. Traduceți codul Racket de mai jos în Haskell în două moduri:
-      1) folosind let - isNumberEven
-      2) folosind where - isNumberEven2
+      1) folosind let - playerWins
+      2) folosind where - playerWins2
 
-        (define (is-number-even? number)
-        (letrec ((is-even (λ (n)
-                            (if (zero? n)
-                                #t
-                                (is-odd (sub1 n)))))
-                (is-odd (λ (n)
-                            (if (zero? n)
-                                #f
-                                (is-even (sub1 n)))))) (if (>= number 0)
-                                                            (is-even number)
-                                                            (is-even (* -1 number)))))
+    (define (player-wins? candies)
+        (letrec
+            ([player (lambda (candies)
+                        (and (> candies 0)
+                            (or (not (opponent (- candies 1)))
+                                (not (opponent (- candies 2))))))]
+            [opponent (lambda (candies)
+                        (and (> candies 1)
+                                (or (not (player (- candies 2)))
+                                    (not (player (- candies 3))))))])
+            (player candies)))
 
 -}
 
-isNumberEven :: Int -> Bool
-isNumberEven number = 
-    let isEven n = if n == 0 then True else isOdd (n - 1)
-        isOdd n = if n == 0 then False else isEven (n - 1)
+playerWins :: Int -> Bool
+playerWins candies = 
+    let player candies = (candies > 0) && ((not (opponent (candies - 1))) || (not (opponent (candies - 2))))
+        opponent candies = (candies > 1) && ((not (player (candies - 2))) || (not (player (candies - 3))))
     in
-        if number >= 0 then isEven number else isEven (number * (-1))
+        player candies
 
-isNumberEven2 :: Int -> Bool
-isNumberEven2 number = if number >= 0 then isEven number else isEven (number * (-1))
+playerWins2 :: Int -> Bool
+playerWins2 candies = player candies
     where 
-        isEven n = if n == 0 then True else isOdd (n - 1)
-        isOdd n = if n == 0 then False else isEven (n - 1)
+        player candies = (candies > 0) && ((not (opponent (candies - 1))) || (not (opponent (candies - 2))))
+        opponent candies = (candies > 1) && ((not (player (candies - 2))) || (not (player (candies - 3))))
 
 check7 :: TestData
 check7 = tests_ 7
-    [ testVal "isNumberEven 2" True $ isNumberEven 2
-    , testVal "isNumberEven 3" False $ isNumberEven 3
-    , testVal "isNumberEven 0" True $ isNumberEven 0
-    , testVal "isNumberEven (-2)" True $ isNumberEven (-2)
-    , testVal "isNumberEven (-3)" False $ isNumberEven (-3)
-    , testVal "isNumberEven2 2" True $ isNumberEven2 2
-    , testVal "isNumberEven2 3" False $ isNumberEven2 3
-    , testVal "isNumberEven2 0" True $ isNumberEven2 0
-    , testVal "isNumberEven2 (-2)" True $ isNumberEven2 (-2)
-    , testVal "isNumberEven2 (-3)" False $ isNumberEven2 (-3)
+    [ testVal "playerWins 2" True $ playerWins 2
+    , testVal "playerWins 4" False $ playerWins 4
+    , testVal "playerWins 17" True $ playerWins 17
+    , testVal "playerWins 32" False $ playerWins 32
+    , testVal "playerWins2 2" True $ playerWins2 2
+    , testVal "playerWins2 4" False $ playerWins2 4
+    , testVal "playerWins2 17" True $ playerWins2 17
+    , testVal "playerWins2 32" False $ playerWins2 32
     ]
 
 {-

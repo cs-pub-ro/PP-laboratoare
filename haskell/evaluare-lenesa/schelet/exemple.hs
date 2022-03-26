@@ -13,6 +13,9 @@ increasingPairs = [(x, y) | x <- naturals, y <- naturals, x < y]
 -- Funcția ^ nu va genera perechi `(1, _)`, ... deoarece valorile din `y` sunt
 -- de o cardinalitate infinită.
 
+increasingPairs2 = [(x, y) | x <- naturals, y <- [x+1 ..]]
+-- mai sus se generează perechile direct crescător
+
 -- {x! | x <- N}
 productList [] = 1
 productList (x:xs) = x * productList xs
