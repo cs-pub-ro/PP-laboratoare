@@ -212,7 +212,7 @@ Un exemplu de aplicație uzuală de "point-free style programming", cu care prob
 
 ## Resurse
 
--   [Cheatsheet](https://github.com/cs-pub-ro/PP-laboratoare/raw/haskell-intro/haskell/intro/haskell-cheatsheet-1.pdf)
+-   [Cheatsheet](https://github.com/cs-pub-ro/PP-laboratoare/raw/master/haskell/intro/haskell-cheatsheet-1.pdf)
 -   [Schelet](https://ocw.cs.pub.ro/courses/_media/pp/22/laboratoare/haskell/evaluare-lenesa-schelet.zip)
 -   [Soluții](https://ocw.cs.pub.ro/courses/_media/pp/22/laboratoare/haskell/evaluare-lenesa-solutii.zip)
 

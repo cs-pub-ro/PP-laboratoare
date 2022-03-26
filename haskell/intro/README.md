@@ -74,7 +74,7 @@ square (1 + 2)
 Există o varietate de compilatoare și interpretoare pentru Haskell. În momentul de față, limbajul și evoluția lui sunt strâns legate de eforturile dezvoltatorilor de la Glasgow. GHC, *The Glorious Glasgow Haskell Compilation System*, este și compilatorul pe care-l vom folosi pentru cursul de PP.
 
 Pentru a avea o experiență bună cu acest limbaj, recomandarea este să vă instalați [Haskell
-Stack](https://docs.haskellstack.org/en/stable/install_and_upgrade/ "wikilink") (citiți instrucțiunile de aici: [Limbaje](https://ocw.cs.pub.ro/courses/pp/21/limbaje "wikilink")). Față de compilator și de suita minimală de pachete, Haskell Stack aduce în plus o suită de biblioteci utile pentru dezvoltarea unor aplicații reale.
+Stack](https://docs.haskellstack.org/en/stable/install_and_upgrade/ "wikilink") (citiți instrucțiunile de aici: [Limbaje](https://ocw.cs.pub.ro/courses/pp/22/limbaje "wikilink")). Față de compilator și de suita minimală de pachete, Haskell Stack aduce în plus o suită de biblioteci utile pentru dezvoltarea unor aplicații reale.
 
 Codul Haskell poate fi atât compilat cât și interpretat. Pentru interpretare vom folosi **ghci**, iar pentru compilare vom folosi **ghc**. Fișierele de cod Haskell au în mod normal extensia `.hs`, dar se poate folosi și `.lhs` pentru variantele de **Literate Haskell** (programare ca o poveste - comentariile ocupă majoritatea textului în timp ce secvențele de cod sunt puține - este formatul preferat pentru publicarea de articole despre Haskell pe bloguri, oricine poate copia textul articolului într-un fișier și îl poate compila și rula apoi).
 
@@ -371,7 +371,7 @@ f :: Num a => a -> a -> a
 
 Fiecare argument este separat prin `->` de următorul sau de rezultat.
 
-Amintindu-ne de discuția despre [funcții curry și uncurry](https://ocw.cs.pub.ro/courses/pp/21/laboratoare/racket/functionale#functii_curryuncurry "wikilink"), rezultatul următor nu trebuie să ne surprindă
+Amintindu-ne de discuția despre [funcții curry și uncurry](https://ocw.cs.pub.ro/courses/pp/22/laboratoare/racket/functionale#functii_curryuncurry "wikilink"), rezultatul următor nu trebuie să ne surprindă
 
 ```haskell
 > :t f 3
@@ -405,7 +405,7 @@ Folosirea lor duce la un cod mai ușor de citit și de întreținut.
 
 ## Domenii de vizibilitate
 
-Spre deosebire de [Racket](https://ocw.cs.pub.ro/courses/pp/21/laboratoare/racket/legare "wikilink"), unde legarea variabilelor la nivelul cel mai de sus (top-level) este dinamică, Haskell leagă definițiile **static**, acestea fiind vizibile implicit la nivel **global**. De exemplu, o definiție de forma:
+Spre deosebire de [Racket](https://ocw.cs.pub.ro/courses/pp/22/laboratoare/racket/legare "wikilink"), unde legarea variabilelor la nivelul cel mai de sus (top-level) este dinamică, Haskell leagă definițiile **static**, acestea fiind vizibile implicit la nivel **global**. De exemplu, o definiție de forma:
 
 ```haskell
 theAnswer = 42
@@ -740,18 +740,15 @@ h' a = (c + b)
 ```
 ## Resurse
 
--   [Cheatsheet](https://github.com/cs-pub-ro/PP-laboratoare/raw/haskell-intro/haskell/intro/haskell-cheatsheet-1.pdf)
+-   [Cheatsheet (partea cu list comprehensions, funcționale utile și operatori se aplică pentru laboratorul 7)](https://github.com/cs-pub-ro/PP-laboratoare/raw/master/haskell/intro/haskell-cheatsheet-1.pdf)
 -   [Schelet](https://ocw.cs.pub.ro/courses/_media/pp/22/laboratoare/haskell/intro-schelet.zip)
 -   [Soluții](https://ocw.cs.pub.ro/courses/_media/pp/22/laboratoare/haskell/intro-solutie.zip)
 
 ## Referințe
 
--   *[Learn You a Haskell](http://learnyouahaskell.com/chapters "wikilink")*, este
-    utilă pentru toate laboratoarele de Haskell plus ceva extra
--   *[Hoogle](http://www.haskell.org/hoogle/ "wikilink")*, search for
-    Haskell functions starting from types
--   *[Hackage](http://hackage.haskell.org/packages/hackage.html "wikilink")*,
-    repository pentru pachete Haskell
+-   *[Learn You a Haskell](http://learnyouahaskell.com/chapters "wikilink")*, este utilă pentru toate laboratoarele de Haskell plus ceva extra
+-   *[Hoogle](http://www.haskell.org/hoogle/ "wikilink")*, search for Haskell functions starting from types
+-   *[Hackage](http://hackage.haskell.org/packages/hackage.html "wikilink")*, repository pentru pachete Haskell
 -   *[Local definitions](http://en.wikibooks.org/wiki/Haskell/Variables_and_functions#Local_definitions "wikilink")*
 -   *[Comparație](http://www.lambdadays.org/static/upload/media/14254629275479beameraghfuneval2.pdf "wikilink")* între diferiți algoritmi de sortare implementați in limbaje funcționale
 -   *[Let vs Where](https://wiki.haskell.org/Let_vs._Where "wikilink")*
