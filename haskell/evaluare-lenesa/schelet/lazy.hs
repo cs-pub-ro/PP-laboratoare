@@ -82,7 +82,7 @@ check3 = tests_ 3
 
 
 {-
-    9. Experimentați în consolă funcționalitățile funcției "trace", aplicată în funcțiile "evens", "squaredEvens" și "sumOfSquaredEvens".
+    4. Experimentați în consolă funcționalitățile funcției "trace", aplicată în funcțiile "evens", "squaredEvens" și "sumOfSquaredEvens".
 -}
 evens :: [Int]
 evens = filter (\x -> trace ("even? " ++ show x) (even x)) [0..9]
