@@ -179,7 +179,7 @@ check7 = tests_ 7
 
 
 {-
-    7. Determinați soluția ecuației f(x) = 0.
+    8. Determinați soluția ecuației f(x) = 0.
 
     Deoarece metoda Netwon-Raphson folosește aproximări succesive pentru
     a ajunge la soluție și noi lucrăm in domeniul real, vom folosi o toleranță
