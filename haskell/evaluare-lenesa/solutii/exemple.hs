@@ -25,7 +25,7 @@ Cum se traduc list-comprehensions în expresii simple cu funcționale?
 
 O expresie de forma
 
-    [expr | x <- listX, textX, y <- listY, testXY, ...]
+    [expr | x <- listX, testX, y <- listY, testXY, ...]
 
 este evaluată prin selectarea consecutivă a elementelor din `listX`, testarea
 predicatului `testX`, selectarea din `listY` (dacă `testX` este satisfăcut),
