@@ -7,7 +7,17 @@ import Data.Function (on)
 import TestPP
 
 
- ----------------------------------------------------------------------------------------------------
+{-
+    De rezolvat in urmatoarea ordine:
+    1) Show
+    2) Eq
+    3) Ord
+    4) Invertible
+    5) Functor
+    6) Foldable
+    7) Container
+    8) size cu foldr
+-}
 
 class Container t where
     contents :: t a -> [a]
@@ -31,6 +41,17 @@ findElem (BSTNod value left right) elem
   | value < elem = findElem right elem
   | value > elem = findElem left elem
 
+size :: (BST a) -> Int
+size BSTNil = 0
+size (BSTNod _ left right) = 1 + (size left) + (size right)
+
+sizeFold :: (BST a) -> Int
+sizeFold tree = foldr (\_ acc -> acc + 1) 0 tree
+
+height :: (BST a) -> Int
+height BSTNil = 0
+height (BSTNod elem left right) = 1 + max (height left) (height right)
+
 inorder :: BST a -> [a]
 inorder BSTNil = []
 inorder (BSTNod elem left right) = (inorder left) ++ [elem] ++ (inorder right) 
@@ -44,6 +65,15 @@ printLevel tab level (BSTNod root left right) = (replicate level tab) ++ (show r
 instance Show a => Show (BST a) where
     show BSTNil = ""
     show (BSTNod root left right) = printLevel '\t' 0 (BSTNod root left right)
+
+instance Eq a => Eq (BST a) where
+    (==) BSTNil BSTNil = True
+    (==) (BSTNod e1 l1 r1) (BSTNod e2 l2 r2) = e1 == e2 && l1 == l2 && r1 == r2
+    (==) _ _ = False
+
+instance Ord a => Ord (BST a) where
+    (<=) t1 t2 = height t1 <= height t2
+    (<) t1 t2 = height t1 < height t2
 
 instance Invertible (BST a) where
     invert BSTNil = BSTNil
