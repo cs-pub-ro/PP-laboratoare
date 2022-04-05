@@ -35,15 +35,6 @@ inorder :: BST a -> [a]
 inorder BSTNil = []
 inorder (BSTNod elem left right) = (inorder left) ++ [elem] ++ (inorder right) 
 
-mapTree :: (a -> b) -> BST a -> BST b
-mapTree f BSTNil = BSTNil
-mapTree f (BSTNod value left right) = BSTNod (f value) (mapTree f left) $ mapTree f right
-
-foldlTree :: (b -> a -> b) -> b -> BST a -> b
-foldlTree _ acc BSTNil = acc
-foldlTree f acc (BSTNod value left right) = foldlTree f newAcc right
-  where newAcc = foldlTree f (f acc value) left 
-
 printLevel :: Show a => Char -> Int -> BST a -> [Char]
 printLevel _ _ BSTNil = ""
 printLevel tab level (BSTNod root left right) = (replicate level tab) ++ (show root) ++ "\n" 
@@ -60,11 +51,14 @@ instance Invertible (BST a) where
 
 instance Functor BST where
     fmap f BSTNil = BSTNil
-    fmap f (BSTNode a left right) = BSTNode (f a) (fmap f left) (fmap f right)
+    fmap f (BSTNod a left right) = BSTNod (f a) (fmap f left) (fmap f right)
 
 instance Foldable BST where
     foldr f acc BSTNil = acc
-    foldr f acc (BSTNod value left right) = foldr f newAcc right
-        where newAcc = foldr f (f acc value) left
+    foldr f acc (BSTNod value left right) = foldr f (f value newAcc) left
+        where newAcc = foldr f acc right
+
+instance Container BST where
+    contents tree = reverse $ foldr (:) [] tree
 
 check = quickCheck False []
