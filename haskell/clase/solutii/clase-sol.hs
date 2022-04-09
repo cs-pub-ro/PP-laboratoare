@@ -45,9 +45,6 @@ size :: (BST a) -> Int
 size BSTNil = 0
 size (BSTNod _ left right) = 1 + (size left) + (size right)
 
-sizeFold :: (BST a) -> Int
-sizeFold tree = foldr (\_ acc -> acc + 1) 0 tree
-
 height :: (BST a) -> Int
 height BSTNil = 0
 height (BSTNod elem left right) = 1 + max (height left) (height right)
@@ -55,6 +52,21 @@ height (BSTNod elem left right) = 1 + max (height left) (height right)
 inorder :: BST a -> [a]
 inorder BSTNil = []
 inorder (BSTNod elem left right) = (inorder left) ++ [elem] ++ (inorder right) 
+
+root = foldl insertElem BSTNil [7, 4, 12, 2, 3, 1, 10, 15, 8]
+
+instance Eq a => Eq (BST a) where
+    (==) BSTNil BSTNil = True
+    (==) (BSTNod e1 l1 r1) (BSTNod e2 l2 r2) = e1 == e2 && l1 == l2 && r1 == r2
+    (==) _ _ = False
+
+check1 :: TestData
+check1 = tests_ 1 $
+    [
+        testVal "Eq 1" True $ root == root,
+        testVal "Eq 2" False $ root == insertElem root 20,
+        testVal "Eq 3" False $ root == BSTNil
+    ]
 
 printLevel :: Show a => Char -> Int -> BST a -> [Char]
 printLevel _ _ BSTNil = ""
@@ -66,29 +78,76 @@ instance Show a => Show (BST a) where
     show BSTNil = ""
     show (BSTNod root left right) = printLevel '\t' 0 (BSTNod root left right)
 
-instance Eq a => Eq (BST a) where
-    (==) BSTNil BSTNil = True
-    (==) (BSTNod e1 l1 r1) (BSTNod e2 l2 r2) = e1 == e2 && l1 == l2 && r1 == r2
-    (==) _ _ = False
+check2 :: TestData
+check2 = tests_ 2 $
+    [
+        testVal "show tree" "7\n\t4\n\t\t2\n\t\t\t1\n\t\t\t3\n\t12\n\t\t10\n\t\t\t8\n\t\t15\n" $ show root
+    ]
 
 instance Ord a => Ord (BST a) where
     (<=) t1 t2 = height t1 <= height t2
     (<) t1 t2 = height t1 < height t2
 
+check3 :: TestData
+check3 = tests_ 3 $
+    [ 
+        testVal "Ord 1" True $ root >= root,
+        testVal "Ord 2" True $ root <= root,
+        testVal "Ord 3" False $ root > root,
+        testVal "Ord 4" True $ foldl insertElem root [10, 20, 22] > root,
+        testVal "Ord 5" True $ BSTNil < root
+    ]
+
 instance Invertible (BST a) where
     invert BSTNil = BSTNil
     invert (BSTNod a left right) = BSTNod a (invert right) (invert left)
 
+check4 :: TestData
+check4 = tests_ 4 $
+    [ 
+        testVal "Invertible 1" True $ root == invert (invert root)
+    ]
+
 instance Functor BST where
     fmap f BSTNil = BSTNil
     fmap f (BSTNod a left right) = BSTNod (f a) (fmap f left) (fmap f right)
+
+check5 :: TestData
+check5 = tests_ 5 $
+    [
+        testVal "Functor 1" BSTNil $ fmap (+1) BSTNil,
+        testVal "Functor 2" (insertElem BSTNil 6) $ fmap (+1) (insertElem BSTNil 5),
+        testVal "Functor 3" (foldl insertElem BSTNil (map (+10) [7, 4, 12, 2, 3, 1, 10, 15, 8])) $ fmap (+10) root
+    ]
 
 instance Foldable BST where
     foldr f acc BSTNil = acc
     foldr f acc (BSTNod value left right) = foldr f (f value newAcc) left
         where newAcc = foldr f acc right
 
+check6 :: TestData
+check6 = tests_ 6 $
+    [
+        testVal "Foldable 1" 62 $ foldr (+) 0 root,
+        testVal "Foldable 2" 82 $ foldr (+) 0 (insertElem root 20)
+    ]
+
 instance Container BST where
     contents tree = reverse $ foldr (:) [] tree
 
-check = quickCheck False []
+check7 = tests_ 7 $
+    [
+        testVal "Container 1" 0 $ length (contents BSTNil),
+        testVal "Container 2" [15,12,10,8,7,4,3,2,1] $ contents root
+    ]
+
+sizeFold :: (BST a) -> Int
+sizeFold tree = foldr (\_ acc -> acc + 1) 0 tree
+
+check8 = tests_ 8 $
+    [
+        testVal "sizeFold 1" 0 $ sizeFold BSTNil,
+        testVal "sizeFold 2" 9 $ sizeFold root
+    ]
+
+check = quickCheck False [check1, check2, check3, check4, check5, check6, check7, check8]
