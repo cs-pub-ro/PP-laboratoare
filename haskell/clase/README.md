@@ -1,7 +1,7 @@
 # Haskell: Polimorfism și clase
 
-  - Data publicării: 19.04.2021
-  - Data ultimei modificări: 20.04.2021
+  - Data publicării: 19.04.2022
+  - Data ultimei modificări: 19.04.2022
 
 ## Obiective
 
