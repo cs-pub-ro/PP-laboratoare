@@ -210,7 +210,8 @@ check4 = let l1 = consElem 1 $ emptyList
 
   generare de arbori infiniți. Găsiți și pașii de rezolvare în
 
-  inregistrarea de anul trecut aici:
+  înregistrarea de anul trecut aici:
+
   https://ctipub-my.sharepoint.com/:v:/g/personal/mihnea_muraru_upb_ro/EcYo_vC9AktDt0fmeIqcdtEBZLsqbf4X6buhe9Gru8ocIg
 
   Pornind de la o valoare numerică x0, găsiți numărul minim de
