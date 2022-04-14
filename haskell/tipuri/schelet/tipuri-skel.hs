@@ -61,7 +61,8 @@ check1 = let
   echivalentul unui linked list. Tot in cadrul laboratorului, implementati
   funcția isBalanced care verifică dacă arborele este balansat. Un arbore
 
-  este balansat daca diferenta inaltimilor subarborilor unui nod este <= 1.
+  este balansat dacă diferența înălțimilor subarborilor unui nod este <= 1.
+
 -}
 
 data BST a = UndefinedNode | BSTNil deriving Show
