@@ -186,7 +186,7 @@ Numele câmpurilor pot fi folosite și pentru "modificarea" selectivă a câmpur
 ``` haskell 
 newP = p { px = 5 }
 ```
-Un asset util in implementari este alias-ul (@), care creeaza un sinonim pentru un tip de date in corpul unei functii pentru simplitate.
+Un asset util in implementări este alias-ul (@), care creează un sinonim pentru un tip de date în corpul unei funcții pentru simplitate.
 Putem rescrie o portiune de cod ca aceasta:
 ``` haskell
 returnPointOrXOrY (PointC x y) choice
