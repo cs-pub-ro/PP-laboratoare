@@ -49,7 +49,8 @@ check1 = let
   arbore binar de căutare, căutarea unui element într-un arbore binar de
   căutare dat, o funcție care întoarce lista elementelor din parcurgerea
   în inordine a arborelui.
-  Recomandam utilizarea alias-urilor(@) pentru rezolvarea acestui exercitiu.
+  Recomandăm utilizarea alias-urilor (@) pentru rezolvarea acestui exercițiu.
+
   
   De asemenea, definiti functiile de size si height pentru determinarea 
   numarului de noduri din arbore, respectiv inaltimii arborelui.
