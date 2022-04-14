@@ -275,7 +275,8 @@ check4 = let l1 = consElem 1 $ emptyList
   Dacă aveți pe nodul stâng și nodul drept doar funcții monoton crescatoare, cum puteți
   opri căutarea?
 
-  Similar exercițiului 9 din laboratorul anterior experimentați în consolă funcționalitățile
+  Similar exercițiului 4 din laboratorul anterior experimentați în consolă funcționalitățile
+
   funcției "trace" în definirea nodurilor din funția completeBinaryTree. Ce observați?
 
 -}
