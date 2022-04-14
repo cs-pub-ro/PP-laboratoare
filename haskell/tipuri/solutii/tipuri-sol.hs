@@ -52,7 +52,8 @@ check1 = let
   Recomandăm utilizarea alias-urilor (@) pentru rezolvarea acestui exercițiu.
 
   
-  De asemenea, definiti functiile de size si height pentru determinarea 
+  De asemenea, definiți funcțiile de size și de height pentru determinarea 
+
   numarului de noduri din arbore, respectiv inaltimii arborelui.
   
   Un arbore binar de cautare este eficient atata timp cat inaltimea lui 
