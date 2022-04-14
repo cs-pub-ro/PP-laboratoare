@@ -102,7 +102,7 @@ sumOfSquaredEvens = foldl' (\acc x -> trace ("add " ++ show x) (acc + x)) 0 squa
 -- Verificare: check4
 check4 :: TestData
 check4 = tests_ 4
-    [ testManually "trace în consolă" True ]
+    [ testManually "trace in consola" True ]
 
 {-
     5. Scrieți o funcție "infiniteApply" care primește ca parametru o funcție "f"
