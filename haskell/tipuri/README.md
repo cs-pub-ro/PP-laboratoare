@@ -1,7 +1,7 @@
 # Haskell: Tipuri de date utilizator
 
-  - Data publicării: 11.04.2021
-  - Data ultimei modificări: 11.04.2021
+  - Data publicării: 15.04.2022
+  - Data ultimei modificări: 14.04.2022
 
 ## Obiective
 
@@ -186,6 +186,22 @@ Numele câmpurilor pot fi folosite și pentru "modificarea" selectivă a câmpur
 ``` haskell 
 newP = p { px = 5 }
 ```
+Un asset util in implementari este alias-ul (@), care creeaza un sinonim pentru un tip de date in corpul unei functii pentru simplitate.
+Putem rescrie o portiune de cod ca aceasta:
+``` haskell
+returnPointOrXOrY (PointC x y) choice
+  | choice == 'x' = x
+  | choice == 'y' = y
+  | otherwise = PointC x y
+```
+cu urmatorul cod:
+``` haskell
+returnPointOrXOrY point@(PointC x y) choice
+  | choice == 'x' = x
+  | choice == 'y' = y
+  | otherwise = point
+```
+
 
 ### Tipuri parametrizate
 
