@@ -54,14 +54,21 @@ check1 = let
   
   De asemenea, definiți funcțiile de size și de height pentru determinarea 
 
-  numarului de noduri din arbore, respectiv inaltimii arborelui.
+  numărului de noduri din arbore, respectiv înălțimii arborelui.
+
   
-  Un arbore binar de cautare este eficient atata timp cat inaltimea lui 
-  este minima. Cu alte cuvinte, crearea unui BST printr-o lista sortata
-  crescator/descrescator este worst-case-scenario pentru un arbore si este
-  echivalentul unui linked list. Tot in cadrul laboratorului, implementati
-  functia isBalanced care verifica daca arborele este balansat. Un arbore
-  este balansat daca diferenta inaltimilor subarborilor unui nod este <= 1.
+  Un arbore binar de căutare este eficient atâta timp cât înălțimea lui 
+
+  este minimă. Cu alte cuvinte, crearea unui BST printr-o listă sortată
+
+  crescător / descrescător este worst-case-scenario pentru un arbore și este
+
+  echivalentul unei liste înlănțuite. Tot în cadrul laboratorului, implementați
+
+  funcția isBalanced care verifică dacă arborele este balansat. Un arbore
+
+  este balansat dacă diferența înălțimilor subarborilor unui nod este <= 1.
+
 -}
 
 data BST a = BSTNod {
