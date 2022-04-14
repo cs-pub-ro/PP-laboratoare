@@ -59,7 +59,8 @@ check1 = let
   este minima. Cu alte cuvinte, crearea unui BST printr-o lista sortata
   crescator/descrescator este worst-case-scenario pentru un arbore si este
   echivalentul unui linked list. Tot in cadrul laboratorului, implementati
-  functia isBalanced care verifica daca arborele este balansat. Un arbore
+  funcția isBalanced care verifică dacă arborele este balansat. Un arbore
+
   este balansat daca diferenta inaltimilor subarborilor unui nod este <= 1.
 -}
 
