@@ -180,7 +180,8 @@ check4 = let l1 = consElem 1 $ emptyList
 {-
  BONUS. Structuri infinite - Arbore binar
 
-  Aveti mai jos rezolvata si explicata o problema deosebita de
+  Aveți mai jos rezolvată și explicată o problemă deosebită de
+
   generare de arbori infiniti. Gasiti si pasii de rezolvare in
   inregistrarea de anul trecut aici:
   https://ctipub-my.sharepoint.com/:v:/g/personal/mihnea_muraru_upb_ro/EcYo_vC9AktDt0fmeIqcdtEBZLsqbf4X6buhe9Gru8ocIg
