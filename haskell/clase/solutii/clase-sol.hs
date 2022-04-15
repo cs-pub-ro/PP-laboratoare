@@ -174,7 +174,7 @@ check5 = tests_ 5 $
     Hints:
     1) aplicați foldr pe copilul din dreapta
     2) folosiți rezultatul de la pasul precedent ca acumulator
-        când să aplicați funcția f pe valoarea nodului din arbore
+        ca să aplicați funcția f pe valoarea nodului din arbore
     3) folosiți rezultatul de la pasul 2) ca acumulator când aplicați
         foldr pe copilul din stânga
 -}
