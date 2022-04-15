@@ -50,23 +50,15 @@ check1 = let
   căutare dat, o funcție care întoarce lista elementelor din parcurgerea
   în inordine a arborelui.
   Recomandăm utilizarea alias-urilor (@) pentru rezolvarea acestui exercițiu.
-
   
   De asemenea, definiți funcțiile de size și de height pentru determinarea 
-
   numărului de noduri din arbore, respectiv înălțimii arborelui.
 
-  
   Un arbore binar de căutare este eficient atâta timp cât înălțimea lui 
-
   este minimă. Cu alte cuvinte, crearea unui BST printr-o listă sortată
-
   crescător / descrescător este worst-case-scenario pentru un arbore și este
-
   echivalentul unei liste înlănțuite. Tot în cadrul laboratorului, implementați
-
   funcția isBalanced care verifică dacă arborele este balansat. Un arbore
-
   este balansat dacă diferența înălțimilor subarborilor unui nod este <= 1.
 
 -}
@@ -216,11 +208,8 @@ check4 = let l1 = consElem 1 $ emptyList
  BONUS. Structuri infinite - Arbore binar
 
   Aveți mai jos rezolvată și explicată o problemă deosebită de
-
   generare de arbori infiniți. Găsiți și pașii de rezolvare în
-
   înregistrarea de anul trecut aici:
-
   https://ctipub-my.sharepoint.com/:v:/g/personal/mihnea_muraru_upb_ro/EcYo_vC9AktDt0fmeIqcdtEBZLsqbf4X6buhe9Gru8ocIg
 
   Pornind de la o valoare numerică x0, găsiți numărul minim de
