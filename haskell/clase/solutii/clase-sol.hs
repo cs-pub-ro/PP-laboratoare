@@ -131,7 +131,7 @@ check3 = tests_ 3 $
 
 {-
     4. Instanțiați Invertible pentru tipul de date BST.
-    Funcția invert, în acest caz, va inversa un arbore binar de căutare.
+    Funcția invert, în acest caz, va inversa ordinea subarborilor.
 -}   
 
 instance Invertible (BST a) where
