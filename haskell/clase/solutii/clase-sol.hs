@@ -84,7 +84,7 @@ check1 = tests_ 1 $
     ]
 
 {-
-    2. Implementați Show pentru tipul de date BST.
+    2. Instanțiați Show pentru tipul de date BST.
     Fiecare nivel de adâncime în arbore va fi reprezentat de un număr
     corespunzător de tab-uri. De exemplu pentru nivelul 2 de adâncime
     se vor adăuga două tab-uri.
