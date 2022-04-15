@@ -164,7 +164,7 @@ check5 = tests_ 5 $
     ]
 
 {-
-    6. Implementați Foldable pentru tipul de date BST.
+    6. Instanțiați Foldable pentru tipul de date BST.
     Funcția foldr are aceeași funcționalitate atunci când
     ea este aplicată pe liste.
 
