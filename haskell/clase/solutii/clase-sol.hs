@@ -148,7 +148,7 @@ check4 = tests_ 4 $
 {-
     5. Implementați Functor pentru tipul de date BST.
     Funcția fmap este similară funcției map, prin care se aplică
-    o funcție f tuturor elementelor din colecție.
+    o funcție f tuturor elementelor din structură.
 -} 
 
 instance Functor BST where
