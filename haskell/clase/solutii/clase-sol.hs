@@ -130,7 +130,7 @@ check3 = tests_ 3 $
     ]
 
 {-
-    4. Implementați Invertible pentru tipul de date BST.
+    4. Instanțiați Invertible pentru tipul de date BST.
     Funcția invert, în acest caz, va inversa un arbore binar de căutare.
 -}   
 
