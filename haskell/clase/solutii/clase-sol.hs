@@ -192,7 +192,7 @@ check6 = tests_ 6 $
     ]
 
 {-
-    7. Implementați Container pentru tipul de date BST.
+    7. Instanțiați Container pentru tipul de date BST.
     Pentru implementarea funcției contents o să folosiți
     funcția foldr, implementată la exercițiul anterior.
 -}
