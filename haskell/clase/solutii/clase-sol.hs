@@ -8,7 +8,7 @@ import TestPP
 
 
 {-
-    Clasa Container reprezintă o clasă folosită pentru afișarea
+    Clasa Container reprezintă o clasă folosită pentru enumerarea
     elementelor unei structuri de date (listă, arbore, graf, etc.)
 -}
 
