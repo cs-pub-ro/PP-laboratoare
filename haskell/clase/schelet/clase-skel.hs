@@ -8,7 +8,7 @@ import TestPP
 
 
 {-
-    Clasa Container reprezintă o clasă folosită pentru afișarea
+    Clasa Container reprezintă o clasă folosită pentru enumerarea
     elementelor unei structuri de date (listă, arbore, graf, etc.)
 -}
 
@@ -31,7 +31,11 @@ class Invertible a where
     Funcționalitățile sunt deja definite în cadrul acestui laborator.
 -}
 
-data BST a = BSTNod a (BST a) (BST a) | BSTNil
+data BST a = BSTNod {
+    vl :: a
+    , lt :: (BST a)
+    , rt :: (BST a)
+    } | BSTNil
 
 insertElem :: (Ord a, Eq a) => BST a -> a -> BST a
 insertElem BSTNil elem = BSTNod elem BSTNil BSTNil
@@ -66,7 +70,7 @@ inorder (BSTNod elem left right) = (inorder left) ++ [elem] ++ (inorder right)
 root = foldl insertElem BSTNil [7, 4, 12, 2, 3, 1, 10, 15, 8]
 
 {-
-    1. Implementați Eq pentru tipul de date BST, prin care se
+    1. Instanțiați Eq pentru tipul de date BST, prin care se
     verifică dacă doi arbori de acoperire sunt identici.
 -}
 
@@ -82,13 +86,26 @@ check1 = tests_ 1 $
     ]
 
 {-
-    2. Implementați Show pentru tipul de date BST.
+    2. Instanțiați Show pentru tipul de date BST.
     Fiecare nivel de adâncime în arbore va fi reprezentat de un număr
     corespunzător de tab-uri. De exemplu pentru nivelul 2 de adâncime
     se vor adăuga două tab-uri.
 
     Fiecare element din arbore va avea linia sa, adică câte un element
     din arbore pe o linie.
+    
+    Exemplu de afișare:
+
+    7
+        4
+                2
+                        1
+                        3
+        12
+                10
+                        8
+                15
+
 -}
 
 instance Show a => Show (BST a) where
@@ -101,10 +118,10 @@ check2 = tests_ 2 $
     ]
 
 {-
-    3. Implementați Ord pentru tipul de date BST.
+    3. Instanțiați Ord pentru tipul de date BST.
     Criteriul de comparare a doi arbori va fi după înălțimea lor (funcția height).
 
-    Trebuie implementate funcțiile (<=) și (<)
+    Trebuie implementată funcția (<=)
 -}
 
 instance Ord a => Ord (BST a) where
@@ -121,8 +138,8 @@ check3 = tests_ 3 $
     ]
 
 {-
-    4. Implementați Invertible pentru tipul de date BST.
-    Funcția invert, în acest caz, va inversa un arbore binar de căutare.
+    4. Instanțiați Invertible pentru tipul de date BST.
+    Funcția invert, în acest caz, va inversa ordinea subarborilor.
 -}   
 
 instance Invertible (BST a) where
@@ -135,9 +152,9 @@ check4 = tests_ 4 $
     ]
 
 {-
-    5. Implementați Functor pentru tipul de date BST.
+    5. Instanțiați Functor pentru tipul de date BST.
     Funcția fmap este similară funcției map, prin care se aplică
-    o funcție f tuturor elementelor din colecție.
+    o funcție f tuturor elementelor din structură.
 -} 
 
 instance Functor BST where
@@ -152,7 +169,7 @@ check5 = tests_ 5 $
     ]
 
 {-
-    6. Implementați Foldable pentru tipul de date BST.
+    6. Instanțiați Foldable pentru tipul de date BST.
     Funcția foldr are aceeași funcționalitate atunci când
     ea este aplicată pe liste.
 
@@ -162,7 +179,7 @@ check5 = tests_ 5 $
     Hints:
     1) aplicați foldr pe copilul din dreapta
     2) folosiți rezultatul de la pasul precedent ca acumulator
-        când să aplicați funcția f pe valoarea nodului din arbore
+        ca să aplicați funcția f pe valoarea nodului din arbore
     3) folosiți rezultatul de la pasul 2) ca acumulator când aplicați
         foldr pe copilul din stânga
 -}
@@ -178,7 +195,7 @@ check6 = tests_ 6 $
     ]
 
 {-
-    7. Implementați Container pentru tipul de date BST.
+    7. Instanțiați Container pentru tipul de date BST.
     Pentru implementarea funcției contents o să folosiți
     funcția foldr, implementată la exercițiul anterior.
 -}

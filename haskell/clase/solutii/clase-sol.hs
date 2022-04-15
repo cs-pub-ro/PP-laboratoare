@@ -31,7 +31,11 @@ class Invertible a where
     Funcționalitățile sunt deja definite în cadrul acestui laborator.
 -}
 
-data BST a = BSTNod a (BST a) (BST a) | BSTNil
+data BST a = BSTNod {
+    vl :: a
+    , lt :: (BST a)
+    , rt :: (BST a)
+    } | BSTNil
 
 insertElem :: (Ord a, Eq a) => BST a -> a -> BST a
 insertElem BSTNil elem = BSTNod elem BSTNil BSTNil
@@ -91,6 +95,19 @@ check1 = tests_ 1 $
 
     Fiecare element din arbore va avea linia sa, adică câte un element
     din arbore pe o linie.
+
+    Exemplu de afișare:
+
+    7
+        4
+                2
+                        1
+                        3
+        12
+                10
+                        8
+                15
+
 -}
 
 printLevel :: Show a => Char -> Int -> BST a -> [Char]
@@ -113,7 +130,7 @@ check2 = tests_ 2 $
     3. Instanțiați Ord pentru tipul de date BST.
     Criteriul de comparare a doi arbori va fi după înălțimea lor (funcția height).
 
-    Trebuie implementate funcțiile (<=) și (<)
+    Trebuie implementată funcția (<=)
 -}
 
 instance Ord a => Ord (BST a) where
