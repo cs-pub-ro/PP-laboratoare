@@ -110,7 +110,7 @@ check2 = tests_ 2 $
     ]
 
 {-
-    3. Implementați Ord pentru tipul de date BST.
+    3. Instanțiați Ord pentru tipul de date BST.
     Criteriul de comparare a doi arbori va fi după înălțimea lor (funcția height).
 
     Trebuie implementate funcțiile (<=) și (<)
