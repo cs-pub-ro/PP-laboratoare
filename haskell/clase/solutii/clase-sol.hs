@@ -118,7 +118,6 @@ check2 = tests_ 2 $
 
 instance Ord a => Ord (BST a) where
     (<=) t1 t2 = height t1 <= height t2
-    (<) t1 t2 = height t1 < height t2
 
 check3 :: TestData
 check3 = tests_ 3 $
