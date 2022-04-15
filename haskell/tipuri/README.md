@@ -189,16 +189,14 @@ newP = p { px = 5 }
 Un asset util in implementari este alias-ul (@), care creeaza un sinonim pentru un tip de date in corpul unei functii pentru simplitate.
 Putem rescrie o portiune de cod ca aceasta:
 ``` haskell
-returnPointOrXOrY (PointC x y) choice
-  | choice == 'x' = x
-  | choice == 'y' = y
-  | otherwise = PointC x y
+returnReversed (PointC x y) reversed
+  | reversed = (PointC y x)
+  | otherwise = (PointC x y)
 ```
 cu urmatorul cod:
 ``` haskell
-returnPointOrXOrY point@(PointC x y) choice
-  | choice == 'x' = x
-  | choice == 'y' = y
+returnReversed point@(PointC x y) reversed
+  | reversed = (PointC y x)
   | otherwise = point
 ```
 
