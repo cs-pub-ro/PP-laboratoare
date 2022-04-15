@@ -49,18 +49,28 @@ check1 = let
   arbore binar de căutare, căutarea unui element într-un arbore binar de
   căutare dat, o funcție care întoarce lista elementelor din parcurgerea
   în inordine a arborelui.
-  Recomandam utilizarea alias-urilor(@) pentru rezolvarea acestui exercitiu
-  intr-o maniera cat mai eleganta.
+  Recomandăm utilizarea alias-urilor (@) pentru rezolvarea acestui exercițiu
+
+  într-o manieră cât mai elegantă.
+
   
-  De asemenea, definiti functiile de size si height pentru determinarea 
-  numarului de noduri din arbore, respectiv inaltimii arborelui.
+  De asemenea, definiți funcțiile de size și de height pentru determinarea 
+
+  numărului de noduri din arbore, respectiv înălțimii arborelui.
+
   
-  Un arbore binar de cautare este eficient atata timp cat inaltimea lui 
-  este minima. Cu alte cuvinte, crearea unui BST printr-o lista sortata
-  crescator/descrescator este worst-case-scenario pentru un arbore si este
-  echivalentul unui linked list. Tot in cadrul laboratorului, implementati
-  functia isBalanced care verifica daca arborele este balansat. Un arbore
-  este balansat daca diferenta inaltimilor subarborilor unui nod este <= 1.
+  Un arbore binar de căutare este eficient atâta timp cât înălțimea lui 
+
+  este minimă. Cu alte cuvinte, crearea unui BST printr-o listă sortată
+
+  crescător / descrescător este worst-case-scenario pentru un arbore și este
+
+  echivalentul unei liste înlănțuite. Tot în cadrul laboratorului, implementați
+
+  funcția isBalanced care verifică dacă arborele este balansat. Un arbore
+
+  este balansat dacă diferența înălțimilor subarborilor unui nod este <= 1.
+
 -}
 
 data BST a = UndefinedNode | BSTNil deriving Show
@@ -178,9 +188,12 @@ check4 = let l1 = consElem 1 $ emptyList
 {-
  BONUS. Structuri infinite - Arbore binar
 
-  Aveti mai jos rezolvata si explicata o problema deosebita de
-  generare de arbori infiniti. Gasiti si pasii de rezolvare in
-  inregistrarea de anul trecut aici:
+  Aveți mai jos rezolvată și explicată o problemă deosebită de
+
+  generare de arbori infiniți. Găsiți și pașii de rezolvare în
+
+  înregistrarea de anul trecut aici:
+
   https://ctipub-my.sharepoint.com/:v:/g/personal/mihnea_muraru_upb_ro/EcYo_vC9AktDt0fmeIqcdtEBZLsqbf4X6buhe9Gru8ocIg
 
   Pornind de la o valoare numerică x0, găsiți numărul minim de

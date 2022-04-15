@@ -186,14 +186,14 @@ Numele câmpurilor pot fi folosite și pentru "modificarea" selectivă a câmpur
 ``` haskell 
 newP = p { px = 5 }
 ```
-Un asset util in implementari este alias-ul (@), care creeaza un sinonim pentru un tip de date in corpul unei functii pentru simplitate.
-Putem rescrie o portiune de cod ca aceasta:
+Un mecanism util în implementări este alias-ul (@), care numește un pattern, astfel încât să putem accesa prin nume atât componentele unui pattern cât și pe acesta ca întreg.
+Putem rescrie o porțiune de cod ca aceasta:
 ``` haskell
 returnReversed (PointC x y) reversed
   | reversed = (PointC y x)
   | otherwise = (PointC x y)
 ```
-cu urmatorul cod:
+cu următorul cod:
 ``` haskell
 returnReversed point@(PointC x y) reversed
   | reversed = (PointC y x)
