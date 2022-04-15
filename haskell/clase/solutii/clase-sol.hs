@@ -66,7 +66,7 @@ inorder (BSTNod elem left right) = (inorder left) ++ [elem] ++ (inorder right)
 root = foldl insertElem BSTNil [7, 4, 12, 2, 3, 1, 10, 15, 8]
 
 {-
-    1. Implementați Eq pentru tipul de date BST, prin care se
+    1. Instanțiați Eq pentru tipul de date BST, prin care se
     verifică dacă doi arbori de acoperire sunt identici.
 -}
 
