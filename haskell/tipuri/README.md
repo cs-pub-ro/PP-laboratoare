@@ -1,7 +1,7 @@
 # Haskell: Tipuri de date utilizator
 
-  - Data publicării: 11.04.2021
-  - Data ultimei modificări: 11.04.2021
+  - Data publicării: 18.04.2022
+  - Data ultimei modificări: 18.04.2022
 
 ## Obiective
 
@@ -186,6 +186,20 @@ Numele câmpurilor pot fi folosite și pentru "modificarea" selectivă a câmpur
 ``` haskell 
 newP = p { px = 5 }
 ```
+Un mecanism util în implementări este alias-ul (@), care numește un pattern, astfel încât să putem accesa prin nume atât componentele unui pattern cât și pe acesta ca întreg.
+Putem rescrie o porțiune de cod ca aceasta:
+``` haskell
+returnReversed (PointC x y) reversed
+  | reversed = PointC y x
+  | otherwise = PointC x y
+```
+cu următorul cod:
+``` haskell
+returnReversed point@(PointC x y) reversed
+  | reversed = PointC y x
+  | otherwise = point
+```
+
 
 ### Tipuri parametrizate
 
