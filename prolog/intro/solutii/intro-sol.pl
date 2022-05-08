@@ -1,4 +1,4 @@
-﻿%% LABORATOR 09
+﻿%% LABORATOR 10
 %% Prolog - Intro
 :- discontiguous exercitiul/2.
 %% -----------------------------------------------------------------------------
@@ -141,94 +141,6 @@ check5 :-
 
 
 %% -----------------------------------------------------------------------------
-
-exercitiul(6, []).
-%% setIntersection/3
-%% setIntersection(+L1, +L2, -L)
-%% L este intersecția listelor L1 si L2.
-
-%% Hint:
-%% - În cazul în care primul element din L1 (H1) este și în L2,
-%% rezultatul este format din H1 și intersecția restului lui L1 cu L2.
-%% - În cazul în care primul element din L1 nu este și în L2,
-%% rezultatul este intersecția restului lui L1 cu L2.
-
-setIntersection([], _, []).
-setIntersection([H1|T1], L2, [H1|T1IntL2]):-member(H1, L2),
-                               setIntersection(T1, L2, T1IntL2).
-setIntersection([H1|T1], L2, T1IntL2):- \+member(H1, L2),
-                               setIntersection(T1, L2, T1IntL2).
-
-check6:-
-    tests([
-        1, chk(setIntersection([], [1,2], [])),
-        1, chk(setIntersection([1,2,3], [7,9,24], [])),
-        1, chk(setIntersection([1,2,3], [2], [2])),
-        2, exp('setIntersection([1,2,3,4,7,13], [7,13,21], Int)',
-               [set('Int', [7,13])])]),
-        writeln('Exercițiul 6 rezolvat corect!').
-
-%% -----------------------------------------------------------------------------
-
-exercitiul(7, []).
-%% setDiff/3
-%% setDiff(+L1, +L2, -L)
-%% L este diferența listelor L1 si L2 (L1 - L2)
-
-%% Hint:
-%% - În cazul în care primul element din L1 (H1) nu este în L2,
-%% rezultatul este format din H1 și diferența dintre restul lui L1 și
-%% L2.
-%% - În cazul în care primul element din L1 este în L2, rezultatul este
-%% diferența dintre restul lui L1 și L2.
-
-
-setDiff([], _, []).
-setDiff([H1|T1], L2, [H1|T1MinL2]):- \+ member(H1, L2),
-                               setDiff(T1, L2, T1MinL2).
-setDiff([H1|T1], L2, T1MinL2):- member(H1,L2),
-                               setDiff(T1, L2, T1MinL2).
-
-
-check7:-
-    tests([
-        1, chk(setDiff([], [1,2], [])),
-        1, chk(setDiff([1,2,3], [7,9,24], [1,2,3])),
-        1, chk(setDiff([1,2,3], [2], [1,3])),
-        2, exp('setDiff([1,2,3,4,7,13], [7,13,21], Diff)',
-               [set('Diff', [1,2,3,4])])]),
-        writeln('Exercițiul 7 rezolvat corect!').
-
-
-
-%% -----------------------------------------------------------------------------
-
-exercitiul(8, []).
-%% setUnion/3
-%% setUnion(+L1, +L2, -L)
-%% L este reuniunea listelor L1 si L2.
-
-%% Hint: Predicatul este adevărat dacă L este egal cu
-%% L1 ++ (L2 - (L1 intersectat L2))
-
-
-
-setUnion(L1, L2, L):- setIntersection(L1, L2, Int),
-                      setDiff(L2, Int, Diff),
-                      myConcat(L1, Diff, L).
-
-check8:-
-    tests([
-        1, chk(setUnion([], [1,2], [1,2])),
-        1, chk(setUnion([1,2,3], [7,9,24], [1,2,3,7,9,24])),
-        1, chk(setUnion([1,2,3], [2], [1,2,3])),
-        2, exp('setUnion([1,2,3,4,7,13], [29,3,7,13,21], Union)',
-               [set('Union', [1,2,3,4,7,13,29,21])])]),
-        writeln('Exercițiul 8 rezolvat corect!').
-
-
-
-%% -----------------------------------------------------------------------------
 %% -----------------------------------------------------------------------------
 %% Se dau următoarele fapte ce descriu arcele unei păduri de arbori binari.
 
@@ -245,7 +157,7 @@ arc(h,i). arc(h,j). arc(i,k). arc(j,l).
 arc(n,o). arc(o,p).
 
 %% -----------------------------------------------------------------------------
-exercitiul(9, []).
+exercitiul(6, []).
 %% isLeaf/1
 %% isLeaf(?Nod)
 
@@ -254,7 +166,7 @@ exercitiul(9, []).
 
 isLeaf(X):- nod(X), \+ arc(X,_).
 
-check9:-
+check6:-
 	tests([
 	chk(isLeaf(d)),
 	chk(isLeaf(f)),
@@ -268,12 +180,12 @@ check9:-
 	uck(isLeaf(c)),
 	uck(isLeaf(e)),
 	nsl('isLeaf(A)', 'A', 7)]),
-        writeln('Exercițiul 9 rezolvat corect!').
+        writeln('Exercițiul 6 rezolvat corect!').
 
 
 
 %% -----------------------------------------------------------------------------
-exercitiul(10, []).
+exercitiul(7, []).
 %% isRoot/1
 %% isRoot(?Nod)
 
@@ -282,7 +194,7 @@ exercitiul(10, []).
 
 isRoot(X):- nod(X), \+ arc(_,X).
 
-check10:-
+check7:-
 	tests([
 	chk(isRoot(a)),
 	chk(isRoot(h)),
@@ -293,12 +205,12 @@ check10:-
 	uck(isRoot(e)),
 	uck(isRoot(l)),
 	nsl('isRoot(A)', 'A', 4)]),
-        writeln('Exercițiul 10 rezolvat corect!').
+        writeln('Exercițiul 7 rezolvat corect!').
 
 
 
 %% -----------------------------------------------------------------------------
-exercitiul(11, []).
+exercitiul(8, []).
 %% descendantOf/2
 %% descendantOf(?X, ?Y)
 %% Nodul X este un urmaș a lui Y.
@@ -310,7 +222,7 @@ exercitiul(11, []).
 descendantOf(X,Y):-arc(Y,X).
 descendantOf(X,Y):-arc(Z,X), descendantOf(Z,Y).
 
-check11:-
+check8:-
 	tests([
 	chk(descendantOf(b, a)),
 	chk(descendantOf(c, a)),
@@ -326,13 +238,13 @@ check11:-
 	nsl('descendantOf(X, h)', 'X', 4),
 	nsl('descendantOf(l, X)', 'X', 2),
 	nsl('descendantOf(f, X)', 'X', 3)]),
-        writeln('Exercițiul 11 rezolvat corect!').
+        writeln('Exercițiul 8 rezolvat corect!').
 
 
 
 %% -----------------------------------------------------------------------------
 
-exercitiul(12, []).
+exercitiul(9, []).
 %% sameTree/2
 %% sameTree(+Nod1, +Nod2).
 %% Nod1 și Nod2 sunt în același arbore.
@@ -346,7 +258,7 @@ sameTree(A, B):- descendantOf(B, A).
 sameTree(A, B):- isRoot(C), descendantOf(A, C), descendantOf(B, C).
 
 
-check12:-
+check9:-
 	tests([
 	chk(sameTree(a, b)),
 	chk(sameTree(c, a)),
@@ -356,12 +268,12 @@ check12:-
 	uck(sameTree(a, m)),
 	uck(sameTree(c, n)),
 	uck(sameTree(d, i))]),
-        writeln('Exercițiul 12 rezolvat corect!').
+        writeln('Exercițiul 9 rezolvat corect!').
 
 
 
 %% -----------------------------------------------------------------------------
-exercitiul(13, []).
+exercitiul(10, []).
 %% drum/3
 %% drum(?Nod1, ?Nod2, ?Drum)
 
@@ -382,7 +294,7 @@ drum(A, B, [A|T]):- arc(P, A), drum(P, B, T).
 
 
 
-check13:-
+check10:-
 	tests([
 	chk(drum(a, b, [a,b])),
 	chk(drum(e, a, [e, c, a])),
@@ -393,12 +305,12 @@ check13:-
 	uck(drum(a, m, X)),
 	uck(drum(a, X, [a, b, k]))
 	]),
-	writeln('Exercițiul 13 rezolvat corect!').
+	writeln('Exercițiul 10 rezolvat corect!').
 
 
 
 %% -----------------------------------------------------------------------------
-exercitiul(14, []).
+exercitiul(11, []).
 %% cost/3
 %% cost(+Nod1, +Nod2, -Cost).
 %% un arc în sus costă -1, unul în jos, 1.
@@ -419,7 +331,7 @@ cost(A, B, -1):- arc(B, A).
 cost(A, B, N1):- arc(A, C), descendantOf(B, C), cost(C, B, N), N1 is N + 1.
 cost(A, B, N1):- arc(P, A), cost(P, B, N), N1 is N - 1.
 
-check14:-
+check11:-
 	tests([
 	chk(cost(a, a, 0)),
 	chk(cost(a, b, 1)),
@@ -428,7 +340,7 @@ check14:-
 	uck(cost(a, h, X)),
 	uck(cost(b, m, X))
 	]),
-        writeln('Exercițiul 14 rezolvat corect!').
+        writeln('Exercițiul 11 rezolvat corect!').
 
 
 %% ----------------------------------------
