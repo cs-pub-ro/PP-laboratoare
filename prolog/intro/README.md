@@ -151,7 +151,7 @@ O regulă Prolog exprimă un fapt care depinde de alte fapte și este de forma:
 S :- S1, S2, ..., Sn.
 ```
 
-Fiecare *S_i*, *i = 1,n* și *S* au forma faptelor Prolog, deci sunt predicate, cu argumente constante, variabile sau structuri. Faptul S care definește regula, se numește **antet de regulă**, iar *S_1, S_2,..., S_n* formează corpul regulii și reprezintă conjuncția de scopuri care trebuie satisfăcute pentru ca antetul regulii să fie satisfăcut.
+Fiecare *S<sub>i</sub>*, *i = 1,n* și *S* au forma faptelor Prolog, deci sunt predicate, cu argumente constante, variabile sau structuri. Faptul S care definește regula, se numește **antet de regulă**, iar *S<sub>1</sub>, S<sub>2</sub>,..., S<sub>n</sub>* formează corpul regulii și reprezintă conjuncția de scopuri care trebuie satisfăcute pentru ca antetul regulii să fie satisfăcut.
 
 Fie următoarea bază de cunoștințe:
 
