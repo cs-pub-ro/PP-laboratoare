@@ -17,6 +17,7 @@ exercitiul(1, []).
 %% restul lui List este egal cu concatenarea restului lui List1 cu
 %% List2.
 
+
 myConcat(_,_,_):- false.
 
 check1:-
@@ -43,6 +44,7 @@ exercitiul(2, []).
 %% Hint: Predicatul este adevărat dacă RevList are ca ultim element
 %% primul element din L, iar prima parte a lui RevList (de la primul
 %% element pâna la penultimul) este inversul restului elementelor din L.
+
 
 myReverse(_,_):- false.
 
@@ -77,6 +79,7 @@ exercitiul(3, []).
 %% până la apelul inițial).
 
 
+myReverseAcc(_,_,_):- false.
 
 check3:-
     tests([
@@ -85,7 +88,6 @@ check3:-
         2, exp('myReverseAcc([1,2,3], [0], Rev)', ['Rev', [3,2,1,0]]),
         2, exp('myReverseAcc(List, [0], [3,2,1,0])', ['List', [1,2,3]]),
         2, exp('myReverseAcc([X2,1], [3], [X1,2,3])', ['X1', 1, 'X2', 2])]).
-myReverseAcc(_,_,_):- false.
 
 
 %% -----------------------------------------------------------------------------
@@ -96,6 +98,7 @@ exercitiul(4, []).
 %% N va fi mereu legat la un număr natural.
 
 %% Hint: Predicatul este adevărat dacă F este egal cu N*(N-1)!.
+
 
 factorial(_, _):- false.
 
@@ -115,6 +118,7 @@ exercitiul(5, []).
 %% 'List' este un palindrom.
 
 %% Hint: Predicatul este adevărat dacă inversul lui List este List.
+
 
 palindrom(_):- false.
 
@@ -186,7 +190,6 @@ exercitiul(8, []).
 %% L1 ++ (L2 - (L1 intersectat L2))
 
 
-
 setUnion(_, _, _):- false.
 
 check8:-
@@ -222,6 +225,7 @@ exercitiul(9, []).
 %% Hint: Predicatul este adevărat dacă Nod este nod și nu există arcuri
 %% care pornesc din Nod.
 
+
 isLeaf(_):- false.
 
 check9:-
@@ -248,6 +252,7 @@ exercitiul(10, []).
 
 %% Hint: Predicatul este adevărat dacă Nod este nod și nu există arcuri
 %% care au ca destinație Nod.
+
 
 isRoot(_):- false.
 
@@ -307,8 +312,8 @@ exercitiul(12, []).
 %% Nod2 este urmașul lui Nod1, sau Nod1 și Nod2 sunt urmași ai unui
 %% același nod.
 
-sameTree(_, _):- false.
 
+sameTree(_, _):- false.
 
 check12:-
 	tests([
@@ -338,8 +343,8 @@ exercitiul(13, []).
 %%  - Nod1 este copilul unui nod X și există un drum T de la X la
 %%  Node2, și atunci drumul căutat este [Nod1|T].
 
-drum(_, _, _):- false.
 
+drum(_, _, _):- false.
 
 check13:-
 	tests([
@@ -370,6 +375,7 @@ exercitiul(14, []).
 %%  N+1
 %%  - dacă există un drum de cost N, de la părintele lui Nod1, către
 %%  Nod2, atunci costul drumului de la Nod1 la Nod2 este N-1.
+
 
 cost(_, _, _):- false.
 
