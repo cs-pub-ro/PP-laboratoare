@@ -9,8 +9,7 @@ Scopul acestui laborator este introducerea în programarea logică și învăța
 Aspectele urmărite sunt:
 
   - diferențierea dintre aceasta paradigmă și cele studiate anterior
-  - familiarizarea cu entitățile limbajului: **fapte**,
-    **reguli**, **scopuri**
+  - familiarizarea cu entitățile limbajului: **fapte**, **reguli**, **scopuri**
   - sintaxa **Prolog**
   - structuri de date
 
@@ -152,7 +151,7 @@ O regulă Prolog exprimă un fapt care depinde de alte fapte și este de forma:
 S :- S1, S2, ..., Sn.
 ```
 
-Fiecare *Si*, *i = 1,n* și *S* au forma faptelor Prolog, deci sunt predicate, cu argumente constante, variabile sau structuri. Faptul S care definește regula, se numește **antet de regulă**, iar *S1, S2,..., Sn* formează corpul regulii și reprezintă conjuncția de scopuri care trebuie satisfăcute pentru ca antetul regulii să fie satisfăcut.
+Fiecare *S_i*, *i = 1,n* și *S* au forma faptelor Prolog, deci sunt predicate, cu argumente constante, variabile sau structuri. Faptul S care definește regula, se numește **antet de regulă**, iar *S_1, S_2,..., S_n* formează corpul regulii și reprezintă conjuncția de scopuri care trebuie satisfăcute pentru ca antetul regulii să fie satisfăcut.
 
 Fie următoarea bază de cunoștințe:
 
@@ -166,14 +165,14 @@ iubeste(X, Y):- bun(X), cunoaste(X, Y), frumoasa(Y).   %6
 
 ```
 
-Se observă definirea atât printr-un fapt(linia 5), cât și printr-o regulă (linia 6) a predicatului *iubeste(?Cine, ?PeCine)*.
+Se observă definirea atât printr-un fapt (linia 5), cât și printr-o regulă (linia 6) a predicatului *iubeste(?Cine, ?PeCine)*.
 
 
 ## Operatori
 
   - Aritmetici: `+` `-` `*` `/`
   - Relaționali: `=\=` `<` `>` `=<` `>=` `=:=` `is`
-  - Logici: `,` (si) `;` (sau) `\+` (not)
+  - Logici: `,` (și) `;` (sau) `\+` (negație)
 
 La scrierea expresiei `1+2\*(X/Y)`, valoarea acesteia nu este calculată, ci expresia este reținută ca atare. Se poate observa că operatorii `=:=` și `is` forțează evaluarea unei expresii, pe când `=` verifica doar egalitatea structurală.
 
@@ -200,6 +199,7 @@ ERROR: =:=/2: Arguments are not sufficiently instantiated
 
 Operatorul unar `\+` folosit pentru un operand reprezintă faptul că nu se poate demonstra că operandul este adevărat.
 Dacă operandul conține variabile, `\+` denotă că nu există nicio legare pentru variabile astfel încât operandul să fie adevărat.
+Operatorul `\+` trebuie în mod necesar să fie urmat de spațiu (sau paranteză deschisă)
 
 ## Liste
 
@@ -215,11 +215,11 @@ Pentru claritate, antetele predicatelor se scriu sub forma:
   * **predicat/nrArgumente**
   * predicat(+Arg1, -Arg2, ?Arg3, ..., +ArgN)
 
-Pentru a diferenția intrările (+) de ieșiri(-), se prefixează argumentele cu indicatori. Acele argumente care pot fi fie intrări, fie ieșiri se prefixează cu '?'. Instanțierea parametrilor ține de specificarea acestora:
+Pentru a diferenția intrările (+) de ieșiri (-), se prefixează argumentele cu indicatori. Acele argumente care pot fi fie intrări, fie ieșiri se prefixează cu '?'. Instanțierea parametrilor ține de specificarea acestora:
 
-* Arg1 va fi instanțiat atunci când se va încerca satisfacerea p/3
-* Arg2 se va instanția odată cu satisfacerea p/3 
-* Arg3 va putea fi instanțiat sau nu atunci când se va satisface p/3
+* Arg1 va fi deja instanțiat atunci când se va încerca satisfacerea p/3
+* Arg2 va fi neinstanțiat atunci când se va încerca satisfacerea p/3 , și dacă predicatul este satisfăcut, Arg2 va fa fi instanțiat la finalul evaluării lui p/3; Arg2 poate fi și deja instanțiat la evaluarea lui p/3, și atunci evaluarea lui p/3 poate servi ca verificare a corectitudinii argumentului în raport cu semnificația prediatului
+* Arg3 va putea fi instanțiat sau nu atunci când se va încerca satisfacerea p/3
 
 
 
