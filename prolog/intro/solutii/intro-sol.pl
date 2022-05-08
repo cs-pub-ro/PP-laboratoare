@@ -1,5 +1,4 @@
-﻿%% LABORATOR 10
-%% Prolog - Intro
+﻿%% Prolog - Intro
 :- discontiguous exercitiul/2.
 %% -----------------------------------------------------------------------------
 
@@ -30,8 +29,7 @@ check1:-
         uck(myConcat([X1, X2], [X1, X2], [1, 2, 3, 4])),
         nsl('myConcat([_,_,_], [_], L)', 'L', 1),
         nsl('myConcat([_,_,_], L, [_,_,_,_])', 'L', 1),
-        exp('myConcat([X51],[X52],[X53,X54])', [cond('X51 == X53'), v('X51'), cond('X52 == X54'), v('X54')])]),
-        writeln('Exercițiul 1 rezolvat corect!').
+        exp('myConcat([X51],[X52],[X53,X54])', [cond('X51 == X53'), v('X51'), cond('X52 == X54'), v('X54')])]).
 
 
 
@@ -58,8 +56,7 @@ check2:-
         exp('myReverse([1,X2,X3], [3,2,X1])', ['X1', 1, 'X2', 2, 'X3', 3]),
         exp('myReverse([Y1,Y2], L)', [cond('L == [Y2, Y1]'), v('Y1'), v('Y2')]),
         exp('myReverse(L, [Z])', [cond('L == [Z]'), v('Z')]),
-        nsl('myReverse([_,_], X)', 'X', 1)]),
-        writeln('Exercițiul 2 rezolvat corect!').
+        nsl('myReverse([_,_], X)', 'X', 1)]).
 
 
 
@@ -89,8 +86,7 @@ check3:-
         1, chk(myReverseAcc([1,2,3], [0], [3,2,1,0])),
         2, exp('myReverseAcc([1,2,3], [0], Rev)', ['Rev', [3,2,1,0]]),
         2, exp('myReverseAcc(List, [0], [3,2,1,0])', ['List', [1,2,3]]),
-        2, exp('myReverseAcc([X2,1], [3], [X1,2,3])', ['X1', 1, 'X2', 2])]),
-        writeln('Exercițiul 3 rezolvat corect!').
+        2, exp('myReverseAcc([X2,1], [3], [X1,2,3])', ['X1', 1, 'X2', 2])]).
 
 
 %% -----------------------------------------------------------------------------
@@ -115,8 +111,7 @@ check4:-
 	exp('factorial(4, F2)',['F2',24]),
         chk(factorial(5, 120)),
 	chk(factorial(6, 720)),
-	chk(factorial(7, 5040))]),
-        writeln('Exercițiul 4 rezolvat corect!').
+	chk(factorial(7, 5040))]).
 
 
 %% -----------------------------------------------------------------------------
@@ -136,8 +131,7 @@ check5 :-
 	chk(palindrom([1,2,3,3,2,1])),
 	uck(palindrom([1,2,3,0,2,1])),
 	exp('palindrom([1,2,3,X3,X2,X1])', ['X1', 1, 'X2', 2, 'X3', 3]),
-	uck(palindrom([1,2,3,X,_,X]))]),
-        writeln('Exercițiul 5 rezolvat corect!').
+	uck(palindrom([1,2,3,X,_,X]))]).
 
 
 %% -----------------------------------------------------------------------------
@@ -179,8 +173,7 @@ check6:-
 	uck(isLeaf(b)),
 	uck(isLeaf(c)),
 	uck(isLeaf(e)),
-	nsl('isLeaf(A)', 'A', 7)]),
-        writeln('Exercițiul 6 rezolvat corect!').
+	nsl('isLeaf(A)', 'A', 7)]).
 
 
 
@@ -204,8 +197,7 @@ check7:-
 	uck(isRoot(d)),
 	uck(isRoot(e)),
 	uck(isRoot(l)),
-	nsl('isRoot(A)', 'A', 4)]),
-        writeln('Exercițiul 7 rezolvat corect!').
+	nsl('isRoot(A)', 'A', 4)]).
 
 
 
@@ -237,8 +229,7 @@ check8:-
 	nsl('descendantOf(X, a)', 'X', 6),
 	nsl('descendantOf(X, h)', 'X', 4),
 	nsl('descendantOf(l, X)', 'X', 2),
-	nsl('descendantOf(f, X)', 'X', 3)]),
-        writeln('Exercițiul 8 rezolvat corect!').
+	nsl('descendantOf(f, X)', 'X', 3)]).
 
 
 
@@ -267,8 +258,7 @@ check9:-
 	chk(sameTree(n, o)),
 	uck(sameTree(a, m)),
 	uck(sameTree(c, n)),
-	uck(sameTree(d, i))]),
-        writeln('Exercițiul 9 rezolvat corect!').
+	uck(sameTree(d, i))]).
 
 
 
@@ -304,8 +294,7 @@ check10:-
 	exp('drum(X, b, [a, b])', ['X', a]),
 	uck(drum(a, m, X)),
 	uck(drum(a, X, [a, b, k]))
-	]),
-	writeln('Exercițiul 10 rezolvat corect!').
+	]).
 
 
 
@@ -339,8 +328,7 @@ check11:-
 	chk(cost(a, d, 2)),
 	uck(cost(a, h, X)),
 	uck(cost(b, m, X))
-	]),
-        writeln('Exercițiul 11 rezolvat corect!').
+	]).
 
 
 %% ----------------------------------------

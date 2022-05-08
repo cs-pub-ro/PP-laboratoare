@@ -1,5 +1,4 @@
-﻿%% LABORATOR 10
-%% Prolog - Intro
+﻿%% Prolog - Intro
 :- discontiguous exercitiul/2.
 %% -----------------------------------------------------------------------------
 
