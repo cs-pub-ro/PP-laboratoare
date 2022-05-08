@@ -36,7 +36,7 @@ check1:-
 %% -----------------------------------------------------------------------------
 exercitiul(2, []).
 %% myReverse/2
-%% myReverse(?List, +RevList)
+%% myReverse(?List, ?RevList)
 %% 'RevList' este o listă ce conține elementele listei 'List' în ordine inversă.
 %% Regulile pot conține și predicatul myConcat/3.
 
@@ -87,6 +87,8 @@ check3:-
         2, exp('myReverseAcc([X2,1], [3], [X1,2,3])', ['X1', 1, 'X2', 2])]).
 myReverseAcc(_,_,_):- false.
 
+
+%% -----------------------------------------------------------------------------
 exercitiul(4, []).
 %% factorial/2
 %% factorial(+N, -Fact)
@@ -107,7 +109,7 @@ check4:-
 
 
 %% -----------------------------------------------------------------------------
-exercitiul(5,[]).
+exercitiul(5, []).
 %% palindrom/2
 %% palindrom(+List)
 %% 'List' este un palindrom.
@@ -127,7 +129,7 @@ check5 :-
 
 %% -----------------------------------------------------------------------------
 
-exercitiul(6,[]).
+exercitiul(6, []).
 %% setIntersection/3
 %% setIntersection(+L1, +L2, -L)
 %% L este intersecția listelor L1 si L2.
@@ -150,7 +152,7 @@ check6:-
 
 %% -----------------------------------------------------------------------------
 
-exercitiul(7,[]).
+exercitiul(7, []).
 %% setDiff/3
 %% setDiff(+L1, +L2, -L)
 %% L este diferența listelor L1 si L2 (L1 - L2)
@@ -175,7 +177,7 @@ check7:-
 
 %% -----------------------------------------------------------------------------
 
-exercitiul(8,[]).
+exercitiul(8, []).
 %% setUnion/3
 %% setUnion(+L1, +L2, -L)
 %% L este reuniunea listelor L1 si L2.
@@ -266,7 +268,7 @@ check10:-
 %% -----------------------------------------------------------------------------
 exercitiul(11, []).
 %% descendantOf/2
-%% descendantOf(?X,?Y)
+%% descendantOf(?X, ?Y)
 %% Nodul X este un urmaș a lui Y.
 
 %% Hint: Predicatul este adevărat dacă există un arc de la Y la X sau
