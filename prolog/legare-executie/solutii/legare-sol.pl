@@ -48,7 +48,6 @@ solve_latin(S) :- template(S), correct(S).
 %% Hint: ansamblul X/Y/S este valid în raport cu cele din lista others
 %% dacă nu există o altă poziționare a aceluiași simbol pe aceeași linie
 %% sau pe aceeași coloană.
-safe(_, _) :- false.
 safe(X/Y/S, Others) :-
     \+ member(X/_/S, Others), \+ member(_/Y/S, Others).
 
@@ -79,7 +78,6 @@ exercitiul(2, []).
 %%
 %% Hint: dăm proprietățile permutării: permutarea are aceeași lungime și
 %% fiecare dintre elementele din Lista4 sunt și în permutare.
-permutari4([_, _, _, _], _) :- false.
 permutari4([A, B, C, D], Perm) :- length(Perm, 4),
     member(A, Perm), member(B, Perm), member(C, Perm), member(D, Perm).
 
@@ -102,7 +100,6 @@ exercitiul(3, []).
 %% Observați cum variabilele sunt legate *după* construcția listei în
 %% interogarea:
 %% alternare(X, Y, 5, Res), writeln(Res), X = 1, Y = 2.
-alternare(_, _, _, _) :- false.
 alternare(_, _, 0, []).
 alternare(A, B, Len, [A | Res]) :- L is Len - 1, Len > 0,
     alternare(B, A, L, Res).
@@ -134,7 +131,6 @@ exercitiul(4, []).
 %% facă parte din sublistă. Restul sublistei este o sublistă din restul
 %% listei.
 
-sublista(_,_) :- false.
 sublista([], []).
 sublista([H|T], [H|SubT]) :- sublista(T, SubT).
 sublista([_|T], SubT) :- sublista(T, SubT).
@@ -166,7 +162,6 @@ exercitiul(5, []).
 %%    - suntem în interiorul zonei de extras (Start = 0 și End > 0) -
 %%    mergem în listă și adăugăm elemente în Range.
 
-extract(_,_,_,_) :- false.
 extract([], _, _, []).
 extract(_, _, 0, []).
 extract([H|T], 0, End, [H|Range]) :-
@@ -201,7 +196,6 @@ exercitiul(6, []).
 %% existe o altă asociere număr-anterior - factorial-anterior, pe baza
 %% căreia putem calcula numărul și factorialul actual.
 
-factorial2(_, _) :- false.
 factorial2(0, 1).
 factorial2(N, F) :- factorial2(N1, F1), N is N1 + 1, F is F1 * N.
 
@@ -252,7 +246,6 @@ exercitiul(7, []).
 %%
 %% Hint: persoanele trebuie să fie diferite.
 
-auCopil(_, _) :- false.
 auCopil(A, B) :- parinte(X, A), parinte(X, B), A \= B, !.
 
 check7 :- tests([
@@ -286,7 +279,6 @@ exercitiul(8, []).
 %%
 %% Hint: puteți folosi operatorul de ordonare naturală @< pentru a
 %% impune o anumită ordine între persoane.
-soti(_, _) :- false.
 soti(A, B):- persoane(L),
     member(A, L),
     member(B, L),
@@ -312,7 +304,6 @@ exercitiul(9, []).
 %% săi, până la o persoană ai cărei parinți nu sunt cunoscuți.
 %% Soluții succesive ale predicatului prezintă diversele linii
 %% genealogice existente pentru urmaș.
-linie(_, _) :- false.
 linie(Urmas, [Urmas]) :- \+ parinte(Urmas, _).
 linie(Urmas, [Urmas | Cale]) :-
     parinte(Urmas, Parinte),
@@ -336,7 +327,6 @@ exercitiul(10, []).
 %% prima_linie_prin(+Urmas, +Persoana, -Linie_Genealogică)
 %% Ne dorim să aflăm o singură linie genealogică, prima în care este
 %% prezentă o anumită persoană.
-prima_linie_prin(_, _, _) :- false.
 prima_linie_prin(Urmas, Persoana, Linie) :-
     linie(Urmas, Linie),
     member(Persoana, Linie), !.
@@ -358,7 +348,6 @@ exercitiul(11, []).
 %% Hint: o persoană are exact 2 părinți, care fiecare are strămoșii lui.
 %% Folosiți predicatul cut la momentul / momentele oportun(e) pentru a
 %% avea o singură soluție.
-stramosi(_, _) :- false.
 stramosi(Urmas, [Urmas]) :- \+ parinte(Urmas, _), !.
 stramosi(Urmas, [Urmas | Stramosi]) :-
     parinte(Urmas, A),
