@@ -104,7 +104,7 @@ Această strategie se traduce în următorul cod Prolog:
 all_members([], _).
 all_members([X | Rest], In) :- member(X, In), all_members(Rest, In).
 
-% predica care verifică faptul că țările nu au culori identice cu niciun vecin
+% predicat care verifică faptul că țările nu au culori identice cu niciun vecin
 solve(S) :- L = [_ | _], length(L, 7), all_members(L, ["r", "g", "b"]), safe(S).
 ```
 
