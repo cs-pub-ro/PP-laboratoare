@@ -132,7 +132,6 @@ exercitiul(4, []).
 
 sublista(_,_) :- false.
 
-
 check4 :- tests([
               chk(sublista([1,2,3,4,5],[2,3,4])),
               chk(sublista([1,2,3,4,5],[1,2,3,4,5])),
@@ -143,41 +142,100 @@ check4 :- tests([
 
 
 exercitiul(5, []).
-%% extract/4
-%% extract(+List, +Start, +End, -Range)
-%% 'Range' reprezintă lista formată din elementele listei 'List' aflate
-%% pe pozițiile din intervalul 'Start' .. 'End'. 'Start' va fi întotdeauna
-%% mai mic decât 'End'. Primul element se află pe poziția 0. Dacă 'End'
-%% depășește lungimea listei, 'Range' va conține toate elementele de la 'Start'
-%% la finalul listei.
+%% intersectie/3
+%% intersectie(+L1, +L2, -L3)
+%% 'L3' reprezintă o listă construită prin intersectarea listelor L1 și L2
 %%
-%% Hint: pe măsură ce avansăm în listă, decrementăm Start și End. Avem
-%% mai multe cazuri:
-%%    - lista s-a terminat - nu mai avem ce extrage
-%%    - am ajuns la sfârșitul zonei de extras (End este 0)
-%%    - nu am ajuns încă la începutul zonei de extras (Start > 0) -
-%%    continuăm mai departe fără să adăugăm elemente în range
-%%    - suntem în interiorul zonei de extras (Start = 0 și End > 0) -
-%%    mergem în listă și adăugăm elemente în Range.
+%% Hint: folosiți findall, unde verificați dacă un element din L1 se află în L2.
 
-extract(_,_,_,_) :- false.
-
+intersectie(_, _, _) :- false.
 
 check5 :- tests([
-              chk(extract([a,b,c,d,e], 0, 3, [a,b,c,d])),
-              chk(extract([a,b,c,d,e], 1, 10, [b,c,d,e])),
-              exp('extract([a,b,C,D,e], 2, 4, [c,d,e])', ['C', c, 'D', d]),
-              exp('extract([a,b,C1,D1,e], 2, 4, [C2,D2,e])',
-                  [cond('C1==C2'), cond('D1==D2')]),
-              chk(extract([a,b,c,_,d], 3, 4, [X,X]))
-          ]).
+    chk(intersectie([1,2,3,4,5],[2,3,4], [2, 3, 4])),
+    chk(intersectie([1,2,3,4,5],[1,2,3,4,5], [1, 2, 3, 4, 5])),
+    uck(intersectie([1,2,3,4,5],[2,1,4], [1, 2])),
+    uck(intersectie([1,2,3,4,5],[3, 4, 5, 6, 7], [3, 4, 5, 6])),
+    sls('intersectie([1,2,3,4],[2,3,4,5],S4)', 'S4',
+        [[2,3,4]])
+]).
+
+exercitiul(6, []).
+%% diff/3
+%% diff(+L1, +L2, -L3)
+%% 'L3' reprezintă o listă construită prin diferența dintre listele L1 și L2 (L1 / L2)
+%%
+%% Hint: folosiți findall, unde verificați dacă un element din L1 NU se află în L2.
+
+diff(_, _, _) :- false.
+
+check6 :- tests([
+    chk(diff([1,2,3,4,5],[2,3,4], [1, 5])),
+    chk(diff([1,2,3,4,5],[1,2,3,4,5], [])),
+    uck(diff([1,2,3,4,5],[2,1,4], [1, 2])),
+    uck(diff([1,2,3,4,5],[3, 4, 5, 6, 7], [1, 2, 7])),
+    sls('diff([1,2,3,4,6],[2,3,4,5],S4)', 'S4',
+        [[1, 6]])
+]).
 
 
+exercitiul(7, []).
+%% countBetween/4
+%% countBetween(+L, +A, +B, -N)
+%% 'N' reprezintă numărul de elemente din lista L care sunt mai mari sau egale cu A
+%% și mai mici sau egale cu B
+%%
+%% Hint: folosiți findall, unde generați o listă care conține elementele din lista L
+%% care respectă condiția menționată mai sus, și funcția length pe lista generată folosind findall
+
+countBetween(_, _, _, _) :- false.
+
+check7 :- tests([
+    chk(countBetween([1,2,3,4,5,6,7,8,9], 2, 9, 8)),
+    chk(countBetween([1,2,3,4,5], 1, 5, 5)),
+    uck(countBetween([1,2,3,4,5], 2, 4, 2)),
+    uck(countBetween([1,2,3,4,5,6,7,8,9], 2, 10, 10)),
+    sls('countBetween([1,2,3,4,5,6,7,8,9], 4, 9, S4)', 'S4',
+        [6])
+]).
+
+exercitiul(8, []).
+%% subset/2
+%% subset(+L1, +L2)
+%% 'subset' reprezintă un predicat care verifică dacă toate elementele din lista L1
+%% se află în lista L2.
+%%
+%% Hint: folosiți forall, unde verificați că toate elementele din L1 se află în L2
+
+subset(_, _) :- false.
+
+check8 :- tests([
+    chk(subset([1,3,2], [1, 2, 3, 4, 5, 6, 7, 8, 10])),
+    chk(subset([1,2,3,4,5], [1, 2, 3, 4, 5, 6, 7, 8, 10])),
+    uck(subset([0,1,2,3,4,5], [1, 2, 3, 4, 5, 6, 7, 8, 10]))
+]).
+
+exercitiul(9, []).
+%% minList/2
+%% minList(+L, -M)
+%% 'minList' reprezintă un predicat care determină pentru o listă L minimul acesteia (M)
+%%
+%% Hint: folosiți forall, prin care verificați dacă toate elementele din L sunt mai mari
+%% sau egale cu minimul generat (aici folosiți predicatul 'member').
+
+minList(_, _) :- false.
+
+check9 :- tests([
+    chk(minList([1,2,3,4,5,6,7,8,9], 1)),
+    chk(minList([5,6,7,8,9], 5)),
+    uck(minList([0,1,2,3,4,5,6,7,8,9], 1)),
+    sls('minList([6,7,8,9], S4)', 'S4',
+        [6])
+]).
 
 %% -- DIRECȚIONALITATE FLEXIBILĂ ÎN CALCUL --
 
 %% -----------------------------------------------------------------------------
-exercitiul(6, []).
+exercitiul(10, []).
 %% factorial2/2
 %% factorial2(?N, ?Fact)
 %% 'Fact' este factorialul lui 'N'.
@@ -190,7 +248,7 @@ exercitiul(6, []).
 
 factorial2(_, _) :- false.
 
-check6 :- tests([
+check10 :- tests([
               exp('factorial2(2, F1)', ['F1', 2]),
               exp('factorial2(4, F2)', ['F2', 24]),
               exp('factorial2(N3, 120)', ['N3', 5]),
@@ -230,7 +288,7 @@ parinte(miruna, gigi).
 persoane([alin, ana, gigi, ioana, mihai, miruna, radu, rodica, wendy]).
 
 
-exercitiul(7, []).
+exercitiul(11, []).
 %% auCopil/2
 %% auCopil(?A, ?B)
 %% Predicatul exprimă faptul că două persoane au un copil împreună.
@@ -239,7 +297,7 @@ exercitiul(7, []).
 
 auCopil(_, _) :- false.
 
-check7 :- tests([
+check11 :- tests([
               chk(auCopil(mihai, wendy)),
               chk(auCopil(rodica, gigi)),
               chk(auCopil(radu, miruna)),
@@ -251,7 +309,7 @@ check7 :- tests([
               uck(auCopil(miruna, alin))
           ]).
 
-exercitiul(8, []).
+exercitiul(12, []).
 %% soti/2
 %% soti(?A, ?B)
 %% Predicatul arată că două persoane sunt soți. Considerăm că sunt soți
@@ -273,7 +331,7 @@ exercitiul(8, []).
 soti(_, _) :- false.
 
 
-check8 :- tests([
+check12 :- tests([
               chk((soti(mihai, wendy) ; soti(wendy, mihai))),
               chk((soti(gigi, rodica) ; soti(rodica, gigi))),
               chk((soti(radu, miruna) ; soti(miruna, radu))),
@@ -284,7 +342,7 @@ check8 :- tests([
               nsl("soti(X, Y)", "(X, Y)", 3)
           ]).
 
-exercitiul(9, []).
+exercitiul(13, []).
 %% linie/2
 %% linie(+Urmas, -Linie_Genealogică)
 %% Predicat pentru aflarea unei linii genealogice pentru o persoană.
@@ -295,7 +353,7 @@ exercitiul(9, []).
 linie(_, _) :- false.
 
 
-check9 :- tests([
+check13 :- tests([
               chk(linie(ioana, [ioana, radu, mihai])),
               chk(linie(ioana, [ioana, radu, wendy])),
               chk(linie(ioana, [ioana, miruna, rodica])),
@@ -308,7 +366,7 @@ check9 :- tests([
               sls("linie(rodica, L)", "L", [[rodica]])
           ]).
 
-exercitiul(10, []).
+exercitiul(14, []).
 %% prima_linie_prin/3
 %% prima_linie_prin(+Urmas, +Persoana, -Linie_Genealogică)
 %% Ne dorim să aflăm o singură linie genealogică, prima în care este
@@ -316,7 +374,7 @@ exercitiul(10, []).
 prima_linie_prin(_, _, _) :- false.
 
 
-check10 :- tests([
+check14 :- tests([
                chk(prima_linie_prin(alin, miruna, [alin, miruna, rodica])),
                exp("prima_linie_prin(alin, miruna, L)",
                    ['L', [alin, miruna, rodica]]),
@@ -325,7 +383,7 @@ check10 :- tests([
            ]).
 
 
-exercitiul(11, []).
+exercitiul(15, []).
 %% stramosi/2
 %% stramosi(+Urmas, -Stramosi)
 %% Predicatul determină toți strămoșii pentru un anumit urmaș.
@@ -336,7 +394,7 @@ exercitiul(11, []).
 stramosi(_, _) :- false.
 
 
-check11 :- tests([
+check15 :- tests([
                exp("stramosi(ioana,X)", [
                    set('X', [ioana, radu, mihai, wendy, miruna, rodica, gigi])]),
                exp("stramosi(ana,X)", [
