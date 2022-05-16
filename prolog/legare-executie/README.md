@@ -1,7 +1,7 @@
 #  Prolog: Legare și execuție
 
-  * Data publicării: 15.05.2022
-  * Data ultimei modificări: 15.05.2022
+  * Data publicării: 16.05.2022
+  * Data ultimei modificări: 16.05.2022
 
 ## Obiective
 
