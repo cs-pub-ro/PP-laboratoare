@@ -313,5 +313,5 @@ false.
 
 
 ## Resurse
--   [Schelet](https://ocw.cs.pub.ro/courses/_media/pp/22/laboratoare/prolog/legare-schelet.zip)
--   [Soluții](https://ocw.cs.pub.ro/courses/_media/pp/22/laboratoare/prolog/legare-solutie.zip)
+-   [Schelet](https://ocw.cs.pub.ro/courses/_media/pp/22/laboratoare/prolog/legare-executie-schelet.zip)
+-   [Soluții](https://ocw.cs.pub.ro/courses/_media/pp/22/laboratoare/prolog/legare-executie-solutie.zip)
