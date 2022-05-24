@@ -1,7 +1,7 @@
 # Prolog: Probleme de căutare în spaţiul stărilor
 
-  - Data publicării: 16.05.2021
-  - Data ultimei modificări: 16.05.2021
+  - Data publicării: 24.05.2022
+  - Data ultimei modificări: 24.05.20212
 
 ## Obiective
 
