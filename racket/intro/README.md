@@ -226,7 +226,8 @@ Un identificator poate fi legat la o valoare folosind (printre altele) construc�
 (define x 2) ; x devine identificator pentru 2
 (define y (+ x 2)) ; y devine identificator pentru 4, întrucât x este doar un alt nume pentru valoarea 2
 (define my_list '(a 2 3)) ; my_list identifică lista (a 2 3)
-(car my_list) ; intoarce a (+ (cadr my_list) y) ; întoarce suma dintre al doilea element din lista my_list și y, deci 2 + 4 = 6
+(car my_list) ; intoarce 'a
+(+ (cadr my_list) y) ; întoarce suma dintre al doilea element din lista my_list și y, deci 2 + 4 = 6
 ```
 
 ## Funcții anonime (lambda)
@@ -256,8 +257,8 @@ Limbajul ne permite să condensăm definirea unei funcții cu legarea ei la un n
 (identitate 3) ; întoarce 3
 
 (define append2 (lambda (l1 l2) (append l2 l1))) (append2 '(1 2 3) '(4 5 6)) ; întoarce lista (4 5 6 1 2 3)
-; fără 'lambda'
 
+; fără 'lambda'
 (define (append2 l1 l2) (append l2 l1)) (append2 '(1 2 3) '(4 5 6)) ; întoarce lista (4 5 6 1 2 3)
 ```
 
