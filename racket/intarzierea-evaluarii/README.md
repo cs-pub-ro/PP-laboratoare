@@ -349,5 +349,5 @@ Algoritmul este implementat mai jos:
   - [Cheatsheet laborator 5](https://github.com/cs-pub-ro/PP-laboratoare/raw/master/racket/intarzierea-evaluarii/fluxuri-cheatsheet.pdf)
 ## Referințe
 
-  - [Structure and Interpretation of Computer Programs](https://web.mit.edu/alexmv/6.037/sicp.pdf "wikilink"), ediția a doua
+  - [Structure and Interpretation of Computer Programs](https://web.mit.edu/6.001/6.037/sicp.pdf "wikilink"), ediția a doua
   - [Evaluation strategy](http://en.wikipedia.org/wiki/Evaluation_strategy "wikilink")

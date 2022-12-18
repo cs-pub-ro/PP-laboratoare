@@ -352,5 +352,5 @@ Citiți exercițiile **rezolvate**; apoi, rezolvați exercițiile **propuse**.
   - [Cheatsheet Laboratorul 3](https://github.com/cs-pub-ro/PP-laboratoare/raw/master/racket/functionale/functionale-cheatsheet.pdf)
 
 ## Referințe
-  - [Structure and Interpretation of Computer Programs](https://web.mit.edu/alexmv/6.037/sicp.pdf "wikilink"), până la pagina 84, înainte de paragraful „Using let to create local variables”
+  - [Structure and Interpretation of Computer Programs](https://web.mit.edu/6.001/6.037/sicp.pdf "wikilink"), până la pagina 84, înainte de paragraful „Using let to create local variables”
   - [Mai multe funcționale](http://docs.racket-lang.org/reference/pairs.html#%28part._.List_.Iteration%29 "wikilink")
