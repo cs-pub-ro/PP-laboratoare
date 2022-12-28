@@ -20,7 +20,7 @@ Arhiva de [resurse](#Resurse "wikilink") conține un fișier cu **exerciții rez
 
 ## Recursivitate
 
-Citiți secțiunea [1.2.1 Linear Recursion and Iteration](https://web.mit.edu/alexmv/6.037/sicp.pdf#subsection.1.2.1 "wikilink") a cărții [Structure and Interpretation of Computer Programs](https://web.mit.edu/alexmv/6.037/sicp.pdf "wikilink"), ediția a doua, până la Example: Counting change. Apoi, parcurgeți **rezumatul** următor, alături de **exercițiile rezolvate**.
+Citiți secțiunea [1.2.1 Linear Recursion and Iteration](https://web.mit.edu/6.001/6.037/sicp.pdf#subsection.1.2.1 "wikilink") a cărții [Structure and Interpretation of Computer Programs](https://web.mit.edu/6.001/6.037/sicp.pdf "wikilink"), ediția a doua, până la Example: Counting change. Apoi, parcurgeți **rezumatul** următor, alături de **exercițiile rezolvate**.
 
 În timpul rulării, un program utilizează o zonă de memorie, denumită **stivă**, cu informațiile de care (mai) are nevoie, în diferite momente. La fiecare **apel** de funcție, spațiul ocupat pe stivă **crește**. La fiecare **revenire** dintr-un apel, cu o anumită valoare, spațiul ocupat pe stivă **scade**. Când recursivitatea este foarte adâncă --- există multe apeluri de funcție realizate, din care nu s-a revenit încă --- spațiul ocupat pe stivă devine mult prea mare.
 Acest lucru **influențează**:
@@ -109,5 +109,5 @@ Citiți exercițiile **rezolvate**; apoi, rezolvați exercițiile **propuse**.
 
 ## Referințe
 
-  - [Structure and Interpretation of ComputerPrograms](https://web.mit.edu/alexmv/6.037/sicp.pdf "wikilink") ediția a doua
+  - [Structure and Interpretation of Computer Programs](https://web.mit.edu/6.001/6.037/sicp.pdf "wikilink") ediția a doua
   - [Tail call](http://en.wikipedia.org/wiki/Tail_call "wikilink")
