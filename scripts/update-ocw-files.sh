@@ -3,7 +3,7 @@ python -m pip install dokuwiki
 
 rm -rf .tmp/
 mkdir -p .tmp/
-NAMESPACE='pp/22/laboratoare'
+NAMESPACE='pp/23/laboratoare'
 src_files=`git diff --name-only HEAD~1 HEAD | xargs dirname | grep -E "schelet|solutii" | uniq`
 
 for file in $src_files

@@ -3,7 +3,7 @@ import dokuwiki
 import pypandoc
 import argparse
 
-NAMESPACE = 'pp/22/laboratoare/'
+NAMESPACE = 'pp/23/laboratoare/'
 
 parser = argparse.ArgumentParser(description='ocw pp publishing')
 parser.add_argument('-u', '--username', help='user', required=True)
