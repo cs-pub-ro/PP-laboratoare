@@ -141,8 +141,8 @@
 ;; palindroame în toate bazele din lista Bases.
 
 ;; Sugestii:
-;; - folosiți funcția anterioară
-;; - efectuați pașii a, b, c descriși mai sus
+;; - folosiți funcția anterioară.
+;; - efectuați pașii a, b, c descriși mai sus.
 
 (define (palindromes-to-n n Bases)
   'your-code-here)
