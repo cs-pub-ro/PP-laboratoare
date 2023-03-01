@@ -292,7 +292,7 @@ Expresii condiționale:
 
 
 ```lisp
-; (if testexp thenexp elseexp) ; sau fără bucata de else
+; (if testexp thenexp elseexp)
 (if (< a 0)
     a ; întoarce a dacă a este negativ
     (if (> a 10)

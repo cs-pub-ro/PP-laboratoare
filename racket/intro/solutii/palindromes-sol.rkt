@@ -214,15 +214,21 @@
 ;; Sugestii:
 ;; - folosiți take - (take L n) întoarce prefixul de lungime n al listei L
 
-(define (find-longest L len best)
-  (cond
-    ((< len (length best)) best)
-    ((and (palindrome? (take L len)) (> len (length best))) (find-longest (cdr L) (length (cdr L)) (take L len)))
-    (else (find-longest (cdr L) (length (cdr L)) (find-longest L (sub1 len) best)))
-    ))
-
 (define (longest-palindrome n)
-   (list->num (find-longest (num->base n 10) (length (num->base n 10)) '())))
+  (define L (num->base n 10)) ;; numărul ca listă
+  (define len (length L))     ;; lungimea listei (câte cifre are numărul)
+  (define (iter L len crtlen) ;; caută în L palindroame de lungime len (crtlen = lungime curentă L) ;; întoarce palindromul dacă există, altfel #f
+    (and (<= len crtlen)                              ;; observație: (and #t 5) întoarce 5 ; (or #f 4) întoarce 4 (se putea si cu if-uri)
+         (if (palindrome? (take L len))
+             (list->num (take L len))
+             (iter (cdr L) len (sub1 crtlen)))))
+  (define (iter2 leng)        ;; încearcă să găsească palindroame, în ordinea descrescătoare a lungimii leng
+    (if (= leng 1)
+        (car L)
+        (or (iter L leng len) ;; ori găsește un palindrom de lungime leng și îl întoarce, ori încearcă lungimea leng-1   
+            (iter2 (sub1 leng)))))
+
+  (iter2 len))                ;; corpul funcției principale, începe căutarea de la len (lungimea maximă posibilă)
 
 (check-exp-part 'a 1/6 (longest-palindrome 121) 121)
 (check-in-part  'b 1/6 (longest-palindrome 51) '(1 5))
