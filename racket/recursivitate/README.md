@@ -1,7 +1,7 @@
 # Racket: Recursivitate
 
   - Data publicării: 06.03.2023
-  - Data ultimei modificări: 06.03.2023
+  - Data ultimei modificări: 09.03.2023
 
 ## Obiective
 
