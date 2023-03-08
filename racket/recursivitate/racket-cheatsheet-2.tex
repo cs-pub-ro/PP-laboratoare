@@ -321,12 +321,14 @@ DA: (and ceva1 ceva2) NU: (if ceva1 ceva2 #f)
 \begin{tikzpicture}
 \node [mybox_skyblue] (box){%
     \begin{minipage}{0.3\textwidth}\centering
-{\centering\bf\color{blue!60} image-height, overlay, flip-vertical \\}
+{\centering\bf\color{blue!60} overlay, image-height, beside, above \\}
 \begin{lstlisting}[language=Racket,escapeinside=||]
-(overlay |\includegraphics[scale=0.5]{imgs/fig1.png}|) ; => |\includegraphics[scale=0.5]{imgs/fig2.png}|
-(flip-vertical |\includegraphics[scale=0.5]{imgs/fig3.png}|) ; => |\includegraphics[scale=0.5]{imgs/fig4.png}|
+(overlay |\includegraphics[scale=0.4]{imgs/fig1.png}|) ; => |\includegraphics[scale=0.5]{imgs/fig2.png}|
 (image-height (circle 20 "solid" "red")) ; => 40
-(image-height |\includegraphics[scale=0.5]{imgs/fig0.png}|) ; => 60
+(image-height |\includegraphics[scale=0.4]{imgs/fig0.png}|) ; => 60
+(image-width |\includegraphics[scale=0.4]{imgs/fig0.png}|) ; => 60
+(beside |\includegraphics[scale=0.3]{imgs/fig3.png}||\includegraphics[scale=0.3]{imgs/fig4.png}|) ; => |\includegraphics[scale=0.3]{imgs/fig6.png}|
+(above |\includegraphics[scale=0.3]{imgs/fig3.png}||\includegraphics[scale=0.3]{imgs/fig4.png}|) ; => |\includegraphics[scale=0.3]{imgs/fig7.png}|
 \end{lstlisting}
     \end{minipage}
 };
