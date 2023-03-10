@@ -54,7 +54,7 @@
 ;(sort-mod5 '(6 1 7 9 3 2 4 6 7))           ;; o functie de sortare dupa restul la impartirea cu 5
 
 ;; Observatie: sortarea mod 5 ar putea folosi o functie derivata dintr-o comparatie mod x, cu x oarecare
-;; puteti incerca asta ca exercitiu
+;; puteti incerca asta ca exercitiu.
 
 ;; Exercitiul 3 - implementarea functionalei map
 (define (map1 f L)
