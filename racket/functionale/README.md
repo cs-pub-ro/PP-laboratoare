@@ -1,7 +1,7 @@
 # Racket: Funcții ca valori. Funcționale
 
-  - Data publicării: 11.03.2022
-  - Data ultimei modificări: 11.03.2022
+  - Data publicării: 10.03.2023
+  - Data ultimei modificări: 10.03.2023
 
 ## Obiective
 
@@ -300,7 +300,9 @@ Mai jos se pot observa câteva exemple folosind foldr:
 ```
 
   - `apply`: returnează rezultatul aplicării unei funcții f cu argumente
-    elementele din lista L
+    elementele din lista L. [Obs: `apply` poate primi parametri adiționali
+    între funcție și listă, caz în care aceștia sunt concatenați la lista 
+    că și cum s-ar folosi *cons*.]
 
 ```lisp
 (apply f L)
@@ -310,6 +312,7 @@ Mai jos se pot observa câteva exemple folosind apply:
 (apply + '(1 2 3 4)) ; întoarce 10
 (apply * 1 2 '(3 4)) ; întoarce 24
 (apply cons '(1 2))  ; întoarce perechea '(1 . 2)
+(apply - 0 1 '(2 3)) ; intoarce -6, echivalent cu (apply - (cons 0 (cons 1 '(2 3))))
 ```
 
 Fără funcționale ar trebui să scriem mereu un cod asemănător, ceea ce nu
@@ -318,7 +321,7 @@ spatele unor prelucrări observăm un mecanism mai general, mai abstract,
 este să scriem o funcțională care descrie acel mecanism.
 
 Prin folosirea funcționalelor și funcțiilor curry, codul scris este mult
-mai restrâns dar și mult mai clar și ușor de urmărit.
+mai restrâns și mult mai clar și ușor de urmărit.
 
 ##### Exemple
 
@@ -347,8 +350,8 @@ ca argument de către funcționale sunt plasate între paranteze.
 
 Citiți exercițiile **rezolvate**; apoi, rezolvați exercițiile **propuse**.
 
-  - [Exerciții rezolvate și propuse](https://ocw.cs.pub.ro/courses/_media/pp/22/laboratoare/racket/functionale-skel.zip)
-  - [Soluții](https://ocw.cs.pub.ro/courses/_media/pp/22/laboratoare/racket/functionale-solutii.zip)
+  - [Exerciții rezolvate și propuse](https://ocw.cs.pub.ro/courses/_media/pp/23/laboratoare/racket/functionale-skel.zip)
+  - [Soluții](https://ocw.cs.pub.ro/courses/_media/pp/23/laboratoare/racket/functionale-solutii.zip)
   - [Cheatsheet Laboratorul 3](https://github.com/cs-pub-ro/PP-laboratoare/raw/master/racket/functionale/functionale-cheatsheet.pdf)
 
 ## Referințe
