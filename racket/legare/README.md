@@ -1,7 +1,7 @@
 # Racket: Legarea variabilelor. Închideri funcționale
 
-  - Data publicării: 19.03.2022
-  - Data ultimei modificări: 19.03.2022
+  - Data publicării: 18.03.2023
+  - Data ultimei modificări: 18.03.2023
 
 ## Obiective
 
