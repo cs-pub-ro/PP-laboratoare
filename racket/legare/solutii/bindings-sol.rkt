@@ -38,7 +38,7 @@
 ;; nu există o rețetă universală, această abilitate se dezvoltă
 ;; de-a lungul anilor de scris cod zilnic.
 
-(sunt 10 exerciții)
+(sunt 11 exerciții)
 
 (exercițiul 1 : 1 puncte)
 ;; Funcția compute-square-area primește ca argument o funcție
@@ -194,6 +194,40 @@
 
 
 (exercițiul 8 : 2 puncte BONUS)
+;; Se da arborele de mai jos
+;;              1
+;;     4        3       2
+;; 13 12 11  10 9 8   7 6 5
+;; ...........................
+;;
+;; Sa se implementeze o functie ce realizeaza parcurgerea in latime (BFS)
+;; a acestui graf pana la o adancime n, care este data.
+;; Functia va intoarce o lista ce contine nodurile in ordinea data de parcurgerea BFS.
+;; Restrictii: -> folositi cel putin o forma de let
+;; Hints: -> pentru nodul cu indexul k, fiii sai vor fi nodurile indexate 3k+1, 3k, respectiv 3k-1
+;;        -> poate fi util sa scrieti o functie care determina coada la pasul urmator
+;;           iar apoi sa va ganditi cati astfel de pasi trebuie realizati
+
+(define (get_new_queue q)
+  (let* [(current (car q)) (left (+ (* 3 current) 1)) (middle (* 3 current)) (right (- (* 3 current) 1))]
+    (append (cdr q) (list left middle right))))
+
+(define (bfs_aux n)
+  (let iter [(step 0) (q '(1))]
+    (if (= step n)
+      q
+      (cons (car q) (iter (+ step 1) (get_new_queue q))))))
+
+(define (bfs n)
+  (bfs_aux (/ (- (expt 3 n) 1) 2)))
+
+(check% 'a 1/4 (bfs 0) is '(1))
+(check% 'b 1/4 (bfs 1) is '(1 4 3 2))
+(check% 'c 1/4 (bfs 2) is '(1 4 3 2 13 12 11 10 9 8 7 6 5))
+(check% 'd 1/4 (bfs 3) is '(1 4 3 2 13 12 11 10 9 8 7 6 5 40 39 38 37 36 35 34 33 32 31 30 29 28 27 26 25 24 23 22 21 20 19 18 17 16 15 14))
+
+
+(exercițiul 9 : 2 puncte BONUS)
 ;; Redefiniți funcția num-concat pentru a funcționa pe oricâte numere.
 ;; Restricții: Nu folosiți `num-concat`.
 ;;             Folosiți funcționale.
@@ -221,7 +255,7 @@
 (check% 'b 1/2 (find-all-suffixes 56789462782) is '(56789462782 6789462782 789462782 89462782 9462782 462782 62782 2782 782 82 2))
 
 
-(exercițiul 9 : 1 puncte BONUS)
+(exercițiul 10 : 1 puncte BONUS)
 ;; Automatele finite sunt un formalism matematic util pentru a descrie
 ;; în mod abstract (matematic) procese, sunt folosite des în computer science
 ;; și le veți întâlni (le-ați întâlnit) la CN, LFA și alte materii.
@@ -244,7 +278,7 @@
 (check% 'd 1/4 (run 2 65536 (lambda (x) (* x x))) is '(2 4 16 256 65536))
 
 
-(exercițiul 10 : 2 puncte BONUS)
+(exercițiul 11 : 2 puncte BONUS)
 ;; Folosindu-vă de exerciţiile anterioare generați numărul de lungime k
 ;; pentru care orice cifră de pe poziția i se poate obține
 ;; folosind formula i*k+x.
