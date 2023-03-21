@@ -139,7 +139,7 @@
 ;; suma secvenței de sumă maximă.
 ;; ex:
 ;; (1 2 3 0 3 5 4 0 5 200) cu separatorul 0
-;; => secvența de sumă maximă este 205
+;; => secvența de sumă maximă este (5 200) și are suma 205
 ;; Restricții: Nu folosiți fold/apply.
 ;;             Folosiți let-values/let*-values.
 ;; Hint: Uitați-vă peste splitf-at.
@@ -156,7 +156,7 @@
 ;; Funcția num-concat primește două numere și le concatenează.
 ;; ex:
 ;;   > (num-concat 33 22)
-;;   3321
+;;   3322
 ;; Suprascrieți procedura `+` doar în contextul local pentru
 ;; a realiza concatenarea dintre două numere.
 ;; Hint: `string-append` concatenează două string-uri.
@@ -171,19 +171,19 @@
 
 
 (exercițiul 8 : 2 puncte BONUS)
-;; Se da arborele de mai jos
+;; Se dă arborele de mai jos
 ;;              1
 ;;     4        3       2
 ;; 13 12 11  10 9 8   7 6 5
 ;; ...........................
 ;;
-;; Sa se implementeze o functie ce realizeaza parcurgerea in latime (BFS)
-;; a acestui graf pana la o adancime n, care este data.
-;; Functia va intoarce o lista ce contine nodurile in ordinea data de parcurgerea BFS.
-;; Restrictii: -> folositi cel putin o forma de let
-;; Hints: -> pentru nodul cu indexul k, fiii sai vor fi nodurile indexate 3k+1, 3k, respectiv 3k-1
-;;        -> poate fi util sa scrieti o functie care determina coada la pasul urmator
-;;           iar apoi sa va ganditi cati astfel de pasi trebuie realizati
+;; Să se implementeze o funcție ce realizează parcurgerea în lățime (BFS)
+;; a acestui graf până la un nivel n, care este dat (rădăcina se află pe nivelul 0).
+;; Funcția va întoarce o listă ce conține nodurile în ordinea dată de parcurgerea BFS.
+;; Restricții: -> folosiți cel puțin o formă de let
+;; Hints: -> pentru nodul cu indexul k, fiii săi vor fi nodurile indexate 3k+1, 3k, respectiv 3k-1
+;;        -> poate fi util să scrieți o funcție auxiliară care determină coada la pasul următor
+;;           iar apoi să vă gândiți câți astfel de pași trebuie realizați
 
 (define (bfs n)
   'your-code-here)
@@ -206,6 +206,9 @@
 (define (list-num-concat numbers)
   'your-code-here)
 
+(check% 'a 1/4 (list-num-concat '(12 34 56)) is 123456)
+(check% 'b 1/4 (list-num-concat '(2 35 7 8 4 91)) is 23578491)
+
 ;; Definiți funcția care găsește toate sufixele posibile pentru un număr.
 ;; ex:
 ;; (find-all-suffixes 123) => '(123 23 3)
@@ -215,8 +218,8 @@
 (define (find-all-suffixes number)
   'your-code-here)
 
-(check% 'a 1/2 (find-all-suffixes 1234) is '(1234 234 34 4))
-(check% 'b 1/2 (find-all-suffixes 56789462782) is '(56789462782 6789462782 789462782 89462782 9462782 462782 62782 2782 782 82 2))
+(check% 'a 1/4 (find-all-suffixes 1234) is '(1234 234 34 4))
+(check% 'b 1/4 (find-all-suffixes 56789462782) is '(56789462782 6789462782 789462782 89462782 9462782 462782 62782 2782 782 82 2))
 
 
 (exercițiul 10 : 1 puncte BONUS)
