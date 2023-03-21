@@ -29,7 +29,7 @@ cuvinte, domeniul de vizibilitate al variabilei x este
 
 **Exemplu:** Domeniul de vizibilitate pentru variabila `a` este
         format din liniile de cod `{9, 10, 11, 12, 13, 14}`
-        {{domeniu\_vizibilitate.png?800 |}}
+        {{:pp:media:domeniu\_vizibilitate.png?600 |}}
 
 ## Context computaţional
 
@@ -42,7 +42,7 @@ dat de toate variabilele şi valorile acestora, vizibile în acel punct.
 
 **Exemplu:** Pe linia 6 contextul computaţional este: `{(a 2) (b 32) (s P)}`
 
-{{context.png?800 |}}
+{{:pp:media:context.png?500 |}}
 
 ## Legare
 
@@ -90,7 +90,7 @@ programului care este evaluată), așa că în literatura de specialitate se
 mai numește **lexical scoping** / **lexical binding**.
 
 În Racket `let` face legare statică:
-{{lexical-binding-example.png?800 |}}
+{{:pp:media:lexical-binding-example.png?600 |}}
 
 ## Legare dinamică
 
@@ -101,7 +101,7 @@ imperative pentru implementarea variabilelor globale.
 
 În Scheme (precursorul lui Racket) `define` face legare dinamică:
 
-{{dynamic-binding-example.png?800 |}}
+{{:pp:media:dynamic-binding-example.png?600 |}}
 
 Observați că același apel de funcție cu aceiași parametri întoarce
 rezultate diferite în funcție de contextul global =\> **introduce efecte laterale**, de aceea editarea contextului global cu `define` este
