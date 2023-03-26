@@ -1,7 +1,7 @@
 # Racket: Întârzierea evaluării
 
-  - Data publicării: 27.03.2022
-  - Data ultimei modificări: 27.03.2022
+  - Data publicării: 26.03.2023
+  - Data ultimei modificări: 26.03.2023
 
 ## Obiective
 
@@ -344,8 +344,8 @@ Algoritmul este implementat mai jos:
 ```
 
 ## Resurse
-  - [Exerciții](https://ocw.cs.pub.ro/courses/_media/pp/22/laboratoare/racket/intarzierea-evaluarii-schelet.zip)
-  - [Soluții](https://ocw.cs.pub.ro/courses/_media/pp/22/laboratoare/racket/intarzierea-evaluarii-solutii.zip)
+  - [Exerciții](https://ocw.cs.pub.ro/courses/_media/pp/23/laboratoare/racket/intarzierea-evaluarii-schelet.zip)
+  - [Soluții](https://ocw.cs.pub.ro/courses/_media/pp/23/laboratoare/racket/intarzierea-evaluarii-solutii.zip)
   - [Cheatsheet laborator 5](https://github.com/cs-pub-ro/PP-laboratoare/raw/master/racket/intarzierea-evaluarii/fluxuri-cheatsheet.pdf)
 ## Referințe
 
