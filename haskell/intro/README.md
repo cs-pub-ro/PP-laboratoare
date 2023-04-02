@@ -740,8 +740,8 @@ h' a = (c + b)
 ## Resurse
 
 -   [Cheatsheet (partea cu list comprehensions, funcționale utile și operatori se aplică pentru laboratorul 7)](https://github.com/cs-pub-ro/PP-laboratoare/raw/master/haskell/intro/haskell-cheatsheet-1.pdf)
--   [Schelet](https://ocw.cs.pub.ro/courses/_media/pp/22/laboratoare/haskell/intro-schelet.zip)
--   [Soluții](https://ocw.cs.pub.ro/courses/_media/pp/22/laboratoare/haskell/intro-solutie.zip)
+-   [Schelet](https://ocw.cs.pub.ro/courses/_media/pp/23/laboratoare/haskell/intro-schelet.zip)
+-   [Soluții](https://ocw.cs.pub.ro/courses/_media/pp/23/laboratoare/haskell/intro-solutii.zip)
 
 ## Referințe
 
