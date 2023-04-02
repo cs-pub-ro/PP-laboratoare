@@ -169,13 +169,13 @@ Tot pentru simplitate, Haskell permite folosirea unor secțiuni -- elemente de z
 (2 -) == \x -> 2 - x
 ```
 
-**Atenție**: În construcția `(- x)` operatorul `-` este unar, nu binar (este echivalentul funcției `negate`). Dacă doriți să aplicați pațial la dreapta operatorul de scădere, utilizați funcția `subtract`, ca în expresia `(\`subtract\` 2)`.
+**Atenție**: În construcția `(- x)` operatorul `-` este unar, nu binar (este echivalentul funcției `negate`). Dacă doriți să aplicați pațial la dreapta operatorul de scădere, utilizați funcția `subtract`, ca în expresia ``(`subtract` 2)``.
 
 ## Tipuri de bază
 
 În această secțiune vom prezenta tipurile existente în limbajul Haskell. Veți observa că limbajul este mult mai bogat în tipuri decât Racket. Programatorul își va putea defini alte tipuri proprii dacă dorește.
 
-Pentru a putea vedea tipul unei expresii în `ghci` folosiți `:t expresie`.
+Pentru a vedea tipul unei expresii în `ghci` folosiți `:t expresie`.
 
 ```haskell
 > :t 'a'
@@ -191,7 +191,7 @@ Operatorul `::` separă o expresie de tipul acesteia.
 
 ### Numere, caractere, siruri, booleeni
 
-Următorii literali sunt valizi in **Haskell** (dupa operatorul `::` sunt precizate tipurile acestora):
+Următorii literali sunt valizi in **Haskell** (după operatorul `::` sunt precizate tipurile acestora):
 
 ```haskell
 5 :: Int
@@ -201,7 +201,7 @@ True :: Bool
 False :: Bool
 ```
 
-Observați că există tipul caracter și tipul șir de caractere. Tipul `String` este de fapt un sinonim pentru tipul `[Char]` - tipul listă de caractere. Astfel, operațiile pe [liste](#liste "wikilink") vor funcționa și pe șiruri.
+Observați că există tipul *caracter* și tipul *șir de caractere*. Tipul `String` este de fapt un sinonim pentru tipul `[Char]` - tipul *listă de caractere*. Astfel, operațiile pe [liste](#liste "wikilink") vor funcționa și pe șiruri de caractere.
 
 Tipurile numerice sunt puțin diferite față de alte limbaje de programare cunoscute:
 
@@ -212,7 +212,7 @@ Tipurile numerice sunt puțin diferite față de alte limbaje de programare cuno
 
 În exemplul de mai sus, `a` este o variabilă de tip (ține locul oricărui tip) restricționată (prin folosirea `=>`) doar la tipurile numerice (`Num a`).
 
-Important de reținut este faptul că există **2** tipuri pentru numere întregi: `Int` și `Integer`. Primul este finit, determinat de arhitectură, în timp ce al doilea este infinit, putând ajunge oricât de mare.
+Important de reținut este faptul că există **2** tipuri pentru numere întregi: `Int` și `Integer`. Primul este finit, determinat de arhitectură, în timp ce al doilea este infinit, putând ajunge oricât de mare (vă puteți imagina că este implementat ca o listă de cifre).
 
 ### Liste
 
@@ -331,7 +331,7 @@ factorial_pm 0 = 1
 factorial_pm x = x * factorial_pm (x - 1)
 ```
 
-Expresiile din interiorul fiecărei ramuri din `case` sau din interiorul pattern-match nu pot fi decât constructorii unui tip (similar cu ce ați făcut la AA). În continuare vom folosi cele 4 stiluri pentru a ilustra funcția care calculează lungimea unei liste
+Expresiile din interiorul fiecărei ramuri din `case` sau din interiorul pattern-match nu pot fi decât constructorii unui tip (asemenea analizei pe cazuri a TDA-urilor în inducția structurală învățată la AA). În continuare vom folosi cele 4 stiluri pentru a ilustra funcția care calculează lungimea unei liste
 
 ```haskell
 length_if l = if l == [] then 0 else 1 + length_if (tail l)
@@ -366,7 +366,7 @@ f x y = x + y
 f :: Num a => a -> a -> a
 ```
 
-Fiecare argument este separat prin `->` de următorul argument (respectiv de rezultat în cazul ultimului argument). Operatorul `->` este asociativ la dreapta. De aceea, semnătura `a -> b -> c` este echivalentă cu `a -> (b -> c)`. Ambele descriu o funcție care primește (pe rând) un argument de tip `a` și unul de tip `b`, întorcând un rezultat de tip `c`.
+Fiecare argument este separat prin `->` de următorul argument (respectiv de rezultat în cazul ultimului argument). Operatorul `->` este asociativ la dreapta. De aceea, semnătura `a -> b -> c` este echivalentă cu `a -> (b -> c)`. Ambele descriu o funcție care primește, pe rând, un argument de tip `a` și unul de tip `b`, întorcând un rezultat de tip `c`.
 
 Amintindu-ne de discuția despre [funcții curry și uncurry](https://ocw.cs.pub.ro/courses/pp/22/laboratoare/racket/functionale#functii_curryuncurry "wikilink"), rezultatul următor nu trebuie să ne surprindă
 
@@ -379,9 +379,16 @@ Toate funcțiile din Haskell sunt în formă **curry**.
 
 Putem transforma o funcție curry (adică o funcție obișnuită) într-una "uncurry" folosind `uncurry :: (a -> b -> c) -> (a, b) -> c`. Alternativ, putem defini în mod direct o funcție uncurry folosind perechi.
 
+```haskell
+add :: (Int, Int) -> Int
+add (x, y) = x + y
+
+add (2, 3)  -- 5
+```
+
 ## Funcționale uzuale
 
-Haskell oferă un set de funcționale (similar celui din Racket) pentru cazuri de folosire des întâlnite (dacă nu mai știți ce fac, încercați să ghiciți citind semnătura și numele ca pe o formă de documentație):
+Haskell oferă un set de funcționale (similar celui din Racket) pentru situații uzuale (dacă nu mai știți ce fac, încercați să ghiciți citind semnătura și numele ca pe o formă de documentație):
 
 ```haskell
 > :t map
