@@ -1,7 +1,7 @@
 # Haskell: Introducere
 
--   Data publicării: 28.03.2021
--   Data ultimei modificări: 28.03.2021
+-   Data publicării: 02.04.2023
+-   Data ultimei modificări: 02.04.2023
 
 ## Obiective
 
@@ -64,7 +64,6 @@ Evaluarea leneșă din Haskell va evalua parametrul x la cerere în cadrul apelu
 ```haskell
 square (1 + 2)
 (1 + 2) * (1 + 2)
-3 * (1 + 2)
 3 * 3
 9
 ```
