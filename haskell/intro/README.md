@@ -405,7 +405,7 @@ zip :: [a] -> [b] -> [(a, b)]
 zipWith :: (a -> b -> c) -> [a] -> [b] -> [c]
 ```
 
-Folosirea lor conduce la un cod mai ușor de citit și de întreținut.
+Folosirea lor conduce la un cod mai ușor de citit și de întreținut. De remarcat că `zip` nu este o funcțională, deoarece nu primește ca parametri funcții și nici nu întoarce funcții, dar este prezentată comparativ cu funcționala `zipWith` prin prisma tipurilor. Comportamental, `zip = zipWith (,)`, unde `(,)` este constructorul perechilor, înțeles ca o funcție binară, care primește ca parametri cele două componente ale unei perechi.
 
 ## Domenii de vizibilitate
 
