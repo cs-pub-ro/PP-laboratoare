@@ -5,7 +5,7 @@ import TestPP
 import Data.Char
 
 {-
-Expresia `undefined` are orice tip dar nu poate fi evaluată.
+    Expresia `undefined` are orice tip dar nu poate fi evaluată.
 -}
 
 {-
@@ -254,6 +254,6 @@ check9 = tests_ 9
     ]
  
 {-
-Helpers for testing :) You can also run check1, check2 etc independently
+    Helpers for testing :) You can also run check1, check2 etc independently
 -}
 check = quickCheck False [check1, check2, check3, check4, check5, check6, check7, check8, check9]
