@@ -274,7 +274,7 @@ let f = \x y -> x + y         legare la un nume
 \begin{tikzpicture}
 \node [mybox_orange] (box){%
     \begin{minipage}{0.3\textwidth}
-    	{\centering\bf\small\color{orange} (++) head tail last init take drop\\}
+    	{\centering\bf\small\color{orange} (++) head tail last init take drop takeWhile dropWhile\\}
 		\begin{lstlisting}[language=Haskell, numbers=none]
 [1, 2] ++ [3, 4]                     [1, 2, 3, 4]
 
@@ -291,6 +291,9 @@ drop 2 [1, 2, 3, 4]                  [3, 4]
 
 null []                              True
 null [1, 2, 3]                       False
+
+takeWhile (<5) [1..8]               [1, 2, 3, 4]
+dropWhile (<5) [1..8]               [5, 6, 7, 8]
 \end{lstlisting}
     \end{minipage}
 };
