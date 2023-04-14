@@ -26,6 +26,7 @@ import TestPP
   Pentru mai multe detalii, consultați:
   https://gerardnico.com/linear_algebra/vector_vector
 -}
+
 data Vector = V
   { vx :: Double
   , vy :: Double
@@ -63,10 +64,10 @@ check1 = let
   este balansat dacă diferența înălțimilor subarborilor unui nod este <= 1.
 -}
 
-data BST a = BSTNod {
-    vl :: a
-    , lt :: (BST a)
-    , rt :: (BST a)
+data BST a = BSTNod
+    { vl :: a
+    , lt :: BST a
+    , rt :: BST a
     } | BSTNil deriving Show
 
 insertElem :: (Ord a, Eq a) => BST a -> a -> BST a
@@ -85,13 +86,13 @@ findElem (BSTNod value left right) elem
 
 inorder :: BST a -> [a]
 inorder BSTNil = []
-inorder (BSTNod elem left right) = (inorder left) ++ [elem] ++ (inorder right)
+inorder (BSTNod elem left right) = inorder left ++ [elem] ++ inorder right
 
-size :: (BST a) -> Int
+size :: BST a -> Int
 size BSTNil = 0
-size (BSTNod _ left right) = 1 + (size left) + (size right)
+size (BSTNod _ left right) = 1 + size left + size right
 
-height :: (BST a) -> Int
+height :: BST a -> Int
 height BSTNil = 0
 height (BSTNod elem left right) = 1 + max (height left) (height right)
 
@@ -100,9 +101,8 @@ isBalanced BSTNil = True
 isBalanced  (BSTNod e left right)
     | not (isBalanced left) = False
     | not (isBalanced right) = False
-    | abs ((height left) - (height right)) > 1 = False
+    | abs (height left - height right) > 1 = False
     | otherwise = True
-
 
 check2 :: TestData
 check2 = let root = foldl insertElem BSTNil [7, 4, 12, 2, 3, 1, 10, 15, 8]
@@ -126,6 +126,7 @@ check2 = let root = foldl insertElem BSTNil [7, 4, 12, 2, 3, 1, 10, 15, 8]
 
  Exercițiu testat manual de asistent
 -}
+
 data Tree a = TreeNode
   { val      :: a
   , children :: [Tree a]
@@ -166,8 +167,8 @@ emptyList :: NestedList a
 emptyList = List []
 
 consElem :: a -> NestedList a -> NestedList a
-consElem x (Atom y)  = List $ [Atom x, Atom y]
-consElem x (List xs) = List $ (Atom x : xs)
+consElem x (Atom y)  = List [Atom x, Atom y]
+consElem x (List xs) = List (Atom x : xs)
 
 consList :: NestedList a -> NestedList a -> NestedList a
 consList x (Atom y)  = List [x, Atom y]
@@ -199,7 +200,7 @@ check4 = let l1 = consElem 1 $ emptyList
   in tests_ 4 $
           [ testCond "simple lists1" $ deepEqual l1 l1
           , testCond "simple lists 2 " $ not (deepEqual l1 l2)
-          , testCond "less simple lists" $ deepEqual (consElem 2 $ l3) l2
+          , testCond "less simple lists" $ deepEqual (consElem 2 l3) l2
           , testCond "head, tail" $ deepEqual (headList $ tailList l2)
             (consElem 1 $ consElem 1 emptyList)
           , testVal "flatten" [2,1,1,3] $ flatten l2
@@ -307,8 +308,8 @@ bfs root = nodes
     children = concatMap (\node -> [left node, right node]) nodes
 
 extractPath :: (Num a, Show a) => InfBST a -> [(a, String)]
-extractPath node = case (parent node) of
-    Just x  -> (value x, func node):(extractPath x)
+extractPath node = case parent node of
+    Just x  -> (value x, func node) : extractPath x
     Nothing -> []
 
 -- extractPath node = tail $ map (\(node, f) -> (value node, f)) nodes
@@ -322,10 +323,10 @@ path :: (Ord a, Num a, Show a) => a -> a -> [(a, String)]
 path x0 xf = go nodes
   where
     nodes = bfs $ completeBinaryTree x0
-    go (node:nodes)
-              | value node == xf         = reverse $ extractPath node
-              | stopCond xf $ value node = []
-              | otherwise                = go nodes
+    go (node : nodes)
+        | value node == xf         = reverse $ extractPath node
+        | stopCond xf $ value node = []
+        | otherwise                = go nodes
 
 checkBonus :: TestData
 checkBonus = let bfsNodes = bfs $ completeBinaryTree 1

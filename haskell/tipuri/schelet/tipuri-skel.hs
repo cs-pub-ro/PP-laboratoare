@@ -26,6 +26,7 @@ import TestPP
   Pentru mai multe detalii, consultați:
   https://gerardnico.com/linear_algebra/vector_vector
 -}
+
 data Vector = V
   { vx :: Double
   , vy :: Double
@@ -74,10 +75,10 @@ findElem = undefined
 inorder :: BST a -> [a]
 inorder = undefined
 
-size :: (BST a) -> Int
+size :: BST a -> Int
 size = undefined
 
-height :: (BST a) -> Int
+height :: BST a -> Int
 height = undefined
 
 isBalanced :: (Ord a, Num a) => BST a -> Bool
@@ -105,6 +106,7 @@ check2 = let root = foldl insertElem BSTNil [7, 4, 12, 2, 3, 1, 10, 15, 8]
 
  Exercițiu testat manual de asistent
 -}
+
 data Tree a = TreeNode deriving Show
 
 check3 :: TestData
@@ -168,7 +170,7 @@ check4 = let l1 = consElem 1 $ emptyList
   in tests_ 4 $
           [ testCond "simple lists1" $ deepEqual l1 l1
           , testCond "simple lists 2 " $ not (deepEqual l1 l2)
-          , testCond "less simple lists" $ deepEqual (consElem 2 $ l3) l2
+          , testCond "less simple lists" $ deepEqual (consElem 2 l3) l2
           , testCond "head, tail" $ deepEqual (headList $ tailList l2)
             (consElem 1 $ consElem 1 emptyList)
           , testVal "flatten" [2,1,1,3] $ flatten l2
@@ -276,8 +278,8 @@ bfs root = nodes
     children = concatMap (\node -> [left node, right node]) nodes
 
 extractPath :: (Num a, Show a) => InfBST a -> [(a, String)]
-extractPath node = case (parent node) of
-    Just x  -> (value x, func node):(extractPath x)
+extractPath node = case parent node of
+    Just x  -> (value x, func node) : extractPath x
     Nothing -> []
 
 -- extractPath node = tail $ map (\(node, f) -> (value node, f)) nodes
@@ -291,10 +293,10 @@ path :: (Ord a, Num a, Show a) => a -> a -> [(a, String)]
 path x0 xf = go nodes
   where
     nodes = bfs $ completeBinaryTree x0
-    go (node:nodes)
-              | value node == xf         = reverse $ extractPath node
-              | stopCond xf $ value node = []
-              | otherwise                = go nodes
+    go (node : nodes)
+        | value node == xf         = reverse $ extractPath node
+        | stopCond xf $ value node = []
+        | otherwise                = go nodes
 
 checkBonus :: TestData
 checkBonus = let bfsNodes = bfs $ completeBinaryTree 1
