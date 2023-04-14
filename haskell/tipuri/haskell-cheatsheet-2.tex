@@ -1,0 +1,287 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% MatPlotLib and Random Cheat Sheet
+%
+% Edited by Michelle Cristina de Sousa Baltazar
+%
+% http://matplotlib.org/api/pyplot_summary.html
+% http://matplotlib.org/users/pyplot_tutorial.html
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\documentclass[a4paper]{article}
+\usepackage[landscape]{geometry}
+\usepackage{url}
+\usepackage{multicol}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{tikz}
+\usetikzlibrary{decorations.pathmorphing}
+\usepackage{amsmath,amssymb}
+\usepackage{hyperref}
+
+\usepackage{colortbl}
+\usepackage{xcolor}
+\usepackage{mathtools}
+\usepackage{amsmath,amssymb}
+\usepackage{enumitem}
+
+\usepackage{textcomp}
+\usepackage{couriers}
+\usepackage{listings}
+\lstset{
+	numbers			= left,
+	numberstyle		= \tiny,
+    numbersep       = 5pt,
+	captionpos		= b,
+	breaklines		= true,
+	basicstyle		= \ttfamily\footnotesize,
+	tabsize			= 4,
+	escapeinside	= {~}{~},
+}
+\lstdefinelanguage{Racket}{
+  morekeywords=[1]{define, define-syntax, define-macro, lambda, define-stream, stream-lambda},
+  morekeywords=[2]{begin, call-with-current-continuation, call/cc,
+    call-with-input-file, call-with-output-file, case, cond,
+    do, else, for-each, if,
+    let*, let, let-syntax, letrec, letrec-syntax,
+    let-values, let*-values,
+    and, or, not, delay, force,
+    quasiquote, quote, unquote, unquote-splicing,
+    map, fold, syntax, syntax-rules, eval, environment },
+  morekeywords=[3]{import, export},
+  alsodigit=!\$\%&*+-./:<=>?@^_~,
+  sensitive=true,
+  morecomment=[l]{;},
+  morecomment=[s]{\#|}{|\#},
+  morestring=[b]",
+  basicstyle=\footnotesize\ttfamily,
+  keywordstyle=\color[rgb]{0,.3,.7},
+  commentstyle=\color[rgb]{0.133,0.545,0.133},
+  stringstyle={\color[rgb]{0.75,0.49,0.07}},
+  upquote=true,
+  breaklines=true,
+  breakatwhitespace=true,
+  literate=*{`}{{`}}{1}
+}
+\lstset{
+    language=Haskell,
+    commentstyle=\color[rgb]{0.133,0.545,0.133},
+}
+
+\title{Haskell - Tipuri de date utilizator}
+\usepackage[brazilian]{babel}
+\usepackage[utf8]{inputenc}
+
+\advance\topmargin-1.0in
+\advance\textheight3in
+\advance\textwidth3in
+\advance\oddsidemargin-1.5in
+\advance\evensidemargin-1.5in
+\parindent0pt
+\parskip1pt
+\newcommand{\hr}{\centerline{\rule{3.5in}{1pt}}}
+%\colorbox[HTML]{e4e4e4}{\makebox[\textwidth-2\fboxsep][l]{texto}
+\begin{document}
+
+\begin{center}{\huge{\textbf{Haskell CheatSheet}}}\\
+{\large Laborator 8}
+\end{center}
+
+\begin{multicols*}{3}
+
+\tikzstyle{mybox} = [draw=black, fill=white, very thick,
+    rectangle, rounded corners, inner sep=10pt, inner ysep=10pt]
+\tikzstyle{fancytitle} =[fill=black, text=white, font=\bfseries]
+
+% Mihnea
+\tikzstyle{mybox_code} = [mybox, draw = orange, fill=sandybrown]
+\tikzstyle{fancytitle_code} = [fancytitle, fill = orange]
+
+\definecolor{almond}{rgb}{0.94, 0.87, 0.8}
+\definecolor{apricot}{rgb}{0.98, 0.81, 0.69}
+\definecolor{atomictangerine}{rgb}{1.0, 0.6, 0.4}
+\definecolor{sandybrown}{rgb}{0.96, 0.64, 0.38}
+\definecolor{buff}{rgb}{0.94, 0.86, 0.51}
+
+\definecolor{persianred}{rgb}{0.8, 0.2, 0.2}
+\definecolor{papayawhip}{rgb}{1.0, 0.94, 0.84}
+\tikzstyle{mybox_persianred} = [mybox, draw = persianred, fill=papayawhip]
+\tikzstyle{fancytitle_persianred} = [fancytitle, fill = persianred]
+
+\definecolor{whitesmoke}{rgb}{0.96, 0.96, 0.96}
+\definecolor{wenge}{rgb}{0.39, 0.33, 0.32}
+\tikzstyle{mybox_blue} = [mybox, draw = wenge, fill=whitesmoke]
+\tikzstyle{fancytitle_blue} = [fancytitle, fill = wenge]
+
+\definecolor{cerise}{rgb}{0.87, 0.19, 0.39}
+\definecolor{mistyrose}{rgb}{1.0, 0.89, 0.88}
+\tikzstyle{mybox_cerise} = [mybox, draw = cerise, fill=mistyrose]
+\tikzstyle{fancytitle_cerise} = [fancytitle, fill = cerise]
+
+\definecolor{pinegreen}{rgb}{0.0, 0.47, 0.44}
+\definecolor{bubbles}{rgb}{0.91, 1.0, 1.0}
+\tikzstyle{mybox_pinegreen} = [mybox, draw = pinegreen, fill=bubbles]
+\tikzstyle{fancytitle_pinegreen} = [fancytitle, fill = pinegreen]
+
+\definecolor{cream}{rgb}{1.0, 0.99, 0.82}
+\definecolor{mikadoyellow}{rgb}{1.0, 0.77, 0.05}
+\tikzstyle{mybox_mikadoyellow} = [mybox, draw = mikadoyellow, fill=cream]
+\tikzstyle{fancytitle_mikadoyellow} = [fancytitle, fill = mikadoyellow]
+
+\definecolor{cornsilk}{rgb}{1.0, 0.97, 0.86}
+\tikzstyle{mybox_orange} = [mybox, draw = orange, fill=cornsilk]
+\tikzstyle{fancytitle_orange} = [fancytitle, fill = orange]
+
+\definecolor{aliceblue}{rgb}{0.94, 0.97, 1.0}
+\definecolor{seagreen}{rgb}{0.18, 0.55, 0.34}
+\tikzstyle{mybox_seagreen} = [mybox, draw = seagreen, fill=aliceblue]
+\tikzstyle{fancytitle_seagreen} = [fancytitle, fill = seagreen]
+
+\definecolor{jazzberryjam}{rgb}{0.65, 0.04, 0.37}
+\definecolor{almond}{rgb}{0.94, 0.87, 0.8}
+\tikzstyle{mybox_jazzberryjam} = [mybox, draw = jazzberryjam, fill=almond]
+\tikzstyle{fancytitle_jazzberryjam} = [fancytitle, fill = jazzberryjam]
+
+\definecolor{amaranth}{rgb}{0.9, 0.17, 0.31}
+\definecolor{bisque}{rgb}{1.0, 0.89, 0.77}
+\tikzstyle{mybox_amaranth} = [mybox, draw = amaranth, fill=bisque]
+\tikzstyle{fancytitle_amaranth} = [fancytitle, fill = amaranth]
+
+\definecolor{carminered}{rgb}{1.0, 0.0, 0.22}
+\definecolor{blanchedalmond}{rgb}{1.0, 0.92, 0.8}
+\tikzstyle{mybox_carminered} = [mybox, draw = amaranth, fill=blanchedalmond]
+\tikzstyle{fancytitle_carminered} = [fancytitle, fill = carminered]
+
+\definecolor{midnightgreen}{rgb}{0.0, 0.29, 0.33}
+\definecolor{lavendermist}{rgb}{0.9, 0.9, 0.98}
+\tikzstyle{mybox_midnightgreen} = [mybox, draw = midnightgreen, fill=lavendermist]
+\tikzstyle{fancytitle_midnightgreen} = [fancytitle, fill = midnightgreen]
+
+\definecolor{indigo}{rgb}{0.29, 0.0, 0.51}
+\definecolor{isabelline}{rgb}{0.96, 0.94, 0.93}
+\tikzstyle{mybox_indigo} = [mybox, draw = indigo, fill=isabelline]
+\tikzstyle{fancytitle_indigo} = [fancytitle, fill = indigo]
+
+\definecolor{russet}{rgb}{0.5, 0.27, 0.11}
+\definecolor{ivory}{rgb}{1.0, 1.0, 0.94}
+\tikzstyle{mybox_russet} = [mybox, draw = russet, fill=ivory]
+\tikzstyle{fancytitle_russet} = [fancytitle, fill = russet]
+
+\definecolor{neongreen}{rgb}{0.12, 0.58, 0.02}
+\definecolor{splashedwhite}{rgb}{0.9, 0.99, 0.9}
+\tikzstyle{mybox_neongreen} = [mybox, draw = neongreen, fill=splashedwhite]
+\tikzstyle{fancytitle_neongreen} = [fancytitle, fill = neongreen]
+
+%---------------------------------------------------------------------------------
+
+\begin{tikzpicture}
+\node [mybox_midnightgreen] (box){%
+\begin{minipage}{0.3\textwidth}
+
+\texttt{type} ne permite definirea unui sinonim de tip, similar cu
+\texttt{typedef} din C.
+
+\begin{lstlisting}[language=Haskell, numbers=none]
+type Point = (Int, Int)
+
+p :: Point
+p = (2, 3)
+\end{lstlisting}
+\end{minipage}
+};
+
+\node[fancytitle_midnightgreen, right=10pt] at (box.north west) {\texttt{type}};
+\end{tikzpicture}
+
+
+\begin{tikzpicture}
+\node [mybox_orange] (box){%
+\begin{minipage}{0.3\textwidth}
+
+\texttt{newtype} este similar cu data, cu diferența că ne \mbox{permite} crearea
+unui tip de date cu un singur constructor, pe baza altor tipuri de date
+existente.
+
+\begin{lstlisting}[language=Haskell, numbers=none]
+newtype Celsius = MakeCelsius Float deriving Show
+
+newtype Fahrenheit = MakeFahrenheit Float
+    deriving Show
+
+celsiusToFahrenheit :: Celsius -> Fahrenheit
+celsiusToFahrenheit (MakeCelsius c) =
+    MakeFahrenheit $ c * 9/5 + 32
+\end{lstlisting}
+\end{minipage}
+};
+
+\node[fancytitle_orange, right=10pt] at (box.north west) {\texttt{newtype}};
+\end{tikzpicture}
+
+\columnbreak
+
+
+\begin{tikzpicture}
+\node [mybox_cerise] (box){%
+\begin{minipage}{0.3\textwidth}
+
+\texttt{data} permite definirea de noi tipuri de date algebrice.
+
+\begin{lstlisting}[language=Haskell, numbers=none]
+data PointT = PointC Double Double deriving Show
+\end{lstlisting}
+
+\vspace{0.6em}
+Tipuri enumerate.
+
+\begin{lstlisting}[language=Haskell, numbers=none]
+data Colour = Red | Green | Blue | Black
+    deriving Show
+nonColour :: Colour -> Bool
+nonColour Black = True
+nonColour _     = False
+\end{lstlisting}
+
+\vspace{0.6em}
+Tipuri înregistrare.
+
+\begin{lstlisting}[language=Haskell, numbers=none]
+data PointT = PointC
+    { px :: Double
+    , py :: Double
+    } deriving Show
+px (PointC x _) = x
+py (PointC _ y) = y
+\end{lstlisting}
+
+\vspace{0.6em}
+Tipuri parametrizate.
+
+\begin{lstlisting}[language=Haskell, numbers=none]
+data Maybe a = Just a | Nothing
+    deriving (Show, Eq, Ord)
+maybeHead :: [a] -> Maybe a
+maybeHead (x : _) = Just x
+maybeHead _       = Nothing
+\end{lstlisting}
+
+\vspace{0.6em}
+Tipuri recursive.
+
+\begin{lstlisting}[language=Haskell, numbers=none]
+data List a = Void | Cons a (List a) deriving Show
+
+data Natural = Zero | Succ Natural deriving Show
+\end{lstlisting}
+\end{minipage}
+};
+
+\node[fancytitle_cerise, right=10pt] at (box.north west) {\texttt{data}};
+\end{tikzpicture}
+
+%---------------------------------------------------------------------------------
+
+\end{multicols*}
+\end{document}
+Contact GitHub API Training Shop Blog About
+© 2016 GitHub, Inc. Terms Privacy Security Status Help
