@@ -191,16 +191,16 @@ Un mecanism util în implementări este alias-ul (@), care numește un pattern, 
 Putem rescrie o porțiune de cod ca aceasta:
 
 ```haskell
-returnReversed (PointC x y) reversed
-  | reversed = PointC y x
+maybeReverse (PointC x y) shouldReverse
+  | shouldReverse = PointC y x
   | otherwise = PointC x y
 ```
 
 cu următorul cod:
 
 ```haskell
-returnReversed point@(PointC x y) reversed
-  | reversed = PointC y x
+maybeReverse point@(PointC x y) shouldReverse
+  | shouldReverse = PointC y x
   | otherwise = point
 ```
 
