@@ -282,10 +282,6 @@ extractPath node = case parent node of
     Just x  -> (value x, func node) : extractPath x
     Nothing -> []
 
--- extractPath node = tail $ map (\(node, f) -> (value node, f)) nodes
---   where condition = not.isNothing.parent.fst
---         nodes = takeWhile condition $ iterate (\(node, f) -> (fromJust $ parent node, func node)) (node, "")
-
 stopCond :: (Num a, Ord a) => a -> a -> Bool
 stopCond xf val = val > 4 * xf
 
