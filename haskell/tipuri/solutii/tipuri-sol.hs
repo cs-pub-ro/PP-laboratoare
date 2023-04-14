@@ -49,7 +49,8 @@ check1 = let
   arbore binar de căutare, căutarea unui element într-un arbore binar de
   căutare dat, o funcție care întoarce lista elementelor din parcurgerea
   în inordine a arborelui.
-  Recomandăm utilizarea alias-urilor (@) pentru rezolvarea acestui exercițiu.
+  Recomandăm utilizarea alias-urilor (@) pentru rezolvarea acestui exercițiu
+  într-o manieră cât mai elegantă.
 
   De asemenea, definiți funcțiile de size și de height pentru determinarea
   numărului de noduri din arbore, respectiv înălțimii arborelui.
@@ -60,7 +61,6 @@ check1 = let
   echivalentul unei liste înlănțuite. Tot în cadrul laboratorului, implementați
   funcția isBalanced care verifică dacă arborele este balansat. Un arbore
   este balansat dacă diferența înălțimilor subarborilor unui nod este <= 1.
-
 -}
 
 data BST a = BSTNod {
@@ -140,10 +140,11 @@ check3 = tests_ 3 $ [testManually "General Tree" True]
   Definiți un tip de date SList a care să aibă funcționalități
   asemănătoare listelor din limbajele Lisp (e.g. Scheme, Racket, Clojure),
   permițând componente la diferite niveluri de imbricare.
-  Obs: Ganditi-va la discutia despre nested lists de la curs cand va apucati
-  de implementare! Definiti-va constructorii esentiali pentru incapsularea
+  Obs: Gândiți-vă la discuția despre nested lists de la curs când vă apucați
+  de implementare! Definiți-vă constructorii esențiali pentru încapsularea
   listelor: Atom - constructorul de date pentru un element
             List - constructorul de date pentru liste de NestedList
+  Obs: Țineți cont de ambii constructori în implementarea operațiilor pe liste!
   Ex: Lista din Racket '(1 (3 4) (2)) să poată fi definită în Haskell
   folosind SList.
 
@@ -227,11 +228,11 @@ check4 = let l1 = consElem 1 $ emptyList
 
   De ce ne ajută o structură arborescentă în acest caz?
 
-  Putem construi un arbore binar infinit avand ca rădăcină un nod cu
+  Putem construi un arbore binar infinit având ca rădăcină un nod cu
   valoarea x0. Pentru construirea nodului de pe ramura din stânga se
   va aplica funcția f, iar pe ramura din dreapta se va aplica funcția g.
 
-    Exemplu:
+  Exemplu:
                                ┌─────┐
                ┌───────────────┤x0=1 ├────────────────┐
                │               └─────┘                │
@@ -262,7 +263,7 @@ check4 = let l1 = consElem 1 $ emptyList
     * completeBinaryTree - pornind de la x0 construiește arborele binar infinit aplicând
       f pe nodul stâng, respectiv g pe nodul drept
     * bfs - primește un arbore și întoarce parcurgerea bfs a acestuia - o lista infinită
-      de noduri, care vor fi expandate într-o listă de noduri copil (stanga, dreapta)
+      de noduri, care vor fi expandate într-o listă de noduri copil (stânga, dreapta)
     * extractPath - primește un nod și întoarce calea către rădacină, o listă de perechi
       de forma (valoare, funcție_aplicată)
     * path - primește 2 numere x0 si xf și întoarce calea de la x0 la xf o listă de perechi
@@ -273,9 +274,7 @@ check4 = let l1 = consElem 1 $ emptyList
   opri căutarea?
 
   Similar exercițiului 4 din laboratorul anterior experimentați în consolă funcționalitățile
-
   funcției "trace" în definirea nodurilor din funția completeBinaryTree. Ce observați?
-
 -}
 
 data InfBST a = Node
@@ -308,7 +307,6 @@ bfs root = nodes
     children = concatMap (\node -> [left node, right node]) nodes
 
 extractPath :: (Num a, Show a) => InfBST a -> [(a, String)]
-
 extractPath node = case (parent node) of
     Just x  -> (value x, func node):(extractPath x)
     Nothing -> []
