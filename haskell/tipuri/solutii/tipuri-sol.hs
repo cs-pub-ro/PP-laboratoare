@@ -109,7 +109,7 @@ check2 = let root = foldl insertElem BSTNil [7, 4, 12, 2, 3, 1, 10, 15, 8]
              values = [1, 2, 3, 4, 7, 8, 10, 12, 15]
              notBalanced = foldl insertElem BSTNil [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
              balanced = foldl insertElem BSTNil [5, 3, 7, 1, 4, 6, 8]
-  in tests_ 2 $
+  in tests_ 2
           [ testVal "findElem" (Just 3) $ findElem root 3
           , testVal "findElem" Nothing  $ findElem root 5
           , testSet "inorder" values    $ inorder root
@@ -133,7 +133,7 @@ data Tree a = TreeNode
   } deriving (Eq, Show)
 
 check3 :: TestData
-check3 = tests_ 3 $ [testManually "General Tree" True]
+check3 = tests_ 3 [testManually "General Tree" True]
 
 {-
  4. Liste imbricate
@@ -192,12 +192,11 @@ flatten (Atom x)  = [x]
 flatten (List xs) = concatMap flatten xs
 
 check4 :: TestData
-check4 = let l1 = consElem 1 $ emptyList
+check4 = let l1 = consElem 1 emptyList
              l2 = consElem 2 $ consList (consElem 1 $ consElem 1 emptyList) $
                   consElem 3 emptyList
-             l3 = consList (consElem 1 $ consElem 1 emptyList) $ consElem 3 $
-                  emptyList
-  in tests_ 4 $
+             l3 = consList (consElem 1 $ consElem 1 emptyList) $ consElem 3 emptyList
+  in tests_ 4
           [ testCond "simple lists1" $ deepEqual l1 l1
           , testCond "simple lists 2 " $ not (deepEqual l1 l2)
           , testCond "less simple lists" $ deepEqual (consElem 2 l3) l2
@@ -327,7 +326,7 @@ path x0 xf = go nodes
 checkBonus :: TestData
 checkBonus = let bfsNodes = bfs $ completeBinaryTree 1
                  values = [1, 2, 4, 4, 7, 8, 13, 8, 13, 14]
-  in tests_ 5 $
+  in tests_ 5
           [ testVal "Bonus bfs" values (value <$> take 10 bfsNodes)
           , testVal "Bonus path 1 8" [(1,"g"),(4,"f")] $ path 1 8
           , testVal "Bonus path 1 100" [(1,"g"),(4,"f"),(8,"g"),(25,"f"),(50,"f")] $ path 1 100
