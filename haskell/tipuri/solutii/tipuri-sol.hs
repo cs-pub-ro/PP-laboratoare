@@ -50,11 +50,11 @@ check1 = let
   căutare dat, o funcție care întoarce lista elementelor din parcurgerea
   în inordine a arborelui.
   Recomandăm utilizarea alias-urilor (@) pentru rezolvarea acestui exercițiu.
-  
-  De asemenea, definiți funcțiile de size și de height pentru determinarea 
+
+  De asemenea, definiți funcțiile de size și de height pentru determinarea
   numărului de noduri din arbore, respectiv înălțimii arborelui.
 
-  Un arbore binar de căutare este eficient atâta timp cât înălțimea lui 
+  Un arbore binar de căutare este eficient atâta timp cât înălțimea lui
   este minimă. Cu alte cuvinte, crearea unui BST printr-o listă sortată
   crescător / descrescător este worst-case-scenario pentru un arbore și este
   echivalentul unei liste înlănțuite. Tot în cadrul laboratorului, implementați
@@ -141,7 +141,7 @@ check3 = tests_ 3 $ [testManually "General Tree" True]
   asemănătoare listelor din limbajele Lisp (e.g. Scheme, Racket, Clojure),
   permițând componente la diferite niveluri de imbricare.
   Obs: Ganditi-va la discutia despre nested lists de la curs cand va apucati
-  de implementare! Definiti-va constructorii esentiali pentru incapsularea 
+  de implementare! Definiti-va constructorii esentiali pentru incapsularea
   listelor: Atom - constructorul de date pentru un element
             List - constructorul de date pentru liste de NestedList
   Ex: Lista din Racket '(1 (3 4) (2)) să poată fi definită în Haskell
