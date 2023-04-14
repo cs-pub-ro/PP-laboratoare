@@ -290,4 +290,4 @@ Diferența principală între `data` și `newtype` este că `newtype` permite cr
 - *[Haskell Wikibook](http://en.wikibooks.org/wiki/Haskell/Type_declarations "wikilink")* - Declararea tipurilor
 - *[Constructor](https://wiki.haskell.org/Constructor "wikilink")* - Distincție între constructori de tip și constructori de date
 - *[Learn you a Haskell](http://learnyouahaskell.com/making-our-own-types-and-typeclasses "wikilink")* - Capitolul "Making your own types"
-- *[Real World Haskell](http://book.realworldhaskell.org/read/defining-types-streamlining-functions.tml "wikilink")* - Capitolul "Defining types"
+- *[Real World Haskell](https://book.realworldhaskell.org/read/defining-types-streamlining-functions.html "wikilink")* - Capitolul "Defining types"
