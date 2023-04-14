@@ -1,7 +1,7 @@
 # Haskell: Tipuri de date utilizator
 
-  - Data publicării: 18.04.2022
-  - Data ultimei modificări: 18.04.2022
+- Data publicării: 18.04.2022
+- Data ultimei modificări: 18.04.2022
 
 ## Obiective
 
@@ -9,15 +9,15 @@ Scopul acestui laborator este introducerea **mecanismului de tipuri** al limbaju
 
 Aspectele urmărite sunt:
 
-  - particularități ale tipurilor de date în Haskell
-  - sinteza de tip
-  - definirea tipurilor de date utilizator:
-      - sinonime de tip
-      - tipuri de date enumerate
-      - tipuri înregistrare
-      - tipuri parametrizate
-      - tipuri recursive
-      - tipuri izomorfe
+- particularități ale tipurilor de date în Haskell
+- sinteza de tip
+- definirea tipurilor de date utilizator:
+    - sinonime de tip
+    - tipuri de date enumerate
+    - tipuri înregistrare
+    - tipuri parametrizate
+    - tipuri recursive
+    - tipuri izomorfe
 
 ## Introducere
 
@@ -280,14 +280,14 @@ Diferența principală între `data` și `newtype` este că `newtype` permite cr
 
 ## Resurse
 
--   [Cheatsheet](https://github.com/cs-pub-ro/PP-laboratoare/blob/master/haskell/tipuri/haskell-cheatsheet-2.pdf)
--   [Schelet](https://ocw.cs.pub.ro/courses/_media/pp/22/laboratoare/haskell/tipuri-schelet.zip)
--   [Soluții](https://ocw.cs.pub.ro/courses/_media/pp/22/laboratoare/haskell/tipuri-solutii.zip)
+- [Cheatsheet](https://github.com/cs-pub-ro/PP-laboratoare/blob/master/haskell/tipuri/haskell-cheatsheet-2.pdf)
+- [Schelet](https://ocw.cs.pub.ro/courses/_media/pp/22/laboratoare/haskell/tipuri-schelet.zip)
+- [Soluții](https://ocw.cs.pub.ro/courses/_media/pp/22/laboratoare/haskell/tipuri-solutii.zip)
 
 ## Referințe
 
-  - *[Algebraic data type](http://www.haskell.org/haskellwiki/Algebraic_data_type "wikilink")*
-  - *[Haskell Wikibook](http://en.wikibooks.org/wiki/Haskell/Type_declarations "wikilink")* - Declararea tipurilor
-  - *[Constructor](https://wiki.haskell.org/Constructor "wikilink")* - Distincție între constructori de tip și constructori de date
-  - *[Learn you a Haskell](http://learnyouahaskell.com/making-our-own-types-and-typeclasses "wikilink")* - Capitolul "Making your own types"
-  - *[Real World Haskell](http://book.realworldhaskell.org/read/defining-types-streamlining-functions.tml "wikilink")* - Capitolul "Defining types"
+- *[Algebraic data type](http://www.haskell.org/haskellwiki/Algebraic_data_type "wikilink")*
+- *[Haskell Wikibook](http://en.wikibooks.org/wiki/Haskell/Type_declarations "wikilink")* - Declararea tipurilor
+- *[Constructor](https://wiki.haskell.org/Constructor "wikilink")* - Distincție între constructori de tip și constructori de date
+- *[Learn you a Haskell](http://learnyouahaskell.com/making-our-own-types-and-typeclasses "wikilink")* - Capitolul "Making your own types"
+- *[Real World Haskell](http://book.realworldhaskell.org/read/defining-types-streamlining-functions.tml "wikilink")* - Capitolul "Defining types"
