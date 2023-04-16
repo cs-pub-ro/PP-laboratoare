@@ -87,7 +87,7 @@ p :: Point
 p = (2, 3)
 ```
 
-Observăm că Haskell nu face distincția între constructorul perechii `(2,3)` și constructorul `Point`, cele două tipuri fiind identice. Singura restricție este aceea că valorile perechii trebuie să fie de tip `Int`, astfel că expresia:
+Observăm că Haskell nu face distincția dintre constructorul perechii `(2,3)` și constructorul `Point`, cele două tipuri fiind identice. Singura restricție este aceea că valorile perechii trebuie să fie de tip `Int`, astfel că expresia:
 
 ```haskell
 p2 :: Point
