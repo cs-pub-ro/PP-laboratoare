@@ -26,6 +26,7 @@ import TestPP
   Pentru mai multe detalii, consultați:
   https://gerardnico.com/linear_algebra/vector_vector
 -}
+
 data Vector = V
   { vx :: Double
   , vy :: Double
@@ -52,10 +53,10 @@ check1 = let
   Recomandăm utilizarea alias-urilor (@) pentru rezolvarea acestui exercițiu
   într-o manieră cât mai elegantă.
 
-  De asemenea, definiți funcțiile de size și de height pentru determinarea 
+  De asemenea, definiți funcțiile de size și de height pentru determinarea
   numărului de noduri din arbore, respectiv înălțimii arborelui.
-  
-  Un arbore binar de căutare este eficient atâta timp cât înălțimea lui 
+
+  Un arbore binar de căutare este eficient atâta timp cât înălțimea lui
   este minimă. Cu alte cuvinte, crearea unui BST printr-o listă sortată
   crescător / descrescător este worst-case-scenario pentru un arbore și este
   echivalentul unei liste înlănțuite. Tot în cadrul laboratorului, implementați
@@ -74,10 +75,10 @@ findElem = undefined
 inorder :: BST a -> [a]
 inorder = undefined
 
-size :: (BST a) -> Int
+size :: BST a -> Int
 size = undefined
 
-height :: (BST a) -> Int
+height :: BST a -> Int
 height = undefined
 
 isBalanced :: (Ord a, Num a) => BST a -> Bool
@@ -88,8 +89,7 @@ check2 = let root = foldl insertElem BSTNil [7, 4, 12, 2, 3, 1, 10, 15, 8]
              values = [1, 2, 3, 4, 7, 8, 10, 12, 15]
              notBalanced = foldl insertElem BSTNil [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
              balanced = foldl insertElem BSTNil [5, 3, 7, 1, 4, 6, 8]
-
-  in tests_ 2 $
+  in tests_ 2
           [ testVal "findElem" (Just 3) $ findElem root 3
           , testVal "findElem" Nothing  $ findElem root 5
           , testSet "inorder" values    $ inorder root
@@ -106,10 +106,11 @@ check2 = let root = foldl insertElem BSTNil [7, 4, 12, 2, 3, 1, 10, 15, 8]
 
  Exercițiu testat manual de asistent
 -}
+
 data Tree a = TreeNode deriving Show
 
 check3 :: TestData
-check3 = tests_ 3 $ [testManually "General Tree" False]
+check3 = tests_ 3 [testManually "General Tree" False]
 
 {-
  4. Liste imbricate
@@ -117,11 +118,11 @@ check3 = tests_ 3 $ [testManually "General Tree" False]
   Definiți un tip de date SList a care să aibă funcționalități
   asemănătoare listelor din limbajele Lisp (e.g. Scheme, Racket, Clojure),
   permițând componente la diferite niveluri de imbricare.
-  Obs: Ganditi-va la discutia despre nested lists de la curs cand va apucati
-  de implementare! Definiti-va constructorii esentiali pentru incapsularea 
+  Obs: Gândiți-vă la discuția despre nested lists de la curs când vă apucați
+  de implementare! Definiți-vă constructorii esențiali pentru încapsularea
   listelor: Atom - constructorul de date pentru un element
             List - constructorul de date pentru liste de NestedList
-  Obs: Tineti cont de ambii constructori in implementarea operatiilor pe liste!
+  Obs: Țineți cont de ambii constructori în implementarea operațiilor pe liste!
   Ex: Lista din Racket '(1 (3 4) (2)) să poată fi definită în Haskell
   folosind SList.
 
@@ -161,15 +162,14 @@ flatten :: NestedList a -> [a]
 flatten = undefined
 
 check4 :: TestData
-check4 = let l1 = consElem 1 $ emptyList
+check4 = let l1 = consElem 1 emptyList
              l2 = consElem 2 $ consList (consElem 1 $ consElem 1 emptyList) $
                   consElem 3 emptyList
-             l3 = consList (consElem 1 $ consElem 1 emptyList) $ consElem 3 $
-                  emptyList
-  in tests_ 4 $
+             l3 = consList (consElem 1 $ consElem 1 emptyList) $ consElem 3 emptyList
+  in tests_ 4
           [ testCond "simple lists1" $ deepEqual l1 l1
           , testCond "simple lists 2 " $ not (deepEqual l1 l2)
-          , testCond "less simple lists" $ deepEqual (consElem 2 $ l3) l2
+          , testCond "less simple lists" $ deepEqual (consElem 2 l3) l2
           , testCond "head, tail" $ deepEqual (headList $ tailList l2)
             (consElem 1 $ consElem 1 emptyList)
           , testVal "flatten" [2,1,1,3] $ flatten l2
@@ -198,11 +198,11 @@ check4 = let l1 = consElem 1 $ emptyList
 
   De ce ne ajută o structură arborescentă în acest caz?
 
-  Putem construi un arbore binar infinit avand ca rădăcină un nod cu
+  Putem construi un arbore binar infinit având ca rădăcină un nod cu
   valoarea x0. Pentru construirea nodului de pe ramura din stânga se
   va aplica funcția f, iar pe ramura din dreapta se va aplica funcția g.
 
-    Exemplu:
+  Exemplu:
                                ┌─────┐
                ┌───────────────┤x0=1 ├────────────────┐
                │               └─────┘                │
@@ -233,7 +233,7 @@ check4 = let l1 = consElem 1 $ emptyList
     * completeBinaryTree - pornind de la x0 construiește arborele binar infinit aplicând
       f pe nodul stâng, respectiv g pe nodul drept
     * bfs - primește un arbore și întoarce parcurgerea bfs a acestuia - o lista infinită
-      de noduri, care vor fi expandate într-o listă de noduri copil (stanga, dreapta)
+      de noduri, care vor fi expandate într-o listă de noduri copil (stânga, dreapta)
     * extractPath - primește un nod și întoarce calea către rădacină, o listă de perechi
       de forma (valoare, funcție_aplicată)
     * path - primește 2 numere x0 si xf și întoarce calea de la x0 la xf o listă de perechi
@@ -243,9 +243,8 @@ check4 = let l1 = consElem 1 $ emptyList
   Dacă aveți pe nodul stâng și nodul drept doar funcții monoton crescatoare, cum puteți
   opri căutarea?
 
-  Similar exercițiului 9 din laboratorul anterior experimentați în consolă funcționalitățile
+  Similar exercițiului 4 din laboratorul anterior experimentați în consolă funcționalitățile
   funcției "trace" în definirea nodurilor din funția completeBinaryTree. Ce observați?
-
 -}
 
 data InfBST a = Node
@@ -278,14 +277,9 @@ bfs root = nodes
     children = concatMap (\node -> [left node, right node]) nodes
 
 extractPath :: (Num a, Show a) => InfBST a -> [(a, String)]
-
-extractPath node = case (parent node) of
-    Just x  -> (value x, func node):(extractPath x)
+extractPath node = case parent node of
+    Just x  -> (value x, func node) : extractPath x
     Nothing -> []
-
--- extractPath node = tail $ map (\(node, f) -> (value node, f)) nodes
---   where condition = not.isNothing.parent.fst
---         nodes = takeWhile condition $ iterate (\(node, f) -> (fromJust $ parent node, func node)) (node, "")
 
 stopCond :: (Num a, Ord a) => a -> a -> Bool
 stopCond xf val = val > 4 * xf
@@ -294,15 +288,15 @@ path :: (Ord a, Num a, Show a) => a -> a -> [(a, String)]
 path x0 xf = go nodes
   where
     nodes = bfs $ completeBinaryTree x0
-    go (node:nodes)
-              | value node == xf         = reverse $ extractPath node
-              | stopCond xf $ value node = []
-              | otherwise                = go nodes
+    go (node : nodes)
+        | value node == xf         = reverse $ extractPath node
+        | stopCond xf $ value node = []
+        | otherwise                = go nodes
 
 checkBonus :: TestData
 checkBonus = let bfsNodes = bfs $ completeBinaryTree 1
                  values = [1, 2, 4, 4, 7, 8, 13, 8, 13, 14]
-  in tests_ 5 $
+  in tests_ 5
           [ testVal "Bonus bfs" values (value <$> take 10 bfsNodes)
           , testVal "Bonus path 1 8" [(1,"g"),(4,"f")] $ path 1 8
           , testVal "Bonus path 1 100" [(1,"g"),(4,"f"),(8,"g"),(25,"f"),(50,"f")] $ path 1 100
