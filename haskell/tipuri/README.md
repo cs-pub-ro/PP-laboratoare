@@ -221,7 +221,7 @@ Just :: a -> Maybe a
 Nothing :: Maybe a
 ```
 
-Observăm că valorile de tip `Maybe a` pot fie să încapsuleze o valoare de tipul `a`, fie să nu conțină nimic, în mod similar cu tipul `void` din C. Această structură ne este utilă atunci când lucrăm cu funcții care pot eșua în a întoarce o valoare utilă. De exemplu, putem folosi `Maybe` pentru a reimplementa funcția `head` în așa fel încât să evităm excepțiile dinamice apărute de aplicarea funcției pe lista vidă:
+Observăm că valorile de tip `Maybe a` pot fie să încapsuleze o valoare de tipul `a`, fie să nu conțină nimic, în mod similar cu tipul `void` din C. Această structură ne este utilă atunci când lucrăm cu funcții care pot eșua în a întoarce o valoare utilă. De exemplu, putem folosi `Maybe` pentru a reimplementa funcția `head` în așa fel încât să evităm excepțiile dinamice apărute la aplicarea funcției pe lista vidă:
 
 ```haskell
 maybeHead :: [a] -> Maybe a
