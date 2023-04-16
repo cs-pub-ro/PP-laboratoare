@@ -104,7 +104,7 @@ Construcția `data` permite definirea de noi tipuri de date algebrice, având ur
 data NumeTip = Constructor1 | Constructor2 | .. | ConstructorN
 ```
 
-Observăm distincția între *numele tipului* (denumit și *constructor de tip*), care poate fi folosit în expresii de tip (spre exemplu, `expr :: NumeTip`), și *numele constructorilor* (denumiți și *constructori de date*), acestea fiind folosite în definiții, cum ar fi `expr = Constructor1`. De exemplu:
+Observăm distincția dintre *numele tipului* (denumit și *constructor de tip*), care poate fi folosit în expresii de tip (spre exemplu, `expr :: NumeTip`), și *numele constructorilor* (denumiți și *constructori de date*), acestea fiind folosite în definiții, cum ar fi `expr = Constructor1`. De exemplu:
 
 ```haskell
 data PointT = PointC Double Double deriving Show
