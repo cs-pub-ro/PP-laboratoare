@@ -184,7 +184,9 @@ tailList _        = error "tail undefined on Atoms"
 
 deepEqual :: Eq a => NestedList a -> NestedList a -> Bool
 deepEqual (Atom x) (Atom y) = x == y
-deepEqual (List a) (List b) = and $ zipWith deepEqual a b
+deepEqual (List a) (List b) = and (zipWith deepEqual a b) && sameLength
+  where
+    sameLength = length a == length b
 deepEqual _ _               = False
 
 flatten :: NestedList a -> [a]
@@ -196,12 +198,14 @@ check4 = let l1 = consElem 1 emptyList
              l2 = consElem 2 $ consList (consElem 1 $ consElem 1 emptyList) $
                   consElem 3 emptyList
              l3 = consList (consElem 1 $ consElem 1 emptyList) $ consElem 3 emptyList
+             l4 = consElem 1 $ consElem 1 emptyList
   in tests_ 4
           [ testCond "simple lists1" $ deepEqual l1 l1
-          , testCond "simple lists 2 " $ not (deepEqual l1 l2)
+          , testCond "simple lists2" $ not (deepEqual l1 l2)
           , testCond "less simple lists" $ deepEqual (consElem 2 l3) l2
           , testCond "head, tail" $ deepEqual (headList $ tailList l2)
             (consElem 1 $ consElem 1 emptyList)
+          , testCond "deepEqual length" $ not (deepEqual l1 l4)
           , testVal "flatten" [2,1,1,3] $ flatten l2
           ]
 

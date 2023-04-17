@@ -1,7 +1,7 @@
 # Haskell: Tipuri de date utilizator
 
 - Data publicării: 16.04.2023
-- Data ultimei modificări: 16.04.2023
+- Data ultimei modificări: 17.04.2023
 
 ## Obiective
 

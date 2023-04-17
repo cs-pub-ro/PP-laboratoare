@@ -168,7 +168,7 @@ check4 = let l1 = consElem 1 emptyList
              l3 = consList (consElem 1 $ consElem 1 emptyList) $ consElem 3 emptyList
   in tests_ 4
           [ testCond "simple lists1" $ deepEqual l1 l1
-          , testCond "simple lists 2 " $ not (deepEqual l1 l2)
+          , testCond "simple lists2" $ not (deepEqual l1 l2)
           , testCond "less simple lists" $ deepEqual (consElem 2 l3) l2
           , testCond "head, tail" $ deepEqual (headList $ tailList l2)
             (consElem 1 $ consElem 1 emptyList)
