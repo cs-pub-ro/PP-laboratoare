@@ -312,9 +312,9 @@ Similar putem defini `fmap` pentru liste, `Maybe` și alte structuri de date.
 
 Cele spuse mai sus dezvăluie o caracteristică interesantă a sistemului de tipuri Haskell. De exemplu, o funcție în Haskell este ceva de tipul `a -> b`, i.e. ia o valoare de tip `a` si produce o valoare de tip `b`.
 
-`BST` se comportă ca o funcție, dar la nivel de tip. Constructorii de tip `BST` iau ca argument un tip de date și produce alt tip de date. De exemplu, `BST Int` ia tipul Int ca argument și produce un tip de date care reprezintă un arbore de întregi. Spunem că `BST` este un **tip de ordin superior** (higher-order type) - în cazul de față este un **constructor de tip unar**.
+`BST` se comportă ca o funcție, dar la nivel de tip. Constructorii de tip `BST` iau ca argument un tip de date și produc alt tip de date. De exemplu, `BST Int` ia tipul Int ca argument și produce un tip de date care reprezintă un arbore de întregi. Spunem că `BST` este un **tip de ordin superior** (higher-order type) - în cazul de față este un **constructor de tip unar**.
 
-Pentru a afla informații despre clase în `ghci` se poate utiliza comanda `:info <typeclass` unde typeclass este clasa despre care dorim să aflăm informații.
+Pentru a afla informații despre clase în `ghci` se poate utiliza comanda `:info <typeclass>` unde typeclass este clasa despre care dorim să aflăm informații.
 
 Mai multe detalii [aici](http://www.haskell.org/tutorial/classes.html "wikilink")
 
