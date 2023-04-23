@@ -6,7 +6,7 @@ import Data.List (sort, insertBy)
 import Data.Function (on)
 import TestPP
 
-{- 
+{-
     Ne dorim reprezentarea jocului X și 0 ca în formatul de mai jos.
     0X0
     X 0
@@ -25,7 +25,7 @@ type Position = (Int, Int)
 {-
     Tip de date pentru reprezentarea celulelor de X și 0.
 -}
-data Cell = X | Zero | Blank 
+data Cell = X | Zero | Blank
     deriving Eq
 
 {-
@@ -33,7 +33,7 @@ data Cell = X | Zero | Blank
 -}
 
 instance Show Cell
-    where 
+    where
         show X = "X"
         show Zero = "0"
         show Blank = " "
@@ -53,16 +53,16 @@ emptyBoard :: TicTacToe
 emptyBoard = Board $ replicate 9 Blank
 
 {-
-    Funcția primește tipul de celulă de inserat('X'/'0'), poziția la care să insereze și board-ul și 
+    Funcția primește tipul de celulă de inserat('X'/'0'), poziția la care să insereze și board-ul și
     întoarce un board nou cu celula respectivă actualizată. Nu trebuie făcute alte verificări,
     pozițiile de test vor fi valide, iar celula de înlocuit va fi mereu goală.
-    Poziția este dată sub formă de tuplu (linie, coloană), deci va trebui să calculați indexul 
+    Poziția este dată sub formă de tuplu (linie, coloană), deci va trebui să calculați indexul
     la care se află celula în listă.
 -}
 
 place :: Char -> Position -> TicTacToe -> TicTacToe
 place playerCell pos@(x,y) (Board b) = Board $ take n b ++ [cell] ++ drop (n + 1) b
-    where 
+    where
         n = x * 3 + y
         cell
             | playerCell == 'X' = X
@@ -76,26 +76,26 @@ place playerCell pos@(x,y) (Board b) = Board $ take n b ++ [cell] ++ drop (n + 1
     X0X
 -}
 instance Show TicTacToe
-    where 
+    where
         show (Board board) = first ++ "\n" ++ second ++ "\n" ++ third where
             first = concatMap show $ take 3 board
             second = concatMap show $ take 3 $ drop 3 board
             third = concatMap show $ drop 6 board
+
 {-
     Definim instanța Eq a stărilor jocului.
     Două stări sunt egale dacă lista de celule este aceeași.
 -}
-instance Eq TicTacToe
-    where
-        (Board b1) == (Board b2) = b1 == b2
+instance Eq TicTacToe where
+    (Board b1) == (Board b2) = b1 == b2
+
 {-
-    Completăm instanța Ord a stărilor jocului. O stare este 
+    Completăm instanța Ord a stărilor jocului. O stare este
     "mai mică" decât cealaltă dacă s-au efectuat mai puține mutări.
 -}
-instance Ord TicTacToe
-    where 
-        (Board b1) <= (Board b2) = moves b1 <= moves b2 where
-            moves = length . filter (/= Blank)
+instance Ord TicTacToe where
+    (Board b1) <= (Board b2) = moves b1 <= moves b2
+        where moves = length . filter (/= Blank)
 
 -- Test 1
 
