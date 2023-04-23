@@ -118,7 +118,7 @@ printLevel tab level (BSTNod root left right) = replicate level tab ++ show root
 
 instance Show a => Show (BST a) where
     show BSTNil = ""
-    show (BSTNod root left right) = printLevel '\t' 0 (BSTNod root left right)
+    show node@BSTNod{} = printLevel '\t' 0 node
 
 check2 :: TestData
 check2 = tests_ 2 $
