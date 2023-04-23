@@ -206,7 +206,7 @@ instance Container BST where
 check7 = tests_ 7 $
     [
         testVal "Container 1" 0 $ length (contents BSTNil),
-        testVal "Container 2" [15,12,10,8,7,4,3,2,1] $ contents root
+        testVal "Container 2" [1,2,3,4,7,8,10,12,15] $ contents root
     ]
 
 {-
