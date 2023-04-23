@@ -21,7 +21,7 @@ class Container t where
 -}
 
 class Invertible a where
-    invert :: a -> a    
+    invert :: a -> a
 
 {-
     BST (Binary Search Tree) reprezintă un tip de date ce modelează
@@ -31,10 +31,10 @@ class Invertible a where
     Funcționalitățile sunt deja definite în cadrul acestui laborator.
 -}
 
-data BST a = BSTNod {
-    vl :: a
-    , lt :: (BST a)
-    , rt :: (BST a)
+data BST a = BSTNod
+    { vl :: a
+    , lt :: BST a
+    , rt :: BST a
     } | BSTNil
 
 insertElem :: (Ord a, Eq a) => BST a -> a -> BST a
@@ -42,7 +42,7 @@ insertElem BSTNil elem = BSTNod elem BSTNil BSTNil
 insertElem root@(BSTNod value left right) elem
   | value == elem = root
   | value < elem = BSTNod value left (insertElem right elem)
-  | value > elem = BSTNod value (insertElem left elem) right  
+  | value > elem = BSTNod value (insertElem left elem) right
 
 findElem :: (Ord a, Eq a) => BST a -> a -> Maybe a
 findElem BSTNil _ = Nothing
@@ -51,17 +51,17 @@ findElem (BSTNod value left right) elem
   | value < elem = findElem right elem
   | value > elem = findElem left elem
 
-size :: (BST a) -> Int
+size :: BST a -> Int
 size BSTNil = 0
-size (BSTNod _ left right) = 1 + (size left) + (size right)
+size (BSTNod _ left right) = 1 + size left + size right
 
-height :: (BST a) -> Int
+height :: BST a -> Int
 height BSTNil = 0
 height (BSTNod elem left right) = 1 + max (height left) (height right)
 
 inorder :: BST a -> [a]
 inorder BSTNil = []
-inorder (BSTNod elem left right) = (inorder left) ++ [elem] ++ (inorder right) 
+inorder (BSTNod elem left right) = inorder left ++ [elem] ++ inorder right
 
 {-
     Arbore folosit pentru testare
@@ -93,7 +93,7 @@ check1 = tests_ 1 $
 
     Fiecare element din arbore va avea linia sa, adică câte un element
     din arbore pe o linie.
-    
+
     Exemplu de afișare:
 
     7
@@ -129,7 +129,7 @@ instance Ord a => Ord (BST a) where
 
 check3 :: TestData
 check3 = tests_ 3 $
-    [ 
+    [
         testVal "Ord 1" True $ root >= root,
         testVal "Ord 2" True $ root <= root,
         testVal "Ord 3" False $ root > root,
@@ -140,14 +140,14 @@ check3 = tests_ 3 $
 {-
     4. Instanțiați Invertible pentru tipul de date BST.
     Funcția invert, în acest caz, va inversa ordinea subarborilor.
--}   
+-}
 
 instance Invertible (BST a) where
     invert tree = undefined
 
 check4 :: TestData
 check4 = tests_ 4 $
-    [ 
+    [
         testVal "Invertible 1" True $ root == invert (invert root)
     ]
 
@@ -155,7 +155,7 @@ check4 = tests_ 4 $
     5. Instanțiați Functor pentru tipul de date BST.
     Funcția fmap este similară funcției map, prin care se aplică
     o funcție f tuturor elementelor din structură.
--} 
+-}
 
 instance Functor BST where
     fmap f tree = undefined
@@ -206,7 +206,7 @@ instance Container BST where
 check7 = tests_ 7 $
     [
         testVal "Container 1" 0 $ length (contents BSTNil),
-        testVal "Container 2" [15,12,10,8,7,4,3,2,1] $ contents root
+        testVal "Container 2" [1,2,3,4,7,8,10,12,15] $ contents root
     ]
 
 {-
@@ -217,7 +217,7 @@ check7 = tests_ 7 $
     Notă: sizeFold trebuie implementată folosind funcția foldr.
 -}
 
-sizeFold :: (BST a) -> Int
+sizeFold :: BST a -> Int
 sizeFold tree = undefined
 
 check8 = tests_ 8 $
