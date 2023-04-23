@@ -214,7 +214,7 @@ check7 = tests_ 7 $
     din cadrul unui arbore binar de căutare (există deja funcția
     size, care face același lucru, definită mai sus).
 
-    sizeFold trebuie implementată folosind funcția foldr.
+    Notă: sizeFold trebuie implementată folosind funcția foldr.
 -}
 
 sizeFold :: (BST a) -> Int
