@@ -206,7 +206,7 @@ maybeReverse point@(PointC x y) shouldReverse
 
 ### Tipuri parametrizate
 
-Haskell ne permite crearea de tipuri care primesc ca parametru un alt tip. De exemplu tipul de date [`Maybe`](http://www.haskell.org/haskellwiki/Maybe "wikilink") are următoarea definiție:
+Haskell ne permite crearea de tipuri care primesc ca parametru un alt tip. De exemplu tipul de date `[Maybe](http://www.haskell.org/haskellwiki/Maybe "wikilink")` are următoarea definiție:
 
 ```haskell
 data Maybe a = Just a | Nothing deriving (Show, Eq, Ord)
