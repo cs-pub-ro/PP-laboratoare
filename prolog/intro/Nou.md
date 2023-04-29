@@ -278,12 +278,12 @@ muritor(X) :- om(X); viu(X), \+ zeu(X).
 ```
 
 Aici apare prima distincție între logica formală și cea computațională:
-premisele din corpul unui reguli sunt parcurse de la stânga la dreapta într-o
-interogare. Deci dacă `om(X)` este adevărat, nu se mai caută satisfacerea a ce a
-rămas din corp. Presupunem că `om(X)` se evaluează la `false`, dacă `viu(X)` nu
-se poate satisface, nici nu se mai verifică `\+ zeu(X)`
+premisele din corpul unui reguli sunt parcurse de la stânga la dreapta când se
+satisface un scop. Deci dacă `om(X)` este adevărat, nu se mai caută satisfacerea
+a ce a rămas din corp. Presupunem că `om(X)` se evaluează la `false`, dacă
+`viu(X)` nu se poate satisface, nici nu se mai verifică `\+ zeu(X)`
 
-V-ați obișnuit deja cu noțiunile de exemplificate mai sus când verificați în `C`
+V-ați obișnuit deja cu noțiunile exemplificate mai sus când verificați în `C`
 dacă un pointer la o structură nu este null înainte să îl dereferențiați.
 
 ```c
