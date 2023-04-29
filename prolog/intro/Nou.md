@@ -270,7 +270,8 @@ muritor(hunabku) :- false. % declarație ineficace
 
 ### Documentarea predicatelor și a argumentelor
 
-Pentru claritate, antetele predicatelor se scriu sub forma `predicat/nrArgumente`:
+Pentru claritate, convenția pentru antetele predicatelor se scriu sub forma
+`predicat/nrArgumente`:
 
 ```prolog
 predicat(+Arg1, -Arg2, ?Arg3, ..., +ArgN)
@@ -285,9 +286,24 @@ cu `?`. Instanțierea parametrilor ține de specificarea acestora:
 - `Arg2` va fi neinstanțiat atunci când se va încerca satisfacerea predicatului.
   - Dacă predicatul este satisfăcut, `Arg2` va fa fi instanțiat la finalul
     evaluării.
-  - Dacă `Arg2` este deja instanțiat la evaluarea predicatului evaluarea poate
-    servi la verificare corectitudinii argumentului în raport cu semnificația
+  - Dacă `Arg2` este deja instanțiat la evaluarea predicatului, evaluarea poate
+    servi la verificarea corectitudinii argumentului în raport cu semnificația
     predicatului.
+    - Următorul exemplu, din laboratorele următore, îl folosește pe `R` ca o intrare, și pe `N` ca o ieșire.
+    ```prolog
+    % lungime(+Lista,-Lungime)
+    lungime([],0).
+    lungime([_ | R], N) :- lungime(R, N1), N is N1 + 1.
+    % Exemplu, când N este ieșire
+    ?- lungime([1, 2, 3], N).
+    N = 3.
+    % Exemplu, când N este intrare, cu scop de verificare.
+    ?- lungime([1, 2, 3], 3).
+    true.
+
+    ?- lungime([1, 2, 3], 4).
+    false.
+    ```
 - `Arg3` va putea fi instanțiat sau nu atunci când se va încerca satisfacerea
   predicatului.
 
