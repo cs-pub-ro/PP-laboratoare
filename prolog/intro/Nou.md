@@ -22,11 +22,13 @@ folosirea de variabile cuantificate pentru a stabili relații.
 Deci următoarele propoziții:
 
 > Toții peștii respiră. (prin branhii)
+
 > Unii pești au o respirație aeriană. (prin plămâni)
 
 Se transformă în:
 
 $$\forall X . (peste(X) \Rightarrow respria(X))$$
+
 $$\exist X. (peste(X) \land respira_aer(X))$$
 
 Limbajul restricționează această logică doar la folosirea de clauze Horn:
