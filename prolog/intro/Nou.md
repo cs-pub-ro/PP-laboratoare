@@ -29,7 +29,7 @@ Se transformă în:
 
 $$\forall X . (peste(X) \Rightarrow respria(X))$$
 
-$$\exist X. (peste(X) \land respira_aer(X))$$
+$$\exists X. (peste(X) \land respira\_aer(X))$$
 
 Limbajul restricționează această logică doar la folosirea de clauze Horn:
 
