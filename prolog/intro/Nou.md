@@ -17,19 +17,17 @@ bazat pe calcul cu predicate.
 ### Recapitulare teorie
 
 Logica cu predicate de ordin I este o extensie a logicii propoziționale, prin
-folosirea de variabile cuantificate pentru a stabili relații.
-
-Deci următoarele propoziții:
+folosirea de variabile cuantificate pentru a stabili relații. Urmăriți
+următoarele două exemple de transformare din logica propozițională în cea cu
+predicate de ordin I.
 
 > Toții peștii respiră. (prin branhii)
 
-> Unii pești au o respirație aeriană. (prin plămâni)
-
-Se transformă în:
-
 $$\forall X . (peste(X) \Rightarrow respria(X))$$
 
-$$\exists X. (peste(X) \land respira\_aer(X))$$
+> Unii pești au o respirație aeriană. (prin plămâni)
+
+$$\exists X. (peste(X) \land respiraAer(X))$$
 
 Limbajul restricționează această logică doar la folosirea de clauze Horn:
 
@@ -104,26 +102,54 @@ true.
 false.
 ```
 
+### Termeni
+
+În Prolog orice valoare se numește [termen](https://www.swi-prolog.org/pldoc/man?section=glossary#gloss:term).
+
+Cuvântul
+[structură](https://www.swi-prolog.org/pldoc/man?section=glossary#gloss:structure)
+este un sinonim pentru termen
+[compus](https://www.swi-prolog.org/pldoc/man?section=glossary#gloss:compound).
+
+```prolog
+% exemplu structură
+client(nume(ion,popescu),carte(aventuri,2002)).
+```
+
+Puteți considera momentan că sintactic singura diferență este că predicatele nu
+sunt pasate ca argumente, acesta fiind o
+[discuție](https://stackoverflow.com/questions/28972038/prolog-structurecomplex-term-vs-predicate-i-dont-really-get-the-difference)
+mai subtilă ce ține de reprezentarea internă a implementării.
+
+Consultați [**glosarul**](https://www.swi-prolog.org/pldoc/man?section=glossary) în caz de orice neînțelegere!!!
+
 ### Scopuri și variabile
 
-Calculele se fac prin interogări despre obiecte și relațiile dintre ele.
-Încercăm să satisfacem *scopuri* pentru a demonstra sau obține informații
-pornind de la axiome ("baza noastră de date").
+Calculele se fac prin interogări despre termeni și relațiile dintre ei. Încercăm
+să satisfacem *scopuri* pentru a demonstra sau obține informații pornind de la
+axiome ("baza noastră de date").
 
 **OBSERVAȚIE**: Când am interogat dacă Socrate este muritor, procesul de
 execuție a returnat `false` deoarece **nu** se putea satisface acest scop. Nu
 înseamnă că el este nemuritor. (*Ipoteza lumii închise*.)
 
 ```prolog
+% Este Rhesus muritor și rege al Traciei, aliat al Troiei?
+% Avem două scopuri de satisfăcut
+?- muritor(rhesus), rege(rhesus, tracia, troian).
+X = hades.
+
+% Cine este muritor?
 ?- muritor(X).       % tastăm o interogare cu un singur scop
 X = leulDinNemeea ;  % tastăm ";" pentru a primi încă un răspuns
 X = rhesus.
-
-?- cel_mai_bun_prieten(cerberus, X).
-X = hades.
 ```
 
-TODO
+Observați că în a doua interogare am făcut primul nostru calcul util, folosind o
+variabilă `X`. Argumentul nu mai este o valoare particulară, ci sistemul de
+execuție încearcă **legarea** ei la diferite constante sau *atomi simbolici*.
+Prin convenție numele variabilelor începe cu literă mare iar numele atomilor
+începe cu literă mică.
 
 ### Reguli
 
