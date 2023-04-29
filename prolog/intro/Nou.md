@@ -1,27 +1,45 @@
 # Prolog: Introducere
 
-## Prolog vs. SWI-Prolog
+## Motivație
+
+### Prolog
 
 Prolog a fost unul dintre
 [primele](https://en.wikipedia.org/wiki/Logic_programming#History) limbaje de
-programare **logice**. E **declarativ**. TODO bla bla a inspirat alte limbaje
-utile
+programare **logice**. Permite separarea datelor de procesul de inferență,
+programele fiind scrise într-un stil **declarativ** și uniform. Impactul
+principal l-a avut în cercetare, în domeniul inteligenței artificiale, dar a
+rămas un punct de inspirație pentru limbajele de după.
+
+Numele limbajului este o abreviere pentru *programmation en logique*, și este
+bazat pe calcul cu predicate.
 
 ### Recapitulare teorie
 
-Logica cu predicate de ordin I
+Logica cu predicate de ordin I este o extensie a logicii propoziționale, prin
+folosirea de variabile cuantificate pentru a stabili relații.
 
-Bazat pe logica cu predicate de ordin I, restricționaționată doar la folosirea
-de clauze Horn:
+Deci următoarele propoziții:
+
+> Toții peștii respiră. (prin branhii)
+> Unii pești au o respirație aeriană. (prin plămâni)
+
+Se transformă în:
+
+$$\forall X . (peste(X) \Rightarrow respria(X))$$
+$$\exist X. (peste(X) \land respira_aer(X))$$
+
+Limbajul restricționează această logică doar la folosirea de clauze Horn:
 
 $$\begin{align}
 A_1 \land A_2 \land \dots \land A_n &\Rightarrow A \\
 true &\Rightarrow B
 \end{align}$$
 
-pe scurt nu e voie cu 
+Deci următoarea implicație nu poate fi transcrisă direct într-o regulă în
+Prolog, pentru că are ca implicație o disjuncție dintre două predicate.
 
-$$ \begin{rcases}
+$$\begin{rcases}
 int(a) \\
 int(b) \\
 a \neq 0 \\
@@ -30,23 +48,27 @@ sum(a, b) = 0
 \Rightarrow negative(a) \lor negative(b)
 $$
 
-Numele limbajului este o abserviere pentru *programmation en logique*.
+### SWI-Prolog
 
-SWI-Prolog este o [implementare](https://en.wikipedia.org/wiki/Prolog#ISO_Prolog) a limbajului, având cele mai multe featureuri. TODO
-https://en.wikipedia.org/wiki/Comparison_of_Prolog_implementations
+SWI-Prolog este o
+[implementare](https://en.wikipedia.org/wiki/Prolog#ISO_Prolog) open-source a
+limbajului, dispunând de multe biblioteci, fiind un punct bun de plecare pentru
+tranziția către alte limbaje logice/implementări.
 
-Urmăriți instrucțiunile de [aici](..:..:limbaje#prolog "wikilink") pentru TODO 
+Dintre toate
+[implementările](https://en.wikipedia.org/wiki/Comparison_of_Prolog_implementations)
+fiecare are particularitățile ei sintatice de folosire. De aceea vă rugăm să
+urmăriți instrucțiunile de [aici](..:..:limbaje#prolog "wikilink") pentru
+laborator.
 
-
-##  TODO
+## Sintaxă și semantică
 
 Programele scrise în Prolog descriu relații definite în termeni de clauze. Există două tipuri de clauze:
 
-  * axiome
-  * reguli
-  * întrebări, numite și **scopuri**, despre obiecte și relațiile dintre ele
+- axiome (en. *facts*)
+- reguli
 
-## Axiome
+### Axiome
 
 Axiome sunt predicate de ordinul I de
 [aritate](https://ro.wikipedia.org/wiki/Aritate) *n*, considerate **adevărate**.
@@ -54,30 +76,54 @@ Axiome sunt predicate de ordinul I de
 Exemple de axiome:
 
 ```prolog
-caine(zdreanta).
-
+% Acesta este un comentariu.
+% Predicate de aritate 1.
+caine(cerberus).
 om(socrate). 
-muritor(zdreanta).
+muritor(leulDinNemeea).
+muritor(rhesus).
 
-TODO axioma cu aritate 3
+% Predicate de aritate 2.
+% cel_mai_bun_prieten(?Cine, ?AlCui)
+cel_mai_bun_prieten(cerberus, hades)
+
+% Predicate de aritate 3.
+% rege(?Nume, ?Localitate, ?Aliat)
+rege(rhesus, tracia, troian).
 ```
 
 Rulăm următoarele interogări:
 
 ```prolog
-?- caine(zdreanta).
+?- caine(cerberus). % este cerberus un câine?
 true.
 
 ?- muritor(socrate).
 false.
 ```
 
-**OBSERVAȚIE**: Când am interogat dacă Socrate este muritor, procesul de
-execuție a returnat fals deoarece nu a găsit nicio faptă și nicio regulă care să
-demonstreze adevărată interogarea. *Ipoteza lumii închise* va fi un subiect pe
-care îl vom mai atinge.
+### Scopuri și variabile
 
-## Reguli
+Calculele se fac prin interogări despre obiecte și relațiile dintre ele.
+Încercăm să satisfacem *scopuri* pentru a demonstra sau obține informații
+pornind de la axiome ("baza noastră de date").
+
+**OBSERVAȚIE**: Când am interogat dacă Socrate este muritor, procesul de
+execuție a returnat `false` deoarece **nu** se putea satisface acest scop. Nu
+înseamnă că el este nemuritor. (*Ipoteza lumii închise*.)
+
+```prolog
+?- muritor(X).       % tastăm o interogare cu un singur scop
+X = leulDinNemeea ;  % tastăm ";" pentru a primi încă un răspuns
+X = rhesus.
+
+?- cel_mai_bun_prieten(cerberus, X).
+X = hades.
+```
+
+TODO
+
+### Reguli
 
 ```
 Antet :- Corp.
@@ -93,30 +139,26 @@ Exemple:
 
 ```prolog
 om(socrate) :- true.
-om(socrate) :- true.
-% Echivalent cu: muritor(socrate).
+% Echivalent cu: om(socrate).
 
 viu(hercule).   % semi-zeu, nici om, nici zeu
-viu(zeus).      % pentru Socrate și Sisif, Zeus era viu
+viu(zeus).      % regele zeilor de pe Muntele Olimp
 viu(hunabku).   % tatăl zeilor în mitologia mayașă 
 
-zeu(zeus).      % regele zeilor de pe Muntele Olimp
+zeu(zeus).      % fapt adevărat în mitologia greacă
 
 muritor(X) :- om(X).
 muritor(X) :- viu(X), \+ zeu(X).
 ```
 
-
 Observați că:
 
-* am trecut de la declararea doar prin axiome, folosind două reguli în pentru
-  predicatului `muritor(?Cine)`
-* am folosit operatorul `,`, "și" logic ($\land$)
-* am folosit
+- Axiomele sunt reguli fără corp.
+- Am folosit operatorul `,`, "și" logic ($\land$), deci a doua regulă a
+  predicatului `muritor(?Cine)` are două premise.
+- Am folosit
   [operatorul `\+`](https://www.swi-prolog.org/pldoc/doc_for?object=(%5C%2B)/1)
   pe care îl puteți trata ca pe o negație pentru moment.
-
-
 
 Rulăm următoarele interogări:
 
@@ -128,9 +170,9 @@ true .
 false.
 ```
 
-### Procesul de execuție
+#### Procesul de execuție
 
-Ca să începem să înțelegem cum se execută o întrebare, mai bine zis se încearcă
+Ca să începem să înțelegem cum se execută o interogare, mai bine zis se încearcă
 *satisfacerea unui un scop*, activăm modul trace.
 
 ```prolog
@@ -154,10 +196,10 @@ true.
 Deci mai întâi încearcă demonstrarea primei reguli pentru predicatul `muritor`
 și eșuează. Prima premisă din a doua regulă este adevărată (`viu(X)`). Observăm
 că **eșecul demonstrației** scopului `zeu(hercule)` determină adevărată a doua
-premisă (`\+ zeu(X)`). Cele două premise fiind puse în conjucție, se poate că
+premisă (`\+ zeu(X)`). Cele două premise fiind puse în conjuncție, considerăm că
 Hercule este muritor.
 
-### Negația ca eșec în demonstrație
+#### Negația ca eșec în demonstrație
 
 ```prolog
 [trace]  ?- muritor(hunabku).
@@ -174,13 +216,53 @@ Hercule este muritor.
 true.
 ```
 
+În cazul lui Hunabku satisfacerea primei premise celei de-a doua reguli cât și
+eșecul demonstrației că este zeu, ne determină să îl considerăm muritor.
+*Totuși* deși grecii nu îl considerau zeu, el nu este sunt un muritor, deci de
+unde contradicția?!
 
-În cazul lui Hunabku satisfacerea primei premise cât și eșecul demonstrației că
-este zeu, ne determină să îl considerăm muritor. *Totuși* știm că zeii sunt
-nemuritori, deci de unde contradicția?!
+Folosirea operatorul `\+` nu ne-a ajutat, întrucât el **întoarce adevărat dacă
+nu se poate satisface argumentul**, nu este echivalent cu operatorul boolean de
+negație.
 
-Întrucât grecii l-au considerat pe Hunabku un personaj influent din zvonuri, nu
-un zeu, nu se poate satisface scopul `zeu(hunabku)`. Deci folosirea operatorul
-`\+` nu ne-a ajutat, întrucât el **întoarce adevărat dacă nu se poate satisface
-argumentul.** (Am încercat să negăm logic un scop pe care nu îl putem
-satisface.)
+De asemenea, nu putem să "corectăm" greșeala prin "hardcodarea" valorii `false`,
+ca mai jos, întrucât procesul de execuție încearcă în ordinea din fișier toate
+declarațiile unui predicat în încercarea de a satisface un scop.
+
+```prolog
+muritor(hunabku) :- false. % declarație ineficace
+```
+
+### Documentarea predicatelor și a argumentelor
+
+Pentru claritate, antetele predicatelor se scriu sub forma `predicat/nrArgumente`:
+
+```prolog
+predicat(+Arg1, -Arg2, ?Arg3, ..., +ArgN)
+```
+
+Pentru a diferenția intrările (`+`) de ieșiri (`-`), se prefixează argumentele
+cu indicatori. Acele argumente care pot fi fie intrări, fie ieșiri se prefixează
+cu `?`. Instanțierea parametrilor ține de specificarea acestora:
+
+- `Arg1` va fi deja instanțiat atunci când se va încerca satisfacerea unui scop
+  care îl are ca premisă pe `predicat`.
+- `Arg2` va fi neinstanțiat atunci când se va încerca satisfacerea predicatului.
+  - Dacă predicatul este satisfăcut, `Arg2` va fa fi instanțiat la finalul
+    evaluării.
+  - Dacă `Arg2` este deja instanțiat la evaluarea predicatului evaluarea lui p/3
+    poate servi la verificare corectitudinii argumentului în raport cu
+    semnificația prediatului.
+- `Arg3` va putea fi instanțiat sau nu atunci când se va încerca satisfacerea
+  predicatului.
+
+## Resurse
+-   [Cheatsheet](https://github.com/cs-pub-ro/PP-laboratoare/raw/master/prolog/intro/prolog-cheatsheet-1.pdf)
+-   [Schelet](https://ocw.cs.pub.ro/courses/_media/pp/22/laboratoare/prolog/intro-schelet.zip)
+-   [Soluții](https://ocw.cs.pub.ro/courses/_media/pp/22/laboratoare/prolog/intro-solutie.zip)
+
+## Referințe
+
+  - [Learn prolog now\!](http://www.learnprolognow.org/ "wikilink")
+  - [Logic, Programming, and Prolog](http://www.ida.liu.se/~ulfni53/lpp/bok/bok.pdf "wikilink")
+  - [Built-in Predicates](http://www.swi-prolog.org/pldoc/doc_for?object=section%281,%274%27,swi%28%27/doc/Manual/builtin.html%27%29%29 "wikilink")
