@@ -1,227 +1,377 @@
 # Prolog: Introducere
-  - Data publicării: 8.05.2022
-  - Data ultimei modificări: 8.05.2022
 
-## Obiective
+## Motivație
 
-Scopul acestui laborator este introducerea în programarea logică și învățarea primelor noțiuni despre Prolog.
+### Prolog
 
-Aspectele urmărite sunt:
+Prolog a fost unul dintre
+[primele](https://en.wikipedia.org/wiki/Logic_programming#History) limbaje de
+programare **logice**. Permite separarea datelor de procesul de inferență,
+programele fiind scrise într-un stil **declarativ** și uniform. Impactul
+principal l-a avut în cercetare, în domeniul inteligenței artificiale, dar a
+rămas un punct de inspirație pentru limbajele de după.
 
-  - diferențierea dintre aceasta paradigmă și cele studiate anterior
-  - familiarizarea cu entitățile limbajului: **fapte**, **reguli**, **scopuri**
-  - sintaxa **Prolog**
-  - structuri de date
+Numele limbajului este o abreviere pentru *programmation en logique*, și este
+bazat pe calcul cu predicate.
 
+### Recapitulare teorie
 
-## SWI-Prolog
+Logica cu predicate de ordin I este o extensie a logicii propoziționale, prin
+folosirea de variabile cuantificate pentru a stabili relații. Urmăriți
+următoarele două exemple de transformare din logica propozițională în cea cu
+predicate de ordin I.
 
-Folosim SWI-Prolog, așa cum este detaliat
-[aici](..:..:limbaje#prolog "wikilink").
+> Toții peștii respiră. (prin branhii)
 
-În cadrul laboratorului, recomandăm folosirea **swipl** în modul următor:
+$$\forall X . (peste(X) \Rightarrow respria(X))$$
 
-* se rulează comanda comanda `swipl` în terminal, sau direct `swipl fisier.pl` pentru a încărca un fișier existent
-    * alternativ, se poate folosi comanda prolog
-* se salvează faptele și regulile într-un fișier cu extensia `.pl`
-* pentru a invoca editorul, se pot folosi următoarele comenzi:
-    * `edit.`, dacă a fost deja încărcat un fișier
-    * `edit(file('new.pl')).`, pentru a crea un fișier nou
-    * `edit('new.pl')`, dacă fișierul a fost creat anterior
-* dacă fișierul nu a fost încărcat prin argument în linia de comandă, se încarcă folosind comanda `consult('file.pl').`
-* pentru a reîncărca toate fișierele modificate de la ultima încărcare, se folosește comanda `make.`
-* pentru a ieși din terminalul `swipl`, se folosește comanda `halt.`
+> Unii pești au o respirație aeriană. (prin plămâni)
 
+$$\exists X. (peste(X) \land respiraAer(X))$$
 
-## Comentarii
+Limbajul restricționează această logică doar la folosirea de clauze Horn:
 
-Simbolul `%` transformă restul rândului într-un comentariu.
+$$\begin{align}
+A_1 \land A_2 \land \dots \land A_n &\Rightarrow A \\
+true &\Rightarrow B
+\end{align}$$
 
-## Entitățile limbajului
+Deci următoarea implicație nu poate fi transcrisă direct într-o regulă în
+Prolog, pentru că are ca implicație o disjuncție dintre două predicate.
 
-Limbajul Prolog (al cărui nume provine de la Programmable Logic) este un limbaj **logic**, **descriptiv**, care permite specificarea problemei de rezolvat în termenii unor **fapte** cunoscute despre obiectele universului problemei și ai relațiilor existente între aceste obiecte.
+$$\begin{rcases}
+int(a) \\
+int(b) \\
+a \neq 0 \\
+sum(a, b) = 0
+\end{rcases}
+\Rightarrow negative(a) \lor negative(b)
+$$
 
-Tot ceea ce nu este cunoscut sau nu poate fi demonstrat este considerat a fi fals (**ipoteza lumii închise**).
+### SWI-Prolog
 
-Execuția unui program Prolog constă în deducerea implicațiilor acestor **fapte** și **relații**, programul definind astfel o mulțime de consecințe ce reprezintă înțelesul sau semnificația declarativă a programului.
+SWI-Prolog este o
+[implementare](https://en.wikipedia.org/wiki/Prolog#ISO_Prolog) open-source a
+limbajului, dispunând de multe biblioteci, fiind un punct bun de plecare pentru
+tranziția către alte limbaje logice/implementări.
 
-Un program Prolog conține următoarele **entități**:
+Dintre [toate
+implementările](https://en.wikipedia.org/wiki/Comparison_of_Prolog_implementations)
+fiecare are particularitățile ei sintatice sau de folosire. De aceea vă rugăm să
+urmăriți instrucțiunile de [aici](..:..:limbaje#prolog "wikilink") pentru
+laborator.
 
-  * **fapte** despre obiecte și relațiile existente între aceste obiecte
-  * **reguli** despre obiecte și relațiile dintre ele, care permit deducerea (inferarea) de noi fapte pe baza celor cunoscute
-  * întrebări, numite și **scopuri**, despre obiecte și relațiile dintre ele, la care programul răspunde pe baza faptelor și regulilor existente
+## Sintaxă și semantică
 
-## Fapte
+Programele scrise în Prolog descriu relații exprimitate prin clauze. Există două
+tipuri de clauze:
 
-Faptele sunt **predicate de ordinul întâi** de aritate *n*, considerate **adevărate**. Ele stabilesc relații între obiectele universului problemei. Numărul de argumente ale faptelor este dat de **aritatea** (numărul de argumente) corespunzătoare a predicatelor.
+- axiome (en. *facts*)
+- reguli
 
-Exemple de fapte: 
-```prolog
-papagal(coco).
-iubeste(mihai, maria).
-iubeste(mihai, ana).
-frumoasa(ana).
-bun(gelu).
-deplaseaza(cub, camera1, camera2).
-```
+"Calculul" modelează în această paradigmă efectuarea de raționamente.
 
-## Structuri
+### Axiome
 
-Structurile au aceeași sintaxă cu faptele, dar apar ca argumente ale predicatelor.
+Axiomele sunt predicate de ordinul I de
+[aritate](https://ro.wikipedia.org/wiki/Aritate) *n*, considerate **adevărate**.
 
-Exemplu de structură: 
-```prolog 
-are(ion,carte(aventuri,2002)).
-```
-
-## Scopuri
-
-Obținerea consecințelor sau a rezultatului unui program Prolog se face prin fixarea unor **scopuri** care pot fi **adevărate** sau **false**, în funcție de conținutul **bazei de cunoștințe** Prolog. Scopurile sunt predicate pentru care se dorește aflarea valorii de adevăr în contextul faptelor existente în baza de cunoștințe.
-
-Cum scopurile pot fi văzute ca **întrebări**, rezultatul unui program Prolog este răspunsul la o întrebare (sau la o conjuncție de întrebări). Acest răspuns poate fi afirmativ, **true**, sau negativ, **false** (în alte versiuni de Prolog răspunsul poate fi **yes** sau **no**; sau **true** sau **fail**).
-
-Se va vedea mai târziu că programul Prolog, în cazul unui răspuns afirmativ la o întrebare, **poate furniza și alte informații** din baza de cunoștințe.
-
-Considerând baza de cunoștințe specificată anterior, se pot pune diverse întrebări, cum ar fi: 
-```prolog
-?- iubeste(mihai, maria).
-true.
-?-papagal(coco).
-true.
-?- papagal(mihai).
-false.
-?- inalt(gelu).
-false.
-```
-
-## Variabile
-
-În exemplele prezentate până acum, argumentele **faptelor** și **întrebărilor** au fost obiecte particulare, numite și **constante** sau **atomi simbolici**. Predicatele Prolog, ca orice predicate în logica cu predicate de ordinul I, admit ca argumente și obiecte generice numite **variabile**.
-
-În Prolog, prin convenție, numele argumentelor variabile începe cu **literă mare** iar numele constantelor simbolice începe cu **literă mică**.
-
-O variabilă poate fi **instanțiată** (legată) dacă există un obiect asociat acestei variabile, sau **neinstanțiată** (liberă) dacă nu se știe încă ce obiect va desemna variabila.
-
-Semnul *\_* (underscore) desemnează o variabila a cărei valoare nu interesează.
-
-```prolog 
-?- papagal(coco).
-true.
-?- papagal(CineEste).
-CineEste = coco
-?- deplaseaza(_, DeUnde, Unde).
-DeUnde = camera1, Unde = camera2
-
-```
-
-La fixarea unui **scop** Prolog care conține **variabile**, acestea sunt neinstanțiate iar sistemul încearcă satisfacerea acestui scop căutând printre faptele din baza de cunoștințe un fapt care poate identifica cu scopul, printr-o **instanțiere adecvată a variabilelor** din scopul dat. Este vorba de fapt de un proces de **unificare** a predicatului scop cu unul din predicatele fapte existente în baza de cunoștințe.
-
-În exemplul de mai jos exista mai multe răspunsuri posibile. Prima soluție este dată de prima unificare și există atâtea soluții câte unificări diferite există.
-
-```prolog 
-?- iubeste(mihai, X).
-```
-
-La realizarea primei unificări se **marchează** faptul care a unificat și care reprezintă prima soluție. La obținerea următoarei soluții, căutarea este reluată de la marcaj în jos în baza de cunoștințe.
-
-Obținerea primei soluții este de obicei numită **satisfacerea scopului** iar obținerea altor soluții, **resatisfacerea scopului**.
-
-La satisfacerea unui scop căutarea se face întotdeauna de la începutul bazei de cunoștințe. La resatisfacerea unui scop, căutarea se face începând de la marcajul stabilit de satisfacerea anterioară a acelui scop.
-
-Sistemul Prolog, fiind un sistem **interactiv**, permite utilizatorului obținerea fie a primului răspuns, fie a tuturor răspunsurilor. În cazul în care, după afișarea tuturor răspunsurilor, un scop nu mai poate fi resatisfăcut, sistemul răspunde **false**.
-
-In exemplul de mai jos, tastând caracterul “;” și Enter, cerem o nouă soluție.
-
-```prolog 
-?- iubeste(mihai, X). 
-X = maria;
-X = ana;
-false.
-?- iubeste(Cine, PeCine).
-Cine = mihai, PeCine = maria;
-Cine = mihai, PeCine = ana;
-false.
-```
-
-## Reguli
-
-O regulă Prolog exprimă un fapt care depinde de alte fapte și este de forma:
+Exemple de axiome:
 
 ```prolog
-S :- S1, S2, ..., Sn.
+% Acesta este un comentariu.
+% Predicate de aritate 1. (unare)
+caine(cerberus).
+om(socrate). 
+muritor(leulDinNemeea).
+muritor(rhesus).
+
+% Predicate de aritate 2. (binare)
+% cel_mai_bun_prieten(?Cine, ?AlCui)
+cel_mai_bun_prieten(cerberus, hades).
+
+% Predicate de aritate 3. (ternare)
+% rege(?Nume, ?Regiune, ?Aliat)
+rege(rhesus, tracia, troia).
 ```
 
-Fiecare *Si*, *i = 1,n* și *S* au forma faptelor Prolog, deci sunt predicate, cu argumente constante, variabile sau structuri. Faptul S care definește regula, se numește **antet de regulă**, iar *S1, S2,..., Sn* formează corpul regulii și reprezintă conjuncția de scopuri care trebuie satisfăcute pentru ca antetul regulii să fie satisfăcut.
-
-Fie următoarea bază de cunoștințe:
-
- ```prolog
-frumoasa(ana).                                         %1
-bun(vlad).                                             %2
-cunoaste(vlad, maria).                                 %3
-cunoaste(vlad, ana).                                   %4
-iubeste(mihai, maria).                                 %5
-iubeste(X, Y):- bun(X), cunoaste(X, Y), frumoasa(Y).   %6
-
-```
-
-Se observă definirea atât printr-un fapt (linia 5), cât și printr-o regulă (linia 6) a predicatului *iubeste(?Cine, ?PeCine)*.
-
-
-## Operatori
-
-  - Aritmetici: `+` `-` `*` `/`
-  - Relaționali: `=\=` `<` `>` `=<` `>=` `=:=` `is`
-  - Logici: `,` (și) `;` (sau) `\+` (negație)
-
-La scrierea expresiei `1+2\*(X/Y)`, valoarea acesteia nu este calculată, ci expresia este reținută ca atare. Se poate observa că operatorii `=:=` și `is` forțează evaluarea unei expresii, pe când `=` verifica doar egalitatea structurală.
-
-De asemenea, `is` și `=` pot primi variabile neinstanțiate pe care le instanțiază (`is` doar în partea stângă).
+Rulăm următoarele interogări:
 
 ```prolog
-
-?- 1 + 2 =:= 2 + 1.
+?- caine(cerberus). % este cerberus un câine?
 true.
 
-?- 1 + 2 = 2 + 1. 
+?- muritor(socrate). % vom detalia mai jos
 false.
-
-?- X = 2 + 1. 
-X = 2+1.
-
-?- X is 2 + 1. 
-X = 3.
-
-?- X =:= 2 + 1. 
-ERROR: =:=/2: Arguments are not sufficiently instantiated
 ```
-### Negație
 
-Operatorul unar `\+` folosit pentru un operand reprezintă faptul că nu se poate demonstra că operandul este adevărat.
-Dacă operandul conține variabile, `\+` denotă că nu există nicio legare pentru variabile astfel încât operandul să fie adevărat.
-Operatorul `\+` trebuie în mod necesar să fie urmat de spațiu (sau paranteză deschisă)
+### Termeni
 
-## Liste
+În Prolog orice valoare se numește
+[termen](https://www.swi-prolog.org/pldoc/man?section=glossary#gloss:term).
+Tipuri simpli de termene: constante, sau mai bine zis *atomi* simbolici,
+întregi, numere în virgulă mobilă sau termeni compuși.
 
-  - Lista vidă: `[]`
-  - Lista cu elementele a, b, c: `[a,b,c]`
-  - Lista nevidă: `[Prim|Rest]` – unde variabila `Prim` unifică cu primul element al listei, iar variabila `Rest` cu lista fără acest prim element
-  - Lista care începe cu n elemente `X1, X2, ..., XN` și continuă cu o altă listă `Rest`: `[X1,X2,...,XN|Rest]`
+Cuvântul
+[structură](https://www.swi-prolog.org/pldoc/man?section=glossary#gloss:structure)
+este un sinonim pentru termen
+[compus](https://www.swi-prolog.org/pldoc/man?section=glossary#gloss:compound).
 
-## Documentarea predicatelor și a argumentelor
+```prolog
+% exemplu structură
+client(nume(ion, popescu), carte(aventuri, 2002)).
+```
 
-Pentru claritate, antetele predicatelor se scriu sub forma:
+Puteți considera momentan că sintactic singura diferență este că predicatele nu
+sunt transmise ca argumente, aceasta fiind o
+[discuție](https://stackoverflow.com/questions/28972038/prolog-structurecomplex-term-vs-predicate-i-dont-really-get-the-difference)
+mai subtilă ce ține de reprezentarea internă a implementării.
 
-  * **predicat/nrArgumente**
-  * predicat(+Arg1, -Arg2, ?Arg3, ..., +ArgN)
+Consultați [**glosarul**](https://www.swi-prolog.org/pldoc/man?section=glossary) în caz de orice neînțelegere!!!
 
-Pentru a diferenția intrările (+) de ieșiri (-), se prefixează argumentele cu indicatori. Acele argumente care pot fi fie intrări, fie ieșiri se prefixează cu '?'. Instanțierea parametrilor ține de specificarea acestora:
+### Scopuri și variabile
 
-* Arg1 va fi deja instanțiat atunci când se va încerca satisfacerea p/3
-* Arg2 va fi neinstanțiat atunci când se va încerca satisfacerea p/3 , și dacă predicatul este satisfăcut, Arg2 va fa fi instanțiat la finalul evaluării lui p/3; Arg2 poate fi și deja instanțiat la evaluarea lui p/3, și atunci evaluarea lui p/3 poate servi ca verificare a corectitudinii argumentului în raport cu semnificația prediatului
-* Arg3 va putea fi instanțiat sau nu atunci când se va încerca satisfacerea p/3
+Când rulăm interogări despre termeni și relațiile dintre ei spunem informal că
+demonstrăm sau obținem informații pornind de la "baza noastră de date" (de la
+axiome).
 
+Calcul se face prin încercarea de a satisface[^1] *scopuri* (en. *goals*).
 
+**OBSERVAȚIE**: Când am interogat dacă Socrate este muritor, procesul de
+execuție a returnat `false` deoarece **nu** se putea satisface acest scop. Nu
+înseamnă că el este nemuritor. (*Ipoteza lumii închise*.)
+
+```prolog
+% Este Rhesus muritor și rege al Traciei, aliat al Troiei?
+% Avem două scopuri de satisfăcut
+?- muritor(rhesus), rege(rhesus, tracia, troia).
+true.
+
+% Cine este muritor?
+?- muritor(X).       % tastăm o interogare cu un singur scop
+X = leulDinNemeea ;  % tastăm ";" pentru a primi încă un răspuns
+X = rhesus.
+```
+
+Observați că în a doua interogare am făcut primul nostru calcul util, folosind o
+variabilă, `X`. Argumentul nu mai este o valoare particulară, ci sistemul de
+execuție încearcă **legarea** ei la diferite constante sau atomi. Prin convenție
+numele variabilelor (`X`) începe cu literă mare iar numele atomilor
+(`leulDinNemeea`, `rhesus`) începe cu literă mică.
+
+Așa cum v-ați obișnuit de la Haskell, și Prolog permite folosirea de variablie
+[anonime](https://www.swi-prolog.org/pldoc/man?section=glossary#gloss:anonymou),
+`_`. Multiple folosiri ale lui `_` nu se leagă la același termen.
+
+```prolog
+?- muritor(X), rege(X, Y, _).
+X = rhesus,
+Y = tracia.
+```
+
+### Reguli
+
+```
+Antet :- Corp.
+```
+
+O regulă este o declarație cu forma generală de mai sus, unde antentul este un predicat, iar corpul este alcătuit din premise separate de operatori. Ea se citește așa:
+
+> Antetul este adevărat dacă corpul este adevărat
+
+Practic este o implicație de la dreapta la stânga.
+
+Exemple:
+
+```prolog
+om(socrate) :- true.
+% Echivalent cu: om(socrate).
+
+viu(hercule).   % semi-zeu, nici om, nici zeu
+viu(zeus).      % regele zeilor de pe Muntele Olimp
+viu(hunabku).   % tatăl zeilor în mitologia mayașă 
+
+zeu(zeus).      % fapt adevărat în mitologia greacă
+
+muritor(X) :- om(X).
+muritor(X) :- viu(X), \+ zeu(X).
+```
+
+Observați că:
+
+- Axiomele sunt reguli fără corp.
+- Am folosit operatorul `,`, "și" logic ($\land$), deci a doua regulă a
+  predicatului `muritor(?Cine)` are două premise.
+- Am folosit
+  [operatorul `\+`](https://www.swi-prolog.org/pldoc/doc_for?object=(%5C%2B)/1)
+  pe care îl puteți trata ca pe o negație pentru moment.
+
+Rulăm următoarele interogări:
+
+```prolog
+?- muritor(socrate).
+true .
+
+?- muritor(zeus).
+false.
+```
+
+#### Procesul de execuție
+
+Ca să începem să înțelegem cum se execută o interogare activăm modul trace.
+
+```prolog
+?- trace.
+true.
+
+[trace]  ?- muritor(hercule).
+   Call: (10) muritor(hercule) ? creep
+   Call: (11) om(hercule) ? creep
+   Fail: (11) om(hercule) ? creep
+   Redo: (10) muritor(hercule) ? creep
+   Call: (11) viu(hercule) ? creep
+   Exit: (11) viu(hercule) ? creep
+   Call: (11) zeu(hercule) ? creep
+   Fail: (11) zeu(hercule) ? creep
+   Redo: (10) muritor(hercule) ? creep
+   Exit: (10) muritor(hercule) ? creep
+true.
+```
+
+Deci mai întâi încearcă demonstrarea primei reguli pentru predicatul `muritor`
+și eșuează. Prima premisă din a doua regulă este adevărată (`viu(X)`). Observăm
+că **eșecul demonstrației** scopului `zeu(hercule)` determină adevărată a doua
+premisă (`\+ zeu(X)`). Cele două premise fiind puse în conjuncție, considerăm că
+Hercule este muritor.
+
+#### Negația ca eșec în demonstrație
+
+```prolog
+[trace]  ?- muritor(hunabku).
+   Call: (10) muritor(hunabku) ? creep
+   Call: (11) om(hunabku) ? creep
+   Fail: (11) om(hunabku) ? creep
+   Redo: (10) muritor(hunabku) ? creep
+   Call: (11) viu(hunabku) ? creep
+   Exit: (11) viu(hunabku) ? creep
+   Call: (11) zeu(hunabku) ? creep
+   Fail: (11) zeu(hunabku) ? creep
+   Redo: (10) muritor(hunabku) ? creep
+   Exit: (10) muritor(hunabku) ? creep
+true.
+```
+
+În cazul lui Hunabku satisfacerea primei premise celei de-a doua reguli cât și
+eșecul demonstrației că este zeu, ne determină să îl considerăm muritor.
+*Totuși* deși grecii nu îl considerau zeu, el nu este un muritor, deci de unde
+contradicția?!
+
+Folosirea operatorului `\+` nu ne-a ajutat, întrucât el **întoarce adevărat dacă
+nu se poate satisface argumentul**, nu este echivalent cu operatorul boolean de
+negație.
+
+#### Procesul de execuție 2
+
+De asemenea, nu putem să "corectăm" greșeala anterioară prin "hardcodarea" valorii `false`,
+ca mai jos, întrucât procesul de execuție încearcă în ordinea din fișier toate
+declarațiile unui predicat până la satisfacerea acelui scop.
+
+```prolog
+muritor(hunabku) :- false. % declarație ineficace
+```
+
+Deci regulile pentru `muritor` pot fi "condensate" într-una singură, prin
+folosirea operatorului sau `;`.
+
+```prolog
+muritor(X) :- om(X); viu(X), \+ zeu(X).
+```
+
+Aici apare prima distincție între logica formală și cea computațională:
+premisele din corpul unui reguli sunt parcurse de la stânga la dreapta când se
+satisface un scop. Deci dacă `om(X)` este adevărat, nu se mai caută satisfacerea
+a ce a rămas din corp. Presupunem că `om(X)` se evaluează la `false`, dacă
+`viu(X)` nu se poate satisface, nici nu se mai verifică `\+ zeu(X)`
+
+V-ați obișnuit deja cu noțiunile exemplificate mai sus când verificați în `C`
+dacă un pointer la o structură nu este null înainte să îl dereferențiați.
+
+```c
+// verificarea celei de-a doua condiții se efectuază doar dacă se trece de prima
+if (ptr != NULL && ptr->field != ILLEGAL_VALUE) {
+  // do something usefull
+}
+```
+
+### Tiprui de date
+
+Am discutat până acum de:
+
+- atomi (constante)
+- numbere
+- variabile
+- termeni compuși (structuri)
+
+#### Liste
+
+Sunt o colecție ordonată de termeni, identificată prin paranteze pătrate.
+
+- Lista vidă: `[]`
+- Lista cu elementele a, b, c: `[a,b,c]`
+- Lista nevidă: `[Prim|Rest]` – unde variabila `Prim` se leagă
+  ([unifică](https://www.swi-prolog.org/pldoc/man?section=glossary#gloss:unify)
+  mai bine zis) cu primul element al listei, iar variabila `Rest` cu lista fără
+  acest prim element
+- Lista care începe cu n elemente `X1, X2, ..., XN` și continuă cu o altă listă `Rest`: `[X1,X2,...,XN|Rest]`
+
+#### Șiruri
+
+O secvență de caractere înscrisă între `"`.
+
+```prolog
+?- X= "abc", string(X), writeln(X).
+abc
+X = "abc".
+```
+
+### Documentarea predicatelor și a argumentelor
+
+Pentru claritate, convenția pentru antetele predicatelor se scriu sub forma
+`predicat/nrArgumente`:
+
+```prolog
+predicat(+Arg1, -Arg2, ?Arg3, ..., +ArgN)
+```
+
+Pentru a diferenția intrările (`+`) de ieșiri (`-`), se prefixează argumentele
+cu indicatori. Acele argumente care pot fi fie intrări, fie ieșiri se prefixează
+cu `?`. Instanțierea parametrilor ține de specificarea acestora:
+
+- `Arg1` va fi deja instanțiat atunci când se va încerca satisfacerea unui scop
+  care îl are ca premisă pe `predicat`.
+- `Arg2` va fi neinstanțiat atunci când se va încerca satisfacerea predicatului.
+  - Dacă predicatul este satisfăcut, `Arg2` va fa fi instanțiat la finalul
+    evaluării.
+  - Dacă `Arg2` este deja instanțiat la evaluarea predicatului, evaluarea poate
+    servi la verificarea corectitudinii argumentului în raport cu semnificația
+    predicatului.
+    - Următorul exemplu, din laboratorele următore, îl folosește pe `R` ca o intrare, și pe `N` ca o ieșire.
+    ```prolog
+    % lungime(+Lista,-Lungime)
+    lungime([],0).
+    lungime([_ | R], N) :- lungime(R, N1), N is N1 + 1.
+    % Exemplu, când N este ieșire
+    ?- lungime([1, 2, 3], N).
+    N = 3.
+    % Exemplu, când N este intrare, cu scop de verificare.
+    ?- lungime([1, 2, 3], 3).
+    true.
+
+    ?- lungime([1, 2, 3], 4).
+    false.
+    ```
+- `Arg3` va putea fi instanțiat sau nu atunci când se va încerca satisfacerea
+  predicatului.
 
 ## Resurse
 -   [Cheatsheet](https://github.com/cs-pub-ro/PP-laboratoare/raw/master/prolog/intro/prolog-cheatsheet-1.pdf)
@@ -234,3 +384,5 @@ Pentru a diferenția intrările (+) de ieșiri (-), se prefixează argumentele c
   - [Logic, Programming, and Prolog](http://www.ida.liu.se/~ulfni53/lpp/bok/bok.pdf "wikilink")
   - [Built-in Predicates](http://www.swi-prolog.org/pldoc/doc_for?object=section%281,%274%27,swi%28%27/doc/Manual/builtin.html%27%29%29 "wikilink")
 
+[^1]: În logica matematică, o formulă este satisfiabilă dacă este adevărată sub
+o anumită asociere de valori variabilelor sale.
