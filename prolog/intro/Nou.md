@@ -55,15 +55,16 @@ SWI-Prolog este o
 limbajului, dispunând de multe biblioteci, fiind un punct bun de plecare pentru
 tranziția către alte limbaje logice/implementări.
 
-Dintre toate
-[implementările](https://en.wikipedia.org/wiki/Comparison_of_Prolog_implementations)
-fiecare are particularitățile ei sintatice de folosire. De aceea vă rugăm să
+Dintre [toate
+implementările](https://en.wikipedia.org/wiki/Comparison_of_Prolog_implementations)
+fiecare are particularitățile ei sintatice sau de folosire. De aceea vă rugăm să
 urmăriți instrucțiunile de [aici](..:..:limbaje#prolog "wikilink") pentru
 laborator.
 
 ## Sintaxă și semantică
 
-Programele scrise în Prolog descriu relații definite în termeni de clauze. Există două tipuri de clauze:
+Programele scrise în Prolog descriu relații exprimitate prin clauze. Există două
+tipuri de clauze:
 
 - axiome (en. *facts*)
 - reguli
@@ -72,26 +73,26 @@ Programele scrise în Prolog descriu relații definite în termeni de clauze. Ex
 
 ### Axiome
 
-Axiome sunt predicate de ordinul I de
+Axiomele sunt predicate de ordinul I de
 [aritate](https://ro.wikipedia.org/wiki/Aritate) *n*, considerate **adevărate**.
 
 Exemple de axiome:
 
 ```prolog
 % Acesta este un comentariu.
-% Predicate de aritate 1.
+% Predicate de aritate 1. (unare)
 caine(cerberus).
 om(socrate). 
 muritor(leulDinNemeea).
 muritor(rhesus).
 
-% Predicate de aritate 2.
+% Predicate de aritate 2. (binare)
 % cel_mai_bun_prieten(?Cine, ?AlCui)
 cel_mai_bun_prieten(cerberus, hades)
 
-% Predicate de aritate 3.
-% rege(?Nume, ?Localitate, ?Aliat)
-rege(rhesus, tracia, troian).
+% Predicate de aritate 3. (ternare)
+% rege(?Nume, ?Regiune, ?Aliat)
+rege(rhesus, tracia, troia).
 ```
 
 Rulăm următoarele interogări:
@@ -100,7 +101,7 @@ Rulăm următoarele interogări:
 ?- caine(cerberus). % este cerberus un câine?
 true.
 
-?- muritor(socrate).
+?- muritor(socrate). % vom detalia mai jos
 false.
 ```
 
@@ -108,7 +109,7 @@ false.
 
 În Prolog orice valoare se numește
 [termen](https://www.swi-prolog.org/pldoc/man?section=glossary#gloss:term).
-Tipuri simpli de termeni: constante, sau mai bine zis *atomi* simbolici,
+Tipuri simpli de termene: constante, sau mai bine zis *atomi* simbolici,
 întregi, numere în virgulă mobilă sau termeni compuși.
 
 Cuvântul
@@ -118,7 +119,7 @@ este un sinonim pentru termen
 
 ```prolog
 % exemplu structură
-client(nume(ion,popescu),carte(aventuri,2002)).
+client(nume(ion, popescu), carte(aventuri, 2002)).
 ```
 
 Puteți considera momentan că sintactic singura diferență este că predicatele nu
@@ -131,7 +132,8 @@ Consultați [**glosarul**](https://www.swi-prolog.org/pldoc/man?section=glossary
 ### Scopuri și variabile
 
 Când rulăm interogări despre termeni și relațiile dintre ei spunem informal că
-demonstrăm sau obținem informații pornind "baza noastră de date" (de la axiome).
+demonstrăm sau obținem informații pornind de la "baza noastră de date" (de la
+axiome).
 
 Calcul se face prin încercarea de a satisface[^1] *scopuri* (en. *goals*).
 
@@ -142,8 +144,8 @@ execuție a returnat `false` deoarece **nu** se putea satisface acest scop. Nu
 ```prolog
 % Este Rhesus muritor și rege al Traciei, aliat al Troiei?
 % Avem două scopuri de satisfăcut
-?- muritor(rhesus), rege(rhesus, tracia, troian).
-X = hades.
+?- muritor(rhesus), rege(rhesus, tracia, troia).
+true.
 
 % Cine este muritor?
 ?- muritor(X).       % tastăm o interogare cu un singur scop
@@ -152,10 +154,10 @@ X = rhesus.
 ```
 
 Observați că în a doua interogare am făcut primul nostru calcul util, folosind o
-variabilă `X`. Argumentul nu mai este o valoare particulară, ci sistemul de
-execuție încearcă **legarea** ei la diferite constante sau *atomi simbolici*.
-Prin convenție numele variabilelor începe cu literă mare iar numele atomilor
-începe cu literă mică.
+variabilă, `X`. Argumentul nu mai este o valoare particulară, ci sistemul de
+execuție încearcă **legarea** ei la diferite constante sau atomi. Prin convenție
+numele variabilelor (`X`) începe cu literă mare iar numele atomilor
+(`leulDinNemeea`, `rhesus`) începe cu literă mică.
 
 ### Reguli
 
@@ -206,8 +208,7 @@ false.
 
 #### Procesul de execuție
 
-Ca să începem să înțelegem cum se execută o interogare, mai bine zis se încearcă
-*satisfacerea unui un scop*, activăm modul trace.
+Ca să începem să înțelegem cum se execută o interogare activăm modul trace.
 
 ```prolog
 ?- trace.
@@ -252,16 +253,16 @@ true.
 
 În cazul lui Hunabku satisfacerea primei premise celei de-a doua reguli cât și
 eșecul demonstrației că este zeu, ne determină să îl considerăm muritor.
-*Totuși* deși grecii nu îl considerau zeu, el nu este sunt un muritor, deci de
-unde contradicția?!
+*Totuși* deși grecii nu îl considerau zeu, el nu este un muritor, deci de unde
+contradicția?!
 
-Folosirea operatorul `\+` nu ne-a ajutat, întrucât el **întoarce adevărat dacă
+Folosirea operatorului `\+` nu ne-a ajutat, întrucât el **întoarce adevărat dacă
 nu se poate satisface argumentul**, nu este echivalent cu operatorul boolean de
 negație.
 
 De asemenea, nu putem să "corectăm" greșeala prin "hardcodarea" valorii `false`,
 ca mai jos, întrucât procesul de execuție încearcă în ordinea din fișier toate
-declarațiile unui predicat în încercarea de a satisface un scop.
+declarațiile unui predicat până la satisfacerea acelui scop.
 
 ```prolog
 muritor(hunabku) :- false. % declarație ineficace
@@ -284,9 +285,9 @@ cu `?`. Instanțierea parametrilor ține de specificarea acestora:
 - `Arg2` va fi neinstanțiat atunci când se va încerca satisfacerea predicatului.
   - Dacă predicatul este satisfăcut, `Arg2` va fa fi instanțiat la finalul
     evaluării.
-  - Dacă `Arg2` este deja instanțiat la evaluarea predicatului evaluarea lui p/3
-    poate servi la verificare corectitudinii argumentului în raport cu
-    semnificația prediatului.
+  - Dacă `Arg2` este deja instanțiat la evaluarea predicatului evaluarea poate
+    servi la verificare corectitudinii argumentului în raport cu semnificația
+    predicatului.
 - `Arg3` va putea fi instanțiat sau nu atunci când se va încerca satisfacerea
   predicatului.
 
