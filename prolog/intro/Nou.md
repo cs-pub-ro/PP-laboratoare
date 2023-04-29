@@ -88,7 +88,7 @@ muritor(rhesus).
 
 % Predicate de aritate 2. (binare)
 % cel_mai_bun_prieten(?Cine, ?AlCui)
-cel_mai_bun_prieten(cerberus, hades)
+cel_mai_bun_prieten(cerberus, hades).
 
 % Predicate de aritate 3. (ternare)
 % rege(?Nume, ?Regiune, ?Aliat)
@@ -158,6 +158,16 @@ variabilă, `X`. Argumentul nu mai este o valoare particulară, ci sistemul de
 execuție încearcă **legarea** ei la diferite constante sau atomi. Prin convenție
 numele variabilelor (`X`) începe cu literă mare iar numele atomilor
 (`leulDinNemeea`, `rhesus`) începe cu literă mică.
+
+Așa cum v-ați obișnuit de la Haskell, și Prolog permite folosirea de variablie
+[anonime](https://www.swi-prolog.org/pldoc/man?section=glossary#gloss:anonymou),
+`_`. Multiple folosiri ale lui `_` nu se leagă la același termen.
+
+```prolog
+?- muritor(X), rege(X, Y, _).
+X = rhesus,
+Y = tracia.
+```
 
 ### Reguli
 
@@ -291,6 +301,37 @@ dacă un pointer la o structură nu este null înainte să îl dereferențiați.
 if (ptr != NULL && ptr->field != ILLEGAL_VALUE) {
   // do something usefull
 }
+```
+
+### Tiprui de date
+
+Am discutat până acum de:
+
+- atomi (constante)
+- numbere
+- variabile
+- termeni compuși (structuri)
+
+#### Liste
+
+Sunt o colecție ordonată de termeni, identificată prin paranteze pătrate.
+
+- Lista vidă: `[]`
+- Lista cu elementele a, b, c: `[a,b,c]`
+- Lista nevidă: `[Prim|Rest]` – unde variabila `Prim` se leagă
+  ([unifică](https://www.swi-prolog.org/pldoc/man?section=glossary#gloss:unify)
+  mai bine zis) cu primul element al listei, iar variabila `Rest` cu lista fără
+  acest prim element
+- Lista care începe cu n elemente `X1, X2, ..., XN` și continuă cu o altă listă `Rest`: `[X1,X2,...,XN|Rest]`
+
+#### Șiruri
+
+O secvență de caractere înscrisă între `"`.
+
+```prolog
+?- X= "abc", string(X), writeln(X).
+abc
+X = "abc".
 ```
 
 ### Documentarea predicatelor și a argumentelor
