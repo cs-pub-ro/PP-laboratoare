@@ -68,6 +68,8 @@ Programele scrise în Prolog descriu relații definite în termeni de clauze. Ex
 - axiome (en. *facts*)
 - reguli
 
+"Calculul" modelează în această paradigmă efectuarea de raționamente.
+
 ### Axiome
 
 Axiome sunt predicate de ordinul I de
@@ -104,7 +106,10 @@ false.
 
 ### Termeni
 
-În Prolog orice valoare se numește [termen](https://www.swi-prolog.org/pldoc/man?section=glossary#gloss:term).
+În Prolog orice valoare se numește
+[termen](https://www.swi-prolog.org/pldoc/man?section=glossary#gloss:term).
+Tipuri simpli de termeni: constante, sau mai bine zis *atomi* simbolici,
+întregi, numere în virgulă mobilă sau termeni compuși.
 
 Cuvântul
 [structură](https://www.swi-prolog.org/pldoc/man?section=glossary#gloss:structure)
@@ -117,7 +122,7 @@ client(nume(ion,popescu),carte(aventuri,2002)).
 ```
 
 Puteți considera momentan că sintactic singura diferență este că predicatele nu
-sunt pasate ca argumente, acesta fiind o
+sunt transmise ca argumente, aceasta fiind o
 [discuție](https://stackoverflow.com/questions/28972038/prolog-structurecomplex-term-vs-predicate-i-dont-really-get-the-difference)
 mai subtilă ce ține de reprezentarea internă a implementării.
 
@@ -125,9 +130,10 @@ Consultați [**glosarul**](https://www.swi-prolog.org/pldoc/man?section=glossary
 
 ### Scopuri și variabile
 
-Calculele se fac prin interogări despre termeni și relațiile dintre ei. Încercăm
-să satisfacem *scopuri* pentru a demonstra sau obține informații pornind de la
-axiome ("baza noastră de date").
+Când rulăm interogări despre termeni și relațiile dintre ei spunem informal că
+demonstrăm sau obținem informații pornind "baza noastră de date" (de la axiome).
+
+Calcul se face prin încercarea de a satisface[^1] *scopuri* (en. *goals*).
 
 **OBSERVAȚIE**: Când am interogat dacă Socrate este muritor, procesul de
 execuție a returnat `false` deoarece **nu** se putea satisface acest scop. Nu
@@ -294,3 +300,6 @@ cu `?`. Instanțierea parametrilor ține de specificarea acestora:
   - [Learn prolog now\!](http://www.learnprolognow.org/ "wikilink")
   - [Logic, Programming, and Prolog](http://www.ida.liu.se/~ulfni53/lpp/bok/bok.pdf "wikilink")
   - [Built-in Predicates](http://www.swi-prolog.org/pldoc/doc_for?object=section%281,%274%27,swi%28%27/doc/Manual/builtin.html%27%29%29 "wikilink")
+
+[^1]: În logica matematică, o formulă este satisfiabilă dacă este adevărată sub
+o anumită asociere de valori variabilelor sale.
