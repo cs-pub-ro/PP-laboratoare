@@ -260,12 +260,37 @@ Folosirea operatorului `\+` nu ne-a ajutat, întrucât el **întoarce adevărat 
 nu se poate satisface argumentul**, nu este echivalent cu operatorul boolean de
 negație.
 
-De asemenea, nu putem să "corectăm" greșeala prin "hardcodarea" valorii `false`,
+#### Procesul de execuție 2
+
+De asemenea, nu putem să "corectăm" greșeala anterioară prin "hardcodarea" valorii `false`,
 ca mai jos, întrucât procesul de execuție încearcă în ordinea din fișier toate
 declarațiile unui predicat până la satisfacerea acelui scop.
 
 ```prolog
 muritor(hunabku) :- false. % declarație ineficace
+```
+
+Deci regulile pentru `muritor` pot fi "condensate" într-una singură, prin
+folosirea operatorului sau `;`.
+
+```prolog
+muritor(X) :- om(X); viu(X), \+ zeu(X).
+```
+
+Aici apare prima distincție între logica formală și cea computațională:
+premisele din corpul unui reguli sunt parcurse de la stânga la dreapta într-o
+interogare. Deci dacă `om(X)` este adevărat, nu se mai caută satisfacerea a ce a
+rămas din corp. Presupunem că `om(X)` se evaluează la `false`, dacă `viu(X)` nu
+se poate satisface, nici nu se mai verifică `\+ zeu(X)`
+
+V-ați obișnuit deja cu noțiunile de exemplificate mai sus când verificați în `C`
+dacă un pointer la o structură nu este null înainte să îl dereferențiați.
+
+```c
+// verificarea celei de-a doua condiții se efectuază doar dacă se trece de prima
+if (ptr != NULL && ptr->field != ILLEGAL_VALUE) {
+  // do something usefull
+}
 ```
 
 ### Documentarea predicatelor și a argumentelor
