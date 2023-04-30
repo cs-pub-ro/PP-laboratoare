@@ -270,6 +270,8 @@ Folosirea operatorului `\+` nu ne-a ajutat, întrucât el **întoarce adevărat 
 nu se poate satisface argumentul**, nu este echivalent cu operatorul boolean de
 negație.
 
+**Observație**: Operatorul de negație `not` este *deprecated*.
+
 #### Procesul de execuție 2
 
 De asemenea, nu putem să "corectăm" greșeala anterioară prin "hardcodarea" valorii `false`,
@@ -302,6 +304,146 @@ if (ptr != NULL && ptr->field != ILLEGAL_VALUE) {
   // do something usefull
 }
 ```
+
+### Operatori
+
+  - Aritmetici: `+` `-` `*` `/`
+  - Relaționali: `=\=` `<` `>` `=<` `>=` `=:=` `is`
+  - De control: `,` (și) `;` (sau) `\+` (negație)
+  
+#### Unificare
+    
+Înainte să explicăm *"egalitatea"*, este dezirabilă o discuție despre
+[unificare](https://www.swi-prolog.org/pldoc/man?section=glossary#gloss:unify),
+adică despre operatorul `=`. 
+
+> Unificarea = procesul de identificare a valorilor
+variabilelor din 2 sau mai multe expresii, astfel încât
+substituirea variabilelor prin valorile asociate
+sa conducă la coincidența expresiilor
+
+```prolog
+?- foo(a, B) = foo(A, b).
+A = a,
+B = b.
+```
+
+#### Diferitele tipuri de *"egalitate"*
+
+- [`=`](https://www.swi-prolog.org/pldoc/doc_for?object=(%3D)/2): operatorul de unificare
+
+- [`is`](https://www.swi-prolog.org/pldoc/doc_for?object=(is)/2): operator aritmetic care returnează adevărat dacă o *expresie* se evaluează la un *număr*. (forțează evaluarea)
+
+- [`==`](https://www.swi-prolog.org/pldoc/doc_for?object=(%3D%3D)/2) : verifică dacă doi termeni sunt echivalenți simbolic.
+
+- [`\==`](https://www.swi-prolog.org/pldoc/doc_for?object=(%5C%3D%3D)/2): echivalent cu `\+ T1 == T2`
+
+- [`=:=`](https://www.swi-prolog.org/pldoc/doc_for?object=(%3D%3A%3D)/2): operator aritmetic care returnează adevărat dacă cele două *expresii* se evaluează la același *număr*.
+
+- [`=\=`](https://www.swi-prolog.org/pldoc/doc_for?object=(%3D%5C%3D)/2): operator aritmetic care returnează adevărat dacă cele două *expresii* **nu** se evaluează la același *număr*.
+
+Pentru o mai bună înțelegere, vom trata operatorii `=`, `is`, `==`, `\==`, `=:=` și
+`=\=` din mai multe perspective.
+
+În primul rând, din punct de vedere al necesității instanțierii variabilelor:
+
+- pot primi variabile [neinstanțiate](https://www.swi-prolog.org/pldoc/man?section=glossary#gloss:instantiation) (adică nelegate) pe care le instanțiază: 
+    - `=` (ambele părți)
+    ```prolog
+    ?- X = 2 + 1. 
+    X = 2+1.
+
+    ?- 2 + 1 = Y.
+    Y = 2+1
+    ```
+    - `is` (doar în partea stângă)
+
+    ```prolog
+    ?- X is 2 + 1.
+    X = 3.
+
+    ?- 2 + 1 is Y.
+    ERROR: Arguments are not sufficiently instantiated
+    ```
+
+- nu pot primi variabile neinstanțiate: `==`, `\==`, `=:=`, `=\=`
+
+  ```prolog
+  ?- X == 2 + 1.
+  ERROR: Arguments are not sufficiently instantiated
+  
+  % X nu este instanțiat, dar va returna valoarea true
+  ?- X \== 2 + 1.
+  true.
+   
+  ?- X =:= 2 + 1.
+  ERROR: Arguments are not sufficiently instantiated
+   
+  ?- X =\= 2 + 1.
+  ERROR: Arguments are not sufficiently instantiated
+  ```
+
+În al doilea rând, din exemplele de mai sus se deduce și ce tip de egalitate verifică fiecare
+dintre acești operatori:
+
+ - verifică dacă cele două părți unifică (modificarea termenului stâng determină
+ modificarea temernului drept și viceversa): `=`
+
+  ``` prolog
+  ?- X = 2 + 1.
+  X = 2+1.
+  ```
+
+ - verifică egalitatea sub formă simbolică (practic verifică asemănător cu potrivirea șirurilor
+de caractere): `==`
+
+  ```prolog
+  ?- 1 + 2 == 2 + 1.
+  false.
+  ?- 2 + 1 == 2 + 1.
+  true.
+  ```
+
+ - forțează evaluarea expresiilor (doar în partea dreapta) pentru a verifica
+egalitatea și face și o eventuală instanțiere (doar în partea stângă): `is`
+
+  ```prolog
+  ?- X is 2 + 1.
+  X = 3.
+
+  ?- 3 is 2 + 1.
+  true.
+
+  ?- 3 is 1 + 2.
+  true.
+  
+  ?- 1 + 2 is 2 + 1.
+  false.
+
+  ?- 2 + 1 is 2 + 1.
+  false.
+
+  ?- 1 + 2 is 3.
+  false. 
+  ```
+
+ - forțează evaluarea expresiilor de ambele părți pentru a verifica egalitatea
+sau inegalitatea lor valorică: `=:=` (egalitate), `=\=` (inegalitate)
+
+  ```prolog
+
+  ?- 3 =:= 2 + 1.
+  true.
+
+  ?- 1 + 2 =:= 3.
+  true.
+  
+  ?- 1 + 2 =:= 2 + 1.
+  true.
+
+  ?- 3 =:= 3.
+  true.
+  ```
 
 ### Tiprui de date
 
