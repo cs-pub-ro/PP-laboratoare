@@ -321,7 +321,8 @@ if (ptr != NULL && ptr->field != ILLEGAL_VALUE) {
 ### Operatori
 
   - Aritmetici: `+` `-` `*` `/`
-  - Relaționali: `=\=` `<` `>` `=<` `>=` `=:=` `is`
+  - De unificare: `=` `\=` `==` `\==`
+  - Relaționali aritmetici: `=\=` `<` `>` `=<` `>=` `=:=` `is`
   - De control: `,` (și) `;` (sau) `\+` (negație)
   
 #### Unificare
@@ -343,17 +344,21 @@ B = b.
 
 #### Diferitele tipuri de *"egalitate"*
 
-- [`=`](https://www.swi-prolog.org/pldoc/doc_for?object=(%3D)/2): operatorul de unificare
+- [`=`](https://www.swi-prolog.org/pldoc/doc_for?object=(%3D)/2): operatorul de unificare. Dacă operanzii nu conțin variabile, atunci verifică identitatea operanzilor; altfel, caută o *legare* a variabilelor în așa fel încât operanzii să unifice.
 
-- [`is`](https://www.swi-prolog.org/pldoc/doc_for?object=(is)/2): operator aritmetic care returnează adevărat dacă o *expresie* se evaluează la un *număr*. (forțează evaluarea)
+- [`\=`](https://www.swi-prolog.org/pldoc/doc_for?object=(%5C%3D)/2): este adevărat doar dacă cei doi operanzi nu pot unifica -- nu se poate găsi o legare a variabilelor în așa fel încât operanzii să unifice.
 
-- [`==`](https://www.swi-prolog.org/pldoc/doc_for?object=(%3D%3D)/2) : verifică dacă doi termeni sunt echivalenți simbolic.
+- [`==`](https://www.swi-prolog.org/pldoc/doc_for?object=(%3D%3D)/2) : verifică dacă doi operanzi sunt același lucru, iar eventualele variabile nelegate din operanzi sunt forțate să unifice la același lucru (printr-o unificare anterioară, de exemplu cu `=`.
 
 - [`\==`](https://www.swi-prolog.org/pldoc/doc_for?object=(%5C%3D%3D)/2): echivalent cu `\+ T1 == T2`
 
-- [`=:=`](https://www.swi-prolog.org/pldoc/doc_for?object=(%3D%3A%3D)/2): operator aritmetic care returnează adevărat dacă cele două *expresii* se evaluează la același *număr*.
+- [`is`](https://www.swi-prolog.org/pldoc/doc_for?object=(is)/2): evaluează operandul din **dreapta** și
+  - dacă în stânga este o variabilă nelegată, **leagă** această variabilă la valoarea din dreapta.
+  - dacă în stânga este un număr, este echivalent cu `=:=`
 
-- [`=\=`](https://www.swi-prolog.org/pldoc/doc_for?object=(%3D%5C%3D)/2): operator aritmetic care returnează adevărat dacă cele două *expresii* **nu** se evaluează la același *număr*.
+- [`=:=`](https://www.swi-prolog.org/pldoc/doc_for?object=(%3D%3A%3D)/2): operator aritmetic care returnează adevărat dacă cele două *expresii* se evaluează la același *număr*. Operanzii trebuie să fie complet instanțiați.
+
+- [`=\=`](https://www.swi-prolog.org/pldoc/doc_for?object=(%3D%5C%3D)/2): operator aritmetic care returnează adevărat dacă cele două *expresii* **nu** se evaluează la același *număr*. Operanzii trebuie să fie complet instanțiați.
 
 Pentru o mai bună înțelegere, vom trata operatorii `=`, `is`, `==`, `\==`, `=:=` și
 `=\=` din mai multe perspective.
@@ -361,15 +366,19 @@ Pentru o mai bună înțelegere, vom trata operatorii `=`, `is`, `==`, `\==`, `=
 În primul rând, din punct de vedere al necesității instanțierii variabilelor:
 
 - pot primi variabile [neinstanțiate](https://www.swi-prolog.org/pldoc/man?section=glossary#gloss:instantiation) (adică nelegate) pe care le instanțiază: 
-    - `=` (ambele părți)
+    - operatorul `=` poate lega în ambele părți
     ```prolog
     ?- X = 2 + 1. 
     X = 2+1.
 
     ?- 2 + 1 = Y.
     Y = 2+1
+    
+    ?- X+2 = 1+Y.
+    X = 1,
+    Y = 2. %** atenție** aici nu se realizează niciun calcul, Prolog doar face ambele expresii identice cu 1+2
     ```
-    - `is` (doar în partea stângă)
+    - operatorul `is` poate lega doar o variabilă, în partea stângă
 
     ```prolog
     ?- X is 2 + 1.
@@ -377,38 +386,27 @@ Pentru o mai bună înțelegere, vom trata operatorii `=`, `is`, `==`, `\==`, `=
 
     ?- 2 + 1 is Y.
     ERROR: Arguments are not sufficiently instantiated
+    
+    ?- X =:= 2 + 1.
+    ERROR: Arguments are not sufficiently instantiated
+     
+    ?- X =\= 2 + 1.
+    ERROR: Arguments are not sufficiently instantiated
     ```
-
-- nu pot primi variabile neinstanțiate: `==`, `\==`, `=:=`, `=\=`
-
-  ```prolog
-  ?- X == 2 + 1.
-  ERROR: Arguments are not sufficiently instantiated
-  
-  % X nu este instanțiat, dar va returna valoarea true
-  ?- X \== 2 + 1.
-  true.
-   
-  ?- X =:= 2 + 1.
-  ERROR: Arguments are not sufficiently instantiated
-   
-  ?- X =\= 2 + 1.
-  ERROR: Arguments are not sufficiently instantiated
-  ```
 
 În al doilea rând, din exemplele de mai sus se deduce și ce tip de egalitate verifică fiecare
 dintre acești operatori:
 
- - verifică dacă cele două părți unifică (modificarea termenului stâng determină
- modificarea temernului drept și viceversa): `=`
+ - `=` verifică dacă cele două părți unifică (modificarea termenului stâng determină
+ modificarea temernului drept și viceversa):
 
   ``` prolog
   ?- X = 2 + 1.
   X = 2+1.
   ```
 
- - verifică egalitatea sub formă simbolică (practic verifică asemănător cu potrivirea șirurilor
-de caractere): `==`
+ - `==` verifică egalitatea sub formă simbolică (practic verifică asemănător cu potrivirea șirurilor
+de caractere):
 
   ```prolog
   ?- 1 + 2 == 2 + 1.
@@ -417,8 +415,8 @@ de caractere): `==`
   true.
   ```
 
- - forțează evaluarea expresiilor (doar în partea dreapta) pentru a verifica
-egalitatea și face și o eventuală instanțiere (doar în partea stângă): `is`
+ - `is` forțează evaluarea expresiilor (doar în partea dreapta) pentru a verifica
+egalitatea și face și o eventuală instanțiere (doar în partea stângă):
 
   ```prolog
   ?- X is 2 + 1.
