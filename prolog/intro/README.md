@@ -4,7 +4,8 @@
   
 ## Obiective
 
-Scopul acestui laborator este introducerea în programarea logică și învățarea primelor noțiuni despre Prolog.
+Scopul acestui laborator este introducerea în programarea logică și învățarea
+primelor noțiuni despre Prolog.
 
 Aspectele urmărite sunt:
 
@@ -19,10 +20,12 @@ Aspectele urmărite sunt:
 
 Prolog a fost unul dintre
 [primele](https://en.wikipedia.org/wiki/Logic_programming#History) limbaje de
-programare **logice** și rămâne în continuare cel mai popular astfel de limbaj, folosit în demonstratoarele de teoreme și utilizat inclusiv pentru o parte din implementarea sistemului IBM Watson. Permite separarea datelor de procesul de inferență,
-programele fiind scrise într-un stil **declarativ** și uniform. Impactul
-principal l-a avut în cercetare, în domeniul inteligenței artificiale, dar a
-rămas un punct de inspirație pentru limbajele de după.
+programare **logice** și rămâne în continuare cel mai popular astfel de limbaj,
+folosit în demonstratoarele de teoreme și utilizat inclusiv pentru o parte din
+implementarea sistemului IBM Watson. Permite separarea datelor de procesul de
+inferență, programele fiind scrise într-un stil **declarativ** și uniform.
+Impactul principal l-a avut în cercetare, în domeniul inteligenței artificiale,
+dar a rămas un punct de inspirație pentru limbajele de după.
 
 Numele limbajului este o abreviere pentru *programmation en logique*, și este
 bazat pe calcul cu predicate.
@@ -42,7 +45,11 @@ $$\forall X . (peste(X) \Rightarrow respira(X))$$
 
 $$\exists X. (peste(X) \land respiraAer(X))$$
 
-Limbajul restricționează această logică doar la folosirea de clauze Horn. O clauză este o disjuncție (o operație *sau*) peste predicate sau și negații de predicate. O **clauză Horn** conține un singur literal pozitiv, ceea ce înseamnă că este o implicație care nu poate avea drept concluzie o disjuncție între mai multe predicate.
+Limbajul restricționează această logică doar la folosirea de clauze Horn. O
+clauză este o disjuncție (o operație *sau*) peste predicate sau și negații de
+predicate. O **clauză Horn** conține un singur literal pozitiv, ceea ce înseamnă
+că este o implicație care nu poate avea drept concluzie o disjuncție între mai
+multe predicate. (Vezi cursul pentru o înțelegere mai bună.)
 
 $$\begin{align}
 A_1 \land A_2 \land \dots \land A_n &\Rightarrow A \\
@@ -79,17 +86,16 @@ laborator.
 Programele scrise în Prolog descriu relații exprimitate prin clauze. Există două
 tipuri de clauze:
 
-- axiome (en. *facts*)
+- axiome sau fapte (en. *facts*)
 - reguli
 
 "Calculul" modelează în această paradigmă efectuarea de raționamente.
 
-### Axiome
+### Axiome (Fapte)
 
-Axiomele sunt predicate de ordinul I de
-[aritate](https://ro.wikipedia.org/wiki/Aritate) *n*, considerate **adevărate**. Ele stabilesc relații între obiectele universului problemei.
-
-Exemple de axiome:
+Axiomele, sau faptele, sunt predicate de ordinul I de
+[aritate](https://ro.wikipedia.org/wiki/Aritate) *n*, considerate **adevărate**.
+Ele stabilesc relații între obiectele universului problemei. Exemple:
 
 ```prolog
 % Acesta este un comentariu.
@@ -140,19 +146,22 @@ sunt transmise ca argumente, aceasta fiind o
 [discuție](https://stackoverflow.com/questions/28972038/prolog-structurecomplex-term-vs-predicate-i-dont-really-get-the-difference)
 mai subtilă ce ține de reprezentarea internă a implementării.
 
-Consultați [**glosarul**](https://www.swi-prolog.org/pldoc/man?section=glossary) în caz de orice neînțelegere!!!
+Consultați
+[**glosarul**](https://www.swi-prolog.org/pldoc/man?section=glossary) în caz de
+orice neînțelegere!!!
 
 ### Scopuri și variabile
 
 Când rulăm interogări despre termeni și relațiile dintre ei spunem informal că
 demonstrăm sau obținem informații pornind de la "baza noastră de date" (de la
-axiome).
+axiome, de la fapte).
 
 Calcul se face prin încercarea de a satisface[^1] *scopuri* (en. *goals*).
 
 **OBSERVAȚIE**: Când am interogat dacă Socrate este muritor, procesul de
 execuție a returnat `false` deoarece **nu** se putea satisface acest scop. Nu
-înseamnă că el este nemuritor. Aceasta este *ipoteza lumii închise* -- orice nu poate fi demonstrat ca adevărat va fi considerat fals.
+înseamnă că el este nemuritor. Aceasta este *ipoteza lumii închise* -- orice nu
+poate fi demonstrat ca adevărat va fi considerat fals.
 
 ```prolog
 % Este Rhesus muritor și rege al Traciei, aliat al Troiei?
@@ -188,7 +197,9 @@ Y = tracia.
 Antet :- Corp.
 ```
 
-O regulă este o declarație cu forma generală de mai sus, unde antentul este un predicat, iar corpul este alcătuit din premise separate de operatori. Ea se citește așa:
+O regulă este o declarație cu forma generală de mai sus, unde antentul este un
+predicat, iar corpul este alcătuit din premise separate de operatori. Ea se
+citește așa:
 
 > Antetul este adevărat dacă corpul este adevărat
 
@@ -287,9 +298,9 @@ negație.
 
 #### Procesul de execuție 2
 
-De asemenea, nu putem să "corectăm" greșeala anterioară prin "hardcodarea" valorii `false`,
-ca mai jos, întrucât procesul de execuție încearcă în ordinea din fișier toate
-declarațiile unui predicat până la satisfacerea acelui scop.
+De asemenea, nu putem să "corectăm" greșeala anterioară prin "hardcodarea"
+valorii `false`, ca mai jos, întrucât procesul de execuție încearcă în ordinea
+din fișier toate declarațiile unui predicat până la satisfacerea acelui scop.
 
 ```prolog
 muritor(hunabku) :- false. % declarație ineficace
@@ -331,10 +342,9 @@ if (ptr != NULL && ptr->field != ILLEGAL_VALUE) {
 [unificare](https://www.swi-prolog.org/pldoc/man?section=glossary#gloss:unify),
 adică despre operatorul `=`. 
 
-> Unificarea = procesul de identificare a valorilor
-variabilelor din 2 sau mai multe expresii, astfel încât
-substituirea variabilelor prin valorile asociate
-sa conducă la coincidența expresiilor
+> Unificarea = procesul de identificare a valorilor variabilelor din 2 sau mai
+> multe expresii, astfel încât substituirea variabilelor prin valorile asociate
+> sa conducă la coincidența expresiilor
 
 ```prolog
 ?- foo(a, B) = foo(A, b).
@@ -344,24 +354,44 @@ B = b.
 
 #### Diferitele tipuri de *"egalitate"*
 
-- [`=`](https://www.swi-prolog.org/pldoc/doc_for?object=(%3D)/2): operatorul de unificare. Dacă operanzii nu conțin variabile, atunci verifică identitatea operanzilor; altfel, caută o *legare* a variabilelor în așa fel încât operanzii să unifice.
+- [`=`](https://www.swi-prolog.org/pldoc/doc_for?object=(%3D)/2): operatorul de
+  unificare. Dacă operanzii nu conțin variabile, atunci verifică identitatea
+  operanzilor; altfel, caută o *legare* a variabilelor în așa fel încât
+  operanzii să unifice.
 
-- [`\=`](https://www.swi-prolog.org/pldoc/doc_for?object=(%5C%3D)/2): este adevărat doar dacă cei doi operanzi nu pot unifica -- nu se poate găsi o legare a variabilelor în așa fel încât operanzii să unifice.
+- [`\=`](https://www.swi-prolog.org/pldoc/doc_for?object=(%5C%3D)/2): este
+  adevărat doar dacă cei doi operanzi nu pot unifica -- nu se poate găsi o
+  legare a variabilelor în așa fel încât operanzii să unifice.
 
-- [`==`](https://www.swi-prolog.org/pldoc/doc_for?object=(%3D%3D)/2) : verifică dacă doi operanzi sunt același lucru, iar eventualele variabile nelegate din operanzi sunt forțate să unifice la același lucru (printr-o unificare anterioară, de exemplu cu `=`.
+- [`==`](https://www.swi-prolog.org/pldoc/doc_for?object=(%3D%3D)/2) : verifică
+  dacă doi operanzi sunt același lucru, iar eventualele variabile nelegate din
+  operanzi sunt forțate să unifice la același lucru (printr-o unificare
+  anterioară, de exemplu cu `=`).
+  ```prolog
+  ?- A=B, X=A, Y=B, X==Y, writeln("Adevarat").
+  Adevarat
+  A = B, B = X, X = Y.
+  ```
 
-- [`\==`](https://www.swi-prolog.org/pldoc/doc_for?object=(%5C%3D%3D)/2): echivalent cu `\+ T1 == T2`
+- [`\==`](https://www.swi-prolog.org/pldoc/doc_for?object=(%5C%3D%3D)/2):
+  echivalent cu `\+ T1 == T2`
 
-- [`is`](https://www.swi-prolog.org/pldoc/doc_for?object=(is)/2): evaluează operandul din **dreapta** și
-  - dacă în stânga este o variabilă nelegată, **leagă** această variabilă la valoarea din dreapta.
+- [`is`](https://www.swi-prolog.org/pldoc/doc_for?object=(is)/2): evaluează
+  operandul din **dreapta** și
+  - dacă în stânga este o variabilă nelegată, **leagă** această variabilă la
+    valoarea din dreapta.
   - dacă în stânga este un număr, este echivalent cu `=:=`
 
-- [`=:=`](https://www.swi-prolog.org/pldoc/doc_for?object=(%3D%3A%3D)/2): operator aritmetic care returnează adevărat dacă cele două *expresii* se evaluează la același *număr*. Operanzii trebuie să fie complet instanțiați.
+- [`=:=`](https://www.swi-prolog.org/pldoc/doc_for?object=(%3D%3A%3D)/2):
+  operator aritmetic care returnează adevărat dacă cele două *expresii* se
+  evaluează la același *număr*. Operanzii trebuie să fie complet instanțiați.
 
-- [`=\=`](https://www.swi-prolog.org/pldoc/doc_for?object=(%3D%5C%3D)/2): operator aritmetic care returnează adevărat dacă cele două *expresii* **nu** se evaluează la același *număr*. Operanzii trebuie să fie complet instanțiați.
+- [`=\=`](https://www.swi-prolog.org/pldoc/doc_for?object=(%3D%5C%3D)/2):
+  operator aritmetic care returnează adevărat dacă cele două *expresii* **nu**
+  se evaluează la același *număr*. Operanzii trebuie să fie complet instanțiați.
 
-Pentru o mai bună înțelegere, vom trata operatorii `=`, `is`, `==`, `\==`, `=:=` și
-`=\=` din mai multe perspective.
+Pentru o mai bună înțelegere, vom trata operatorii `=`, `is`, `==`, `\==`, `=:=`
+și `=\=` din mai multe perspective.
 
 În primul rând, din punct de vedere al necesității instanțierii variabilelor:
 
@@ -376,7 +406,7 @@ Pentru o mai bună înțelegere, vom trata operatorii `=`, `is`, `==`, `\==`, `=
     
     ?- X+2 = 1+Y.
     X = 1,
-    Y = 2. %** atenție** aici nu se realizează niciun calcul, Prolog doar face ambele expresii identice cu 1+2
+    Y = 2. % atenție aici nu se realizează niciun calcul, Prolog doar face ambele expresii identice cu 1+2
     ```
     - operatorul `is` poate lega doar o variabilă, în partea stângă
 
@@ -394,19 +424,19 @@ Pentru o mai bună înțelegere, vom trata operatorii `=`, `is`, `==`, `\==`, `=
     ERROR: Arguments are not sufficiently instantiated
     ```
 
-În al doilea rând, din exemplele de mai sus se deduce și ce tip de egalitate verifică fiecare
-dintre acești operatori:
+În al doilea rând, din exemplele de mai sus se deduce și ce tip de egalitate
+verifică fiecare dintre acești operatori:
 
- - `=` verifică dacă cele două părți unifică (modificarea termenului stâng determină
- modificarea temernului drept și viceversa):
+ - `=` verifică dacă cele două părți unifică (modificarea termenului stâng
+  determină modificarea temernului drept și viceversa):
 
   ``` prolog
   ?- X = 2 + 1.
   X = 2+1.
   ```
 
- - `==` verifică egalitatea sub formă simbolică (practic verifică asemănător cu potrivirea șirurilor
-de caractere):
+ - `==` verifică egalitatea sub formă simbolică (practic verifică asemănător cu
+  potrivirea șirurilor de caractere):
 
   ```prolog
   ?- 1 + 2 == 2 + 1.
@@ -415,8 +445,9 @@ de caractere):
   true.
   ```
 
- - `is` forțează evaluarea expresiilor (doar în partea dreapta) pentru a verifica
-egalitatea și face și o eventuală instanțiere (doar în partea stângă):
+ - `is` forțează evaluarea expresiilor (doar în partea dreapta) pentru a
+   verifica egalitatea și face și o eventuală instanțiere (doar în partea
+   stângă):
 
   ```prolog
   ?- X is 2 + 1.
@@ -475,7 +506,8 @@ Sunt o colecție ordonată de termeni, identificată prin paranteze pătrate.
   ([unifică](https://www.swi-prolog.org/pldoc/man?section=glossary#gloss:unify)
   mai bine zis) cu primul element al listei, iar variabila `Rest` cu lista fără
   acest prim element
-- Lista care începe cu n elemente `X1, X2, ..., XN` și continuă cu o altă listă `Rest`: `[X1,X2,...,XN|Rest]`
+- Lista care începe cu n elemente `X1, X2, ..., XN` și continuă cu o altă listă
+  `Rest`: `[X1,X2,...,XN|Rest]`
 
 #### Șiruri
 
@@ -508,7 +540,8 @@ cu `?`. Instanțierea parametrilor ține de specificarea acestora:
   - Dacă `Arg2` este deja instanțiat la evaluarea predicatului, evaluarea poate
     servi la verificarea corectitudinii argumentului în raport cu semnificația
     predicatului.
-    - Următorul exemplu, din laboratorele următore, îl folosește pe `R` ca o intrare, și pe `N` ca o ieșire.
+    - Următorul exemplu, din laboratorele următore, îl folosește pe `R` ca o
+      intrare, și pe `N` ca o ieșire.
     ```prolog
     % lungime(+Lista,-Lungime)
     lungime([],0).
