@@ -18,7 +18,7 @@ Aspectele urmărite sunt:
 
 ### Prolog
 
-Prolog a fost unul dintre
+[Prolog](https://en.wikipedia.org/wiki/Prolog) a fost unul dintre
 [primele](https://en.wikipedia.org/wiki/Logic_programming#History) limbaje de
 programare **logice** și rămâne în continuare cel mai popular astfel de limbaj,
 folosit în demonstratoarele de teoreme și utilizat inclusiv pentru o parte din
@@ -39,11 +39,11 @@ predicate de ordin I.
 
 > Toții peștii respiră. (prin branhii)
 
-$$\forall X . (peste(X) \Rightarrow respira(X))$$
+*∀ X . (peste(X) → respira(X))*
 
 > Unii pești au o respirație aeriană. (prin plămâni)
 
-$$\exists X. (peste(X) \land respiraAer(X))$$
+*∃ X . (peste(X) ∧ respira(X))*
 
 Limbajul restricționează această logică doar la folosirea de clauze Horn. O
 clauză este o disjuncție (o operație *sau*) peste predicate sau și negații de
@@ -51,22 +51,14 @@ predicate. O **clauză Horn** conține un singur literal pozitiv, ceea ce însea
 că este o implicație care nu poate avea drept concluzie o disjuncție între mai
 multe predicate. (Vezi cursul pentru o înțelegere mai bună.)
 
-$$\begin{align}
-A_1 \land A_2 \land \dots \land A_n &\Rightarrow A \\
-true &\Rightarrow B
-\end{align}$$
+A_1 ∧ A_2 ∧ ... ∧ A_n → A
+
+true → B
 
 Deci următoarea implicație **nu** poate fi transcrisă direct într-o regulă în
 Prolog, pentru că are ca implicație o disjuncție dintre două predicate.
 
-$$\begin{rcases}
-int(a) \\
-int(b) \\
-a \neq 0 \\
-sum(a, b) = 0
-\end{rcases}
-\Rightarrow negative(a) \lor negative(b)
-$$
+int(a) ∧ int(b) ∧ a ≠ 0 ∧ sum(a, b) = 0 → negative(a) ∨ negative(b)
 
 ### SWI-Prolog
 
