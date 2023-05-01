@@ -1,4 +1,17 @@
 # Prolog: Introducere
+  - Data publicării: 1.05.2023
+  - Data ultimei modificări: 1.05.2023
+  
+## Obiective
+
+Scopul acestui laborator este introducerea în programarea logică și învățarea primelor noțiuni despre Prolog.
+
+Aspectele urmărite sunt:
+
+  - diferențierea dintre aceasta paradigmă și cele studiate anterior
+  - familiarizarea cu entitățile limbajului: **fapte**, **reguli**, **scopuri**
+  - sintaxa **Prolog**
+  - structuri de date
 
 ## Motivație
 
@@ -6,7 +19,7 @@
 
 Prolog a fost unul dintre
 [primele](https://en.wikipedia.org/wiki/Logic_programming#History) limbaje de
-programare **logice**. Permite separarea datelor de procesul de inferență,
+programare **logice** și rămâne în continuare cel mai popular astfel de limbaj, folosit în demonstratoarele de teoreme și utilizat inclusiv pentru o parte din implementarea sistemului IBM Watson. Permite separarea datelor de procesul de inferență,
 programele fiind scrise într-un stil **declarativ** și uniform. Impactul
 principal l-a avut în cercetare, în domeniul inteligenței artificiale, dar a
 rămas un punct de inspirație pentru limbajele de după.
@@ -23,20 +36,20 @@ predicate de ordin I.
 
 > Toții peștii respiră. (prin branhii)
 
-$$\forall X . (peste(X) \Rightarrow respria(X))$$
+$$\forall X . (peste(X) \Rightarrow respira(X))$$
 
 > Unii pești au o respirație aeriană. (prin plămâni)
 
 $$\exists X. (peste(X) \land respiraAer(X))$$
 
-Limbajul restricționează această logică doar la folosirea de clauze Horn:
+Limbajul restricționează această logică doar la folosirea de clauze Horn. O clauză este o disjuncție (o operație *sau*) peste predicate sau și negații de predicate. O **clauză Horn** conține un singur literal pozitiv, ceea ce înseamnă că este o implicație care nu poate avea drept concluzie o disjuncție între mai multe predicate.
 
 $$\begin{align}
 A_1 \land A_2 \land \dots \land A_n &\Rightarrow A \\
 true &\Rightarrow B
 \end{align}$$
 
-Deci următoarea implicație nu poate fi transcrisă direct într-o regulă în
+Deci următoarea implicație **nu** poate fi transcrisă direct într-o regulă în
 Prolog, pentru că are ca implicație o disjuncție dintre două predicate.
 
 $$\begin{rcases}
@@ -74,7 +87,7 @@ tipuri de clauze:
 ### Axiome
 
 Axiomele sunt predicate de ordinul I de
-[aritate](https://ro.wikipedia.org/wiki/Aritate) *n*, considerate **adevărate**.
+[aritate](https://ro.wikipedia.org/wiki/Aritate) *n*, considerate **adevărate**. Ele stabilesc relații între obiectele universului problemei.
 
 Exemple de axiome:
 
@@ -109,12 +122,12 @@ false.
 
 În Prolog orice valoare se numește
 [termen](https://www.swi-prolog.org/pldoc/man?section=glossary#gloss:term).
-Tipuri simpli de termene: constante, sau mai bine zis *atomi* simbolici,
+Tipuri simpli de termeni: constante, sau mai bine zis *atomi* simbolici,
 întregi, numere în virgulă mobilă sau termeni compuși.
 
 Cuvântul
 [structură](https://www.swi-prolog.org/pldoc/man?section=glossary#gloss:structure)
-este un sinonim pentru termen
+este un sinonim pentru termenul
 [compus](https://www.swi-prolog.org/pldoc/man?section=glossary#gloss:compound).
 
 ```prolog
@@ -139,7 +152,7 @@ Calcul se face prin încercarea de a satisface[^1] *scopuri* (en. *goals*).
 
 **OBSERVAȚIE**: Când am interogat dacă Socrate este muritor, procesul de
 execuție a returnat `false` deoarece **nu** se putea satisface acest scop. Nu
-înseamnă că el este nemuritor. (*Ipoteza lumii închise*.)
+înseamnă că el este nemuritor. Aceasta este *ipoteza lumii închise* -- orice nu poate fi demonstrat ca adevărat va fi considerat fals.
 
 ```prolog
 % Este Rhesus muritor și rege al Traciei, aliat al Troiei?
@@ -160,7 +173,7 @@ numele variabilelor (`X`) începe cu literă mare iar numele atomilor
 (`leulDinNemeea`, `rhesus`) începe cu literă mică.
 
 Așa cum v-ați obișnuit de la Haskell, și Prolog permite folosirea de variablie
-[anonime](https://www.swi-prolog.org/pldoc/man?section=glossary#gloss:anonymou),
+[anonime](https://www.swi-prolog.org/pldoc/man?section=glossary#gloss:anonymous),
 `_`. Multiple folosiri ale lui `_` nu se leagă la același termen.
 
 ```prolog
