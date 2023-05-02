@@ -139,8 +139,7 @@ sunt transmise ca argumente, aceasta fiind o
 mai subtilă ce ține de reprezentarea internă a implementării.
 
 Consultați
-[**glosarul**](https://www.swi-prolog.org/pldoc/man?section=glossary) în caz de
-orice neînțelegere!!!
+**[glosarul](https://www.swi-prolog.org/pldoc/man?section=glossary)** pentru orice detalii suplimentare.
 
 ### Scopuri și variabile
 
@@ -219,7 +218,7 @@ Observați că:
 - Am folosit operatorul `,`, "și" logic ($\land$), deci a doua regulă a
   predicatului `muritor(?Cine)` are două premise.
 - Am folosit
-  [operatorul `\+`](https://www.swi-prolog.org/pldoc/doc_for?object=(%5C%2B)/1)
+  operatorul `\+` ([doc](https://www.swi-prolog.org/pldoc/doc_for?object=(%5C%2B)/1))
   pe care îl puteți trata ca pe o negație pentru moment.
 
 Rulăm următoarele interogări:
@@ -346,16 +345,16 @@ B = b.
 
 #### Diferitele tipuri de *"egalitate"*
 
-- [`=`](https://www.swi-prolog.org/pldoc/doc_for?object=(%3D)/2): operatorul de
+- `=` ([doc](https://www.swi-prolog.org/pldoc/doc_for?object=(%3D)/2)): operatorul de
   unificare. Dacă operanzii nu conțin variabile, atunci verifică identitatea
   operanzilor; altfel, caută o *legare* a variabilelor în așa fel încât
   operanzii să unifice.
 
-- [`\=`](https://www.swi-prolog.org/pldoc/doc_for?object=(%5C%3D)/2): este
+- `\=` ([doc](https://www.swi-prolog.org/pldoc/doc_for?object=(%5C%3D)/2)): este
   adevărat doar dacă cei doi operanzi nu pot unifica -- nu se poate găsi o
   legare a variabilelor în așa fel încât operanzii să unifice.
 
-- [`==`](https://www.swi-prolog.org/pldoc/doc_for?object=(%3D%3D)/2) : verifică
+- `==` ([doc](https://www.swi-prolog.org/pldoc/doc_for?object=(%3D%3D)/2)) : verifică
   dacă doi operanzi sunt același lucru, iar eventualele variabile nelegate din
   operanzi sunt forțate să unifice la același lucru (printr-o unificare
   anterioară, de exemplu cu `=`).
@@ -365,20 +364,20 @@ B = b.
   A = B, B = X, X = Y.
   ```
 
-- [`\==`](https://www.swi-prolog.org/pldoc/doc_for?object=(%5C%3D%3D)/2):
+- `\==` ([doc](https://www.swi-prolog.org/pldoc/doc_for?object=(%5C%3D%3D)/2)):
   echivalent cu `\+ T1 == T2`
 
-- [`is`](https://www.swi-prolog.org/pldoc/doc_for?object=(is)/2): evaluează
+- `is` ([doc](https://www.swi-prolog.org/pldoc/doc_for?object=(is)/2)): evaluează
   operandul din **dreapta** și
   - dacă în stânga este o variabilă nelegată, **leagă** această variabilă la
     valoarea din dreapta.
   - dacă în stânga este un număr, este echivalent cu `=:=`
 
-- [`=:=`](https://www.swi-prolog.org/pldoc/doc_for?object=(%3D%3A%3D)/2):
+- `=:=` ([doc](https://www.swi-prolog.org/pldoc/doc_for?object=(%3D%3A%3D)/2)):
   operator aritmetic care returnează adevărat dacă cele două *expresii* se
   evaluează la același *număr*. Operanzii trebuie să fie complet instanțiați.
 
-- [`=\=`](https://www.swi-prolog.org/pldoc/doc_for?object=(%3D%5C%3D)/2):
+- `=\=` ([doc](https://www.swi-prolog.org/pldoc/doc_for?object=(%3D%5C%3D)/2)):
   operator aritmetic care returnează adevărat dacă cele două *expresii* **nu**
   se evaluează la același *număr*. Operanzii trebuie să fie complet instanțiați.
 
@@ -493,13 +492,13 @@ Am discutat până acum de:
 Sunt o colecție ordonată de termeni, identificată prin paranteze pătrate.
 
 - Lista vidă: `[]`
-- Lista cu elementele a, b, c: `[a,b,c]`
-- Lista nevidă: `[Prim|Rest]` – unde variabila `Prim` se leagă
+- Lista cu elementele a, b, c: `[a, b, c]`
+- Lista nevidă: `[Prim | Rest]` – unde variabila `Prim` se leagă
   ([unifică](https://www.swi-prolog.org/pldoc/man?section=glossary#gloss:unify)
   mai bine zis) cu primul element al listei, iar variabila `Rest` cu lista fără
   acest prim element
 - Lista care începe cu n elemente `X1, X2, ..., XN` și continuă cu o altă listă
-  `Rest`: `[X1,X2,...,XN|Rest]`
+  `Rest`: `[X1, X2, ..., XN | Rest]`
 
 #### Șiruri
 
