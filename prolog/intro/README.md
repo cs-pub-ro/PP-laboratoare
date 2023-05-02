@@ -75,7 +75,7 @@ laborator.
 
 ## Sintaxă și semantică
 
-Programele scrise în Prolog descriu relații exprimitate prin clauze. Există două
+Programele scrise în Prolog descriu relații exprimate prin clauze. Există două
 tipuri de clauze:
 
 - axiome sau fapte (en. *facts*)
@@ -120,26 +120,37 @@ false.
 
 În Prolog orice valoare se numește
 [termen](https://www.swi-prolog.org/pldoc/man?section=glossary#gloss:term).
-Tipuri simpli de termeni: constante, sau mai bine zis *atomi* simbolici,
-întregi, numere în virgulă mobilă sau termeni compuși.
+Tipuri simpli de termeni:
+
+- Constante textuale, sau mai bine zis *atomi*
+  ```prolog
+  nume, ion, popescu
+  ```
+- Numere întregi/numere în virgulă mobilă
+- Variabile (vom detalia mai departe)
+  ```prolog
+  ?- om(X).
+  X = socrate.
+  ```
+- Termeni
+  [compuși](https://www.swi-prolog.org/pldoc/man?section=glossary#gloss:compound).
+  ```prolog
+  % exemplu structură
+  client(nume(ion, popescu), carte(aventuri, 2002)).
+  ```
 
 Cuvântul
 [structură](https://www.swi-prolog.org/pldoc/man?section=glossary#gloss:structure)
-este un sinonim pentru termenul
-[compus](https://www.swi-prolog.org/pldoc/man?section=glossary#gloss:compound).
+este un sinonim pentru termenul compus.
 
-```prolog
-% exemplu structură
-client(nume(ion, popescu), carte(aventuri, 2002)).
-```
-
-Puteți considera momentan că sintactic singura diferență este că predicatele nu
-sunt transmise ca argumente, aceasta fiind o
+Puteți considera momentan că singura diferență, sintactică, este că predicatele
+nu sunt transmise ca argumente, aceasta fiind o
 [discuție](https://stackoverflow.com/questions/28972038/prolog-structurecomplex-term-vs-predicate-i-dont-really-get-the-difference)
 mai subtilă ce ține de reprezentarea internă a implementării.
 
 Consultați
-**[glosarul](https://www.swi-prolog.org/pldoc/man?section=glossary)** pentru orice detalii suplimentare.
+[**glosarul**](https://www.swi-prolog.org/pldoc/man?section=glossary) pentru
+orice detalii suplimentare.
 
 ### Scopuri și variabile
 
@@ -147,7 +158,7 @@ Când rulăm interogări despre termeni și relațiile dintre ei spunem informal
 demonstrăm sau obținem informații pornind de la "baza noastră de date" (de la
 axiome, de la fapte).
 
-Calcul se face prin încercarea de a satisface[^1] *scopuri* (en. *goals*).
+Calcul se face prin încercarea de a satisface [^1] *scopuri* (en. *goals*).
 
 **OBSERVAȚIE**: Când am interogat dacă Socrate este muritor, procesul de
 execuție a returnat `false` deoarece **nu** se putea satisface acest scop. Nu
@@ -172,7 +183,7 @@ execuție încearcă **legarea** ei la diferite constante sau atomi. Prin conven
 numele variabilelor (`X`) începe cu literă mare iar numele atomilor
 (`leulDinNemeea`, `rhesus`) începe cu literă mică.
 
-Așa cum v-ați obișnuit de la Haskell, și Prolog permite folosirea de variablie
+Așa cum v-ați obișnuit de la Haskell, și Prolog permite folosirea de variabile
 [anonime](https://www.swi-prolog.org/pldoc/man?section=glossary#gloss:anonymous),
 `_`. Multiple folosiri ale lui `_` nu se leagă la același termen.
 
@@ -180,6 +191,9 @@ Așa cum v-ați obișnuit de la Haskell, și Prolog permite folosirea de variabl
 ?- muritor(X), rege(X, Y, _).
 X = rhesus,
 Y = tracia.
+
+?- muritor(X), rege(X, _, _).
+X = rhesus.
 ```
 
 ### Reguli
@@ -253,11 +267,11 @@ true.
 true.
 ```
 
-Deci mai întâi încearcă demonstrarea primei reguli pentru predicatul `muritor`
-și eșuează. Prima premisă din a doua regulă este adevărată (`viu(X)`). Observăm
-că **eșecul demonstrației** scopului `zeu(hercule)` determină adevărată a doua
-premisă (`\+ zeu(X)`). Cele două premise fiind puse în conjuncție, considerăm că
-Hercule este muritor.
+Observăm că mai întâi încearcă demonstrarea primei reguli pentru predicatul
+`muritor` și eșuează. Prima premisă din a doua regulă este adevărată (`viu(X)`).
+Observăm că **eșecul demonstrației** scopului `zeu(hercule)` determină adevărată
+a doua premisă (`\+ zeu(X)`). Cele două premise fiind puse în conjuncție,
+considerăm că Hercule este muritor.
 
 #### Negația ca eșec în demonstrație
 
@@ -478,7 +492,7 @@ sau inegalitatea lor valorică: `=:=` (egalitate), `=\=` (inegalitate)
   true.
   ```
 
-### Tiprui de date
+### Tipuri de date
 
 Am discutat până acum de:
 
@@ -502,7 +516,9 @@ Sunt o colecție ordonată de termeni, identificată prin paranteze pătrate.
 
 #### Șiruri
 
-O secvență de caractere înscrisă între `"`.
+O secvență de caractere (un
+[string](https://www.swi-prolog.org/pldoc/man?section=string)) va fi înscrisă
+între ghilimele (`"`).
 
 ```prolog
 ?- X= "abc", string(X), writeln(X).
@@ -526,12 +542,12 @@ cu `?`. Instanțierea parametrilor ține de specificarea acestora:
 - `Arg1` va fi deja instanțiat atunci când se va încerca satisfacerea unui scop
   care îl are ca premisă pe `predicat`.
 - `Arg2` va fi neinstanțiat atunci când se va încerca satisfacerea predicatului.
-  - Dacă predicatul este satisfăcut, `Arg2` va fa fi instanțiat la finalul
+  - Dacă predicatul este satisfăcut, `Arg2` va fi instanțiat la finalul
     evaluării.
   - Dacă `Arg2` este deja instanțiat la evaluarea predicatului, evaluarea poate
     servi la verificarea corectitudinii argumentului în raport cu semnificația
     predicatului.
-    - Următorul exemplu, din laboratorele următore, îl folosește pe `R` ca o
+    - Următorul exemplu, din laboratoarele următoare, îl folosește pe `R` ca
       intrare, și pe `N` ca o ieșire.
     ```prolog
     % lungime(+Lista,-Lungime)
