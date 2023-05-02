@@ -569,7 +569,7 @@ cu `?`. Instanțierea parametrilor ține de specificarea acestora:
 ## Resurse
 -   [Cheatsheet](https://github.com/cs-pub-ro/PP-laboratoare/raw/master/prolog/intro/prolog-cheatsheet-1.pdf)
 -   [Schelet](https://ocw.cs.pub.ro/courses/_media/pp/23/laboratoare/prolog/intro-schelet.zip)
--   [Soluții](https://ocw.cs.pub.ro/courses/_media/pp/23/laboratoare/prolog/intro-solutie.zip)
+-   [Soluții](https://ocw.cs.pub.ro/courses/_media/pp/23/laboratoare/prolog/intro-solutii.zip)
 
 ## Referințe
 
