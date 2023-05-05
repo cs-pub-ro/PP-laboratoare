@@ -1,49 +1,177 @@
 #  Prolog: Legare și execuție
 
-  * Data publicării: 16.05.2022
-  * Data ultimei modificări: 16.05.2022
+* Data publicării: TODO
+* Data ultimei modificări: 05.05.2023
 
 ## Obiective
 
-Scopul acestui laborator este introducerea unor noțiuni mai avansate de Prolog:
-  * procesul de backtracking realizat de Prolog
-  * lucrul cu variabile neinstanțiate (nelegate)
-  * controlul execuției și predicatul cut.
-  * obținerea tuturor soluțiilor ce satisfac un scop.
+Scopul acestui laborator este introducerea și _înțelegerea_ unor noțiuni mai
+avansate de Prolog:
+
+* procesul de backtracking realizat de Prolog
+* lucrul cu variabile neinstanțiate (nelegate)
+* controlul execuției și predicatul cut.
+* obținerea tuturor soluțiilor ce satisfac un scop.
+
+## Recapitulare
+
+Laboratorul trecut a introdus două elemete ale limbajului importante:
+
+- [variabile](https://www.swi-prolog.org/pldoc/man?section=glossary#gloss:variable)
+  > O variabilă este o valoare care nu a fost încă legată
+- operatorul de
+  [unificare](https://www.swi-prolog.org/pldoc/man?section=glossary#gloss:unify),
+  `=` [doc](https://www.swi-prolog.org/pldoc/doc_for?object=(%3D)/2)
+
+Un exemplu foarte simplu de legare unei variabile este prima interograre de mai
+jos, unde `X` s-a legat la atomul (constanta) `socrate` pentru a satisface
+scopul `om(X)` și apoi este printat atomul.
+
+```prolog
+om(socrate).
+
+caesar(gaiusIulius).      % Divus Iulius - divinul Iulius
+caesar(octavianAugustus). % Divi filius  - fiu divin
+
+?- om(X), writeln(X).
+socrate
+X = socrate. % legarea făcută pe parcursul satisfacerii scopului
+
+?- om(X), caesar(X), writeln(X).
+false.
+```
+
+În a doua interogare nicio regulă (cu corp sau nu) a predicatului `caesar` nu
+permite unificarea cu expresia `caesar(socrate)`. Practic:
+
+```prolog
+[trace]  ?- om(X), caesar(X), writeln("Succes").
+   Call: (11) om(_18822) ? creep
+   Exit: (11) om(socrate) ? creep
+   Call: (11) caesar(socrate) ? creep
+   Fail: (11) caesar(socrate) ? creep
+false.
+```
+
+La al doilea call `X` este deja legat și nu se poate demonstra scopul
+`caesar(socrate)`.
+
+
+### Unificare
+
+Ceea ce merită clarificat este că legarea unei variabile la o valoare este un
+pas necesar în procesul de unificare.
+
+Am folosit formularea `caesar(X)` nu unifică cu `caesar(socrate)`. Sau `om(X)`
+unifică cu `om(socrate)` leagându-l pe `X` la `socrate`.
+
+Totuși de ce legarea este importantă în înțelgerea unificării? În exemplul de
+mai jos cele două expresii diferă, deci nu ar trebui să unifice.
+
+```prolog
+?- caesar(gaiusIulius) = caesar(octavianAugustus).
+false.
+```
+
+**Mai important** este că, deși diferă, nu există *nicio* legare ca să facem
+expresiile să coincidă.
+
+```prolog
+?- caesar(X) = caesar(Y).
+X = Y.
+```
+
+În ultimul exemplu deși cele două expresii diferă, și ele referă variabile care
+nu sunt instanțiate la aceiași valoare, există o **legare** ca să se satisfacă
+scopul.
+
+### Domenii de vizibilitate
+
+Odată legată o variabilă la o valoare, aceasta nu se mai poate modifica pentru
+durata ei de viață. (Durata de viață va fi un concept clarificat pe parcursul
+laboratorului.)
+
+Atenție la următorii termeni:
+
+- domeniu de vizibilitate a unei variabile (en. *scope*)
+- [scop](https://www.swi-prolog.org/pldoc/man?section=glossary#gloss:goal) (en.
+  *goal*)
+
+```prolog
+single([A]).
+double([A, A]).
+
+?- single([1]), double([2, 2]).
+true.
+```
+
+În exemplul anterior am văzut că variabile denumite la fel (având același
+indentificator), `A` se pot lega în aceiași interogare la diferite valori, `1`
+și `2`. Deși cel mai bine este să consultați standardul limbajului, de obicei
+întinderea domeniului de vizibilitate a unei variabile este o singură caluză sau
+o interogare.
 
 ## Puterea generativă a limbajului
 
-Așa cum am văzut în laboratorul precedent scopurile pot fi privite ca întrebări ale căror răspunsuri sunt *true* sau *false*. În plus, acest răspuns poate fi însoțit de instanțierile variabilelor din cadrul scopului. Acest mecanism ne ajută să folosim scopurile pentru a obține rezultate de orice formă.
+Așa cum am văzut în laboratorul precedent scopurile pot fi privite ca întrebări
+ale căror răspunsuri sunt `true` sau `false`. În plus, acest răspuns poate fi
+însoțit de legări variabilelor din cadrul scopului.
 
-De exemplu, pentru a obține lungimea unei liste putem folosi:
+Pentru a obține lungimea unei liste putem folosi:
+
 ```prolog
-% lungime(+Lista,-Lungime)
-lungime([],0).
+% lungime(+Lista, -Lungime)
+lungime([], 0).
 lungime([_ | R], N) :- lungime(R, N1), N is N1 + 1.
-```
 
-```prolog
-?- lungime([1,2,3],N).
+?- lungime([1, 2, 3], N).
 N = 3.
 ```
 
-În exemplul de mai sus se va încerca satisfacerea scopului `lungime([1,2,3],N).` prin instanțierea convenabilă a variabilei `N`. În acest caz soluția este unică, dar așa cum am văzut anterior, putem avea situații în care există mai multe unificări posibile. Putem folosi faptul că se încearcă resatisfacerea unui scop în mod exhaustiv pentru a genera multiple rezultate.
-
-În exemplul de mai jos vom defini predicatul ``membru(?Elem,+List)`` care verifică apartenența unui element la o listă:
+În exemplul de mai sus se va încerca satisfacerea scopului `lungime([1,2,3],N)`
+printr-o legare convenabilă a variabilei `N`. Observați cum în interogări se
+generează o legare pentru variabile în funcție de legările apelurilor recursive.
 
 ```prolog
-% membru(?Elem,+Lista)
+[trace]  ?- lungime([1, 2, 3], N).
+   Call: (10) lungime([1, 2, 3], _9968) ? creep
+   Call: (11) lungime([2, 3], _10424) ? creep
+   Call: (12) lungime([3], _10468) ? creep
+   Call: (13) lungime([], _10512) ? creep
+   Exit: (13) lungime([], 0) ? creep
+   Call: (13) _10604 is 0+1 ? creep
+   Exit: (13) 1 is 0+1 ? creep
+   Exit: (12) lungime([3], 1) ? creep
+   Call: (12) _10742 is 1+1 ? creep
+   Exit: (12) 2 is 1+1 ? creep
+   Exit: (11) lungime([2, 3], 2) ? creep
+   Call: (11) _9968 is 2+1 ? creep
+   Exit: (11) 3 is 2+1 ? creep
+   Exit: (10) lungime([1, 2, 3], 3) ? creep
+N = 3.
+```
+
+În acest caz soluția este unică, dar așa cum am văzut anterior, putem avea
+situații în care există mai multe unificări posibile. Putem folosi faptul că se
+încearcă resatisfacerea unui scop în mod exhaustiv pentru a genera multiple
+rezultate.
+
+```prolog
+% Verifică dacă un element aparține unei liste
+% membru(?Elem, +Lista)
 membru(Elem, [Elem | _]).
 membru(Elem, [_ | Rest]) :- membru(Elem, Rest).
 ```
 
 Putem folosi acest predicat pentru a obține un răspuns:
+
 ```prolog
 ?- membru(3, [1, 2, 3, 4, 5]).
 true.
 ```
 
 Sau putem să îl folosim pentru a genera pe rând toate elementele unei liste:
+
 ```prolog
 ?- membru(N, [1, 2, 3]).
 N = 1 ;
