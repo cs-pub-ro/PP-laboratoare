@@ -82,8 +82,8 @@ X = Y.
 ```
 
 În ultimul exemplu deși cele două expresii diferă, și ele referă variabile care
-nu sunt instanțiate la aceiași valoare, există o **legare** ca să se satisfacă
-scopul.
+nu sunt instanțiate la aceiași valoare, există cel puțin o **legare** ca să se
+satisfacă scopul, și anume dacă `X` și `Y` se leagă la aceiași valoare.
 
 ### Domenii de vizibilitate
 
@@ -110,6 +110,56 @@ indentificator), `A` se pot lega în aceiași interogare la diferite valori, `1`
 și `2`. Deși cel mai bine este să consultați standardul limbajului, de obicei
 întinderea domeniului de vizibilitate a unei variabile este o singură caluză sau
 o interogare.
+
+### Negația ca eșec (\\+)
+
+Prolog utilizează *presupunerea lumii închise*: ceea ce nu poate fi demonstrat, este fals. De aceea, în Prolog `\+ p` trebuie citit ca:
+
+> scopul `p` nu poate fi satisfăcut
+> 
+> (sau)
+> `p` nu poate fi demonstrat
+
+Faptul că Prolog utilizează negația ca eșec (eng. *negation as failure*) are implicații asupra execuției programelor.
+
+În logica de ordinul întâi, următoarele două expresii sunt echivalente: *¬a(X) ^
+b(X)* și *b(X) ^ ¬a(X)*. În Prolog, următoarele 2 clauze (`p1` și `p2`) vor
+produce rezultate diferite:
+
+```prolog
+student(andrei).
+student(marius).
+lazy(marius).
+
+p1(X) :- student(X), \+ lazy(X).
+p2(X) :- \+ lazy(X), student(X).
+```
+
+Acesta se întâmplă pentru că, Prolog **nu poate să derive, pe baza negației,
+legări** pentru `X`. În Prolog putem folosi negația doar pentru a *verifica*
+variabile deja legate sau pentru a exprima faptul că *nu se poate demonstra că
+predicatul este adevărat*.
+
+În `p1`, `X` este legat și negația are rolul de a verifica că `lazy` nu este
+adevărat pentru `X`. În `p2`, `X` este nelegat, deci putem interpreta
+rezultatele folosind a doua modalitate: Prolog va încerca să demonstreze că nu
+există `X` pentru care `lazy` să fie adevărat, ceea ce nu este corect.
+
+## Câteva observații asupra purității
+
+În logica de ordinul întâi clauzele *p(A, B) ^ q(A, B)* și *q(A, B) ^ p(A, B)*
+sunt echivalente. Ordinea termenilor dintr-o conjuncție (sau disjuncție) nu
+influențează valoarea de adevăr a clauzei.
+
+În Prolog acest lucru nu este întotdeauna adevărat:
+
+```prolog
+?- X = Y, X == Y. 
+X = Y.
+
+?- X == Y, X = Y. 
+false.
+```
 
 ## Puterea generativă a limbajului
 
@@ -180,23 +230,46 @@ N = 3 ;
 false.
 ```
 
-Inițial, scopul `membru(N, [1,2,3]).` va unifica cu faptul `membru(Elem, [Elem | _]).`, în care `Elem = N` și `Elem = 1`, din care rezultă instanțierea `N = 1`. Apoi se va încerca unificarea cu antetul de regulă `membru(Elem, [_ | Rest])`, în care `Elem = N`, iar `Rest = [2, 3]`. Acest lucru implică satisfacerea unui nou scop, `membru(N, [2, 3]).`. Noul scop va unifica, de asemenea, cu faptul de la linia 1, `membru(Elem, [Elem | _]).`, din care va rezulta `N = 2`. Asemănător se va găsi și soluția `N = 3`, după care nu va mai reuși nicio altă unificare.
+Inițial, se va încerca unificarea scopul `membru(N, [1, 2, 3])` cu faptul
+`membru(Elem, [Elem | _]).`. Deci ar trebui să unificăm `Elem = N` și
+`Elem = 1`, ceea ce poate prin legarea `N = 1`.
 
-Pentru a exemplifica utilizarea acestui mecanism, vom considera următorul exemplu în care dorim generarea, pe rând, a tuturor permutărilor unei liste:
+Când alegem să ni se mai *genereze* un răspuns, tastând `;`, se va încerca
+unificarea cu antetul de regulă `membru(Elem, [_ | Rest])`, în care `Elem = N`,
+iar `Rest = [2, 3]`. Acestă încercare implică satisfacerea unui nou scop,
+`membru(N, [2, 3])`. Noul scop va unifica, de asemenea, cu primul fapt,
+`membru(Elem, [Elem | _])`, din care va rezulta `N = 2`.
+
+Asemănător se va găsi și soluția `N = 3`, după care nu va mai reuși nicio altă
+unificare.
+
+Pentru a exemplifica utilizarea acestui mecanism, vom considera următorul
+exemplu în care dorim generarea, pe rând, a tuturor permutărilor unei liste.
+Definim mai întâi un predicat ajutător care șterge un element dintr-o listă.
 
 ```prolog
 % remove(+Elem, +Lista, -ListaNoua)
-remove(E, [E | R], R).
-remove(E, [F | R], [F | L]) :- remove(E, R, L).
+remove(Elem, [Elem | Rest], Rest).
+remove(Elem, [Head | Rest], [Head | Left]) :- remove(Elem, Rest, Left).
 ```
+
+Ca să generăm o permutare pentru o listă `[Head | Rest]`, vom genera mai întâi o
+permutare pentru lista `Rest`. Apoi ne vom folosi de predicatul `remove` pentru
+a insera pe `Head` pe diferinte poziții în această "subpermutare".
 
 ```prolog
 % perm(+Lista, -Permutare)
 perm([], []).
-perm([F | R], P) :- perm(R, P1), remove(F, P, P1).
+perm([Head | Rest], Perm) :- perm(Rest, P1), remove(Head, Perm, P1).
 ```
 
-Observați ca am definit predicatul `remove(+Elem, +Lista, -ListaNoua)`, care șterge un element dintr-o listă. Rolul acestuia în cadrul regulii `perm([F | R], P):- perm(R, P1), remove(F, P, P1).` este, de fapt, de a insera elementul `F` în permutarea `P1`. Poziția pe care va fi inserat elementul va fi diferită la fiecare resatisfacere a scopului `remove(F, P, P1)`, ceea ce ne ajută sa obținem permutările.
+Observați că în a doua premisă, `remove(Head, Perm, P1)`, `P1` este deja legat
+dacă s-a reușit satisfacerea primei premise, `perm(Rest, P1)`. Cazul de bază
+`perm([], [])` ne asigură această reușită mereu.
+
+Folosim predicatul `remove` cu al doilea parametru nelegat pentru a genera o
+listă `Perm`. Dacă din `Perm` l-am șterge pe `Head` ar rezulta `P1`. Urmăriți
+exemplul de mai jos.
 
 ```prolog
 ?- remove(3, L, [1, 1, 1]).
@@ -206,6 +279,8 @@ L = [1, 1, 3, 1] ;
 L = [1, 1, 1, 3] ;
 false.
 ```
+
+Iar acesta este comportamentul predicatului final:
 
 ```prolog
 ?- perm([1, 2, 3], Perm).
@@ -223,6 +298,18 @@ Putem folosi puterea generativă a limbajului pentru a produce soluții bazate p
 `?- [L1,L2,L3]=[[1,2,3], [4,5,6], [5,6]], member(X, L1), member(Y, L2), S is X + Y, \+ member(S, L3).`
 
 ## Obținerea de soluții prin generare și testare
+
+### Considerente teoretice
+
+Un algoritm este nedeterminist dacă poate alege următoarea sa stare. Deci are
+mai multe căi de execuție, fiecare cu rezultatul ei.
+
+Prolog este un limbaj care implementează un model nedeterminist de execuție. În general, algoritmii nedeterminiști au două etape:
+
+1. Generarea tuturor valorilor care respectă o anumită structură.
+2. Verificarea dacă o valoare este sau nu o soluție.
+
+### Exemplu
 
 Fie problema colorării a 7 țări de pe o hartă folosind 3 culori. Scopul este acela de a atribui câte o culoare fiecărei țări, astfel încât nicio țară să nu aibă niciun vecin de aceeași culoare cu aceasta. Soluția problemei va fi o listă de atribuiri din domeniul `["r", "g", "b"]`, care desemnează culorile atribuite fiecărei țări `(1, 2, 3, 4, 5, 6, 7)`.
 
@@ -266,23 +353,7 @@ solve_maps(S):-template(S), correct(S).
         asigură un câștig în viteza de calcul (câștigul se observă la
         scrierea predicatului safe).
 
-## Controlul execuției: operatorul cut (!), negația (\\+) și false
-
-### Negația ca eșec (\\+)
-
-`\+` este operatorul folosit pentru negație în Prolog (meta-predicatul `not` nu mai este recomandat). Așa cum ați observat nu se pot adăuga în baza de date fapte în forma negată și nici nu se pot scrie reguli pentru acestea. Dacă nu se poate demonstra `¬p`, atunci ce semnificație are în Prolog `not(Goal)` sau `\+ Goal`?
-
-Prolog utilizează *presupunerea lumii închise*: ceea ce nu poate fi demonstrat, este fals. De aceea, în Prolog `\+ p` trebuie citit ca "scopul `p` nu poate fi satisfăcut" sau "`p` nu poate fi demonstrat". Faptul că Prolog utilizează negația ca eșec (eng. *negation as failure*) are implicații asupra execuției programelor.
-
-În logica de ordinul întâi, următoarele două expresii sunt echivalente: `¬a(X) & b(X)` și `b(X) & ¬a(X)`. În Prolog, următoarele 2 clauze (`p1` și `p2`) vor produce rezultate diferite:
-
-```prolog
-student(andrei). student(marius). lazy(marius).
-p1(X) :- student(X), \+ lazy(X).
-p2(X) :- \+ lazy(X), student(X).
-```
-
-Acest lucru se întâmplă pentru că, în `p2`, Prolog nu poate să derive, pe baza negației, legări pentru `X`. În Prolog putem folosi negația doar pentru a *verifica* variabile deja legate, sau pentru a exprima faptul că *nu se poate demonstra că predicatul este adevărat*. În `p1`, `X` este legat și negația are rolul de a verifica că `lazy` nu este adevărat pentru `X`. În `p2`, `X` este nelegat, deci putem interpreta rezultatele folosind a doua modalitate: Prolog va încerca să demonstreze că nu există `X` pentru care `lazy` să fie adevărat, ceea ce nu este corect.
+## Controlul execuției: operatorul cut (`!`) și `false`
 
 ### Predicatul false
 
@@ -405,9 +476,12 @@ Prolog oferă un set special de predicate care pot construi liste din toate solu
 Predicatul `findall` pune în `Bag` câte un element Template pentru fiecare soluție a expresiei `Goal`. Desigur, predicatul este util atunci când `Goal` și `Template` au variabile comune. De exemplu: 
 ```prolog
 even(Numbers, Even):-
-    findall(X,(member(X, Numbers), X mod 2 =:= 0), Even).
+    findall(X,
+            (member(X, Numbers), X mod 2 =:= 0),
+            Even).
 
-?- even([1, 2, 3, 4, 5, 6, 7, 8, 9], Even). Even = [2, 4, 6, 8].
+?- even([1, 2, 3, 4, 5, 6, 7, 8, 9], Even).
+Even = [2, 4, 6, 8].
 ```
 
 ### forall(+Cond, +Action)
@@ -415,30 +489,15 @@ Predicatul `forall/2` verifică dacă pentru orice legare din `Cond`, care repre
 
 Exemple:
 ```prolog
-?- forall(member(X,[2, 4, 6]), X mod 2 =:= 0).
+?- forall(member(X, [2, 4, 6]), X mod 2 =:= 0).
 true.
 
-?- forall(member(X,[2, 4, 3, 6]), X mod 2 =:= 0).
+?- forall(member(X, [2, 4, 3, 6]), X mod 2 =:= 0).
 false.
 
 ?- forall(member(X, [6, 12, 18]), (X mod 2 =:= 0, X mod 3 =:= 0)).
 true.
 ```
-
-## Câteva observații asupra purității
-
-În logica de ordinul întâi clauzele `p(A,B) ^ q(A,B)` și `q(A,B) ^ p(A,B)` sunt echivalente. Ordinea termenilor dintr-o conjuncție (sau disjuncție) nu influențează valoarea de adevăr a clauzei.
-
-În Prolog acest lucru nu este întotdeauna adevărat:
-
-```prolog
-?- X = Y, X == Y. 
-X = Y.
-
-?- X == Y, X = Y. 
-false.
-```
-
 
 ## Resurse
 -   [Schelet](https://ocw.cs.pub.ro/courses/_media/pp/22/laboratoare/prolog/legare-executie-schelet.zip)
