@@ -62,8 +62,9 @@ La al doilea call `X` este deja legat și nu se poate demonstra scopul
 Ceea ce merită clarificat este că legarea unei variabile la o valoare este un
 pas necesar în procesul de unificare.
 
-Am folosit formularea `caesar(X)` nu unifică cu `caesar(socrate)`. Sau `om(X)`
-unifică cu `om(socrate)` leagându-l pe `X` la `socrate`.
+Am spus mai devereme că nicio regulă a predicatului `caesar` nu unifică cu
+`caesar(socrate)`. Sau `om(X)` unifică cu `om(socrate)` leagându-l pe `X` la
+`socrate`.
 
 Totuși de ce legarea este importantă în înțelgerea unificării? În exemplul de
 mai jos cele două expresii diferă, deci nu ar trebui să unifice.
@@ -84,6 +85,15 @@ X = Y.
 În ultimul exemplu deși cele două expresii diferă, și ele referă variabile care
 nu sunt instanțiate la aceiași valoare, există cel puțin o **legare** ca să se
 satisfacă scopul, și anume dacă `X` și `Y` se leagă la aceiași valoare.
+
+```prolog
+?- X = Y, string_concat("P", "P", X), writeln(Y).
+PP
+X = Y, Y = "PP".
+```
+
+Mai sus `X` și `Y` au unificat, iar legarea lui `X` îl leagă și pe `Y` la șirul
+"PP".
 
 ### Domenii de vizibilitate
 
@@ -117,8 +127,10 @@ Prolog utilizează *presupunerea lumii închise*: ceea ce nu poate fi demonstrat
 
 > scopul `p` nu poate fi satisfăcut
 > 
-> (sau)
 > `p` nu poate fi demonstrat
+>
+> nu se poate găsi o legare pentru variabile din premise astfel încât predicatul
+> să fie demonstrat 
 
 Faptul că Prolog utilizează negația ca eșec (eng. *negation as failure*) are implicații asupra execuției programelor.
 
@@ -297,62 +309,6 @@ Putem folosi puterea generativă a limbajului pentru a produce soluții bazate p
 
 `?- [L1,L2,L3]=[[1,2,3], [4,5,6], [5,6]], member(X, L1), member(Y, L2), S is X + Y, \+ member(S, L3).`
 
-## Obținerea de soluții prin generare și testare
-
-### Considerente teoretice
-
-Un algoritm este nedeterminist dacă poate alege următoarea sa stare. Deci are
-mai multe căi de execuție, fiecare cu rezultatul ei.
-
-Prolog este un limbaj care implementează un model nedeterminist de execuție. În general, algoritmii nedeterminiști au două etape:
-
-1. Generarea tuturor valorilor care respectă o anumită structură.
-2. Verificarea dacă o valoare este sau nu o soluție.
-
-### Exemplu
-
-Fie problema colorării a 7 țări de pe o hartă folosind 3 culori. Scopul este acela de a atribui câte o culoare fiecărei țări, astfel încât nicio țară să nu aibă niciun vecin de aceeași culoare cu aceasta. Soluția problemei va fi o listă de atribuiri din domeniul `["r", "g", "b"]`, care desemnează culorile atribuite fiecărei țări `(1, 2, 3, 4, 5, 6, 7)`.
-
-Această strategie se traduce în următorul cod Prolog:
-```prolog
-% predicat care verifică că toate elementele din prima listă sunt prezente în a doua
-all_members([], _).
-all_members([X | Rest], In) :- member(X, In), all_members(Rest, In).
-
-% predicat care verifică faptul că țările nu au culori identice cu niciun vecin
-solve(S) :- L = [_ | _], length(L, 7), all_members(L, ["r", "g", "b"]), safe(S).
-```
-
-Programul anterior este foarte ineficient. El construiește extrem de multe atribuiri, fără a le respinge pe cele "ilegale" într-un stadiu incipient al construcției.
-
-## Backtracking atunci când cunoaștem dimensiunea soluției
-
-Mecanismul de backtracking ne oferă o rezolvare mai eficientă. Știm că orice soluție pentru problema colorării hărților constă într-o listă de atribuiri a 3 culori, de genul `[X1/C1,X2/C2, ... X7/C7]`, scopul programului de rezolvare fiind să instanțieze adecvat variabilele X1, C1, X2, C2 etc.
-
-Vom considera că orice soluție este de forma `[1/C1,2/C2, ... 7/C7]`, deoarece ordinea țărilor nu este importantă.
-
-Fie problema mai generală a colorării a N țări folosind M culori. Definim soluția pentru N = 7 ca o soluție pentru problema generală a colorării hărților, care în plus respectă template-ul `[1/Y1,2/Y2, ... 7/Y7]`. Semnul "/" este folosit în acest caz ca o modalitate de alipire a unor valori, fără a calcula vreodată împărțirea.
-
-În Prolog vom scrie:
-```prolog
-% Lungimea soluției este cunoscută și fixă.
-template([1/_, 2/_, 3/_, 4/_, 5/_, 6/_, 7/_]).
-
-correct([]) :- !.
-correct([X/Y | Others]):-
-       correct(Others),
-       member(Y, ["r", "g", "b"]),
-       safe(X/Y, Others).
-
-solve_maps(S):-template(S), correct(S).
-```
-
-  - *Regulă:* Atunci când calea către soluție respectă un anumit template (avem de instanțiat un număr finit, predeterminat, de variabile), este eficient să definim un astfel de template în program.
-  - *Observație:* În exemplul de mai sus am reținut explicit
-        ordinea celor 7 țări. Redundanța în reprezentarea datelor ne
-        asigură un câștig în viteza de calcul (câștigul se observă la
-        scrierea predicatului safe).
-
 ## Controlul execuției: operatorul cut (`!`) și `false`
 
 ### Predicatul false
@@ -467,9 +423,61 @@ Dacă inegalitatea din prima regulă reușește, sigur nu mai avem nevoie de a d
 
 Aici, cut **nu** poate să lipsească -- dacă lipsește vom obține și soluții incorecte, ca în cazul lui `minB`.
 
+## Obținerea de soluții prin generare și testare
+
+### Considerente teoretice
+
+Un algoritm este nedeterminist dacă poate alege următoarea sa stare. Deci are
+mai multe căi de execuție, fiecare cu rezultatul ei.
+
+Prolog este un limbaj care implementează un model nedeterminist de execuție. În general, algoritmii nedeterminiști au două etape:
+
+1. Generarea tuturor valorilor care respectă o anumită structură.
+2. Verificarea dacă o valoare este sau nu o soluție.
+
+### Exemplu
+
+Fie problema identificării unei submulțimi de sumă dată. (en. *subset sum*) O
+rezolvăm cât mai simplu, mai întâi:
+
+```prolog
+subset_sum(+List, ?Sum).
+subset_sum(_, 0).
+subset_sum([_ | Rest], Sum) :- subset_sum(Rest, Sum).
+subset_sum([Head | Rest], Sum) :- subset_sum(Rest, S1), Sum is S1 + Head.
+
+?- subset_sum([4, 2, 1], 0).
+true .
+?- subset_sum([4, 2, 1], 7).
+true.
+?- subset_sum([4, 2, 1], 8).
+false.
+```
+
+Observați că premisa `subset_sum(Rest, S1)` generează legări pentru `S1` care
+s-ar putea dovedi nefolositoare în premisa de testare, `Sum is S1 + Head`.
+
+## Backtracking atunci când cunoaștem dimensiunea soluției
+
+```prolog
+subset_sum(+List, +Sum).
+subset_sum(_, 0) :- !.
+subset_sum([Head | Rest], Sum) :- Head > Sum, !, subset_sum(Rest, Sum).
+subset_sum([Head | Rest], Sum) :-
+    S1 is Sum - Head,
+    subset_sum(Rest, S1).
+```
+
+Considerăm adăugarea primului element **doar** dacă este mai mic decât suma
+cerută. Apoi am renunțat la posibilitatea folosirii variabilei `Sum`
+neinstațiate pentru a eficientiza apelurile recursive.
+
 ## Aflarea tuturor soluțiilor pentru satisfacerea unui scop
 
 Prolog oferă un set special de predicate care pot construi liste din toate soluțiile de satisfacere a unui scop. Acestea sunt extrem de utile deoarece altfel este complicată culegerea informațiilor la revenirea din backtracking (o alternativă este prezentată în secțiunea următoare).
+
+**Observație**: Orice legare din scopurile pasate ca parametru funcțiilor de mai
+jos **NU** nu se menține după încercarea de satisfacere.
 
 ### findall(+Template, +Goal, -Bag)
 
