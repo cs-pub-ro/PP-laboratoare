@@ -441,7 +441,7 @@ Fie problema identificării unei submulțimi de sumă dată. (en. *subset sum*) 
 rezolvăm cât mai simplu, mai întâi:
 
 ```prolog
-subset_sum(+List, ?Sum).
+% subset_sum(+List, ?Sum).
 subset_sum(_, 0).
 subset_sum([_ | Rest], Sum) :- subset_sum(Rest, Sum).
 subset_sum([Head | Rest], Sum) :- subset_sum(Rest, S1), Sum is S1 + Head.
@@ -460,7 +460,7 @@ s-ar putea dovedi nefolositoare în premisa de testare, `Sum is S1 + Head`.
 ## Backtracking atunci când cunoaștem dimensiunea soluției
 
 ```prolog
-subset_sum(+List, +Sum).
+% subset_sum(+List, +Sum).
 subset_sum(_, 0) :- !.
 subset_sum([Head | Rest], Sum) :- Head > Sum, !, subset_sum(Rest, Sum).
 subset_sum([Head | Rest], Sum) :-
