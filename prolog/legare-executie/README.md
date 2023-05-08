@@ -145,6 +145,14 @@ lazy(marius).
 
 p1(X) :- student(X), \+ lazy(X).
 p2(X) :- \+ lazy(X), student(X).
+
+% se incearcă și găsirea următorului student (de unde și spatiul dintre andrei și '.') ce îndeplinește
+% condiția, însă nu mai este găsit niciunul
+?- p1(X).
+X = andrei .
+
+?- p2(X).
+false.
 ```
 
 Acesta se întâmplă pentru că, Prolog **nu poate să derive, pe baza negației,
@@ -511,3 +519,4 @@ true.
 -   [Cheatsheet](https://github.com/cs-pub-ro/PP-laboratoare/raw/master/prolog/intro/prolog-cheatsheet-1.pdf)
 -   [Schelet](https://ocw.cs.pub.ro/courses/_media/pp/22/laboratoare/prolog/legare-executie-schelet.zip)
 -   [Soluții](https://ocw.cs.pub.ro/courses/_media/pp/22/laboratoare/prolog/legare-executie-solutii.zip)
+
