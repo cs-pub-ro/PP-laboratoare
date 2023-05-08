@@ -83,8 +83,8 @@ X = Y.
 ```
 
 În ultimul exemplu deși cele două expresii diferă, și ele referă variabile care
-nu sunt instanțiate la aceiași valoare, există cel puțin o **legare** ca să se
-satisfacă scopul, și anume dacă `X` și `Y` se leagă la aceiași valoare.
+nu sunt instanțiate la aceeași valoare, există cel puțin o **legare** ca să se
+satisfacă scopul, și anume dacă `X` și `Y` se leagă la aceeași valoare.
 
 ```prolog
 ?- X = Y, string_concat("P", "P", X), writeln(Y).
@@ -116,7 +116,7 @@ true.
 ```
 
 În exemplul anterior am văzut că variabile denumite la fel (având același
-indentificator), `A` se pot lega în aceiași interogare la diferite valori, `1`
+indentificator), `A` se pot lega în aceeași interogare la diferite valori, `1`
 și `2`. Deși cel mai bine este să consultați standardul limbajului, de obicei
 întinderea domeniului de vizibilitate a unei variabile este o singură caluză sau
 o interogare.
@@ -508,5 +508,6 @@ true.
 ```
 
 ## Resurse
+-   [Cheatsheet](https://github.com/cs-pub-ro/PP-laboratoare/raw/master/prolog/intro/prolog-cheatsheet-1.pdf)
 -   [Schelet](https://ocw.cs.pub.ro/courses/_media/pp/22/laboratoare/prolog/legare-executie-schelet.zip)
 -   [Soluții](https://ocw.cs.pub.ro/courses/_media/pp/22/laboratoare/prolog/legare-executie-solutii.zip)
