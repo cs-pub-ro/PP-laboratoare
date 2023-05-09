@@ -1,11 +1,11 @@
 #  Prolog: Legare și execuție
 
-* Data publicării: TODO
-* Data ultimei modificări: 05.05.2023
+* Data publicării: 09.05.2023
+* Data ultimei modificări: 09.05.2023
 
 ## Obiective
 
-Scopul acestui laborator este introducerea și _înțelegerea_ unor noțiuni mai
+Scopul acestui laborator este introducerea și înțelegerea unor noțiuni mai
 avansate de Prolog:
 
 * procesul de backtracking realizat de Prolog
@@ -15,7 +15,7 @@ avansate de Prolog:
 
 ## Recapitulare
 
-Laboratorul trecut a introdus două elemete ale limbajului importante:
+Laboratorul trecut a introdus două elemente ale limbajului importante:
 
 - [variabile](https://www.swi-prolog.org/pldoc/man?section=glossary#gloss:variable)
   > O variabilă este o valoare care nu a fost încă legată
@@ -23,7 +23,7 @@ Laboratorul trecut a introdus două elemete ale limbajului importante:
   [unificare](https://www.swi-prolog.org/pldoc/man?section=glossary#gloss:unify),
   `=` [doc](https://www.swi-prolog.org/pldoc/doc_for?object=(%3D)/2)
 
-Un exemplu foarte simplu de legare unei variabile este prima interograre de mai
+Un exemplu foarte simplu de legare unei variabile este prima interogare de mai
 jos, unde `X` s-a legat la atomul (constanta) `socrate` pentru a satisface
 scopul `om(X)` și apoi este printat atomul.
 
@@ -62,8 +62,8 @@ La al doilea call `X` este deja legat și nu se poate demonstra scopul
 Ceea ce merită clarificat este că legarea unei variabile la o valoare este un
 pas necesar în procesul de unificare.
 
-Am spus mai devereme că nicio regulă a predicatului `caesar` nu unifică cu
-`caesar(socrate)`. Sau `om(X)` unifică cu `om(socrate)` leagându-l pe `X` la
+Am spus mai devreme că nicio regulă a predicatului `caesar` nu unifică cu
+`caesar(socrate)`. Sau `om(X)` unifică cu `om(socrate)` legându-l pe `X` la
 `socrate`.
 
 Totuși de ce legarea este importantă în înțelgerea unificării? În exemplul de
@@ -116,9 +116,9 @@ true.
 ```
 
 În exemplul anterior am văzut că variabile denumite la fel (având același
-indentificator), `A` se pot lega în aceeași interogare la diferite valori, `1`
+identificator), `A` se pot lega în aceeași interogare la diferite valori, `1`
 și `2`. Deși cel mai bine este să consultați standardul limbajului, de obicei
-întinderea domeniului de vizibilitate a unei variabile este o singură caluză sau
+întinderea domeniului de vizibilitate a unei variabile este o singură clauză sau
 o interogare.
 
 ### Negația ca eșec (\\+)
@@ -148,7 +148,7 @@ p2(X) :- \+ lazy(X), student(X).
 
 ?- p1(X).
 X = andrei ;
-false. % se incearcă și găsirea următorului student care satisface cea de-a doua
+false. % se încearcă și găsirea următorului student care satisface cea de-a doua
 % premisă, însă nu se poate
 
 ?- p2(X).
@@ -256,7 +256,7 @@ Inițial, se va încerca unificarea scopul `membru(N, [1, 2, 3])` cu faptul
 
 Când alegem să ni se mai *genereze* un răspuns, tastând `;`, se va încerca
 unificarea cu antetul de regulă `membru(Elem, [_ | Rest])`, în care `Elem = N`,
-iar `Rest = [2, 3]`. Acestă încercare implică satisfacerea unui nou scop,
+iar `Rest = [2, 3]`. Această încercare implică satisfacerea unui nou scop,
 `membru(N, [2, 3])`. Noul scop va unifica, de asemenea, cu primul fapt,
 `membru(Elem, [Elem | _])`, din care va rezulta `N = 2`.
 
@@ -275,7 +275,7 @@ remove(Elem, [Head | Rest], [Head | Left]) :- remove(Elem, Rest, Left).
 
 Ca să generăm o permutare pentru o listă `[Head | Rest]`, vom genera mai întâi o
 permutare pentru lista `Rest`. Apoi ne vom folosi de predicatul `remove` pentru
-a insera pe `Head` pe diferinte poziții în această "subpermutare".
+a insera pe `Head` pe diferite poziții în această "subpermutare".
 
 ```prolog
 % perm(+Lista, -Permutare)
@@ -478,7 +478,7 @@ subset_sum([Head | Rest], Sum) :-
 
 Considerăm adăugarea primului element **doar** dacă este mai mic decât suma
 cerută. Apoi am renunțat la posibilitatea folosirii variabilei `Sum`
-neinstațiate pentru a eficientiza apelurile recursive.
+neinstanțiate pentru a eficientiza apelurile recursive.
 
 ## Aflarea tuturor soluțiilor pentru satisfacerea unui scop
 
