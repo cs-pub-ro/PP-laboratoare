@@ -1,49 +1,247 @@
 #  Prolog: Legare și execuție
 
-  * Data publicării: 16.05.2022
-  * Data ultimei modificări: 16.05.2022
+* Data publicării: TODO
+* Data ultimei modificări: 05.05.2023
 
 ## Obiective
 
-Scopul acestui laborator este introducerea unor noțiuni mai avansate de Prolog:
-  * procesul de backtracking realizat de Prolog
-  * lucrul cu variabile neinstanțiate (nelegate)
-  * controlul execuției și predicatul cut.
-  * obținerea tuturor soluțiilor ce satisfac un scop.
+Scopul acestui laborator este introducerea și _înțelegerea_ unor noțiuni mai
+avansate de Prolog:
+
+* procesul de backtracking realizat de Prolog
+* lucrul cu variabile neinstanțiate (nelegate)
+* controlul execuției și predicatul cut.
+* obținerea tuturor soluțiilor ce satisfac un scop.
+
+## Recapitulare
+
+Laboratorul trecut a introdus două elemete ale limbajului importante:
+
+- [variabile](https://www.swi-prolog.org/pldoc/man?section=glossary#gloss:variable)
+  > O variabilă este o valoare care nu a fost încă legată
+- operatorul de
+  [unificare](https://www.swi-prolog.org/pldoc/man?section=glossary#gloss:unify),
+  `=` [doc](https://www.swi-prolog.org/pldoc/doc_for?object=(%3D)/2)
+
+Un exemplu foarte simplu de legare unei variabile este prima interograre de mai
+jos, unde `X` s-a legat la atomul (constanta) `socrate` pentru a satisface
+scopul `om(X)` și apoi este printat atomul.
+
+```prolog
+om(socrate).
+
+caesar(gaiusIulius).      % Divus Iulius - divinul Iulius
+caesar(octavianAugustus). % Divi filius  - fiu divin
+
+?- om(X), writeln(X).
+socrate
+X = socrate. % legarea făcută pe parcursul satisfacerii scopului
+
+?- om(X), caesar(X), writeln(X).
+false.
+```
+
+În a doua interogare nicio regulă (cu corp sau nu) a predicatului `caesar` nu
+permite unificarea cu expresia `caesar(socrate)`. Practic:
+
+```prolog
+[trace]  ?- om(X), caesar(X), writeln("Succes").
+   Call: (11) om(_18822) ? creep
+   Exit: (11) om(socrate) ? creep
+   Call: (11) caesar(socrate) ? creep
+   Fail: (11) caesar(socrate) ? creep
+false.
+```
+
+La al doilea call `X` este deja legat și nu se poate demonstra scopul
+`caesar(socrate)`.
+
+
+### Unificare
+
+Ceea ce merită clarificat este că legarea unei variabile la o valoare este un
+pas necesar în procesul de unificare.
+
+Am spus mai devereme că nicio regulă a predicatului `caesar` nu unifică cu
+`caesar(socrate)`. Sau `om(X)` unifică cu `om(socrate)` leagându-l pe `X` la
+`socrate`.
+
+Totuși de ce legarea este importantă în înțelgerea unificării? În exemplul de
+mai jos cele două expresii diferă, deci nu ar trebui să unifice.
+
+```prolog
+?- caesar(gaiusIulius) = caesar(octavianAugustus).
+false.
+```
+
+**Mai important** este că, deși diferă, nu există *nicio* legare ca să facem
+expresiile să coincidă.
+
+```prolog
+?- caesar(X) = caesar(Y).
+X = Y.
+```
+
+În ultimul exemplu deși cele două expresii diferă, și ele referă variabile care
+nu sunt instanțiate la aceeași valoare, există cel puțin o **legare** ca să se
+satisfacă scopul, și anume dacă `X` și `Y` se leagă la aceeași valoare.
+
+```prolog
+?- X = Y, string_concat("P", "P", X), writeln(Y).
+PP
+X = Y, Y = "PP".
+```
+
+Mai sus `X` și `Y` au unificat, iar legarea lui `X` îl leagă și pe `Y` la șirul
+"PP".
+
+### Domenii de vizibilitate
+
+Odată legată o variabilă la o valoare, aceasta nu se mai poate modifica pentru
+durata ei de viață. (Durata de viață va fi un concept clarificat pe parcursul
+laboratorului.)
+
+Atenție la următorii termeni:
+
+- domeniu de vizibilitate a unei variabile (en. *scope*)
+- [scop](https://www.swi-prolog.org/pldoc/man?section=glossary#gloss:goal) (en.
+  *goal*)
+
+```prolog
+single([A]).
+double([A, A]).
+
+?- single([1]), double([2, 2]).
+true.
+```
+
+În exemplul anterior am văzut că variabile denumite la fel (având același
+indentificator), `A` se pot lega în aceeași interogare la diferite valori, `1`
+și `2`. Deși cel mai bine este să consultați standardul limbajului, de obicei
+întinderea domeniului de vizibilitate a unei variabile este o singură caluză sau
+o interogare.
+
+### Negația ca eșec (\\+)
+
+Prolog utilizează *presupunerea lumii închise*: ceea ce nu poate fi demonstrat, este fals. De aceea, în Prolog `\+ p` trebuie citit ca:
+
+> scopul `p` nu poate fi satisfăcut
+> 
+> `p` nu poate fi demonstrat
+>
+> nu se poate găsi o legare pentru variabile din premise astfel încât predicatul
+> să fie demonstrat 
+
+Faptul că Prolog utilizează negația ca eșec (eng. *negation as failure*) are implicații asupra execuției programelor.
+
+În logica de ordinul întâi, următoarele două expresii sunt echivalente: *¬a(X) ^
+b(X)* și *b(X) ^ ¬a(X)*. În Prolog, următoarele 2 clauze (`p1` și `p2`) vor
+produce rezultate diferite:
+
+```prolog
+student(andrei).
+student(marius).
+lazy(marius).
+
+p1(X) :- student(X), \+ lazy(X).
+p2(X) :- \+ lazy(X), student(X).
+
+?- p1(X).
+X = andrei ;
+false. % se incearcă și găsirea următorului student care satisface cea de-a doua
+% premisă, însă nu se poate
+
+?- p2(X).
+false.
+```
+
+Acesta se întâmplă pentru că, Prolog **nu poate să derive, pe baza negației,
+legări** pentru `X`. În Prolog putem folosi negația doar pentru a *verifica*
+variabile deja legate sau pentru a exprima faptul că *nu se poate demonstra că
+predicatul este adevărat*.
+
+În `p1`, `X` este legat și negația are rolul de a verifica că `lazy` nu este
+adevărat pentru `X`. În `p2`, `X` este nelegat, deci putem interpreta
+rezultatele folosind a doua modalitate: Prolog va încerca să demonstreze că nu
+există `X` pentru care `lazy` să fie adevărat, ceea ce nu este corect.
+
+## Câteva observații asupra purității
+
+În logica de ordinul întâi clauzele *p(A, B) ^ q(A, B)* și *q(A, B) ^ p(A, B)*
+sunt echivalente. Ordinea termenilor dintr-o conjuncție (sau disjuncție) nu
+influențează valoarea de adevăr a clauzei.
+
+În Prolog acest lucru nu este întotdeauna adevărat:
+
+```prolog
+?- X = Y, X == Y. 
+X = Y.
+
+?- X == Y, X = Y. 
+false.
+```
 
 ## Puterea generativă a limbajului
 
-Așa cum am văzut în laboratorul precedent scopurile pot fi privite ca întrebări ale căror răspunsuri sunt *true* sau *false*. În plus, acest răspuns poate fi însoțit de instanțierile variabilelor din cadrul scopului. Acest mecanism ne ajută să folosim scopurile pentru a obține rezultate de orice formă.
+Așa cum am văzut în laboratorul precedent scopurile pot fi privite ca întrebări
+ale căror răspunsuri sunt `true` sau `false`. În plus, acest răspuns poate fi
+însoțit de legări variabilelor din cadrul scopului.
 
-De exemplu, pentru a obține lungimea unei liste putem folosi:
+Pentru a obține lungimea unei liste putem folosi:
+
 ```prolog
-% lungime(+Lista,-Lungime)
-lungime([],0).
+% lungime(+Lista, -Lungime)
+lungime([], 0).
 lungime([_ | R], N) :- lungime(R, N1), N is N1 + 1.
-```
 
-```prolog
-?- lungime([1,2,3],N).
+?- lungime([1, 2, 3], N).
 N = 3.
 ```
 
-În exemplul de mai sus se va încerca satisfacerea scopului `lungime([1,2,3],N).` prin instanțierea convenabilă a variabilei `N`. În acest caz soluția este unică, dar așa cum am văzut anterior, putem avea situații în care există mai multe unificări posibile. Putem folosi faptul că se încearcă resatisfacerea unui scop în mod exhaustiv pentru a genera multiple rezultate.
-
-În exemplul de mai jos vom defini predicatul ``membru(?Elem,+List)`` care verifică apartenența unui element la o listă:
+În exemplul de mai sus se va încerca satisfacerea scopului `lungime([1,2,3],N)`
+printr-o legare convenabilă a variabilei `N`. Observați cum în interogări se
+generează o legare pentru variabile în funcție de legările apelurilor recursive.
 
 ```prolog
-% membru(?Elem,+Lista)
+[trace]  ?- lungime([1, 2, 3], N).
+   Call: (10) lungime([1, 2, 3], _9968) ? creep
+   Call: (11) lungime([2, 3], _10424) ? creep
+   Call: (12) lungime([3], _10468) ? creep
+   Call: (13) lungime([], _10512) ? creep
+   Exit: (13) lungime([], 0) ? creep
+   Call: (13) _10604 is 0+1 ? creep
+   Exit: (13) 1 is 0+1 ? creep
+   Exit: (12) lungime([3], 1) ? creep
+   Call: (12) _10742 is 1+1 ? creep
+   Exit: (12) 2 is 1+1 ? creep
+   Exit: (11) lungime([2, 3], 2) ? creep
+   Call: (11) _9968 is 2+1 ? creep
+   Exit: (11) 3 is 2+1 ? creep
+   Exit: (10) lungime([1, 2, 3], 3) ? creep
+N = 3.
+```
+
+În acest caz soluția este unică, dar așa cum am văzut anterior, putem avea
+situații în care există mai multe unificări posibile. Putem folosi faptul că se
+încearcă resatisfacerea unui scop în mod exhaustiv pentru a genera multiple
+rezultate.
+
+```prolog
+% Verifică dacă un element aparține unei liste
+% membru(?Elem, +Lista)
 membru(Elem, [Elem | _]).
 membru(Elem, [_ | Rest]) :- membru(Elem, Rest).
 ```
 
 Putem folosi acest predicat pentru a obține un răspuns:
+
 ```prolog
 ?- membru(3, [1, 2, 3, 4, 5]).
 true.
 ```
 
 Sau putem să îl folosim pentru a genera pe rând toate elementele unei liste:
+
 ```prolog
 ?- membru(N, [1, 2, 3]).
 N = 1 ;
@@ -52,23 +250,46 @@ N = 3 ;
 false.
 ```
 
-Inițial, scopul `membru(N, [1,2,3]).` va unifica cu faptul `membru(Elem, [Elem | _]).`, în care `Elem = N` și `Elem = 1`, din care rezultă instanțierea `N = 1`. Apoi se va încerca unificarea cu antetul de regulă `membru(Elem, [_ | Rest])`, în care `Elem = N`, iar `Rest = [2, 3]`. Acest lucru implică satisfacerea unui nou scop, `membru(N, [2, 3]).`. Noul scop va unifica, de asemenea, cu faptul de la linia 1, `membru(Elem, [Elem | _]).`, din care va rezulta `N = 2`. Asemănător se va găsi și soluția `N = 3`, după care nu va mai reuși nicio altă unificare.
+Inițial, se va încerca unificarea scopul `membru(N, [1, 2, 3])` cu faptul
+`membru(Elem, [Elem | _]).`. Deci ar trebui să unificăm `Elem = N` și
+`Elem = 1`, ceea ce poate prin legarea `N = 1`.
 
-Pentru a exemplifica utilizarea acestui mecanism, vom considera următorul exemplu în care dorim generarea, pe rând, a tuturor permutărilor unei liste:
+Când alegem să ni se mai *genereze* un răspuns, tastând `;`, se va încerca
+unificarea cu antetul de regulă `membru(Elem, [_ | Rest])`, în care `Elem = N`,
+iar `Rest = [2, 3]`. Acestă încercare implică satisfacerea unui nou scop,
+`membru(N, [2, 3])`. Noul scop va unifica, de asemenea, cu primul fapt,
+`membru(Elem, [Elem | _])`, din care va rezulta `N = 2`.
+
+Asemănător se va găsi și soluția `N = 3`, după care nu va mai reuși nicio altă
+unificare.
+
+Pentru a exemplifica utilizarea acestui mecanism, vom considera următorul
+exemplu în care dorim generarea, pe rând, a tuturor permutărilor unei liste.
+Definim mai întâi un predicat ajutător care șterge un element dintr-o listă.
 
 ```prolog
 % remove(+Elem, +Lista, -ListaNoua)
-remove(E, [E | R], R).
-remove(E, [F | R], [F | L]) :- remove(E, R, L).
+remove(Elem, [Elem | Rest], Rest).
+remove(Elem, [Head | Rest], [Head | Left]) :- remove(Elem, Rest, Left).
 ```
+
+Ca să generăm o permutare pentru o listă `[Head | Rest]`, vom genera mai întâi o
+permutare pentru lista `Rest`. Apoi ne vom folosi de predicatul `remove` pentru
+a insera pe `Head` pe diferinte poziții în această "subpermutare".
 
 ```prolog
 % perm(+Lista, -Permutare)
 perm([], []).
-perm([F | R], P) :- perm(R, P1), remove(F, P, P1).
+perm([Head | Rest], Perm) :- perm(Rest, P1), remove(Head, Perm, P1).
 ```
 
-Observați ca am definit predicatul `remove(+Elem, +Lista, -ListaNoua)`, care șterge un element dintr-o listă. Rolul acestuia în cadrul regulii `perm([F | R], P):- perm(R, P1), remove(F, P, P1).` este, de fapt, de a insera elementul `F` în permutarea `P1`. Poziția pe care va fi inserat elementul va fi diferită la fiecare resatisfacere a scopului `remove(F, P, P1)`, ceea ce ne ajută sa obținem permutările.
+Observați că în a doua premisă, `remove(Head, Perm, P1)`, `P1` este deja legat
+dacă s-a reușit satisfacerea primei premise, `perm(Rest, P1)`. Cazul de bază
+`perm([], [])` ne asigură această reușită mereu.
+
+Folosim predicatul `remove` cu al doilea parametru nelegat pentru a genera o
+listă `Perm`. Dacă din `Perm` l-am șterge pe `Head` ar rezulta `P1`. Urmăriți
+exemplul de mai jos.
 
 ```prolog
 ?- remove(3, L, [1, 1, 1]).
@@ -78,6 +299,8 @@ L = [1, 1, 3, 1] ;
 L = [1, 1, 1, 3] ;
 false.
 ```
+
+Iar acesta este comportamentul predicatului final:
 
 ```prolog
 ?- perm([1, 2, 3], Perm).
@@ -94,67 +317,7 @@ Putem folosi puterea generativă a limbajului pentru a produce soluții bazate p
 
 `?- [L1,L2,L3]=[[1,2,3], [4,5,6], [5,6]], member(X, L1), member(Y, L2), S is X + Y, \+ member(S, L3).`
 
-## Obținerea de soluții prin generare și testare
-
-Fie problema colorării a 7 țări de pe o hartă folosind 3 culori. Scopul este acela de a atribui câte o culoare fiecărei țări, astfel încât nicio țară să nu aibă niciun vecin de aceeași culoare cu aceasta. Soluția problemei va fi o listă de atribuiri din domeniul `["r", "g", "b"]`, care desemnează culorile atribuite fiecărei țări `(1, 2, 3, 4, 5, 6, 7)`.
-
-Această strategie se traduce în următorul cod Prolog:
-```prolog
-% predicat care verifică că toate elementele din prima listă sunt prezente în a doua
-all_members([], _).
-all_members([X | Rest], In) :- member(X, In), all_members(Rest, In).
-
-% predicat care verifică faptul că țările nu au culori identice cu niciun vecin
-solve(S) :- L = [_ | _], length(L, 7), all_members(L, ["r", "g", "b"]), safe(S).
-```
-
-Programul anterior este foarte ineficient. El construiește extrem de multe atribuiri, fără a le respinge pe cele "ilegale" într-un stadiu incipient al construcției.
-
-## Backtracking atunci când cunoaștem dimensiunea soluției
-
-Mecanismul de backtracking ne oferă o rezolvare mai eficientă. Știm că orice soluție pentru problema colorării hărților constă într-o listă de atribuiri a 3 culori, de genul `[X1/C1,X2/C2, ... X7/C7]`, scopul programului de rezolvare fiind să instanțieze adecvat variabilele X1, C1, X2, C2 etc.
-
-Vom considera că orice soluție este de forma `[1/C1,2/C2, ... 7/C7]`, deoarece ordinea țărilor nu este importantă.
-
-Fie problema mai generală a colorării a N țări folosind M culori. Definim soluția pentru N = 7 ca o soluție pentru problema generală a colorării hărților, care în plus respectă template-ul `[1/Y1,2/Y2, ... 7/Y7]`. Semnul "/" este folosit în acest caz ca o modalitate de alipire a unor valori, fără a calcula vreodată împărțirea.
-
-În Prolog vom scrie:
-```prolog
-% Lungimea soluției este cunoscută și fixă.
-template([1/_, 2/_, 3/_, 4/_, 5/_, 6/_, 7/_]).
-
-correct([]) :- !.
-correct([X/Y | Others]):-
-       correct(Others),
-       member(Y, ["r", "g", "b"]),
-       safe(X/Y, Others).
-
-solve_maps(S):-template(S), correct(S).
-```
-
-  - *Regulă:* Atunci când calea către soluție respectă un anumit template (avem de instanțiat un număr finit, predeterminat, de variabile), este eficient să definim un astfel de template în program.
-  - *Observație:* În exemplul de mai sus am reținut explicit
-        ordinea celor 7 țări. Redundanța în reprezentarea datelor ne
-        asigură un câștig în viteza de calcul (câștigul se observă la
-        scrierea predicatului safe).
-
-## Controlul execuției: operatorul cut (!), negația (\\+) și false
-
-### Negația ca eșec (\\+)
-
-`\+` este operatorul folosit pentru negație în Prolog (meta-predicatul `not` nu mai este recomandat). Așa cum ați observat nu se pot adăuga în baza de date fapte în forma negată și nici nu se pot scrie reguli pentru acestea. Dacă nu se poate demonstra `¬p`, atunci ce semnificație are în Prolog `not(Goal)` sau `\+ Goal`?
-
-Prolog utilizează *presupunerea lumii închise*: ceea ce nu poate fi demonstrat, este fals. De aceea, în Prolog `\+ p` trebuie citit ca "scopul `p` nu poate fi satisfăcut" sau "`p` nu poate fi demonstrat". Faptul că Prolog utilizează negația ca eșec (eng. *negation as failure*) are implicații asupra execuției programelor.
-
-În logica de ordinul întâi, următoarele două expresii sunt echivalente: `¬a(X) & b(X)` și `b(X) & ¬a(X)`. În Prolog, următoarele 2 clauze (`p1` și `p2`) vor produce rezultate diferite:
-
-```prolog
-student(andrei). student(marius). lazy(marius).
-p1(X) :- student(X), \+ lazy(X).
-p2(X) :- \+ lazy(X), student(X).
-```
-
-Acest lucru se întâmplă pentru că, în `p2`, Prolog nu poate să derive, pe baza negației, legări pentru `X`. În Prolog putem folosi negația doar pentru a *verifica* variabile deja legate, sau pentru a exprima faptul că *nu se poate demonstra că predicatul este adevărat*. În `p1`, `X` este legat și negația are rolul de a verifica că `lazy` nu este adevărat pentru `X`. În `p2`, `X` este nelegat, deci putem interpreta rezultatele folosind a doua modalitate: Prolog va încerca să demonstreze că nu există `X` pentru care `lazy` să fie adevărat, ceea ce nu este corect.
+## Controlul execuției: operatorul cut (`!`) și `false`
 
 ### Predicatul false
 
@@ -268,18 +431,73 @@ Dacă inegalitatea din prima regulă reușește, sigur nu mai avem nevoie de a d
 
 Aici, cut **nu** poate să lipsească -- dacă lipsește vom obține și soluții incorecte, ca în cazul lui `minB`.
 
+## Obținerea de soluții prin generare și testare
+
+### Considerente teoretice
+
+Un algoritm este nedeterminist dacă poate alege următoarea sa stare. Deci are
+mai multe căi de execuție, fiecare cu rezultatul ei.
+
+Prolog este un limbaj care implementează un model nedeterminist de execuție. În general, algoritmii nedeterminiști au două etape:
+
+1. Generarea tuturor valorilor care respectă o anumită structură.
+2. Verificarea dacă o valoare este sau nu o soluție.
+
+### Exemplu
+
+Fie problema identificării unei submulțimi de sumă dată. (en. *subset sum*) O
+rezolvăm cât mai simplu, mai întâi:
+
+```prolog
+% subset_sum(+List, ?Sum).
+subset_sum(_, 0).
+subset_sum([_ | Rest], Sum) :- subset_sum(Rest, Sum).
+subset_sum([Head | Rest], Sum) :- subset_sum(Rest, S1), Sum is S1 + Head.
+
+?- subset_sum([4, 2, 1], 0).
+true .
+?- subset_sum([4, 2, 1], 7).
+true.
+?- subset_sum([4, 2, 1], 8).
+false.
+```
+
+Observați că premisa `subset_sum(Rest, S1)` generează legări pentru `S1` care
+s-ar putea dovedi nefolositoare în premisa de testare, `Sum is S1 + Head`.
+
+## Backtracking atunci când cunoaștem dimensiunea soluției
+
+```prolog
+% subset_sum(+List, +Sum).
+subset_sum(_, 0) :- !.
+subset_sum([Head | Rest], Sum) :- Head > Sum, !, subset_sum(Rest, Sum).
+subset_sum([Head | Rest], Sum) :-
+    S1 is Sum - Head,
+    subset_sum(Rest, S1).
+```
+
+Considerăm adăugarea primului element **doar** dacă este mai mic decât suma
+cerută. Apoi am renunțat la posibilitatea folosirii variabilei `Sum`
+neinstațiate pentru a eficientiza apelurile recursive.
+
 ## Aflarea tuturor soluțiilor pentru satisfacerea unui scop
 
 Prolog oferă un set special de predicate care pot construi liste din toate soluțiile de satisfacere a unui scop. Acestea sunt extrem de utile deoarece altfel este complicată culegerea informațiilor la revenirea din backtracking (o alternativă este prezentată în secțiunea următoare).
+
+**Observație**: Orice legare din scopurile pasate ca parametru funcțiilor de mai
+jos **NU** nu se menține după încercarea de satisfacere.
 
 ### findall(+Template, +Goal, -Bag)
 
 Predicatul `findall` pune în `Bag` câte un element Template pentru fiecare soluție a expresiei `Goal`. Desigur, predicatul este util atunci când `Goal` și `Template` au variabile comune. De exemplu: 
 ```prolog
 even(Numbers, Even):-
-    findall(X,(member(X, Numbers), X mod 2 =:= 0), Even).
+    findall(X,
+            (member(X, Numbers), X mod 2 =:= 0),
+            Even).
 
-?- even([1, 2, 3, 4, 5, 6, 7, 8, 9], Even). Even = [2, 4, 6, 8].
+?- even([1, 2, 3, 4, 5, 6, 7, 8, 9], Even).
+Even = [2, 4, 6, 8].
 ```
 
 ### forall(+Cond, +Action)
@@ -287,31 +505,18 @@ Predicatul `forall/2` verifică dacă pentru orice legare din `Cond`, care repre
 
 Exemple:
 ```prolog
-?- forall(member(X,[2, 4, 6]), X mod 2 =:= 0).
+?- forall(member(X, [2, 4, 6]), X mod 2 =:= 0).
 true.
 
-?- forall(member(X,[2, 4, 3, 6]), X mod 2 =:= 0).
+?- forall(member(X, [2, 4, 3, 6]), X mod 2 =:= 0).
 false.
 
 ?- forall(member(X, [6, 12, 18]), (X mod 2 =:= 0, X mod 3 =:= 0)).
 true.
 ```
 
-## Câteva observații asupra purității
-
-În logica de ordinul întâi clauzele `p(A,B) ^ q(A,B)` și `q(A,B) ^ p(A,B)` sunt echivalente. Ordinea termenilor dintr-o conjuncție (sau disjuncție) nu influențează valoarea de adevăr a clauzei.
-
-În Prolog acest lucru nu este întotdeauna adevărat:
-
-```prolog
-?- X = Y, X == Y. 
-X = Y.
-
-?- X == Y, X = Y. 
-false.
-```
-
-
 ## Resurse
+-   [Cheatsheet](https://github.com/cs-pub-ro/PP-laboratoare/blob/prolog-legare-exec/prolog/legare-executie/prolog_cheatsheet_2.pdf)
 -   [Schelet](https://ocw.cs.pub.ro/courses/_media/pp/22/laboratoare/prolog/legare-executie-schelet.zip)
 -   [Soluții](https://ocw.cs.pub.ro/courses/_media/pp/22/laboratoare/prolog/legare-executie-solutii.zip)
+
