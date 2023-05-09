@@ -516,7 +516,7 @@ true.
 ```
 
 ## Resurse
--   [Cheatsheet](https://github.com/cs-pub-ro/PP-laboratoare/blob/prolog-legare-exec/prolog/legare-executie/prolog_cheatsheet_2.pdf)
+-   [Cheatsheet](https://github.com/cs-pub-ro/PP-laboratoare/raw/master/prolog/legare-executie/prolog_cheatsheet_2.pdf)
 -   [Schelet](https://ocw.cs.pub.ro/courses/_media/pp/22/laboratoare/prolog/legare-executie-schelet.zip)
 -   [Soluții](https://ocw.cs.pub.ro/courses/_media/pp/22/laboratoare/prolog/legare-executie-solutii.zip)
 
