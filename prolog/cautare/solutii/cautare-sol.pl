@@ -3,6 +3,7 @@
 :- discontiguous exercitiul/2, initial_state/2, final_state/2, next_state/3.
 :-ensure_loaded('checker.pl').
 
+
 %% -------------------------------------------------------------
 %% -------------------------------------------------------------
 
