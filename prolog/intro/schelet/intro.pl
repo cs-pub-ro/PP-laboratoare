@@ -12,7 +12,10 @@ exercitiul(1, []).
 %% 'List' este lista formată prin concatenarea listelor 'List1' și
 %% 'List2'.
 
-%% Hint: Predicatul myConcat este adevărat dacă primul element al
+%% Hint:
+%% Predicatul myConcat este adevărat pentru prima listă vidă și pentru
+%% List2 și List identice.
+%% Predicatul myConcat este adevărat dacă primul element al
 %% rezultatului (List) este egal cu primul element al listei List1, iar
 %% restul lui List este egal cu concatenarea restului lui List1 cu
 %% List2.
