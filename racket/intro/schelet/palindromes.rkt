@@ -30,6 +30,8 @@
 (exercițiul 1 : 1 punct)
 ;; Fie următoarele axiome pentru obținerea reprezentării unui număr natural
 ;; în baza b (cu [] = lista vidă și ++ = concatenare).
+;; Convenim ca numărul 0 (în orice bază) să fie reprezentat prin lista vidă,
+;; în rest reprezentarea corespunde reprezentării matematice.
 ;; num->base(0,b) = [ ]                                   ; pt n=0
 ;; num->base(n,b) = num->base(n div b, b) ++ [ n mod b ]  ; pt n>0
 ;; Implementați funcția corespunzătoare în Racket.
@@ -53,26 +55,24 @@
 (check-exp (rev '(5 1 4 8 7)) '(7 8 4 1 5))
 
 
-(exercițiul 3 : 2 puncte)
+(exercițiul 3 : 1 punct)
 ;; Un reverse care acționează și asupra elementelor din eventualele liste interioare.
 ;; ex: Pt lista L = '(1 b (3 d (5 f)) (7 (h (9 10) 11)) 12):
 ;; (rev L) întoarce '(12 (7 (h (9 10) 11)) (3 d (5 f)) b 1)
 ;; (deep-rev L) ->  '(12 ((11 (10 9) h) 7) ((f 5) d 3) b 1)
 
-; cazul 1) - cazul de bază
+; Cazul 1) - cazul de bază:
 ;; deep-rev([ ]) = [ ]
 
-; cazul 2) - când elementul curent NU este o listă, se procedează la fel ca la funcția rev de mai sus
+; Cazul 2) - când elementul curent NU este o listă, procedăm ca la funcția rev de mai sus:
 ;; deep-rev(x:l) = deep-rev(l) ++ [x]
 
-; cazul 3) - se procedează similar ca la cazul 2),
-; însă aici avem cazul cand elementul curent este, de asemenea o listă,
-; acesta trebuie inversat la rândul lui,
-; astfel, trebuie apelat deep-rev atât pe elementul curent, cât și pe restul listei
-;; deep-rev((x:xl):l) = deep-rev(l) ++ [deep-rev(x:xl)]
+; Cazul 3) - similar, dar când elementul curent este de asemenea o listă,
+; această listă trebuie și ea inversată (cu tot cu eventualele liste interioare).
+; În acest scop folosim tot deep-rev:
+;; deep-rev(L:l) = deep-rev(l) ++ [deep-rev(L)]
 
 ;; Restricții:
-;; - se va implementa obligatoriu recursiv, după modelul implementării lui rev
 ;; - folosiți cond
 ;; - folosiți list? pentru a verifica dacă elementul procesat este o listă
 
@@ -84,6 +84,10 @@
 
 (exercițiul 4 : 1 punct)
 ;; Implementați testul că o listă L este palindrom.
+;; Abordarea recomandată este să descrieți CE este un palindrom,
+;; mai degrabă decât CUM se verifică proprietatea de palindrom.
+;; Genul acesta de abordare corespunde stilului declarativ de
+;; a programa (în contrast cu stilul procedural).
 
 (define (palindrome? L)
   'your-code-here)
@@ -94,21 +98,7 @@
 (check-exp-part 'd .25 (palindrome? '()) #t)
 
 
-(exercițiul 5 : 1 punct)
-;; Pentru o listă de liste de elemente, determinați dacă listele interioare
-;; sunt toate palindroame.
-
-;; Restricții:
-;; - folosiți doar rev și/sau deep-rev, nu recursivitate
-
-(define (palindrome-list? L)
-  'your-code-here)
-
-(check-exp-part 'a .5 (palindrome-list? '((2 a 2) (b) (3) (a a 1 1 a a))) #t)
-(check-exp-part 'b .5 (palindrome-list? '((a a 1 a a) (4 0) (a a 1 a a))) #f)
-
-
-(exercițiul 6 : 2 puncte)
+(exercițiul 5 : 2 puncte)
 ;; Testați că n este palindrom în toate bazele din lista Bases.
 
 ;; a) După ce variabilă/variabile e util să faceți recursivitatea?
@@ -130,7 +120,7 @@
 (check-exp-part 'b .5 (all-palindromes? 594 '(2 10)) #f)
 
 
-(exercițiul 6.0 : 0 puncte)
+(exercițiul 6 : 0 puncte)
 ;; Dacă nu ați făcut-o deja, încercați să înlocuiți if sau cond de mai sus cu o combinație
 ;; de operatori logici (and, or, not).
 ;; Apoi testați-vă singuri funcția (fără check-expect, doar rulați-o pe o listă aleasă de voi).
@@ -142,7 +132,9 @@
 
 ;; Sugestii:
 ;; - folosiți funcția anterioară.
-;; - efectuați pașii a, b, c descriși mai sus.
+;; - efectuați pașii a, b, c descriși mai sus:
+;;   a) Vrem să facem recursivitate după n sau după Bases?
+;;   ... etc.
 
 (define (palindromes-to-n n Bases)
   'your-code-here)
@@ -150,9 +142,9 @@
 (check-exp (palindromes-to-n 100 '(2 10)) '(0 1 3 5 7 9 33 99))
 
 
-(exercițiul 8 : 2 puncte BONUS)
-;; Să se găsească primul număr mai mare decât start care este palindrom în
-;; minim b baze dintre bazele 2, 3, 4, 5, 6, 7, 8, 9, 10.
+(exercițiul 8 : 2 puncte)
+;; Să se găsească primul număr mai mare sau egal cu start care este 
+;; palindrom în minim b baze dintre bazele 2, 3, 4, 5, 6, 7, 8, 9, 10.
 
 ;; Sugestii:
 ;; - definiți-vă una sau mai multe funcții ajutătoare
@@ -167,7 +159,7 @@
 (check-exp-part 'b .5 (first-b-pal 150 4) 373)
 
 
-(exercițiul 9 : 3 puncte BONUS)
+(exercițiul 9 : 3 puncte)
 ;; Să se găsească cea mai lungă porțiune continuă a unui număr care este palindrom.
 ;; Dacă există mai multe asemenea porțiuni, întoarceți una (oarecare) dintre ele.
 
@@ -175,6 +167,8 @@
 (define (list->num L) (foldl (lambda (dig num) (+ dig (* 10 num))) 0 L))
 
 ;; Sugestii:
+;; - convertiți numerele în liste pentru a le prelucra cu funcțiile pe liste
+;;   (pentru conversia inversă este dată funcția list->num de mai sus)
 ;; - folosiți take - (take L n) întoarce prefixul de lungime n al listei L
 
 (define (longest-palindrome n)
