@@ -53,9 +53,9 @@ insert y [] = [y]
 insert y (x:xs) = if y < x then (y:x:xs) else x:(insert y xs)
 ```
 
-Observați asemănarea izbitoare între codul Haskell și **definirea axiomelor unui TDA**, studiată la cursul de *Analiza Algoritmilor* funcțiile sunt definite pe cazurile de aplicare și folosesc recursivitatea pentru a referi un caz deja implementat.
+Observați asemănarea izbitoare între codul Haskell și **definirea axiomelor unui TDA**, studiată la cursul de *Analiza Algoritmilor*. Funcțiile sunt definite pe toate valorile posibile ale parametrilor (pe toți constructorii de bază ai tipului) și folosesc recursivitatea pentru a referi un caz deja implementat.
 
-Funcția **`insertion_sort`** primește o listă ca parametru, și o sortează prin inserție. Dacă parametrul lui *insertion_sort* este lista vidă, atunci funcția va întoarce lista vidă (care este sortată trivial). Altfel, `insertion_sort` sortează recursiv sublista `xs`, apoi
+Funcția **`insertion_sort`** primește o listă ca parametru și o sortează prin inserție. Dacă lista este vidă, atunci `insertion_sort` va întoarce lista vidă (care este sortată trivial). Altfel, funcția sortează recursiv sublista `xs`, apoi
 inserează pe poziția corespunzătoare în această listă (sortată) elementul `x`.
 
 Funcția **`insert`** primește doi parametri:
@@ -95,14 +95,14 @@ Comparativ, iată aplicarea funcției `max` în `Racket`:
 ``` 
 
 În **C**, apelul de funcție se realizează direct prin nume; acesta este urmat de paranteze, iar între paranteze sunt enumerați parametrii. În **Racket**, paranteza deschisă indică exclusiv faptul că urmează o
-**aplicare de funcție**. Între paranteze se află numele funcției, urmat de parametri. Următoarea construcție: 
+**aplicare de funcție**. Între paranteze se află numele funcției, urmat de argumente. Următoarea construcție: 
 ```lisp
 (max (+ 2 3) 4)
 ``` 
 se interpretează astfel:
 
-  - evaluează aplicarea funcției `max`, care primește doi parametri
-  - primul parametru reprezintă o altă aplicare a funcției `+` cu parametrii `2` și `3`
+  - evaluează aplicarea funcției `max` pe două argumente
+  - primul argument reprezintă o altă aplicare a funcției `+` pe argumentele `2` și `3`
   - aplicarea funcției `+` se evaluează la 5
   - funcția `max` determină maximul între două numere, iar aplicarea ei pe `5` și `4` se evaluează la 5.
 
@@ -114,7 +114,7 @@ Următoarea construcție:
 ``` 
 este **invalidă**.
 
-**Racket** va interpreta `(3)` ca pe o tentativă de a aplica funcția cu numele `3` pe zero parametri. Codul va genera eroare.
+**Racket** va interpreta `(3)` ca pe o tentativă de a aplica funcția cu numele `3` pe zero argumente. Codul va genera eroare.
 
  **Exercițiu**: încercați să priviți orice construcție din limbajul Racket ca pe o funcție. De exemplu, `if`:
 ```lisp
@@ -126,7 +126,7 @@ Putem observa faptul că `if` se comportă ca o funcție cu trei parametri:
 - al doilea parametru reprezintă expresia de evaluat când condiția este `true`  
 - al treilea parametru reprezintă expresia de evaluat când condiția este `false`
 
-Cum 2 este diferit de 3, codul de mai sus va întoarce al treilea parametru (evaluarea expresiei `(max 2 3)`).
+Cum 2 este diferit de 3, codul de mai sus va întoarce al treilea argument al lui `if` (evaluarea expresiei `(max 2 3)`).
 
 ## Tipuri de date
 
@@ -146,7 +146,7 @@ Următoarele tipuri de date sunt uzuale în **Racket** (cu **bold** tipurile pe 
 
 Simbolurile (numite și literali) sunt valori formate din unul sau mai multe caractere, fără spațiu. Diferențierea dintre un nume (care este legat la o valoare, similar unei variabile din limbajele imperative) și un simbol se face atașând în fața valorii simbolului un apostrof: `'simbol`.
 
-**Atenție!** Apostroful în fața unui simbol (sau, vedem mai jos, a unei expresii în paranteză) este un operator, echivalent cu funcția `quote`, care determină ca simbolul sau expresia care îi urmează să __nu__ fie evaluată. Astfel, `'simbol` se valuează la un simbol și nu se încearcă evaluarea unei variabile cu numele `simbol` și găsirea unei valori asociate acestui nume.
+**Atenție!** Apostroful în fața unui simbol (sau, vedem mai jos, a unei expresii în paranteză) este un operator, echivalent cu funcția `quote`, care determină ca simbolul sau expresia care îi urmează să __nu__ fie evaluat(ă). Astfel, `'simbol` se evaluează la un simbol și nu se încearcă evaluarea unei variabile cu numele `simbol` și găsirea unei valori asociate acestui nume.
 
 ### Perechi
 
@@ -173,7 +173,7 @@ Exemple:
 (cons 1 (cons 2 (cons 3 null))) ; lista (1 2 3)
 (cons 'a (cons 'b (cons 'c '()))) ; lista (a b c); Atenție, lista vidă se poate reprezenta ca '() sau null;
 ```
-**Funcția** `list` construiește o listă nouă care va conține elementele date ca argumente funcției:
+**Funcția** `list` construiește o listă nouă din argumentele pe care este aplicată funcția:
 
 ```lisp
 (list 1 2 3 4)
@@ -209,7 +209,7 @@ Racket permite forme prescurtate pentru compuneri de funcții de tip `car` și `
 
 Alte funcții utile pentru manipularea listelor:
 ```lisp
-(append '(1 2 3) '(4) '(5 6)) ; întoarce lista (1 2 3 4 5 6), din concatenarea tuturor listelor primite ca argumente
+(append '(1 2 3) '(4) '(5 6)) ; întoarce lista (1 2 3 4 5 6), prin concatenarea tuturor listelor primite ca argumente
 (null? '()) ; întoarce #t (adică true), întrucât lista primită ca argument este vidă
 (null? '(1 2) ; întoarce #f (adică false), întrucât lista primită ca argument este nevidă
 (length '(1 2 3 4)) ; întoarce 4 (lungimea listei primită ca argument)
@@ -251,7 +251,7 @@ anonimă).
 (define identitate (lambda (x) x))
 (identitate 3) ; întoarce 3
 ```
-Limbajul ne permite să condensăm definirea unei funcții cu legarea ei la un nume, scriind ca `(define (nume-funcție arg1 arg2 ...) ce_întoarce_funcția)`:
+Limbajul ne permite să condensăm definirea unei funcții cu legarea ei la un nume, scriind `(define (nume-funcție arg1 arg2 ...) ce_întoarce_funcția)`:
 ```lisp
 (define (identitate x) x)
 (identitate 3) ; întoarce 3
@@ -356,8 +356,8 @@ Trecem axiomele în cod Racket:
 
 ## Resurse
 
-  - [Schelet](https://ocw.cs.pub.ro/courses/_media/pp/23/laboratoare/racket/intro-skel.zip)
-  - [Soluții](https://ocw.cs.pub.ro/courses/_media/pp/23/laboratoare/racket/intro-sol.zip)
+  - [Schelet](https://ocw.cs.pub.ro/courses/_media/pp/24/laboratoare/racket/intro-skel.zip)
+  - [Soluții](https://ocw.cs.pub.ro/courses/_media/pp/24/laboratoare/racket/intro-sol.zip)
   - [Cheatsheet](https://github.com/cs-pub-ro/PP-laboratoare/raw/master/racket/intro/racket-cheatsheet-1.pdf)
 
 ## Referinţe
