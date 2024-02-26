@@ -1,7 +1,7 @@
 # Racket: Introducere
 
-  - Data publicării: 27.02.2023
-  - Data ultimei modificări: 27.02.2023
+  - Data publicării: 26.02.2024
+  - Data ultimei modificări: 26.02.2024
 
 ## Obiective
 
