@@ -130,7 +130,7 @@ Cum 2 este diferit de 3, codul de mai sus va întoarce al treilea argument al lu
 
 ## Tipuri de date
 
-Următoarele tipuri de date sunt uzuale în **Racket** (cu **bold** tipurile pe care le vom folosi mai mult:
+Următoarele tipuri de date sunt uzuale în **Racket** (cu **bold** tipurile pe care le vom folosi mai mult):
 - Tipuri de date **simple**
     - **Boolean** -- `#t` sau `#f`  
     - **Număr**
