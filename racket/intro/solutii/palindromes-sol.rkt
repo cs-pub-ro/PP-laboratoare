@@ -40,7 +40,7 @@
   (if (zero? n)
       '()
       (append (num->base (quotient n b) b)
-              (list (modulo n b))))) ; este necesar să facem listă din n mod b, întrucât 
+              (list (modulo n b))))) ; este necesar să facem listă din n mod b, întrucât
                                      ; append primește ca argumente obligatoriu liste
 
 (check-exp-part 'a .5 (num->base 489 10) '(4 8 9))
@@ -126,13 +126,14 @@
 
 (define (all-palindromes? n Bases)
   (if (null? Bases) ; este important să mergem cu toate recursivitățile până la cazul de bază (null?,
-      #t            ; zero?), nu până la lista de 1 element; aplicarea pe '() nu trebuie să dea eroare 
+      #t            ; zero?), nu până la lista de 1 element; aplicarea pe '() nu trebuie să dea eroare
       ; daca Bases e vidă, nu există nicio bază în Bases în care n să nu fie palindrom
       (and (palindrome? (num->base n (car Bases))) ; trebuie ca n să fie palindrom atât în prima baza
            (all-palindromes? n (cdr Bases)))))     ; cât și în restul de baze din Bases
 
 (check-exp-part 'a .5 (all-palindromes? 585 '(2 10)) #t)
 (check-exp-part 'b .5 (all-palindromes? 594 '(2 10)) #f)
+(check-exp-part 'c .5 (all-palindromes? 15 '(2 10)) #f)
 
 
 (exercițiul 6 : 0 puncte)
@@ -157,12 +158,12 @@
 ;;   ... etc.
 
 (define (palindromes-to-n n Bases)
-  (cond 
+  (cond
     ((< n 0) '())
-    ((all-palindromes? n Bases) 
+    ((all-palindromes? n Bases)
      (append (palindromes-to-n (sub1 n) Bases) ; dacă foloseam (cons n (palindromes-to-n ...)), am fi obținut lista
              (list n)))                        ; rezultat în ordine inversă; în fapt, este mai eficient să folosim
-    ; cons (O(1)), nu append (O(n)), și să facem reverse pe rezultatul obținut; append 
+    ; cons (O(1)), nu append (O(n)), și să facem reverse pe rezultatul obținut; append
     ; presupune că de fiecare dată parcurgem prima listă ca să ne poziționăm la sfârșitul ei
     (else (palindromes-to-n (sub1 n) Bases))))
 
@@ -170,7 +171,7 @@
 
 
 (exercițiul 8 : 2 puncte)
-;; Să se găsească primul număr mai mare sau egal cu start care este 
+;; Să se găsească primul număr mai mare sau egal cu start care este
 ;; palindrom în minim b baze dintre bazele 2, 3, 4, 5, 6, 7, 8, 9, 10.
 
 ;; Sugestii:
@@ -184,7 +185,7 @@
     ((null? Bases) 0)
     ((palindrome? (num->base n (car Bases))) (add1 (count-bases n (cdr Bases))))
     (else (count-bases n (cdr Bases)))))
-      
+
 (define (first-b-pal start b)
   (if (>= (count-bases start '(2 3 4 5 6 7 8 9 10)) b)
       start
@@ -218,7 +219,7 @@
   (define (iter2 leng)        ;; încearcă să găsească palindroame, în ordinea descrescătoare a lungimii leng
     (if (= leng 1)
         (car L)
-        (or (iter L leng len) ;; ori găsește un palindrom de lungime leng și îl întoarce, ori încearcă lungimea leng-1   
+        (or (iter L leng len) ;; ori găsește un palindrom de lungime leng și îl întoarce, ori încearcă lungimea leng-1
             (iter2 (sub1 leng)))))
 
   (iter2 len))                ;; corpul funcției principale, începe căutarea de la len (lungimea maximă posibilă)
