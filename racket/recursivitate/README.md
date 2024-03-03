@@ -1,7 +1,7 @@
 # Racket: Recursivitate
 
-  - Data publicării: 06.03.2023
-  - Data ultimei modificări: 09.03.2023
+  - Data publicării: 04.03.2024
+  - Data ultimei modificări: 04.03.2024
 
 ## Obiective
 
@@ -102,8 +102,8 @@ Se poate observa **ineficiența** implementării recursive pe stivă, atât din 
 Citiți exercițiile **rezolvate**; apoi, rezolvați exercițiile **propuse**.
 
 
-  - [Schelet + exerciții rezolvate](https://ocw.cs.pub.ro/courses/_media/pp/23/laboratoare/racket/recursivitate-schelet.zip)
-  - [Soluții](https://ocw.cs.pub.ro/courses/_media/pp/23/laboratoare/racket/recursivitate-solutii.zip)
+  - [Schelet + exerciții rezolvate](https://ocw.cs.pub.ro/courses/_media/pp/24/laboratoare/racket/recursivitate-schelet.zip)
+  - [Soluții](https://ocw.cs.pub.ro/courses/_media/pp/24/laboratoare/racket/recursivitate-solutii.zip)
   - [Cheatsheet Laboratorul 1](https://github.com/cs-pub-ro/PP-laboratoare/raw/master/racket/intro/racket-cheatsheet-1.pdf)
   - [Cheatsheet Laboratorul 2](https://github.com/cs-pub-ro/PP-laboratoare/raw/master/racket/recursivitate/racket-cheatsheet-2.pdf)
 
