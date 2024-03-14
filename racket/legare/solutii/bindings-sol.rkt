@@ -38,14 +38,14 @@
 ;; nu există o rețetă universală, această abilitate se dezvoltă
 ;; de-a lungul anilor de scris cod zilnic.
 
-(sunt 11 exerciții)
+(sunt 9 exerciții)
 
-(exercițiul 1 : 1 puncte)
+(exercițiul 1 : 1 punct)
 ;; Funcția compute-square-area primește ca argument o funcție
-;; nulară ce returnează un număr, reprezentând latura unui pătrat;
+;; nulară care returnează un număr, reprezentând latura unui pătrat;
 ;; compute-square-area trebuie să calculeze aria acelui pătrat.
 ;; Restricții: Aplicați get-length o singură dată.
-;;             Nu puteți folosi `exp`/`expt`.
+;;             Nu puteți folosi `sqr`/`exp`/`expt`.
 ;; compute-square-area:: funcție -> real
 (define (compute-square-area get-length)
   (let ((l (get-length)))
@@ -57,7 +57,7 @@
 (check% 'd 1/4 (compute-square-area (lambda () (count-call 198.2522))) is 39303.93480483999 (check-calls 1))(reset)
 
 
-(exercițiul 2 : 1 puncte)
+(exercițiul 2 : 1 punct)
 ;; Funcția compute-length primește ca argumente 3 funcții:
 ;;  - get-line-segment => nulară, întoarce un segment de dreaptă.
 ;;  - get-start-point => primește un segment de dreaptă și
@@ -88,7 +88,7 @@
   )
 
 
-(exercițiul 3 : 1 puncte)
+(exercițiul 3 : 1 punct)
 ;; Definiți funcția distance care calculează distanța
 ;; dintre două puncte bazându-se pe funcția compute-length.
 ;; Identificați închiderea funcțională și arătați-o
@@ -100,7 +100,7 @@
 (check% 'a 0.25 (distance '(9 . 12)  '(12 . 16)) is 5)
 
 
-(exercițiul 4 : 3 puncte)
+(exercițiul 4 : 2 puncte)
 ;; Definiți funcția compute-perimeter care primește un poligon reprezentat
 ;; printr-o listă de puncte și calculează perimetrul acestuia.
 ;; Restricții: Nu folosiți funcționale.
@@ -193,41 +193,7 @@
 (check% 'b 1/2 (num-concat 33 674) is 33674)
 
 
-(exercițiul 8 : 2 puncte BONUS)
-;; Se dă arborele de mai jos
-;;              1
-;;     4        3       2
-;; 13 12 11  10 9 8   7 6 5
-;; ...........................
-;;
-;; Să se implementeze o funcție ce realizează parcurgerea în lățime (BFS)
-;; a acestui graf până la un nivel n, care este dat (rădăcina se află pe nivelul 0).
-;; Funcția va întoarce o listă ce conține nodurile în ordinea dată de parcurgerea BFS.
-;; Restricții: -> folosiți cel puțin o formă de let
-;; Hints: -> pentru nodul cu indexul k, fiii săi vor fi nodurile indexate 3k+1, 3k, respectiv 3k-1
-;;        -> poate fi util să scrieți o funcție auxiliară care determină coada la pasul următor
-;;           iar apoi să vă gândiți câți astfel de pași trebuie realizați
-
-(define (get_new_queue q)
-  (let* [(current (car q)) (left (+ (* 3 current) 1)) (middle (* 3 current)) (right (- (* 3 current) 1))]
-    (append (cdr q) (list left middle right))))
-
-(define (bfs_aux n)
-  (let iter [(step 0) (q '(1))]
-    (if (= step n)
-      q
-      (cons (car q) (iter (+ step 1) (get_new_queue q))))))
-
-(define (bfs n)
-  (bfs_aux (/ (- (expt 3 n) 1) 2)))
-
-(check% 'a 1/4 (bfs 0) is '(1))
-(check% 'b 1/4 (bfs 1) is '(1 4 3 2))
-(check% 'c 1/4 (bfs 2) is '(1 4 3 2 13 12 11 10 9 8 7 6 5))
-(check% 'd 1/4 (bfs 3) is '(1 4 3 2 13 12 11 10 9 8 7 6 5 40 39 38 37 36 35 34 33 32 31 30 29 28 27 26 25 24 23 22 21 20 19 18 17 16 15 14))
-
-
-(exercițiul 9 : 2 puncte BONUS)
+(exercițiul 8 : 2 puncte)
 ;; Redefiniți funcția num-concat pentru a funcționa pe oricâte numere.
 ;; Restricții: Nu folosiți `num-concat`.
 ;;             Folosiți funcționale.
@@ -242,59 +208,51 @@
 (check% 'a 1/4 (list-num-concat '(12 34 56)) is 123456)
 (check% 'b 1/4 (list-num-concat '(2 35 7 8 4 91)) is 23578491)
 
-;; Definiți funcția care găsește toate sufixele posibile pentru un număr.
-;; ex:
-;; (find-all-suffixes 123) => '(123 23 3)
-;; Restricții: Folosiți named let.
-;;             Există deja definită în laborator funcția number->list.
-;; find-all-suffixes:: număr -> listă de numere
-(define (find-all-suffixes number)
-  (let iter ((L (number->list number)))
-    (if (null? L)
-        '()
-        (cons (list-num-concat L) (iter (cdr L))))))
 
-(check% 'c 1/4 (find-all-suffixes 1234) is '(1234 234 34 4))
-(check% 'd 1/4 (find-all-suffixes 56789462782) is '(56789462782 6789462782 789462782 89462782 9462782 462782 62782 2782 782 82 2))
+(exercițiul 9 : 3 puncte)
+;; Se dă arborele de mai jos
+;;              1
+;;     4        3       2
+;; 13 12 11  10 9 8   7 6 5
+;; ...........................
+;;
+;; Să se implementeze o funcție ce realizează parcurgerea în lățime (BFS)
+;; a acestui graf până la un nivel n, care este dat (rădăcina se află pe nivelul 0).
+;; Funcția va întoarce o listă ce conține nodurile în ordinea dată de parcurgerea BFS.
+;; Restricții: -> folosiți cel puțin o formă de let
+;; Hints: -> pentru nodul cu indexul k, fiii săi vor fi nodurile indexate 3k+1, 3k, respectiv 3k-1
+;;        -> poate fi util să scrieți o funcție auxiliară care determină coada la pasul următor
+;;           iar apoi să vă gândiți câți astfel de pași trebuie realizați
 
+(define (children x) ; determină lista copiilor nodului x
+  (let ((m (* 3 x)))
+    (list (add1 m) m (sub1 m))))
 
-(exercițiul 10 : 1 puncte BONUS)
-;; Automatele finite sunt un formalism matematic util pentru a descrie
-;; în mod abstract (matematic) procese, sunt folosite des în computer science
-;; și le veți întâlni (le-ați întâlnit) la CN, LFA și alte materii.
-;; În acest exercițiu vom reprezenta un automat finit prin 3 elemente:
-;;  - initial-state => o stare inițială din care automatul pornește
-;;  - final-state => o stare finală în care automatul se oprește
-;;  - next => o funcție care primește o stare și decide care e următoarea stare.
-;; Restricții: Trebuie să folosiți named let.
-;; Funcția întoarce o listă ce cuprinde toate stările automatului
-;; run:: stare x stare x funcție -> listă de stări
-(define (run initial-state final-state next)
-  (let iter ((state initial-state))
-    (if (equal? state final-state)
-        (list state)
-        (cons state (iter (next state))))))
+;; Varianta 1: parcurge nod cu nod și se oprește după (3^n-1)/2 pași
+(define (get-new-queue q)
+  (append (cdr q) (children (car q)))) ; nodul curent iese din coadă iar copiii lui intră (la final)
 
-(check% 'a 1/4 (run 0 9 add1) is (range 10))
-(check% 'b 1/4 (run 9 0 sub1) is (reverse (range 10)))
-(check% 'c 1/4 (run 0 20 (compose add1 add1)) is (filter even? (range 21)))
-(check% 'd 1/4 (run 2 65536 (lambda (x) (* x x))) is '(2 4 16 256 65536))
+(define (bfs-aux n)
+  (let iter [(step 0) (q '(1))]
+    (if (= step n)
+        q
+        (cons (car q) (iter (+ step 1) (get-new-queue q))))))
 
+(define (bfs n)
+  (bfs-aux (/ (- (expt 3 n) 1) 2)))
 
-(exercițiul 11 : 2 puncte BONUS)
-;; Folosindu-vă de exerciţiile anterioare generați numărul de lungime k
-;; pentru care orice cifră de pe poziția i se poate obține
-;; folosind formula i*k+x.
-;; Cifrele sunt numerotate de la 0, pornind de la cea mai din stânga.
-;; Restricții: Folosiți let.
-;; generate-number:: întreg x întreg -> întreg
-(define (generate-number k x)
-  (let ((initial-state (+ x (* k 0)))
-        (final-state   (+ x (* k (- k 1))))
-        (next          (λ (x) (+ x k))))
-    (list-num-concat (run initial-state final-state next))))
+;; Varianta 2: parcurge nivel cu nivel și se oprește după n pași
+(define (bfs-2 n)
+  (let iter ((n n) (queue '(1)))
+    (if (zero? n)
+        queue
+        (append queue ; adaugă întreg nivelul curent
+                (iter (- n 1) (flatten (map children queue)))))))
+                ; flatten se putea înlocui cu apply append
 
-(check% 'a 1/2 (generate-number 3 2) is 258)
-(check% 'b 1/2 (generate-number 3 3) is 369)
+(check% 'a 1/4 (bfs 0) is '(1))
+(check% 'b 1/4 (bfs 1) is '(1 4 3 2))
+(check% 'c 1/4 (bfs 2) is '(1 4 3 2 13 12 11 10 9 8 7 6 5))
+(check% 'd 1/4 (bfs 3) is '(1 4 3 2 13 12 11 10 9 8 7 6 5 40 39 38 37 36 35 34 33 32 31 30 29 28 27 26 25 24 23 22 21 20 19 18 17 16 15 14))
 
 (sumar)
