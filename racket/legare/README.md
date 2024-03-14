@@ -1,7 +1,7 @@
 # Racket: Legarea variabilelor. Închideri funcționale
 
-  - Data publicării: 18.03.2023
-  - Data ultimei modificări: 18.03.2023
+  - Data publicării: 14.03.2024
+  - Data ultimei modificări: 14.03.2024
 
 ## Obiective
 
@@ -25,7 +25,7 @@ Se urmărește stăpânirea conceptelor teoretice:
 punctelor din program în care variabila este vizibilă. Cu alte
 cuvinte, domeniul de vizibilitate al variabilei x este
         reprezentat de porțiunile din program în care aceasta poate fi
-        accesată (este vizibilă).
+        accesată.
 
 **Exemplu:** Domeniul de vizibilitate pentru variabila `a` este
         format din liniile de cod `{9, 10, 11, 12, 13, 14}`
