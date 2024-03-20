@@ -35,7 +35,7 @@
     numbersep       = 5pt,
 	captionpos		= b,
 	breaklines		= true,
-	basicstyle		= \ttfamily\footnotesize, 
+	basicstyle		= \ttfamily\footnotesize,
 	tabsize			= 4,
 	escapeinside	= {~}{~},
 }
@@ -81,7 +81,7 @@
 \begin{document}
 
 \begin{center}{\huge{\textbf{Racket CheatSheet}}}\\
-{\large Laborator5}
+{\large Laborator 5}
 \end{center}
 \begin{multicols*}{3}
 
@@ -206,9 +206,9 @@ empty-stream						   #<stream>
 (define ones (stream-cons 1 ones))   fluxul de 1
 
 ;; fluxul numerelor naturale
-(define naturals                         
+(define naturals
   (let loop ((n 0))
-     (stream-cons n (loop (add1 n))))) 
+     (stream-cons n (loop (add1 n)))))
         \end{lstlisting}
     \end{minipage}
 };
@@ -225,9 +225,9 @@ empty-stream						   #<stream>
     	{\centering\bf\small\color{pinegreen} stream-first stream-rest stream-empty? \\}
 		\begin{lstlisting}[language=Racket]
 (stream-first naturals)                        0
-(stream-rest (stream-cons 2 ones))   fluxul de 1          
+(stream-rest (stream-cons 2 ones))   fluxul de 1
 
-(stream-empty? empty-stream)                  #t 
+(stream-empty? empty-stream)                  #t
 (stream-empty? ones)                          #f
 
 		\end{lstlisting}
@@ -266,20 +266,20 @@ empty-stream						   #<stream>
 (define powers-of-2
   (let loop ((n 1))
     (stream-cons n (loop (* n 2)))))
-    
+
 ;; fluxul Fibonacci
 (define fibonacci
   (let loop ((n1 0) (n2 1))
     (stream-cons n1 (loop n2 (+ n1 n2)))))
-    
-;; fluxul 1/(n!) 
+
+;; fluxul 1/(n!)
 ;; (cu care putem aproxima constanta lui Euler)
 (define rev-factorials
   (let loop ((term 1) (n 1))
     (stream-cons term (loop (/ term n) (add1 n)))))
-    
+
 ;; testare: stream-take este definita de noi
-;; in laborator, nu exista in Racket
+;; in laborator, nu cel definit in Racket
 
 ;; rezultat '(1 2 4 8 16 32 64 128 256 512)
 (stream-take powers-of-2 10)
@@ -322,27 +322,27 @@ DA: (stream-rest S)   NU: ((cdr S))
     \begin{minipage}{0.3\textwidth}
     {\centering\bf\small\color{orange} Fără generator explicit\\}
     \medskip
-    {\centering\bf\small\color{orange} Dă explicit primii 1-2 termeni\color{black}, apoi inițiază\\} 
-    {\centering\bf\small o prelucrare folosind (de obicei)\\} 
+    {\centering\bf\small\color{orange} Dă explicit primii 1-2 termeni\color{black}, apoi inițiază\\}
+    {\centering\bf\small o prelucrare folosind (de obicei)\\}
     {\centering\bf\small\color{orange}funcționale pe fluxuri\\}
     \begin{lstlisting}[language=Racket]
 ;; stream-zip-with este definita de voi
 ;; in laborator, nu exista in Racket
 
-;; fluxul puterilor lui 2    
+;; fluxul puterilor lui 2
 (define powers-of-2-a
   (stream-cons
    1
    (stream-zip-with +
                     powers-of-2-a
                     powers-of-2-a)))
-                    
+
 (define powers-of-2-b
   (stream-cons
    1
    (stream-map (lambda (x) (* x 2))
-               powers-of-2-b)))                    
- 
+               powers-of-2-b)))
+
 ;; fluxul Fibonacci
 (define fibonacci
   (stream-cons
@@ -352,15 +352,15 @@ DA: (stream-rest S)   NU: ((cdr S))
     (stream-zip-with +
                      fibonacci
                      (stream-rest fibonacci)))))
-    
-;; fluxul 1/(n!) 
+
+;; fluxul 1/(n!)
 (define rev-factorials
   (stream-cons
    1
    (stream-zip-with /
                     rev-factorials
                     (stream-rest naturals))))
-                    
+
 
         \end{lstlisting}
     \end{minipage}
