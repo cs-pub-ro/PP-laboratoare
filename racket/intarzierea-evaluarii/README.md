@@ -1,7 +1,7 @@
 # Racket: Întârzierea evaluării
 
-  - Data publicării: 26.03.2023
-  - Data ultimei modificări: 26.03.2023
+- Data publicării: 26.03.2023
+- Data ultimei modificări: 26.03.2023
 
 ## Obiective
 
@@ -10,10 +10,10 @@ respectiv a controlului evaluării în Racket.
 
 Conceptele introduse sunt:
 
-  - evaluare aplicativă
-  - evaluare leneșă
-  - promisiuni
-  - fluxuri
+- evaluare aplicativă
+- evaluare leneșă
+- promisiuni
+- fluxuri
 
 ## Evaluare aplicativă vs. evaluare leneșă
 
@@ -43,7 +43,7 @@ Intuitiv, expresia de mai sus va aduna *1* cu *5*, unde *5* este rezultatul eval
 
 Observații:
 
-- parametrii funcției sunt evaluați **înaintea** aplicării funcției asupra acestora; afirmăm că transferul parametrilor se face **prin valoare**;  
+- parametrii funcției sunt evaluați **înaintea** aplicării funcției asupra acestora; afirmăm că transferul parametrilor se face **prin valoare**;
 - **`Racket`** (ca și majoritatea limbajelor tradiționale) folosește **evaluare aplicativă**.
 
 ### Evaluare leneșă
@@ -60,8 +60,8 @@ Exemplu:
 
 Observații:
 
-  - aplicația funcției anonime de parametru *z* este trimisă ca parametru și nu se evaluează înainte ca acest lucru să devină necesar; afirmăm că transferul parametrilor se face **prin nume**;
-  - **`Haskell`** folosește **evaluare leneșă**.
+- aplicația funcției anonime de parametru *z* este trimisă ca parametru și nu se evaluează înainte ca acest lucru să devină necesar; afirmăm că transferul parametrilor se face **prin nume**;
+- **`Haskell`** folosește **evaluare leneșă**.
 
 Există avantaje și dezavantaje ale **evaluării leneșe**. O situație în care **evaluarea leneșă** se poate dovedi utilă este următoarea:
 
@@ -116,13 +116,13 @@ Fie următorul cod:
 
 Codul de mai sus este o rescriere din **calcul Lambda** în **Racket** a exemplului introductiv. Reamintim că evaluarea în Racket este **aplicativă**, așadar etapele parcurse sunt următoarele:
 
-  - `(+ 2 3)`: al doilea parametru al funcției `+` se evaluează la `5`;
-  - `(+ 1 5)` se evaluează la `6`.
+- `(+ 2 3)`: al doilea parametru al funcției `+` se evaluează la `5`;
+- `(+ 1 5)` se evaluează la `6`.
 
 Pentru a obține beneficiile evaluării **leneșe** în Racket, putem **întârzia** evaluarea unei expresii în două moduri:
 
-  - închideri funcționale (de obicei nulare (fără parametri)): `(lambda () (...))`;
-  - promisiuni: `delay`/`force`.
+- închideri funcționale (de obicei nulare (fără parametri)): `(lambda () (...))`;
+- promisiuni: `delay`/`force`.
 
 ### Evaluare leneșă folosind închideri
 
@@ -131,7 +131,7 @@ Fie următorul exemplu:
 ```lisp
 (define sum
   (lambda (x y)
-    (lambda () 
+    (lambda ()
       (+ x y))))
 (sum 1 2)
 ```
@@ -177,8 +177,8 @@ Pentru a forța evaluarea, folosim `force`:
 
 Folosind evaluarea leneșă, putem construi **obiecte infinite** sau **fluxuri** (*streams*). Exemplu de flux: șirul numerelor naturale: `(0 1 2 3 ... n ...)`. Un astfel de obiect se reprezintă ca o **pereche** între:
 
-  - un **element curent** (primul element din flux, asemănător unui `car` pe liste);
-  - un **generator** (o promisiune sau o închidere funcțională) care, pornit (prin `force` sau aplicație), va întoarce următoarea pereche din flux (restul fluxului, asemănător unui `cdr` pe liste).
+- un **element curent** (primul element din flux, asemănător unui `car` pe liste);
+- un **generator** (o promisiune sau o închidere funcțională) care, pornit (prin `force` sau aplicație), va întoarce următoarea pereche din flux (restul fluxului, asemănător unui `cdr` pe liste).
 
 Exemple:
 
@@ -205,8 +205,8 @@ Primele `5` elemente ale acestui șir sunt:
 
 Observăm că șirul este o pereche în care:
 
-  - primul element este **valoarea curentă**, `1`;
-  - al doilea element este **funcția** `(lambda () ones-stream)`, capabilă să genereze restul fluxului.
+- primul element este **valoarea curentă**, `1`;
+- al doilea element este **funcția** `(lambda () ones-stream)`, capabilă să genereze restul fluxului.
 
 Folosind promisiuni, același șir este generat ca mai jos:
 
@@ -217,21 +217,24 @@ Folosind promisiuni, același șir este generat ca mai jos:
 
 Limbajul Racket pune la dispoziție o interfață pentru manipularea fluxurilor, asemănătoare cu aceea pentru manipularea listelor:
 
-  - `stream-cons` este omologul lui `cons` (adaugă un element la începutul unui flux);
-  - `stream-first` este omologul lui `car` (extrage primul element din flux);
-  - `stream-rest` este omologul lui `cdr` (reprezintă fluxul fără primul său element);
-  - `empty-stream` este omologul lui `'()` (fluxul vid);
-  - `stream-empty?` este omologul lui `null?` (testează dacă un flux este vid);
-  - `stream-map`, `stream-filter` corespund lui `map`, `filter` (însă `stream-map` acceptă doar funcții unare).
+- `stream-cons` este omologul lui `cons` (adaugă un element la începutul unui flux);
+- `stream-first` este omologul lui `car` (extrage primul element din flux);
+- `stream-rest` este omologul lui `cdr` (reprezintă fluxul fără primul său element);
+- `empty-stream` este omologul lui `'()` (fluxul vid);
+- `stream-empty?` este omologul lui `null?` (testează dacă un flux este vid);
+- `stream-map`, `stream-filter` corespund lui `map`, `filter` (însă `stream-map` acceptă doar funcții unare).
 
 În spiritul abstractizării, putem folosi această interfață fără să ne preocupe dacă funcțiile sunt implementate folosind închideri funcționale sau promisiuni (pentru curioși - sunt implementate folosind promisiuni).
+
 Șirul infinit de `1` se va genera astfel:
+
 ```lisp
 (define ones-stream
   (stream-cons 1 ones-stream))
 ```
 
 Să scriem o funcție care întoarce primele `n` elemente din șir:
+
 ```lisp
 ; extragerea primelor n elemente din șirul s
 (define (stream-take s n)
@@ -259,8 +262,10 @@ Fie următorul cod, care implementează șirul numerelor naturale:
 ; testare
 (stream-take naturals-stream 4) ; va afisa (0 1 2 3)
 ```
+
 Observații:
-- în plus față de cum am generat șirul infinit de 1, aici am folosit o funcție, `add1`, care calculează elementul următor din flux pe baza elementului curent - din acest motiv, am definit un generator care primește ca parametru elementul curent;  
+
+- în plus față de cum am generat șirul infinit de 1, aici am folosit o funcție, `add1`, care calculează elementul următor din flux pe baza elementului curent - din acest motiv, am definit un generator care primește ca parametru elementul curent;
 - în funcție de fluxul construit, generatorul poate primi alți parametri.
 
 ### Șirul lui Fibonacci
@@ -288,7 +293,7 @@ Pentru a implementa expresia de mai sus, avem un singur **obstacol** de depăși
 
 ```lisp
 (define add
-  (lambda (s1 s2)  
+  (lambda (s1 s2)
     (stream-cons (+ (stream-first s1) (stream-first s2))
                  (add (stream-rest s1) (stream-rest s2)))))
 ```
@@ -305,20 +310,26 @@ Definim fluxul `Fibo` pe baza adunării de mai sus:
 ### Fluxul numerelor prime
 
 Eratostene a conceput un algoritm pentru determinarea fluxului numerelor prime, care funcționează astfel: fie șirul numerelor naturale, începând cu `2`:
+
 ```text
 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 ...
 ‾
 ```
+
 Păstrăm primul element din șir (`2`) și eliminăm elementele care se divid cu el:
+
 ```text
 2 3   5   7   9    11    13    15    17    19    21 ...
 ‾
 ```
+
 Apoi păstrăm următorul element din șirul rămas (`3`) și eliminăm toate elementele care se divid cu el:
+
 ```text
 2 3   5   7        11    13          17    19       ...
   ‾
 ```
+
 etc.
 
 Algoritmul este implementat mai jos:
@@ -344,10 +355,12 @@ Algoritmul este implementat mai jos:
 ```
 
 ## Resurse
-  - [Exerciții](https://ocw.cs.pub.ro/courses/_media/pp/23/laboratoare/racket/intarzierea-evaluarii-schelet.zip)
-  - [Soluții](https://ocw.cs.pub.ro/courses/_media/pp/23/laboratoare/racket/intarzierea-evaluarii-solutii.zip)
-  - [Cheatsheet laborator 5](https://github.com/cs-pub-ro/PP-laboratoare/raw/master/racket/intarzierea-evaluarii/fluxuri-cheatsheet.pdf)
+
+- [Exerciții](https://ocw.cs.pub.ro/courses/_media/pp/23/laboratoare/racket/intarzierea-evaluarii-schelet.zip)
+- [Soluții](https://ocw.cs.pub.ro/courses/_media/pp/23/laboratoare/racket/intarzierea-evaluarii-solutii.zip)
+- [Cheatsheet laborator 5](https://github.com/cs-pub-ro/PP-laboratoare/raw/master/racket/intarzierea-evaluarii/fluxuri-cheatsheet.pdf)
+
 ## Referințe
 
-  - [Structure and Interpretation of Computer Programs](https://web.mit.edu/6.001/6.037/sicp.pdf "wikilink"), ediția a doua
-  - [Evaluation strategy](http://en.wikipedia.org/wiki/Evaluation_strategy "wikilink")
+- [Structure and Interpretation of Computer Programs](https://web.mit.edu/6.001/6.037/sicp.pdf "wikilink"), ediția a doua
+- [Evaluation strategy](http://en.wikipedia.org/wiki/Evaluation_strategy "wikilink")
