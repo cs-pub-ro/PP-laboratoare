@@ -26,7 +26,7 @@ Fie următoarea aplicație, scrisă în **calcul Lambda**:
 În urma aplicării funcției de mai sus, expresia se va evalua la *3*. Ce se întâmplă însă dacă parametrii funcției noastre reprezintă alte aplicații de funcții?
 
 ```lisp
-(λx.λy.(x + y) 1 (λz.(z + 2) 3)
+(λx.λy.(x + y) 1 (λz.(z + 2) 3))
 ```
 
 Intuitiv, expresia de mai sus va aduna *1* cu *5*, unde *5* este rezultatul evaluării expresiei *(λz.(z + 2) 3)*. În cadrul acestui raționament, am presupus că parametrii sunt evaluați **înaintea** aplicării funcției asupra acestora. Vom vedea, în cele ce urmează, că evaluarea se poate realiza și în altă ordine.
@@ -44,7 +44,7 @@ Intuitiv, expresia de mai sus va aduna *1* cu *5*, unde *5* este rezultatul eval
 Observații:
 
 - parametrii funcției sunt evaluați **înaintea** aplicării funcției asupra acestora; afirmăm că transferul parametrilor se face **prin valoare**;  
-- **`Racket`** (ca și majoritatea limbajelor tradiționale folosește **evaluare aplicativă**.
+- **`Racket`** (ca și majoritatea limbajelor tradiționale) folosește **evaluare aplicativă**.
 
 ### Evaluare leneșă
 
@@ -167,7 +167,7 @@ Pentru a scrie o funcție **cu evaluare leneșă**, asemănătoare celei scrise 
 (sum 1 2) ; va afișa #<promise>
 ```
 
-Pentru a forța evaluarea, folosim *force*:
+Pentru a forța evaluarea, folosim `force`:
 
 ```lisp
 (force (sum 1 2)) ; va afișa 3
@@ -175,10 +175,10 @@ Pentru a forța evaluarea, folosim *force*:
 
 ## Fluxuri - aplicații ale evaluării leneșe
 
-Folosind evaluarea leneșă, putem construi **obiecte infinite** sau **fluxuri** (*streams*). Exemplu de *flux*: șirul numerelor naturale: `(0 1 2 3 ... n ...)`. Un astfel de obiect se reprezintă ca o **pereche** între:
+Folosind evaluarea leneșă, putem construi **obiecte infinite** sau **fluxuri** (*streams*). Exemplu de flux: șirul numerelor naturale: `(0 1 2 3 ... n ...)`. Un astfel de obiect se reprezintă ca o **pereche** între:
 
   - un **element curent** (primul element din flux, asemănător unui `car` pe liste);
-  - un **generator** (o promisiune sau o închidere funcțională) care, pornit (prin `force` sau aplicație), va întoarce următoarea pereche din *flux* (restul fluxului, asemănător unui `cdr` pe liste).
+  - un **generator** (o promisiune sau o închidere funcțională) care, pornit (prin `force` sau aplicație), va întoarce următoarea pereche din flux (restul fluxului, asemănător unui `cdr` pe liste).
 
 Exemple:
 
@@ -206,7 +206,7 @@ Primele `5` elemente ale acestui șir sunt:
 Observăm că șirul este o pereche în care:
 
   - primul element este **valoarea curentă**, `1`;
-  - al doilea element este o **funcție** `((lambda () ones-stream))` capabilă să genereze restul fluxului.
+  - al doilea element este **funcția** `(lambda () ones-stream)`, capabilă să genereze restul fluxului.
 
 Folosind promisiuni, același șir este generat ca mai jos:
 
@@ -278,7 +278,7 @@ unde: t0 = 0 t1 = 1 tk = t(k-2) + t(k-1) pentru k >= 2
 ```lisp
 Fibo        = t0 t1 t2 t3 ... t(k-2) ... +
 (tail Fibo) = t1 t2 t3 t4 ... t(k-1) ...
-___________________________________________
+───────────────────────────────────────────
 Fibo  = t0 t1 t2 t3 t4 t5 ... t(k) ...
 ```
 
@@ -302,22 +302,22 @@ Definim fluxul `Fibo` pe baza adunării de mai sus:
                             (add fibo-stream (stream-rest fibo-stream)))))
 ```
 
-## Fluxul numerelor prime
+### Fluxul numerelor prime
 
 Eratostene a conceput un algoritm pentru determinarea fluxului numerelor prime, care funcționează astfel: fie șirul numerelor naturale, începând cu `2`:
-```lisp
+```text
 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 ...
-_
+‾
 ```
 Păstrăm primul element din șir (`2`) și eliminăm elementele care se divid cu el:
-```lisp
+```text
 2 3   5   7   9    11    13    15    17    19    21 ...
-_
+‾
 ```
 Apoi păstrăm următorul element din șirul rămas (`3`) și eliminăm toate elementele care se divid cu el:
-```lisp
+```text
 2 3   5   7        11    13          17    19       ...
-  _
+  ‾
 ```
 etc.
 
@@ -325,18 +325,18 @@ Algoritmul este implementat mai jos:
 
 ```lisp
 (define sieve
-  (lambda (s) 
+  (lambda (s)
     (let ((divisor (stream-first s)))
       (stream-cons
-       ;; păstrează primul element
+       ; păstrează primul element
        divisor
-       ;; și aplică recursiv algoritmul pe numerele care nu se divid cu el
+       ; și aplică recursiv algoritmul pe numerele care nu se divid cu el
        (sieve (stream-filter (lambda (x) (> (modulo x divisor) 0))
                              (stream-rest s)))))))
 
 (define primes-stream
   (sieve
-   ;; șirul numerelor naturale începând de la 2
+   ; șirul numerelor naturale începând de la 2
    (stream-rest (stream-rest naturals-stream))))
 
 ; testare
