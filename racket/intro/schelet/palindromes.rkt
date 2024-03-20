@@ -118,6 +118,7 @@
 
 (check-exp-part 'a .5 (all-palindromes? 585 '(2 10)) #t)
 (check-exp-part 'b .5 (all-palindromes? 594 '(2 10)) #f)
+(check-exp-part 'c .5 (all-palindromes? 15 '(2 10)) #f)
 
 
 (exercițiul 6 : 0 puncte)
@@ -143,7 +144,7 @@
 
 
 (exercițiul 8 : 2 puncte)
-;; Să se găsească primul număr mai mare sau egal cu start care este 
+;; Să se găsească primul număr mai mare sau egal cu start care este
 ;; palindrom în minim b baze dintre bazele 2, 3, 4, 5, 6, 7, 8, 9, 10.
 
 ;; Sugestii:
