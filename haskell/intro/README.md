@@ -1,7 +1,7 @@
 # Haskell: Introducere
 
--   Data publicării: 02.04.2023
--   Data ultimei modificări: 02.04.2023
+-   Data publicării: 31.03.2024
+-   Data ultimei modificări: 31.03.2024
 
 ## Obiective
 
@@ -745,8 +745,8 @@ h' a = (c + b)
 ## Resurse
 
 -   [Cheatsheet (partea cu list comprehensions, funcționale utile și operatori se aplică pentru laboratorul 7)](https://github.com/cs-pub-ro/PP-laboratoare/raw/master/haskell/intro/haskell-cheatsheet-1.pdf)
--   [Schelet](https://ocw.cs.pub.ro/courses/_media/pp/23/laboratoare/haskell/intro-schelet.zip)
--   [Soluții](https://ocw.cs.pub.ro/courses/_media/pp/23/laboratoare/haskell/intro-solutii.zip)
+-   [Schelet](https://ocw.cs.pub.ro/courses/_media/pp/24/laboratoare/haskell/intro-schelet.zip)
+-   [Soluții](https://ocw.cs.pub.ro/courses/_media/pp/24/laboratoare/haskell/intro-solutii.zip)
 
 ## Referințe
 
