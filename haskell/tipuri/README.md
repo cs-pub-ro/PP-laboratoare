@@ -1,7 +1,7 @@
 # Haskell: Tipuri de date utilizator
 
-- Data publicării: 16.04.2023
-- Data ultimei modificări: 17.04.2023
+- Data publicării: 10.04.2024
+- Data ultimei modificări: 10.04.2024
 
 ## Obiective
 
@@ -281,8 +281,8 @@ Diferența principală între `data` și `newtype` este că `newtype` permite cr
 ## Resurse
 
 - [Cheatsheet](https://github.com/cs-pub-ro/PP-laboratoare/raw/master/haskell/tipuri/haskell-cheatsheet-2.pdf)
-- [Schelet](https://ocw.cs.pub.ro/courses/_media/pp/23/laboratoare/haskell/tipuri-schelet.zip)
-- [Soluții](https://ocw.cs.pub.ro/courses/_media/pp/23/laboratoare/haskell/tipuri-solutii.zip)
+- [Schelet](https://ocw.cs.pub.ro/courses/_media/pp/24/laboratoare/haskell/tipuri-schelet.zip)
+- [Soluții](https://ocw.cs.pub.ro/courses/_media/pp/24/laboratoare/haskell/tipuri-solutii.zip)
 
 ## Referințe
 
