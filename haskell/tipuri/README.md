@@ -1,7 +1,7 @@
 # Haskell: Tipuri de date utilizator
 
 - Data publicării: 10.04.2024
-- Data ultimei modificări: 10.04.2024
+- Data ultimei modificări: 19.04.2024
 
 ## Obiective
 
@@ -253,7 +253,7 @@ data Natural = Zero | Succ Natural deriving Show
 
 ## newtype
 
-Construcția `newtype` este similară cu `data`, cu diferența că ne permite crearea unui tip de date cu **un singur** constructor, pe baza altor tipuri de date existente. De exemplu:
+Construcția `newtype` este similară cu `data`, cu diferența că ne permite crearea unui tip de date cu **un singur** constructor și **cu un singur** câmp, pe baza altor tipuri de date existente. De exemplu:
 
 ```haskell
 newtype Celsius = MakeCelsius Float deriving Show

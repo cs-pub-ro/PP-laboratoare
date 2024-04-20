@@ -28,17 +28,17 @@ Cum se traduc list-comprehensions în expresii simple cu funcționale?
 
 O expresie de forma
 
-    [expr | x <- listX, testX, y <- listY, testXY, ...]
+    [expr | x <- listX, textX, y <- listY, testXY, ...]
 
 este evaluată prin selectarea consecutivă a elementelor din `listX`, testarea
 predicatului `testX`, selectarea din `listY` (dacă `testX` este satisfăcut),
 ... Varianta cu funcționale ar arăta
 
-    map (\x y ... -> expr) $ ... $ filter testXY $ zip listY $ filter testX listX
+    map (\x y ... -> expr) $ ... $ filter testXY $ map (\[x, y] -> (x, y)) $ sequence [listY, filter testX listX]
 
 Funcțiile de mai sus, se traduc -- după ceva simplificări -- în:
 -}
 naturals' = [0 ..] -- map id $ filter (\x -> True) [0 ..]
-increasingPairs' = filter (\(y, x) -> x < y) $ zip naturals naturals
--- ^ observați folosirea `zip` și o funcție uncurry pentru `filter`
+increasingPairs' = filter (\(x, y) -> x < y) $ map (\[x, y] -> (x, y)) $ sequence [naturals, naturals]
+-- ^ observați folosirea `sequence` și o funcții uncurry pentru `filter` și pentru `map`
 factorials' = map factorial naturals
