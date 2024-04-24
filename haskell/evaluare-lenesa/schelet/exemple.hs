@@ -16,6 +16,10 @@ increasingPairs = [(x, y) | x <- naturals, y <- naturals, x < y]
 increasingPairs2 = [(x, y) | x <- naturals, y <- [x+1 ..]]
 -- mai sus se generează perechile direct crescător
 
+increasingPairs3 = [(x, y) | s <- [0..], x <- [0..s], let y = s - x, x < y]
+-- dacă vrem să vedem și perechi cu altceva decât 0 pe prima poziție, le generăm
+-- în ordinea crescătoare a sumei componentelor
+
 -- {x! | x <- N}
 productList [] = 1
 productList (x:xs) = x * productList xs
@@ -39,6 +43,4 @@ predicatului `testX`, selectarea din `listY` (dacă `testX` este satisfăcut),
 Funcțiile de mai sus, se traduc -- după ceva simplificări -- în:
 -}
 naturals' = [0 ..] -- map id $ filter (\x -> True) [0 ..]
-increasingPairs' = filter (\(x, y) -> x < y) $ map (\[x, y] -> (x, y)) $ sequence [naturals, naturals]
--- ^ observați folosirea `sequence` și o funcții uncurry pentru `filter` și pentru `map`
 factorials' = map factorial naturals
