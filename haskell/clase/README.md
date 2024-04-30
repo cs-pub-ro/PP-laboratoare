@@ -273,7 +273,7 @@ Pentru că semantic seamănă foarte mult cu `map`, o să-i spunem `treeMap`.
 treeMap :: (a -> b) -> BST a -> BST b
 
 treeMap f Empty = Empty
-treeMap f (BST info l r) = BST (f info) (treeMap f l) (treeMap f r)
+treeMap f (Node info l r) = Node (f info) (treeMap f l) (treeMap f r)
 ```
 
 Să presupunem că dorim să facem ceva similar și pentru tipul `Maybe`.
