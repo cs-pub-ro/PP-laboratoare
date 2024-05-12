@@ -1,7 +1,7 @@
 #  Prolog: Legare și execuție
 
-* Data publicării: 09.05.2023
-* Data ultimei modificări: 09.05.2023
+* Data publicării: 12.05.2024
+* Data ultimei modificări: 12.05.2024
 
 ## Obiective
 
@@ -517,6 +517,6 @@ true.
 
 ## Resurse
 -   [Cheatsheet](https://github.com/cs-pub-ro/PP-laboratoare/raw/master/prolog/legare-executie/prolog_cheatsheet-2.pdf)
--   [Schelet](https://ocw.cs.pub.ro/courses/_media/pp/23/laboratoare/prolog/legare-executie-schelet.zip)
--   [Soluții](https://ocw.cs.pub.ro/courses/_media/pp/23/laboratoare/prolog/legare-executie-solutii.zip)
+-   [Schelet](https://ocw.cs.pub.ro/courses/_media/pp/24/laboratoare/prolog/legare-executie-schelet.zip)
+-   [Soluții](https://ocw.cs.pub.ro/courses/_media/pp/24/laboratoare/prolog/legare-executie-solutii.zip)
 

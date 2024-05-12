@@ -1,7 +1,7 @@
 # Prolog: Probleme de căutare în spaţiul stărilor
 
-  - Data publicării: 16.05.2023
-  - Data ultimei modificări: 16.05.2023
+  - Data publicării: 12.05.2024
+  - Data ultimei modificări: 12.05.2024
 
 ## Obiective
 
@@ -99,8 +99,8 @@ mecanismul general de căutare A\*, astfel:
 
 
 -   [Cheatsheet](https://github.com/cs-pub-ro/PP-laboratoare/raw/master/prolog/cautare/prolog-cheatsheet-3.pdf)
--   [Schelet](https://ocw.cs.pub.ro/courses/_media/pp/23/laboratoare/prolog/cautare-schelet.zip)
--   [Soluții](https://ocw.cs.pub.ro/courses/_media/pp/23/laboratoare/prolog/cautare-solutii.zip)
+-   [Schelet](https://ocw.cs.pub.ro/courses/_media/pp/24/laboratoare/prolog/cautare-schelet.zip)
+-   [Soluții](https://ocw.cs.pub.ro/courses/_media/pp/24/laboratoare/prolog/cautare-solutii.zip)
 
 ## Referinţe
 
