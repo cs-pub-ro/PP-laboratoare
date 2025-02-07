@@ -17,10 +17,11 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
 
-      - name: Zip the file
-        run: |
-          zip -r racket-intro-skel.zip ./racket/intro/schelet/palindromes.rkt
-          zip -r racket-intro-sol.zip ./racket/intro/solutii/palindromes.rkt
+      - name: Zip code
+        uses: vimtor/action-zip@v1.2
+        with:
+            files: ./racket/intro/schelet/palindromes.rkt
+            dest: racket-intro-skel.zip
 
       - name: Upload archives
         uses: actions/upload-artifact@v4
@@ -28,4 +29,3 @@ jobs:
           name: archives
           path: |
             racket-intro-skel.zip
-            racket-intro-sol.zip
