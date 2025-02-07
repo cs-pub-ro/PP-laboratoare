@@ -1,0 +1,31 @@
+name: Zip and Upload Artifact
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  zip-and-upload:
+    runs-on: ubuntu-latest # Specify the OS to run the job on
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2 # Checkout the code from the repository
+
+      - name: Zip the file
+        run: |
+          zip racket-intro-skel.zip racket/intro/schelet/palindromes.rkt
+          zip racket-intro-sol.zip racket/intro/solutii/palindromes.rkt
+
+      - name: Upload Artifact - Racket - intro - skel
+        uses: actions/upload-artifact@v2
+        with:
+          name: racket-intro-skel
+          path: racket-intro-skel.zip
+
+      - name: Upload Artifact - Racket intro - sol
+        uses: actions/upload-artifact@v2
+        with:
+          name: racket-intro-sol
+          path: racket-intro-sol.zip
