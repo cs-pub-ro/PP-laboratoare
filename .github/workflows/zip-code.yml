@@ -4,6 +4,10 @@ on:
   push:
     branches:
       - master
+    paths:
+      - '*/*/*/*.rkt'
+      - '*/*/*/*.hs'
+      - '*/*/*/*.pl'
 
 jobs:
   zip-and-upload:
@@ -15,17 +19,13 @@ jobs:
 
       - name: Zip the file
         run: |
-          zip racket-intro-skel.zip ./racket/intro/schelet/palindromes.rkt
-          zip racket-intro-sol.zip ./racket/intro/solutii/palindromes.rkt
+          zip -r racket-intro-skel.zip ./racket/intro/schelet/palindromes.rkt
+          zip -r racket-intro-sol.zip ./racket/intro/solutii/palindromes.rkt
 
-      - name: Upload Artifact - Racket - intro - skel
+      - name: Upload archives
         uses: actions/upload-artifact@v4
         with:
-          name: racket-intro-skel
-          path: racket-intro-skel.zip
-
-      - name: Upload Artifact - Racket intro - sol
-        uses: actions/upload-artifact@v4
-        with:
-          name: racket-intro-sol
-          path: racket-intro-sol.zip
+          name: archives
+          path: |
+            racket-intro-skel.zip
+            racket-intro-sol.zip
