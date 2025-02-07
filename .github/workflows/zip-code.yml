@@ -15,8 +15,8 @@ jobs:
 
       - name: Zip the file
         run: |
-          zip racket-intro-skel.zip racket/intro/schelet/palindromes.rkt
-          zip racket-intro-sol.zip racket/intro/solutii/palindromes.rkt
+          zip racket-intro-skel.zip ./racket/intro/schelet/palindromes.rkt
+          zip racket-intro-sol.zip ./racket/intro/solutii/palindromes.rkt
 
       - name: Upload Artifact - Racket - intro - skel
         uses: actions/upload-artifact@v4
