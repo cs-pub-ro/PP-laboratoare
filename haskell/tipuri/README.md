@@ -281,8 +281,8 @@ Diferența principală între `data` și `newtype` este că `newtype` permite cr
 ## Resurse
 
 - [Cheatsheet](https://github.com/cs-pub-ro/PP-laboratoare/raw/master/haskell/tipuri/haskell-cheatsheet-2.pdf)
-- [Schelet](https://ocw.cs.pub.ro/courses/_media/pp/24/laboratoare/haskell/tipuri-schelet.zip)
-- [Soluții](https://ocw.cs.pub.ro/courses/_media/pp/24/laboratoare/haskell/tipuri-solutii.zip)
+- [Schelet](https://github.com/cs-pub-ro/PP-laboratoare/raw/refs/heads/archives25/archives/haskell-tipuri-schelet.zip)
+- [Soluții](https://github.com/cs-pub-ro/PP-laboratoare/raw/refs/heads/archives25/archives/haskell-tipuri-solutii.zip)
 
 ## Referințe
 

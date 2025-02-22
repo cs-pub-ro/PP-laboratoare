@@ -5,7 +5,7 @@ import TestPP
 import Data.Char
 
 {-
-Expresia `undefined` are orice tip dar nu poate fi evaluată.
+    Expresia `undefined` are orice tip dar nu poate fi evaluată.
 -}
 
 {-

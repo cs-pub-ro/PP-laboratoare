@@ -356,8 +356,8 @@ Algoritmul este implementat mai jos:
 
 ## Resurse
 
-- [Exerciții](https://ocw.cs.pub.ro/courses/_media/pp/24/laboratoare/racket/intarzierea-evaluarii-schelet.zip)
-- [Soluții](https://ocw.cs.pub.ro/courses/_media/pp/24/laboratoare/racket/intarzierea-evaluarii-solutii.zip)
+- [Exerciții](https://github.com/cs-pub-ro/PP-laboratoare/raw/refs/heads/archives25/archives/racket-intarzierea-evaluarii-schelet.zip)
+- [Soluții](https://github.com/cs-pub-ro/PP-laboratoare/raw/refs/heads/archives25/archives/racket-intarzierea-evaluarii-solutii.zip)
 - [Cheatsheet laborator 5](https://github.com/cs-pub-ro/PP-laboratoare/raw/master/racket/intarzierea-evaluarii/fluxuri-cheatsheet.pdf)
 
 ## Referințe

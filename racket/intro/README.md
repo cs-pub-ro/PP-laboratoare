@@ -1,7 +1,7 @@
 # Racket: Introducere
 
-  - Data publicării: 26.02.2024
-  - Data ultimei modificări: 26.02.2024
+  - Data publicării: 23.02.2025
+  - Data ultimei modificări: 23.02.2025
 
 ## Obiective
 
@@ -356,8 +356,8 @@ Trecem axiomele în cod Racket:
 
 ## Resurse
 
-  - [Schelet](https://ocw.cs.pub.ro/courses/_media/pp/24/laboratoare/racket/intro-skel.zip)
-  - [Soluții](https://ocw.cs.pub.ro/courses/_media/pp/24/laboratoare/racket/intro-sol.zip)
+  - [Schelet](https://github.com/cs-pub-ro/PP-laboratoare/raw/refs/heads/archives25/archives/racket-intro-schelet.zip)
+  - [Soluții](https://github.com/cs-pub-ro/PP-laboratoare/raw/refs/heads/archives25/archives/racket-intro-solutii.zip)
   - [Cheatsheet](https://github.com/cs-pub-ro/PP-laboratoare/raw/master/racket/intro/racket-cheatsheet-1.pdf)
 
 ## Referinţe

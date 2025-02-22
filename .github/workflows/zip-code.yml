@@ -1,31 +1,21 @@
-name: Zip and Upload Artifact
+name: Creating zip archives and publish them
 
 on:
   push:
     branches:
       - master
+    paths:
+      - '*/*/*/*.rkt'
+      - '*/*/*/*.hs'
+      - '*/*/*/*.pl'
 
 jobs:
   zip-and-upload:
-    runs-on: ubuntu-latest # Specify the OS to run the job on
+    runs-on: ubuntu-latest
     
     steps:
       - name: Checkout code
-        uses: actions/checkout@v2 # Checkout the code from the repository
+        uses: actions/checkout@v2
 
-      - name: Zip the file
-        run: |
-          zip racket-intro-skel.zip racket/intro/schelet/palindromes.rkt
-          zip racket-intro-sol.zip racket/intro/solutii/palindromes.rkt
-
-      - name: Upload Artifact - Racket - intro - skel
-        uses: actions/upload-artifact@v2
-        with:
-          name: racket-intro-skel
-          path: racket-intro-skel.zip
-
-      - name: Upload Artifact - Racket intro - sol
-        uses: actions/upload-artifact@v2
-        with:
-          name: racket-intro-sol
-          path: racket-intro-sol.zip
+      - name: Execute archives script
+        run: cd scripts && ./create-archives.sh

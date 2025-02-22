@@ -321,5 +321,5 @@ Mai multe detalii [aici](http://www.haskell.org/tutorial/classes.html "wikilink"
 ## Resurse
 
 -   [Cheatsheet](https://github.com/cs-pub-ro/PP-laboratoare/raw/master/haskell/clase/haskell-cheatsheet-3.pdf)
--   [Schelet](https://ocw.cs.pub.ro/courses/_media/pp/24/laboratoare/haskell/clase-schelet.zip)
--   [Soluții](https://ocw.cs.pub.ro/courses/_media/pp/24/laboratoare/haskell/clase-solutii.zip)
+-   [Schelet](https://github.com/cs-pub-ro/PP-laboratoare/raw/refs/heads/archives25/archives/haskell-clase-schelet.zip)
+-   [Soluții](https://github.com/cs-pub-ro/PP-laboratoare/raw/refs/heads/archives25/archives/haskell-clase-solutii.zip)

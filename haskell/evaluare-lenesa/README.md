@@ -213,8 +213,8 @@ Un exemplu de aplicație uzuală de "point-free style programming", cu care prob
 ## Resurse
 
 -   [Cheatsheet](https://github.com/cs-pub-ro/PP-laboratoare/raw/master/haskell/intro/haskell-cheatsheet-1.pdf)
--   [Schelet](https://ocw.cs.pub.ro/courses/_media/pp/24/laboratoare/haskell/evaluare-lenesa-schelet.zip)
--   [Soluții](https://ocw.cs.pub.ro/courses/_media/pp/24/laboratoare/haskell/evaluare-lenesa-solutii.zip)
+-   [Schelet](https://github.com/cs-pub-ro/PP-laboratoare/raw/refs/heads/archives25/archives/haskell-evaluare-lenesa-schelet.zip)
+-   [Soluții](https://github.com/cs-pub-ro/PP-laboratoare/raw/refs/heads/archives25/archives/haskell-evaluare-lenesa-solutii.zip)
 
 ## Referințe
 -   *[Pointfree on Haskell Wiki](http://www.haskell.org/haskellwiki/Pointfree "wikilink")*

@@ -99,8 +99,8 @@ mecanismul general de căutare A\*, astfel:
 
 
 -   [Cheatsheet](https://github.com/cs-pub-ro/PP-laboratoare/raw/master/prolog/cautare/prolog-cheatsheet-3.pdf)
--   [Schelet](https://ocw.cs.pub.ro/courses/_media/pp/24/laboratoare/prolog/cautare-schelet.zip)
--   [Soluții](https://ocw.cs.pub.ro/courses/_media/pp/24/laboratoare/prolog/cautare-solutii.zip)
+-   [Schelet](https://github.com/cs-pub-ro/PP-laboratoare/raw/refs/heads/archives25/archives/prolog-cautare-schelet.zip)
+-   [Soluții](https://github.com/cs-pub-ro/PP-laboratoare/raw/refs/heads/archives25/archives/prolog-cautare-solutii.zip)
 
 ## Referinţe
 

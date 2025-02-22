@@ -261,8 +261,8 @@ momentul dorit, aplicând această expresie (aici pe 0 argumente).
 ## Resurse
 
   - [Documentație Racket](https://docs.racket-lang.org/reference/let.html "wikilink")
-  - [Schelet](https://ocw.cs.pub.ro/courses/_media/pp/23/laboratoare/racket/legare-schelet.zip)
-  - [Soluții](https://ocw.cs.pub.ro/courses/_media/pp/23/laboratoare/racket/legare-solutii.zip)
+  - [Schelet](https://github.com/cs-pub-ro/PP-laboratoare/raw/refs/heads/archives25/archives/racket-legare-schelet.zip)
+  - [Soluții](https://github.com/cs-pub-ro/PP-laboratoare/raw/refs/heads/archives25/archives/racket-legare-solutii.zip)
   - [Cheatsheet Laboratorul 4](https://github.com/cs-pub-ro/PP-laboratoare/raw/master/racket/legare/legare-cheatsheet.pdf)
 
 ## Referințe
