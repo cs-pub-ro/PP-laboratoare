@@ -1,7 +1,7 @@
 {-
   Tipuri:
 
-  Încărcați în ghci fișierul și verificați tipul următoarelor expresii.
+  Încărcați în terminalul de ghci fișierul și verificați tipul următoarelor expresii.
 -}
 anInteger = 42
 aFloat = 42.2
