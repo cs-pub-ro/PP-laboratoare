@@ -34,7 +34,7 @@
 ;; în rest reprezentarea corespunde reprezentării matematice.
 ;; num->base(0,b) = [ ]                                   ; pt n=0
 ;; num->base(n,b) = num->base(n div b, b) ++ [ n mod b ]  ; pt n>0
-;; Implementați funcția corespunzătoare în Racket.
+;; Implementați funcția corespunzătoare în Racket. 
 
 (define (num->base n b)
   'your-code-here)
