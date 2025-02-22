@@ -28,4 +28,5 @@ jobs:
         with:
           name: racket-intro-skel
           path: racket-intro-skel.zip
+          target: racket-intro-skel
           overwrite: true
