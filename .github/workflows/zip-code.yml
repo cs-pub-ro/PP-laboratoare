@@ -31,10 +31,11 @@ jobs:
         with:
             draft: false
             prerelease: false
-            release_name: ${{ steps.version.outputs.version }}
-            tag_name: Release ${{ github.ref }}
+            release_name: Release ${{ github.run_number }}
+            tag_name: ${{ github.run_number }}
         env:
             GITHUB_TOKEN: ${{ github.token }}
+
       - name: Upload archive - Racket - lab 1 - skel
         id: upload-release-asset 
         uses: actions/upload-release-asset@v1
