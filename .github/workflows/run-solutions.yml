@@ -18,8 +18,13 @@ jobs:
                 version: '8.15'
             - name: Run Racket solutions
               run: |
+                echo "Laboratorul 1"
                 xvfb-run -a racket ./racket/intro/solutii/*.rkt
+                echo "Laboratorul 2"
                 xvfb-run -a racket ./racket/recursivitate/solutii/*.rkt
+                echo "Laboratorul 3"
                 xvfb-run -a racket ./racket/functionale/solutii/*.rkt
+                echo "Laboratorul 4"
                 xvfb-run -a racket ./racket/legare/solutii/*.rkt
+                echo "Laboratorul 5"
                 xvfb-run -a racket ./racket/intarzierea-evaluarii/solutii/*.rkt
