@@ -18,8 +18,8 @@ jobs:
                 version: '8.15'
             - name: Run Racket solutions
               run: |
-                xvfb-run racket ./racket/intro/solutii/*.rkt
-                xvfb-run racket ./racket/recursivitate/solutii/*.rkt
-                xvfb-run racket ./racket/functionale/solutii/*.rkt
-                xvfb-run racket ./racket/legare/solutii/*.rkt
-                xvfb-run racket ./racket/intarzierea-evaluarii/solutii/*.rkt
+                xvfb-run -a racket ./racket/intro/solutii/*.rkt
+                xvfb-run -a racket ./racket/recursivitate/solutii/*.rkt
+                xvfb-run -a racket ./racket/functionale/solutii/*.rkt
+                xvfb-run -a racket ./racket/legare/solutii/*.rkt
+                xvfb-run -a racket ./racket/intarzierea-evaluarii/solutii/*.rkt
