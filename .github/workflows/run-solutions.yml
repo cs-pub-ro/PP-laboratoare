@@ -1,0 +1,25 @@
+name: Running solutions
+on: [push]
+
+jobs:
+    run-sols:
+        runs-on: ubuntu-latest
+        steps:
+            - name: Checkout code
+              uses: actions/checkout@v2
+            - name: Install xvfb
+              run: sudo apt install xvfb
+            - name: Install Racket
+              uses: Bogdanp/setup-racket@v1.5
+              with:
+                architecture: 'x64'
+                distribution: 'full'
+                variant: 'CS'
+                version: '8.15'
+            - name: Run Racket solutions
+              run: |
+                xvfb-run racket ./racket/intro/solutii/*.rkt
+                xvfb-run racket ./racket/recursivitate/solutii/*.rkt
+                xvfb-run racket ./racket/functionale/solutii/*.rkt
+                xvfb-run racket ./racket/legare/solutii/*.rkt
+                xvfb-run racket ./racket/intarzierea-evaluarii/solutii/*.rkt
