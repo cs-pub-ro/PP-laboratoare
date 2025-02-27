@@ -20,7 +20,7 @@ for str in ${topics[@]}; do
 
         for type in ${archive_types[@]}; do
             ls "$entry/$type"
-            zip ../archives/"$str-$lab-$type.zip" "$entry/$type"/*
+            zip -j ../archives/"$str-$lab-$type.zip" "$entry/$type"/*
         done
     done
 done
