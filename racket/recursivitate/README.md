@@ -72,7 +72,7 @@ Este important să aveți în vedere faptul că **funcțiile** recursive pe coad
 (define (member x L) ;; O posibilă implementare a funcției member
 
  (if (null? L) #f  ;; Caz de bază, lista vidă nu conține elemente`
-    (if (equal? x (car L)) (cdr L)  ;; Verificăm dacă elementul căutat este primul termen din listă  
+    (if (equal? x (car L)) L  ;; Verificăm dacă elementul căutat este primul termen din listă  
         (member x (cdr L)))))  ;; Dacă nu, căutăm în restul listei
 
 ```
@@ -93,9 +93,9 @@ Recursivitatea arborescentă apare în cazul funcțiilor care conțin, în imple
 
 {{ pp:19:laboratoare:racket:fibonacci.png }}
 
-Se poate observa **ineficiența** implementării recursive pe stivă, atât din punct de vedere **temporal** (datorată **apelurilor duplicate**, precum apelul funcției pentru n = 3), cât și din punct de vedere **spațial** (datorată **stocării de "stack frames"** necesare pentru revenirea din recursivitate).
+Se poate observa **ineficiența** implementării cu recursivitate arborescentă, atât din punct de vedere **temporal** (datorată **apelurilor duplicate**, precum apelul funcției pentru n = 3), cât și din punct de vedere **spațial** (datorată **stocării de "stack frames"** necesare pentru revenirea din recursivitate).
 
-În cadrul [exercițiilor rezolvate](#Resurse "wikilink") puteți observa mai în detaliu diferențele dintre recursivitatea pe stivă si cea pe coada (inclusiv în contextul funcției *fib*).
+În cadrul [exercițiilor rezolvate](#Resurse "wikilink") puteți observa mai în detaliu diferențele dintre recursivitatea pe stivă și cea pe coadă (inclusiv în contextul funcției *fib*).
 
 ## Resurse
 
