@@ -29,7 +29,7 @@ cuvinte, domeniul de vizibilitate al variabilei x este
 
 **Exemplu:** Domeniul de vizibilitate pentru variabila `a` este
         format din liniile de cod `{9, 10, 11, 12, 13, 14}`
-        {{:pp:media:domeniu\_vizibilitate.png?600 |}}
+        ![Domeniu_vizibilitate](img-ocw/domeniu_vizibilitate.png)
 
 ## Context computaţional
 
@@ -42,7 +42,7 @@ dat de toate variabilele şi valorile acestora, vizibile în acel punct.
 
 **Exemplu:** Pe linia 6 contextul computaţional este: `{(a 2) (b 32) (s P)}`
 
-{{:pp:media:context.png?500 |}}
+![Context](img-ocw/context.png)
 
 ## Legare
 
