@@ -1,7 +1,7 @@
 # Haskell: Introducere
 
--   Data publicării: 31.03.2024
--   Data ultimei modificări: 31.03.2024
+-   Data publicării: 05.04.2025
+-   Data ultimei modificări: 05.04.2025
 
 ## Obiective
 
@@ -287,6 +287,17 @@ Se ofera de asemenea și funcțiile `zip` și `unzip`, **doar** pentru perechi, 
 
 Pentru tuplurile cu mai mult de 2 elemente este sarcina programatorului să definească funcțiile folosite.
 
+### *Typed holes*
+
+Pe lângă posibilitatea inferenței automate a tipului unei întregi expresii, limbajul oferă posibilitatea determinării **tipului așteptat al unei subexpresii** (***typed hole***) din cadrul unei expresii mai ample. Acest lucru se realizează plasând un *underscore* în locul subexpresiei cu pricina. La evaluarea unei expresii care conține un *typed hole*, se afișează tipul celei din urmă:
+
+```haskell
+> not $ fst (_, 2)
+Found hole: _ :: Bool
+```
+
+Acest mecanism poate fi util după ce am scris o parte din definiția unei funcții și nu ne este clar cum trebuie să o completăm mai departe. Tipul porțiunii lipsă poate fi un indiciu important în acest sens.
+
 ## Definirea funcțiilor
 
 Să considerăm că vrem să scriem o funcție pentru factorialul unui număr.
@@ -324,7 +335,7 @@ Observați regula indentării aplicată și aici. Expresia `_` semnifică orice 
 
 Fiecare caz este tratat în ordine, prima potrivire este executată.
 
-În final, putem scrie aceeași funcție folosind **pattern matching**:
+În final, putem scrie aceeași funcție folosind ***pattern matching***:
 
 ```haskell
 factorial_pm 0 = 1
@@ -334,24 +345,43 @@ factorial_pm x = x * factorial_pm (x - 1)
 Expresiile din interiorul fiecărei ramuri din `case` sau din interiorul pattern-match nu pot fi decât constructorii unui tip (asemenea analizei pe cazuri a TDA-urilor în inducția structurală învățată la AA). În continuare vom folosi cele 4 stiluri pentru a ilustra funcția care calculează lungimea unei liste
 
 ```haskell
-length_if l = if l == [] then 0 else 1 + length_if (tail l)
+length_if lst = if lst == [] then 0 else 1 + length_if (tail lst)
 ```
 ```haskell
-length_guard l
+length_guard lst
     | l == [] = 0
-    | otherwise = 1 + length_guard (tail l)
+    | otherwise = 1 + length_guard (tail lst)
 ```
 ```haskell 
-length_case l = case l of
+length_case lst = case lst of
     [] -> 0
-    (_ : xs) -> 1 + length_case xs
+    _ : xs -> 1 + length_case xs
 ``` 
 ```haskell
 length_pm [] = 0
-length_pm (_:xs) = 1 + length_pm xs
+length_pm (_ : xs) = 1 + length_pm xs
 ```
 
 Observați în exemplele de mai sus expresivitatea limbajului. Folosirea construcției potrivite duce la definiții scurte și ușor de înțeles.
+
+**Gărzile** pot apărea și în cadrul ramurilor de **`case`**. De exemplu, dacă dorim să calculăm lungimea celui mai lung prefix de numere pare, putem scrie funcția de mai jos, pentru care aplicația `length_even_prefix [2, 4, 6, 7, 8]` are valoarea `3`, corespunzătoare prefixului `[2, 4, 6]`.
+
+```haskell
+length_even_prefix lst = case lst of
+    x : xs
+        | even x -> 1 + length_even_prefix xs
+    _ -> 0
+```
+
+Observați că ultima ramură (`_`) surprinde atât lista vidă, cât și o listă nevidă pentru care primul element nu satisface condiția de paritate.
+
+O ultimă construcție utilă reprezintă o combinație de gărzi și *pattern matching*, denumită ***pattern guards***. Funcția anterioară se poate rescrie ca mai jos:
+
+```haskell
+length_even_prefix_pg lst
+    | x : xs <- lst, even x = 1 + length_even_prefix_pg xs
+    | otherwise             = 0
+```
 
 ## Curry vs Uncurry
 
@@ -742,6 +772,7 @@ h' a = (c + b)
         c = b
         b = a + 1  -- letrec din Racket, aici nu avem eroare datorită evaluării leneșe
 ```
+
 ## Resurse
 
 -   [Cheatsheet (partea cu list comprehensions, funcționale utile și operatori se aplică pentru laboratorul 7)](https://github.com/cs-pub-ro/PP-laboratoare/raw/master/haskell/intro/haskell-cheatsheet-1.pdf)
