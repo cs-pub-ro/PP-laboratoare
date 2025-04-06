@@ -313,8 +313,8 @@ Mai frumos, putem scrie funcția de mai sus folosind **gărzi**:
 
 ```haskell 
 factorial_guards x
-    | x < 1 = 1
-    | otherwise = x * factorial_guards (x - 1)
+    | x < 1 = 1
+    | otherwise = x * factorial_guards (x - 1)
 ```
 
 Observați indentarea: orice linie care face parte din aceeași expresie ca cea de deasupra trebuie să înceapă la exact aceeași indentare. Orice linie care este o subexpresie a expresiei de mai sus (`then` sau `else` în cazul `if`, fiecare gardă în parte, etc.) trebuie să fie indentată mai spre dreapta.
@@ -327,8 +327,8 @@ Pentru a ne apropia de definiția matematică, putem scrie aceeași funcție fol
 
 ```haskell 
 factorial_case x = case x < 1 of
-    True -> 1 
-    _ -> x * factorial_case (x - 1)
+    True -> 1 
+    _ -> x * factorial_case (x - 1)
 ```
 
 Observați regula indentării aplicată și aici. Expresia `_` semnifică orice valoare, indiferent de valoarea ei. Expresia din `case` poate fi oricare.
@@ -350,12 +350,12 @@ length_if lst = if lst == [] then 0 else 1 + length_if (tail lst)
 ```haskell
 length_guard lst
     | l == [] = 0
-    | otherwise = 1 + length_guard (tail lst)
+    | otherwise = 1 + length_guard (tail lst)
 ```
 ```haskell 
 length_case lst = case lst of
     [] -> 0
-    _ : xs -> 1 + length_case xs
+    _ : xs -> 1 + length_case xs
 ``` 
 ```haskell
 length_pm [] = 0
@@ -455,19 +455,19 @@ Forma generală a clauzei `let` este următoarea:
 
 ```haskell
 let id1 = val1
-    id2 = val2
-    ...
-    idn = valn
-in expr
+    id2 = val2
+    ...
+    idn = valn
+in expr
 ```
 
 unde `expr` este o expresie Haskell care poate depinde de `id1, id2, ..., idn`. De asemenea, domeniul de vizibilitate ale definițiilor locale este întreaga clauză `let` (similar cu `letrec` în Racket). Astfel, definiția următoare:
 
 ```haskell
 p = let x = y + 1
-        y = 2
-        b n = if n == 0 then [] else n : b (n - 1)  
-    in (x + y, b 2)
+        y = 2
+        b n = if n == 0 then [] else n : b (n - 1)  
+    in (x + y, b 2)
 ```
 
 este corectă. `x` poate să depindă de `y` datorită **evaluării leneșe**: în fapt `x` va fi evaluat în corpul clauzei, în cadrul expresiei `(x + y, b 2)`, unde `y` e deja definit.
@@ -479,10 +479,10 @@ Clauza `where` este similară cu `let`, diferența principală constând în fol
 ```haskell 
 def = expr
     where  
-    id1 = val1  
-    id2 = val2  
+    id1 = val1  
+    id2 = val2  
     ...
-    idn = valn
+    idn = valn
 ```
 cu aceleași observații ca în cazul `let`.
 
@@ -492,8 +492,8 @@ Un exemplu de folosire vedem în implementarea metodei de sortare QuickSort:
 qsort [] = [] 
 qsort (p : xs) = qsort left ++ [p] ++ qsort right
     where  
-    left = filter (< p) xs
-    right = filter (>= p) xs
+    left = filter (< p) xs
+    right = filter (>= p) xs
 ```
 
 Clauzele de tip `let` și `where` facilitează **reutilizarea** codului. De exemplu, funcția:
@@ -501,12 +501,12 @@ Clauzele de tip `let` și `where` facilitează **reutilizarea** codului. De exem
 ```haskell
 inRange :: Double -> Double -> String 
 inRange x max
-    | f < low               = "Too low!"  
-    | f >= low && f <= high = "In range"  
-    | otherwise             = "Too high!"  
+    | f < low               = "Too low!"  
+    | f >= low && f <= high = "In range"  
+    | otherwise             = "Too high!"  
     where
-    f = x / max
-    (low, high) = (0.5, 1.0)
+    f = x / max
+    (low, high) = (0.5, 1.0)
 ```
 
 verifică dacă o valoare normată se află într-un interval fixat. Expresia dată de `f` este folosită de mai multe ori în corpul funcției, motiv pentru care este urmărită încapsularea ei într-o definiție. De asemenea, se observă că definițiile locale, ca și cele top-level, permit pattern matching-ul pe constructorii de tip, în cazul acesta constructorul tipului pereche.
@@ -515,7 +515,7 @@ Observăm că `where` și `let` sunt de asemenea utile pentru definirea de func�
 
 ```haskell
 naturals = iter 0
-    where iter x = x : iter (x + 1)
+    where iter x = x : iter (x + 1)
 ```
 
 `iter` având în exemplul de mai sus rolul de generator auxiliar al listei numerelor naturale.
@@ -581,12 +581,14 @@ max 2 3
 
 Perechi:
 - Racket
+
 ```lisp
 (cons 1 2) ; construirea unei perechi
 (car (cons 1 2)) ; primul element
 (cdr (cons 1 2)) ; al doilea element
 ```
 - Haskell - folosim tupluri, mai precis colecții care pot avea elemente de tipuri diferite
+
 ```haskell
 (1, 2) -- construirea unei perechi
 (fst (1, 2)) -- primul element
@@ -597,6 +599,7 @@ Perechi:
 
 Liste:
 - Racket - listele sunt eterogene, pot conține elemente de tipuri diferite
+
 ```lisp
 null ; lista goala
 '() ; lista goala
@@ -616,7 +619,9 @@ null ; lista goala
 
 (member 4 (list 1 2 3 4)) ; se verifica daca un element exista intr-o lista
 ```
+
 - Haskell - listele sunt omogene, au elemente de același tip
+
 ```haskell
 [] -- lista goala
 
@@ -640,6 +645,7 @@ elem 4 [1, 2, 3, 4] -- se verifica daca un element exista intr-o lista
 
 Sintaxa `if`:
 - Racket
+
 ```lisp
 (if (< a 0)
     (if (> a 10) 
@@ -648,6 +654,7 @@ Sintaxa `if`:
     -1))
 ```
 - Haskell
+
 ```haskell
 if a < 0 then 
     if (a > 10) 
@@ -658,6 +665,7 @@ if a < 0 then
 
 Definirea unei funcții:
 - Racket
+
 ```lisp
 (define (sum-list l)
   (if (null? l)
@@ -665,6 +673,7 @@ Definirea unei funcții:
       (+ (car l) (sum-list (cdr l)))))
 ```
 - Haskell
+
 ```haskell
 -- cu `if .. else .. then`
 sumList :: [Int] -> Int
@@ -690,6 +699,7 @@ sumList2 (x:xl) = x + sumList2 xl
 
 Funcționale:
 - Racket
+
 ```lisp
 ; map
 (map (λ (x) (+ x 1)) (list 1 2 3 4))  ; '(2 3 4 5)
@@ -705,6 +715,7 @@ Funcționale:
 (foldr (lambda (x acc) (cons x acc)) '() (list 1 2 3 4 5)) ; '(1 2 3 4 5)
 ```
 - Haskell
+
 ```haskell
 -- map
 map (\x -> x + 1) [1, 2, 3, 4]  -- [2, 3, 4, 5]
@@ -725,6 +736,7 @@ Observăm că, spre deosebire de Racket, în Haskell funcționalele `foldl` și 
 
 Legări:
 - Racket
+
 ```lisp
 (define (f a) 
     (let ((c a) (b (+ a 1))) 
@@ -739,6 +751,7 @@ Legări:
 ;        (+ c b)))               ; aici vom avea eroare, pentru ca la legarea lui b la c, b-ul nu este definit
 ```
 - Haskell - `let` în Haskell se comporta precum `letrec` din Racket
+
 ```haskell
 -- cu let
 f a = 
