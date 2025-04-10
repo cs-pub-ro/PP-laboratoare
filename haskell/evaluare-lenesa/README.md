@@ -208,7 +208,7 @@ Observăm că al doilea argument al funcției `myIntersperse` nu este menționat
 
 Atenție! Folosirea stilului "point-free" poate să scadă în anumite cazuri lizibilitatea codului! Ideal este să folosiți construcții "point-free" doar atunci când acestea fac programul **mai ușor** de înțeles. Proiectele Haskell de dimensiuni mari încurajează stilul "point-free" **doar** împreună cu clauze `let` și `where`, și uneori cu funcții anonime.
 
-Un exemplu de aplicație uzuală de "point-free style programming", cu care probabil sunteți deja familiari, este folosirea operatorului pipe ("|") în [unix shell scripting](http://www.vex.net/~trebla/weblog/pointfree.html "wikilink").
+Un exemplu de aplicație uzuală de "point-free style programming", cu care probabil sunteți deja familiari, este folosirea operatorului pipe (`|`) în [unix shell scripting](http://www.vex.net/~trebla/weblog/pointfree.html "wikilink").
 
 ## Resurse
 
