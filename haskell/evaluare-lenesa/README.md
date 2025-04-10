@@ -38,7 +38,7 @@ Definiția de mai sus este însă **zahăr sintactic** pentru următoarea expres
 
 ```haskell 
 naturals = iter 0
-    where iter x = x : iter (x + 1)
+    where iter x = x : iter (x + 1)
 ```
 
 Putem de asemenea să generăm liste infinite folosind funcționala [iterate](http://hackage.haskell.org/package/base-4.6.0.1/docs/Prelude.html#v:iterate "wikilink"), având prototipul:
@@ -73,7 +73,7 @@ fibs = 0 : 1 : zipWith (+) fibs (tail fibs) -- sirul lui Fibonacci
 powsOfTwo = iterate (* 2) 1 -- puterile lui 2
 palindromes = filter isPalindrome [0..] -- palindroame
     where  
-    isPalindrome x = show x == reverse (show x) -- truc: reprezint numarul ca String
+    isPalindrome x = show x == reverse (show x) -- truc: reprezint numarul ca String
 ```
 
 ## Point-free programming
