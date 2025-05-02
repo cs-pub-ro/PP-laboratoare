@@ -71,7 +71,7 @@ root = foldl insertElem BSTNil [7, 4, 12, 2, 3, 1, 10, 15, 8]
 
 {-
     1. Instanțiați Eq pentru tipul de date BST, prin care se
-    verifică dacă doi arbori de acoperire sunt identici.
+    verifică dacă doi arbori binari de căutare sunt identici.
 -}
 
 instance Eq a => Eq (BST a) where
@@ -184,8 +184,8 @@ check5 = tests_ 5 $
     Funcția foldr are aceeași funcționalitate atunci când
     ea este aplicată pe liste.
 
-    Nu trebuie să implementați și foldl, clasa Foldable
-    nu acoperă și această funcție.
+    Nu este necesar să implementați și foldl, întrucât clasa Foldable 
+    conține o implementare implicită a acesteia, bazată pe foldr.
 
     Hints:
     1) aplicați foldr pe copilul din dreapta
