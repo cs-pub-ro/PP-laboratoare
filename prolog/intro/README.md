@@ -577,5 +577,4 @@ cu `?`. Instanțierea parametrilor ține de specificarea acestora:
   - [Logic, Programming, and Prolog](http://www.ida.liu.se/~ulfni53/lpp/bok/bok.pdf "wikilink")
   - [Built-in Predicates](http://www.swi-prolog.org/pldoc/doc_for?object=section%281,%274%27,swi%28%27/doc/Manual/builtin.html%27%29%29 "wikilink")
 
-[^1]: În logica matematică, o formulă este satisfiabilă dacă este adevărată sub
-o anumită asociere de valori variabilelor sale.
+[^1]: În logica matematică, o formulă este satisfiabilă dacă este adevărată sub o anumită asociere de valori variabilelor sale.
