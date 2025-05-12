@@ -123,17 +123,20 @@ false.
 Tipuri simpli de termeni:
 
 - Constante textuale, sau mai bine zis *atomi*
+  
   ```prolog
   nume, ion, popescu
   ```
 - Numere întregi/numere în virgulă mobilă
 - Variabile (vom detalia mai departe)
+  
   ```prolog
   ?- om(X).
   X = socrate.
   ```
 - Termeni
   [compuși](https://www.swi-prolog.org/pldoc/man?section=glossary#gloss:compound).
+  
   ```prolog
   % exemplu structură
   client(nume(ion, popescu), carte(aventuri, 2002)).
@@ -402,6 +405,7 @@ Pentru o mai bună înțelegere, vom trata operatorii `=`, `is`, `==`, `\==`, `=
 
 - pot primi variabile [neinstanțiate](https://www.swi-prolog.org/pldoc/man?section=glossary#gloss:instantiation) (adică nelegate) pe care le instanțiază: 
     - operatorul `=` poate lega în ambele părți
+    
     ```prolog
     ?- X = 2 + 1. 
     X = 2+1.
@@ -549,6 +553,7 @@ cu `?`. Instanțierea parametrilor ține de specificarea acestora:
     predicatului.
     - Următorul exemplu, din laboratoarele următoare, îl folosește pe `R` ca
       intrare, și pe `N` ca o ieșire.
+    
     ```prolog
     % lungime(+Lista,-Lungime)
     lungime([],0).
