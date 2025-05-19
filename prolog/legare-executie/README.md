@@ -465,8 +465,6 @@ false.
 Observați că premisa `subset_sum(Rest, S1)` generează legări pentru `S1` care
 s-ar putea dovedi nefolositoare în premisa de testare, `Sum is S1 + Head`.
 
-## Backtracking atunci când cunoaștem dimensiunea soluției
-
 ```prolog
 % subset_sum(+List, +Sum).
 subset_sum(_, 0) :- !.
