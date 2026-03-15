@@ -1,0 +1,38 @@
+name: Test SSH
+on:
+  push:
+    branches:
+      - lm/ocw-update
+jobs:
+  test-ssh-conn:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 2
+
+      - name: Test SSH Connection
+        env:
+          SSH_PRIVATE_KEY: ${{ secrets.PP_OCW_PRIVATE_KEY }}
+          SSH_PASSPHRASE: ${{ secrets.PP_OCW_PASSPHRASE }}
+        run: |
+          # Start the agent
+          eval "$(ssh-agent -s)"
+
+          # Add the key, feeding the passphrase via SSH_ASKPASS
+          echo "$SSH_PRIVATE_KEY" > /tmp/ssh_key
+          chmod 600 /tmp/ssh_key
+
+          export SSH_ASKPASS_REQUIRE=force
+          export SSH_ASKPASS=$(mktemp)
+          echo "#!/bin/sh" > "$SSH_ASKPASS"
+          echo "echo \"\$SSH_PASSPHRASE\"" >> "$SSH_ASKPASS"
+          chmod +x "$SSH_ASKPASS"
+
+          ssh-add /tmp/ssh_key
+
+          # Clean up sensitive files
+          rm /tmp/ssh_key "$SSH_ASKPASS"
+
+          ssh -o "PubkeyAcceptedKeyTypes=+ssh-rsa" -o "HostKeyAlgorithms=+ssh-rsa" -o "StrictHostKeyChecking=no" pp@ocw.cs.pub.ro "cat /home/pp/pp-pages/26/laboratoare/tda.txt"
