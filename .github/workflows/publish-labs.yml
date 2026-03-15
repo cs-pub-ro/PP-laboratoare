@@ -2,9 +2,10 @@ name: Publish labs
 on:
   push:
     branches:
-      - master
-    paths:
-      - '*/*/README.md'
+    # - master
+      - lm/ocw-update
+    # paths:
+    #   - '*/*/README.md'
 jobs:
   publish_labs:
     runs-on: ubuntu-latest
