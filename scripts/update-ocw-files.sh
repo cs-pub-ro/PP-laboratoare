@@ -1,9 +1,11 @@
 #!/usr/bin/env bash
-python -m pip install dokuwiki
+
+REMOTE_BASE='/home/pp/pp-pages/26/laboratoare'
+REMOTE_HOST='pp@ocw.cs.pub.ro'
+SSH_OPTS='-o PubkeyAcceptedKeyTypes=+ssh-rsa -o HostKeyAlgorithms=+ssh-rsa -o StrictHostKeyChecking=no'
 
 rm -rf .tmp/
 mkdir -p .tmp/
-NAMESPACE='pp/23/laboratoare'
 src_files=`git diff --name-only HEAD~1 HEAD | xargs dirname | grep -E "schelet|solutii" | uniq`
 
 for file in $src_files
@@ -16,5 +18,8 @@ do
   cd $file
   zip $path -r .
   cd $pwd_point
-  python scripts/upload_file.py --username $USERNAME --password $PASSWORD --file $path --namespace $NAMESPACE/$lang/$lab-$target.zip
+
+  remote_dir="$REMOTE_BASE/$lang"
+  ssh $SSH_OPTS $REMOTE_HOST "mkdir -p $remote_dir"
+  scp $SSH_OPTS $path "$REMOTE_HOST:$remote_dir/$lab-$target.zip"
 done
