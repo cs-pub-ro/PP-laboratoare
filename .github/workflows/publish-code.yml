@@ -1,0 +1,39 @@
+name: Publish code
+on:
+  push:
+    branches:
+      - master
+    paths:
+      - '*/*/*/*.rkt'
+      - '*/*/*/*.hs'
+      - '*/*/*/*.pl'
+jobs:
+  publish_code:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 2
+
+      - name: Update code
+        env:
+          SSH_PRIVATE_KEY: ${{ secrets.PP_OCW_PRIVATE_KEY }}
+          SSH_PASSPHRASE: ${{ secrets.PP_OCW_PASSPHRASE }}
+        run: |
+          eval "$(ssh-agent -s)"
+
+          echo "$SSH_PRIVATE_KEY" > /tmp/ssh_key
+          chmod 600 /tmp/ssh_key
+
+          export SSH_ASKPASS_REQUIRE=force
+          export SSH_ASKPASS=$(mktemp)
+          echo "#!/bin/sh" > "$SSH_ASKPASS"
+          echo "echo \"\$SSH_PASSPHRASE\"" >> "$SSH_ASKPASS"
+          chmod +x "$SSH_ASKPASS"
+
+          ssh-add /tmp/ssh_key
+
+          rm /tmp/ssh_key "$SSH_ASKPASS"
+
+          ./scripts/update-ocw-files-ssh.sh
