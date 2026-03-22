@@ -354,7 +354,6 @@ Trecem axiomele în cod Racket:
 (sum-list 1) ; eroare
 ```
 
-test
 
 ## Resurse
 
