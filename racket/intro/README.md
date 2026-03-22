@@ -354,6 +354,8 @@ Trecem axiomele în cod Racket:
 (sum-list 1) ; eroare
 ```
 
+test
+
 ## Resurse
 
   - [Schelet](https://github.com/cs-pub-ro/PP-laboratoare/raw/refs/heads/archives25/archives/racket-intro-schelet.zip)
