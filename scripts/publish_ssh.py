@@ -37,9 +37,11 @@ def upload_page(page, content):
         tmp_path = f.name
 
     try:
-        subprocess.run(
-            ['scp'] + SSH_OPTS + [tmp_path, f'{REMOTE_HOST}:{remote_path}'],
-            check=True)
+        scp_cmd = ['scp'] + SSH_OPTS + [tmp_path, f'{REMOTE_HOST}:{remote_path}']
+        print(scp_cmd)
+        subprocess.run(scp_cmd, check=True)
+    except Exception as e:
+        print(f'WARNING: subprocess failed ({e})')
     finally:
         os.unlink(tmp_path)
 
