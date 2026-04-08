@@ -18,6 +18,7 @@
 (define (sumar) (when (and (not (null? defaults)) (< show-defaults (length defaults))) (p `(... rezultatul implicit dat la ,(cadr name-ex) ,(reverse defaults)))) (when (not nopoints) (printf "total: ~v puncte~n" total)))
 
 
+
 ;; Avem de implementat o mini-bibliotecă pentru numere palindromice.
 
 ;; Pentru aceasta, vom defini, pe rând, funcții pentru:
