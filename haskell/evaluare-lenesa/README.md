@@ -1,7 +1,7 @@
 # Haskell: Evaluare leneșă, programare point-free și list comprehensions
 
--   Data publicării: 10.04.2024
--   Data ultimei modificări: 10.04.2024
+- Data publicării: 10.04.2024
+- Data ultimei modificări: 26.04.2026
 
 ## Obiective
 
@@ -9,9 +9,9 @@ Scopul acestui laborator îl reprezintă acomodarea cu noțiuni avansate de prog
 
 Aspectele urmărite sunt:
 
--   list comprehensions
--   definirea de liste infinite
--   programare "point-free"
+- list comprehensions
+- definirea de liste infinite
+- programare "point-free"
 
 ## List comprehensions
 
@@ -25,6 +25,15 @@ Haskell oferă un mod suplimentar de a genera liste: scriem proprietățile pe c
 Observați că se generează elemente la infinit. Pentru fiecare element din lista `[0, 2 ..]` (din expresia `x <- [0, 2..]`) se testează condițiile următoare. Dacă toate sunt îndeplinite, se generează elementul din fața `|`.
 
 Pentru a putea vedea o porțiune a fluxului folosim functiile `take` și `drop`.
+
+În partea stângă a săgeții, pot apărea nu doar variabile individuale, ca `x` mai sus, ci chiar ***pattern*-uri**. De exemplu, putem păstra primul element al fiecărei liste nevide dintr-o listă de liste, astfel:
+
+```haskell
+> [ x | x : _ <- [[1,2],[],[3,4,5],[]] ]
+[1,3]
+```
+
+Aici, *pattern*-ul `x : _` se potrivește doar cu listele `[1,2]` și `[3,4,5]`, ignorând listele vide.
 
 ## Liste infinite și generarea lor folosind funcționale
 
