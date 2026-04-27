@@ -43,7 +43,6 @@ dat de toate variabilele şi valorile acestora, vizibile în acel punct.
 **Exemplu:** Pe linia 6 contextul computaţional este: `{(a 2) (b 32) (s P)}`
 
 ![Context](img-ocw/context.png)
-{{ context.png }}
 
 ## Legare
 
