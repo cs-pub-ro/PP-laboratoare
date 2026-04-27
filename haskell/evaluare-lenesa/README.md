@@ -4,7 +4,7 @@
 - Data ultimei modificări: 26.04.2026
 
 ## Obiective
-
+ 
 Scopul acestui laborator îl reprezintă acomodarea cu noțiuni avansate de programare în Haskell, având în vedere scrierea de cod clar și concis.
 
 Aspectele urmărite sunt:
