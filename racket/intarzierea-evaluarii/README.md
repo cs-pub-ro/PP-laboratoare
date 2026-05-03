@@ -1,7 +1,7 @@
 # Racket: Întârzierea evaluării
 
-- Data publicării: 18.03.2024
-- Data ultimei modificări: 21.03.2024
+- Data publicării: 30.03.2024
+- Data ultimei modificări: 30.03.2024
 
 ## Obiective
 

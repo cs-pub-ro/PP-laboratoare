@@ -1,7 +1,7 @@
 # Racket: Funcții ca valori. Funcționale
 
-  - Data publicării: 10.03.2023
-  - Data ultimei modificări: 10.03.2023
+  - Data publicării: 16.03.2023
+  - Data ultimei modificări: 16.03.2023
 
 ## Obiective
 

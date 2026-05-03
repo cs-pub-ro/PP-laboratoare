@@ -28,8 +28,7 @@ def upload_page(page, content):
 
     # Ensure remote directory exists
     subprocess.run(
-        ['ssh'] + SSH_OPTS + [REMOTE_HOST, f'mkdir -p {remote_dir}'],
-        check=True)
+        ['ssh'] + SSH_OPTS + [REMOTE_HOST, f'mkdir -p {remote_dir}'])
 
     # Write content to a temp file and scp it
     with tempfile.NamedTemporaryFile(mode='w', suffix='.txt', delete=False) as f:
