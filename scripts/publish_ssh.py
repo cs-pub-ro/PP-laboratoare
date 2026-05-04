@@ -6,6 +6,7 @@ import tempfile
 import os
 
 REMOTE_BASE = '/home/pp/pp-pages/26/laboratoare'
+REMOTE_MEDIA_BASE = '/home/pp/pp-media/26/laboratoare'
 REMOTE_HOST = 'pp@ocw.cs.pub.ro'
 SSH_OPTS = [
     '-o', 'PubkeyAcceptedKeyTypes=+ssh-rsa',
@@ -68,7 +69,7 @@ def translate_image_path(local_path):
 
 def upload_image(img_path):
     relative = translate_image_path(img_path)
-    remote_path = f'{REMOTE_BASE}/{relative}'
+    remote_path = f'{REMOTE_MEDIA_BASE}/{relative}'
     try:
         upload_file(img_path, remote_path)
     except Exception as e:
@@ -81,14 +82,12 @@ def main():
     for file in files:
         page = file.replace('/README.md', '')
         page_name = os.path.basename(page)
-        parent_ns = os.path.dirname(page)
         output = pypandoc.convert_file(
                 file,
                 'dokuwiki', format='gfm',
                 extra_args=
                     [f'--lua-filter={TRANSLATE_PATH_FILTER}',
-                     f'--metadata=lab_name:{page_name}',
-                     f'--metadata=parent_ns:{parent_ns}'])
+                     f'--metadata=lab_name:{page_name}'])
         upload_page(page, output)
         print(f'Published {file} -> {page}')
     images = args['images']
