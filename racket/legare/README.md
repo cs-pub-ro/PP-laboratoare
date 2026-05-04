@@ -270,3 +270,4 @@ momentul dorit, aplicând această expresie (aici pe 0 argumente).
   - [Lexical Binding](https://www.cs.oberlin.edu/~bob/cs275.spring14/Examples%20and%20Notes/February/Februrary%2028/Lexical%20and%20Dynamic%20Binding.pdf "wikilink")
   - [Legare statică vs Legare dinamică](https://www.emacswiki.org/emacs/DynamicBindingVsLexicalBinding "wikilink")
   - [Name, scope, binding](http://www.cs.iusb.edu/~danav/teach/c311/c311_3_scope.html "wikilink")
+
