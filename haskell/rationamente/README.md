@@ -620,7 +620,7 @@ heightFolder = BSTFolder
     }
 ```
 
-Din cele prezentate mai sus, pare că este necesară adaptarea explicită a mecanismului de reducere pentru fiecare nou tip de structură (listă, arbore binar etc.). Din fericire, utilizând instrumente mai avansate, este posibilă definirea în Haskell a unui mecanism universal, astfel încât operatori ca `(<+>)`, `(>.>)` și `(<.>)` să aibă o definiție **unică**, independentă de structură! Nu vom dezvolta această idee, întrucât necesită mecanisme mai avansate de limbaj.
+Din cele prezentate mai sus, pare că este necesară adaptarea explicită a mecanismului de reducere pentru fiecare nou tip de structură (listă, arbore binar etc.). Din fericire, este posibilă definirea în Haskell a unui mecanism universal, astfel încât funcțiile de reducere, ca `foldList` și `foldBST`, precum și operatori ca `(<+>)`, `(>.>)` și `(<.>)` să aibă o definiție **unică**, independentă de structură! Nu vom dezvolta această idee, întrucât necesită mecanisme mai avansate de limbaj.
 
 ## Dualismul proprietate-definiție
 
