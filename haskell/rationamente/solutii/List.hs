@@ -1,66 +1,66 @@
-module List where
+module List () where
 
 -- Ascundem cele două funcții predefinite, pentru a le putea redefini noi înșine
 import Prelude hiding (sum, length)
 
 -- Exemple din textul laboratorului
 
-data ListFolder a b c = ListFolder
+data Folder a b c = Folder
     { foldNull :: c
     , foldCons :: a -> b -> c
     }
 
-foldList :: ListFolder a b b -> [a] -> b
-foldList folder = foldr (foldCons folder) (foldNull folder)
+fold :: Foldable t => Folder a b b -> t a -> b
+fold folder = foldr (foldCons folder) (foldNull folder)
 
-sum :: Num a => [a] -> a
-sum = foldList sumFolder
+sum :: (Foldable t, Num a) => t a -> a
+sum = fold sumFolder
 
-sumFolder :: Num a => ListFolder a a a
-sumFolder = ListFolder
+sumFolder :: Num a => Folder a a a
+sumFolder = Folder
     { foldNull = 0
     , foldCons = (+)
     }
 
-length :: [a] -> Int
-length = foldList lengthFolder
+length :: Foldable t => t a -> Int
+length = fold lengthFolder
 
-lengthFolder :: ListFolder a Int Int
-lengthFolder = ListFolder
+lengthFolder :: Folder a Int Int
+lengthFolder = Folder
     { foldNull = 0
     , foldCons = const (+ 1)
     }
 
 infixl 5 <+>
-(<+>) :: ListFolder a b b
-      -> ListFolder a c c
-      -> ListFolder a (b, c) (b, c)
-f <+> g = ListFolder
+(<+>) :: Folder a b b
+      -> Folder a c c
+      -> Folder a (b, c) (b, c)
+f <+> g = Folder
     { foldNull = (foldNull f, foldNull g)
     , foldCons = \a (b, c) -> (foldCons f a b, foldCons g a c)
     }
 
-sumLength :: Num a => [a] -> (a, Int)
-sumLength = foldList (sumFolder <+> lengthFolder)
+sumLength :: (Foldable t, Num a) => t a -> (a, Int)
+sumLength = fold (sumFolder <+> lengthFolder)
 
 -- steep :: (Ord a, Num a) => [a] -> Bool
 -- steep [] = True
 -- steep (x : xs) = x > sum xs && steep xs
 
 infixl 5 >.>
-(>.>) :: ListFolder a b b
-      -> ListFolder a (b, c) c
-      -> ListFolder a (b, c) (b, c)
-f >.> g = ListFolder
+(>.>) :: Folder a b b
+      -> Folder a (b, c) c
+      -> Folder a (b, c) (b, c)
+f >.> g = Folder
     { foldNull = (foldNull f, foldNull g)
     , foldCons = \a (b, c) -> (foldCons f a b, foldCons g a (b, c))
     }
 
-steep ::(Ord a, Num a) => [a] -> (a, Bool)
-steep = foldList (sumFolder >.> steepFolder)
+steep :: (Ord a, Num a) => [a] -> (a, Bool)
+steep = fold (sumFolder >.> steepFolder)
 
-steepFolder :: Ord a => ListFolder a (a, Bool) Bool
-steepFolder = ListFolder
+steepFolder :: Ord a => Folder a (a, Bool) Bool
+steepFolder = Folder
     { foldNull = True
     , foldCons = \x (s, stp) -> x > s && stp
     }
@@ -73,29 +73,29 @@ steepFolder = ListFolder
 -- oddSum [] = 0
 -- oddSum (x : xs) = evenSum xs
 
-evenSumFolder :: Num a => ListFolder a (a, a) a
-evenSumFolder = ListFolder
+evenSumFolder :: Num a => Folder a (a, a) a
+evenSumFolder = Folder
     { foldNull = 0
     , foldCons = \x (evenS, oddS) -> x + oddS
     }
 
-oddSumFolder :: Num a => ListFolder a (a, a) a
-oddSumFolder = ListFolder
+oddSumFolder :: Num a => Folder a (a, a) a
+oddSumFolder = Folder
     { foldNull = 0
     , foldCons = \x (evenS, oddS) -> evenS
     }
 
 infixl 5 <.>
-(<.>) :: ListFolder a (b, c) b
-      -> ListFolder a (b, c) c
-      -> ListFolder a (b, c) (b, c)
-f <.> g = ListFolder
+(<.>) :: Folder a (b, c) b
+      -> Folder a (b, c) c
+      -> Folder a (b, c) (b, c)
+f <.> g = Folder
     { foldNull = (foldNull f, foldNull g)
     , foldCons = \a (b, c) -> (foldCons f a (b, c), foldCons g a (b, c))
     }
 
 evenOddSums :: Num a => [a] -> (a, a)
-evenOddSums = foldList (evenSumFolder <.> oddSumFolder)
+evenOddSums = fold (evenSumFolder <.> oddSumFolder)
 
 {-
 Variație a lui steep, care utilizează media restului listei în loc de sumă.
@@ -103,10 +103,10 @@ Variație a lui steep, care utilizează media restului listei în loc de sumă.
 Ilustrează combinarea a trei foldere.
 -}
 steepMean :: (Ord a, Fractional a) => [a] -> ((a, Int), Bool)
-steepMean = foldList ((sumFolder <+> lengthFolder) >.> steepMeanFolder)
+steepMean = fold ((sumFolder <+> lengthFolder) >.> steepMeanFolder)
 
-steepMeanFolder :: (Ord a, Fractional a) => ListFolder a ((a, Int), Bool) Bool
-steepMeanFolder = ListFolder
+steepMeanFolder :: (Ord a, Fractional a) => Folder a ((a, Int), Bool) Bool
+steepMeanFolder = Folder
     { foldNull = True
     , foldCons = \x ((s, l), stp) -> x > s / fromIntegral l && stp
     }

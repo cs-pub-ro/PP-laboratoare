@@ -331,10 +331,10 @@ Generalizând demersul de ER realizat asupra funcției `sumLength` în secțiune
 (foldr f a xs, foldr g b xs) = foldr (\x (acc1, acc2) -> (f x acc1, g x acc2)) (a, b) xs
 ```
 
-Să vedem cum putem **automatiza** procesul de asamblare a funcțiilor binare și a acumulatorilor inițiali în vederea rescrierii cu un singur `foldr` în loc de două. Având în vedere că un `foldr` este caracterizat de cele două componente, definim mai întâi un tip de date care le încapsulează: `ListFolder a b` include acumulatorul inițial și funcția binară drept câmpuri. Observați că tipurile lor corespund tipurilor primilor doi parametri ai lui `foldr`, dar în altă ordine; `a` este tipul elementelor listei, iar `b` este tipul acumulatorului.
+Să vedem cum putem **automatiza** procesul de asamblare a funcțiilor binare și a acumulatorilor inițiali în vederea rescrierii cu un singur `foldr` în loc de două. Având în vedere că un `foldr` este caracterizat de cele două componente, definim mai întâi un tip de date care le încapsulează: `Folder a b` include acumulatorul inițial și funcția binară drept câmpuri. Observați că tipurile lor corespund tipurilor primilor doi parametri ai lui `foldr`, dar în altă ordine; `a` este tipul elementelor listei, iar `b` este tipul acumulatorului.
 
 ```haskell
-data ListFolder a b = ListFolder
+data Folder a b = Folder
     { foldNull :: b
     , foldCons :: a -> b -> b
     }
@@ -343,29 +343,31 @@ data ListFolder a b = ListFolder
 Totuși, se dovedește că, în vederea **extinderii** acestui mecanism la reduceri **semi-dependente** (doar o reducere depinde de cealaltă) și **dependente** (fiecare reducere depinde de cealaltă), este mai avantajoasă o definiție mai flexibilă, în care tipul reducerii întregii liste (`c`) poate fi **diferit** de tipul reducerii restului listei (`b`):
 
 ```haskell
-data ListFolder a b c = ListFolder
+data Folder a b c = Folder
     { foldNull :: c
     , foldCons :: a -> b -> c
     }
 ```
 
-Bineînțeles, reducerea clasică (`foldr`) poate fi recuperată doar în condițiile în care `b = c` (observați parametrul de tipul `ListFolder a b b`):
+Bineînțeles, reducerea clasică (`foldr`) poate fi recuperată doar în condițiile în care `b = c` (observați parametrul de tipul `Folder a b b`):
 
 ```haskell
-foldList :: ListFolder a b b -> [a] -> b
-foldList folder = foldr (foldCons folder) (foldNull folder)
+fold :: Foldable t => Folder a b b -> t a -> b
+fold folder = foldr (foldCons folder) (foldNull folder)
 ```
+
+Constrângerea `Foldable t` este impusă de utilizarea lui `foldr` în implementarea lui `fold`. Prin urmare, deși discuția a fost purtată asupra listelor, mecanismul poate funcționa pentru **orice** instanță de `Foldable`.
 
 ### Reduceri independente
 
 Cum ne poate ajuta acest mecanism în cazul funcției `sumLength`? În primul rând, să rescriem corespunzător funcția `sum`:
 
 ```haskell
-sum :: Num a => [a] -> a
-sum = foldList sumFolder
+sum :: (Foldable t, Num a) => t a -> a
+sum = fold sumFolder
 
-sumFolder :: Num a => ListFolder a a a
-sumFolder = ListFolder
+sumFolder :: Num a => Folder a a a
+sumFolder = Folder
     { foldNull = 0
     , foldCons = (+)
     }
@@ -374,34 +376,34 @@ sumFolder = ListFolder
 Similar, rescriem funcția `length`:
 
 ```haskell
-length :: [a] -> Int
-length = foldList lengthFolder
+length :: Foldable t => t a -> Int
+length = fold lengthFolder
 
-lengthFolder :: ListFolder a Int Int
-lengthFolder = ListFolder
+lengthFolder :: Folder a Int Int
+lengthFolder = Folder
     { foldNull = 0
     , foldCons = const (+ 1)
     }
 ```
 
-Până în acest punct, doar am rescris funcțiile noastre utilizând noul mecanism. Avantajul este că, utilizând această reprezentare, putem introduce un operator care să **asambleze** două `ListFolder`-e **independente** într-unul singur:
+Până în acest punct, doar am rescris funcțiile noastre utilizând noul mecanism. Avantajul este că, utilizând această reprezentare, putem introduce un operator care să **asambleze** două `Folder`-e **independente** într-unul singur:
 
 ```haskell
 infixl 5 <+>
-(<+>) :: ListFolder a b b
-      -> ListFolder a c c
-      -> ListFolder a (b, c) (b, c)
-f <+> g = ListFolder
+(<+>) :: Folder a b b
+      -> Folder a c c
+      -> Folder a (b, c) (b, c)
+f <+> g = Folder
     { foldNull = (foldNull f, foldNull g)
     , foldCons = \a (b, c) -> (foldCons f a b, foldCons g a c)
     }
 ```
 
-Operatorul primește două `ListFolder`-e care operează pe liste cu același tip `a` de elemente, dar care produc acumulatori diferiți, de tipurile `b`, respectiv `c`, și construiește un nou `ListFolder`, care produce un acumulator de tipul combinat `(b, c)`. În acest moment, putem defini automat un `ListFolder` pentru funcția `sumLength`:
+Operatorul primește două `Folder`-e care operează pe liste cu același tip `a` de elemente, dar care produc acumulatori diferiți, de tipurile `b`, respectiv `c`, și construiește un nou `Folder`, care produce un acumulator de tipul combinat `(b, c)`. În acest moment, putem defini automat un `Folder` pentru funcția `sumLength`:
 
 ```haskell
-sumLength :: Num a => [a] -> (a, Int)
-sumLength = foldList (sumFolder <+> lengthFolder)
+sumLength :: (Foldable t, Num a) => t a -> (a, Int)
+sumLength = fold (sumFolder <+> lengthFolder)
 ```
 
 Ce am obținut în final? Cu toate că nu am putut reutiliza funcțiile `sum` și `length` în sine, am putut **reutiliza** `sumFolder` și `lengthFolder`, păstrând **modularitatea** la acest nivel!
@@ -425,45 +427,45 @@ Dacă la fiecare pas am avea deja la dispoziție **suma** restului listei, compl
 
 Totuși, apare o **diferență** față de funcția `sumLength`, în care cele două reduceri constitutive, `sum`, respectiv `length`, sunt **independente**. În cazul funcției `steep`, transformarea principală **depinde unilateral** de `sum`, transformarea secundară. Numim cele două transformări ***semidependente***.
 
-Din moment ce `sumFolder` este gata implementat, rămâne să implementăm `ListFolder`-ul aferent transformării principale. Aspectul esențial este că acesta citește un acumulator compus, cu tipul `(a, Bool)`, care include acumulatorul propriu de tipul `Bool`, dar și acumulatorul produs de `sumFolder`, de tipul `a`. Acumulatorul produs este doar cel propriu, de tipul `Bool`.
+Din moment ce `sumFolder` este gata implementat, rămâne să implementăm `Folder`-ul aferent transformării principale. Aspectul esențial este că acesta citește un acumulator compus, cu tipul `(a, Bool)`, care include acumulatorul propriu de tipul `Bool`, dar și acumulatorul produs de `sumFolder`, de tipul `a`. Acumulatorul produs este doar cel propriu, de tipul `Bool`.
 
 ```haskell
-ssteepFolder :: Ord a => ListFolder a (a, Bool) Bool
-steepFolder = ListFolder
+steepFolder :: Ord a => Folder a (a, Bool) Bool
+steepFolder = Folder
     { foldNull = True
     , foldCons = \x (s, stp) -> x > s && stp
     }
 ```
 
-În continuare, introducem un nou operator de **asamblare** a `ListFolder`-elor **semidependente**:
+În continuare, introducem un nou operator de **asamblare** a `Folder`-elor **semidependente**:
 
 ```haskell
 infixl 5 >.>
-(>.>) :: ListFolder a b b
-      -> ListFolder a (b, c) c
-      -> ListFolder a (b, c) (b, c)
-f >.> g = ListFolder
+(>.>) :: Folder a b b
+      -> Folder a (b, c) c
+      -> Folder a (b, c) (b, c)
+f >.> g = Folder
     { foldNull = (foldNull f, foldNull g)
     , foldCons = \a (b, c) -> (foldCons f a b, foldCons g a (b, c))
     }
 ```
 
-Observați că primul `ListFolder` este **autonom**, operând cu acumulatori de tipul `b`. În schimb, al doilea `ListFolder` este **unidirecțional dependent** de primul, astfel încât pentru a produce un acumulator de tipul `c`, are nevoie nu numai de propriul său acumulator de tipul `c`, ci și de acumulatorul de tipul `b` produs de primul `ListFolder`. Parantezele unghiulare indică sensul transferului de informație dinspre primul spre al doilea `ListFolder`.
+Observați că primul `Folder` este **autonom**, operând cu acumulatori de tipul `b`. În schimb, al doilea `Folder` este **unidirecțional dependent** de primul, astfel încât pentru a produce un acumulator de tipul `c`, are nevoie nu numai de propriul său acumulator de tipul `c`, ci și de acumulatorul de tipul `b` produs de primul `Folder`. Parantezele unghiulare indică sensul transferului de informație dinspre primul spre al doilea `Folder`.
 
-Acest operator este motivul pentru care am parametrizat constructorul de tip `ListFolder` cu trei parametri de tip în loc de doi; astfel, al doilea `ListFolder` poate citi un acumulator cu tipul `(b, c)`, **diferit** de tipul acumulatorului produs, `c`.
+Acest operator este motivul pentru care am parametrizat constructorul de tip `Folder` cu trei parametri de tip în loc de doi; astfel, al doilea `Folder` poate citi un acumulator cu tipul `(b, c)`, **diferit** de tipul acumulatorului produs, `c`.
 
 Cu acesta, noua implementare a funcției `steep` devine:
 
 ```haskell
 steep :: (Ord a, Num a) => [a] -> (a, Bool)
-steep = foldList (sumFolder >.> steepFolder)
+steep = fold (sumFolder >.> steepFolder)
 ```
 
-Dacă doream întoarcerea doar a rezultatului boolean, puteam extrage a doua componentă a perechii produse:
+Dacă dorim întoarcerea doar a rezultatului boolean, puteam extrage a doua componentă a perechii produse:
 
 ```haskell
 steep :: (Ord a, Num a) => [a] -> Bool
-steep = snd . foldList (sumFolder >.> steepFolder)
+steep = snd . fold (sumFolder >.> steepFolder)
 ```
 
 ### Reduceri dependente
@@ -491,42 +493,42 @@ Dacă la fiecare pas am avea deja la dispoziție **cealaltă** sumă a restului 
 
 Totuși, apare o **diferență** față de funcția `steep`, în sensul că acum cele două transformări depind **ambele** una de alta. Numim cele două transformări ***dependente***.
 
-`ListFolder`-ele aferente celor două funcții urmează șablonul lui `steepFolder`, în sensul că citesc un acumulator compus, cu tipul `(a, a)`, care include atât acumulatorul propriu, cât și pe cel produs de cealaltă funcție. Fiecare `ListFolder` produce doar acumulatorul propriu.
+`Folder`-ele aferente celor două funcții urmează șablonul lui `steepFolder`, în sensul că citesc un acumulator compus, cu tipul `(a, a)`, care include atât acumulatorul propriu, cât și pe cel produs de cealaltă funcție. Fiecare `Folder` produce doar acumulatorul propriu.
 
 ```haskell
-evenSumFolder :: Num a => ListFolder a (a, a) a
-evenSumFolder = ListFolder
+evenSumFolder :: Num a => Folder a (a, a) a
+evenSumFolder = Folder
     { foldNull = 0
     , foldCons = \x (evenS, oddS) -> x + oddS
     }
 
-oddSumFolder :: Num a => ListFolder a (a, a) a
-oddSumFolder = ListFolder
+oddSumFolder :: Num a => Folder a (a, a) a
+oddSumFolder = Folder
     { foldNull = 0
     , foldCons = \x (evenS, oddS) -> evenS
     }
 ```
 
-În continuare, introducem un nou operator de **asamblare** a `ListFolder`-elor **dependente**:
+În continuare, introducem un nou operator de **asamblare** a `Folder`-elor **dependente**:
 
 ```haskell
 infixl 5 <.>
-(<.>) :: ListFolder a (b, c) b
-      -> ListFolder a (b, c) c
-      -> ListFolder a (b, c) (b, c)
-f <.> g = ListFolder
+(<.>) :: Folder a (b, c) b
+      -> Folder a (b, c) c
+      -> Folder a (b, c) (b, c)
+f <.> g = Folder
     { foldNull = (foldNull f, foldNull g)
     , foldCons = \a (b, c) -> (foldCons f a (b, c), foldCons g a (b, c))
     }
 ```
 
-Observați că ambele `ListFolder`-e citesc un acumulator de tipul `(b, c)`, **compus** din acumulatorii individuali, și produc doar acumulatorii **proprii** (`b`, respectiv `c`). Parantezele unghiulare indică dependențele **bidirecționale**.
+Observați că ambele `Folder`-e citesc un acumulator de tipul `(b, c)`, **compus** din acumulatorii individuali, și produc doar acumulatorii **proprii** (`b`, respectiv `c`). Parantezele unghiulare indică dependențele **bidirecționale**.
 
 Cu acestea, noua implementare a funcției `evenOddSums` devine:
 
 ```haskell
 evenOddSums :: Num a => [a] -> (a, a)
-evenOddSums = foldList (evenSumFolder <.> oddSumFolder)
+evenOddSums = fold (evenSumFolder <.> oddSumFolder)
 ```
 
 ## Generalizarea reducerilor la alte structuri
@@ -553,9 +555,9 @@ observăm că este **compozițională** (`left` și `right` contribuie doar prin
 
 Din păcate, dacă încercăm să o implementăm cu `foldr`, ne dăm seama că **nu reușim**. Care este problema? `foldr` expune o vedere **liniară** asupra arborelui, și, pe baza unui singur acumulator, **nu** putem distinge între informația provenită din subarborele stâng și cea provenită din subarborele drept, așa cum necesită calculul înălțimii.
 
-Concluzia este că `foldr` surprinde într-adevăr transformări compoziționale, așa cum susține proprietatea de universalitate, dar **numai** transformările compoziționale pe vederea **liniară** asupra structurilor, **nu** orice transformare compozițională. Mai precis, `foldr f acc tree = foldr f acc (toList tree)`, unde primul `foldr` se realizează direct pe arbore, iar al doilea, pe lista rezultată prin liniarizarea conținutului.
+Concluzia este că `foldr` surprinde într-adevăr transformări compoziționale, așa cum susține proprietatea de universalitate, dar **numai** transformările compoziționale pe vederea **liniară** asupra structurilor, **nu** orice transformare compozițională. Mai precis, `foldr f acc tree = foldr f acc (toList tree)`, unde primul `foldr` se realizează direct pe arbore, iar al doilea, pe lista rezultată prin liniarizarea conținutului. Acest lucru înseamnă că, deși mecanismul bazat pe `Folder` și `fold` de mai sus **poate** fi aplicat și asupra arborilor, întrucât `BST` este instanță de `Foldable`, **nici el** nu ne poate ajuta pentru orice transformare compozițională pe aceștia.
 
-Din fericire, putem surprinde orice transformare compozițională pe arbori adaptând mecanismul bazat pe `ListFolder` din secțiunea anterioară. Cum putem defini un `BSTFolder`? Răspunsul transpare odată ce înțelegem mai bine originea tipurilor parametrilor aplicației `foldr f acc` pe liste. Acestea sunt obținute plecând de la tipurile constructorilor de date ai tipului `[a]`, și înlocuind aparițiile recursive ale tipului `[a]` însuși cu tipul `b` al acumulatorului:
+Din fericire, putem surprinde orice transformare compozițională pe arbori adaptând mecanismul bazat pe `Folder` din secțiunea anterioară. Cum putem defini un `BSTFolder`? Răspunsul transpare odată ce înțelegem mai bine originea tipurilor parametrilor aplicației `foldr f acc` pe liste. Acestea sunt obținute plecând de la tipurile constructorilor de date ai tipului `[a]`, și înlocuind aparițiile recursive ale tipului `[a]` însuși cu tipul `b` al acumulatorului:
 
 ```haskell
 (:) :: a -> [a] -> [a]
@@ -588,7 +590,7 @@ data BSTFolder a b = BSTFolder
     }
 ```
 
-Dacă flexibilizăm tipul pentru a permite reduceri semidepdendente, analog `ListFolder`, obținem definiția finală:
+Dacă flexibilizăm tipul pentru a permite reduceri semidepdendente, analog `Folder`, obținem definiția finală:
 
 ```haskell
 data BSTFolder a b c = BSTFolder
@@ -620,7 +622,7 @@ heightFolder = BSTFolder
     }
 ```
 
-Din cele prezentate mai sus, pare că este necesară adaptarea explicită a mecanismului de reducere pentru fiecare nou tip de structură (listă, arbore binar etc.). Din fericire, este posibilă definirea în Haskell a unui mecanism universal, astfel încât funcțiile de reducere, ca `foldList` și `foldBST`, precum și operatori ca `(<+>)`, `(>.>)` și `(<.>)` să aibă o definiție **unică**, independentă de structură! Nu vom dezvolta această idee, întrucât necesită mecanisme mai avansate de limbaj.
+Din cele prezentate mai sus, pare necesară adaptarea explicită a mecanismului de reducere pentru fiecare nou tip de structură (listă, arbore binar etc.). Din fericire, este posibilă definirea în Haskell a unui mecanism universal, astfel încât funcțiile de reducere, ca `fold` și `foldBST`, precum și operatori ca `(<+>)`, `(>.>)` și `(<.>)` să aibă o definiție **unică**, independentă de structură! Nu vom dezvolta această idee, întrucât necesită mecanisme mai avansate de limbaj.
 
 ## Dualismul proprietate-definiție
 
