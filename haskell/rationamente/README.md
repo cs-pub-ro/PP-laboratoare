@@ -1,7 +1,7 @@
 # Raționamente funcționale
 
-- Data publicării: 03.05.2026
-- Data ultimei modificări: 03.05.2026
+- Data publicării: 12.05.2026
+- Data ultimei modificări: 12.05.2026
 
 ## Obiective
 
