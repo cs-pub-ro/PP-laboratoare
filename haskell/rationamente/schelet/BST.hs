@@ -46,34 +46,10 @@ heightIsBalanced bst = (heigth bst, isBalanced bst).
 
 Pe cazuri, derivați o definiție mai eficientă a funcției heightIsBalanced.
 
-DERIVARE:
-
-heightIsBalanced BSTNil
-= (height BSTNil, isBalanced BSTNil)
-= (0, True)
-
-heightIsBalanced (BSTNod elem left right)
-= (height (BSTNod elem left right), isBalanced (BSTNod elem left right))
-= ( 1 + max (height left) (height right)
-  , isBalanced left
-    && isBalanced right
-    && abs (height left - height right) <= 1
-  )
-= let (heightLeft, isBalancedLeft) = heightIsBalanced left
-      (heightRight, isBalancedRight) = heightIsBalanced right
-  in ( 1 + max heightLeft heightRight
-     , isBalancedLeft && isBalancedRight && abs (heightLeft - heightRight) <= 1
-     )
+DERIVARE: ...
 -}
 heightIsBalanced :: BST a -> (Int, Bool)
-heightIsBalanced BSTNil = (0, True)
-heightIsBalanced (BSTNod elem left right) = 
-    ( 1 + max heightLeft heightRight
-    , isBalancedLeft && isBalancedRight && abs (heightLeft - heightRight) <= 1
-    )
-  where
-    (heightLeft,  isBalancedLeft)  = heightIsBalanced left
-    (heightRight, isBalancedRight) = heightIsBalanced right
+heightIsBalanced bst = undefined
 
 check1 :: TestData
 check1 = tests_ 1 
@@ -178,13 +154,8 @@ isBalancedWithFold = snd . foldBST (heightFolder >.> isBalancedFolder)
 
 isBalancedFolder :: BSTFolder a (Int, Bool) Bool
 isBalancedFolder = BSTFolder
-    { foldNil = True
-    , foldNod = \elem
-                 (heightLeft,  isBalancedLeft)
-                 (heightRight, isBalancedRight) ->
-                    isBalancedLeft
-                    && isBalancedRight
-                    && abs (heightLeft - heightRight) <= 1
+    { foldNil = undefined
+    , foldNod = undefined
     }
 
 check2 :: TestData
@@ -245,27 +216,10 @@ inorder node = inorderAcc node [].
 
 Pe cazuri, derivați o definiție mai eficientă a lui inorderAcc.
 
-DERIVARE:
-
-inorderAcc BSTNil acc
-= inorder BSTNil ++ acc
-= [] ++ acc
-= acc
-
-inorderAcc (BSTNod elem left right) acc
-= (inorder left ++ [elem] ++ inorder right) ++ acc
-= (inorder left ++ elem : inorder right) ++ acc
-= inorder left ++ (elem : inorder right ++ acc)
-= inorder left ++ elem : (inorder right ++ acc)
-= inorder left ++ elem : inorderAcc right acc
-= inorderAcc left (elem : inorderAcc right acc)
+DERIVARE: ...
 -}
 inorderLinear :: BST a -> [a]
-inorderLinear node = inorderAcc node []
-  where
-    inorderAcc BSTNil acc = acc
-    inorderAcc (BSTNod elem left right) acc =
-        inorderAcc left (elem : inorderAcc right acc)
+inorderLinear node = undefined
 
 check3 :: TestData
 check3 = tests_ 3

@@ -632,6 +632,9 @@ Astfel, limbajele funcționale oferă o **notație comună** atât pentru scrier
 
 ## Resurse
 
+- [Schelet](https://github.com/cs-pub-ro/PP-laboratoare/raw/refs/heads/archives25/archives/haskell-rationamente-schelet.zip) (exerciții în modulele `Fusion` și `BST`; exemple în modulul `List`)
+- [Soluții](https://github.com/cs-pub-ro/PP-laboratoare/raw/refs/heads/archives25/archives/haskell-rationamente-solutii.zip)
+
 ## Referințe
 
 - Bird, R., & Gibbons, J. (2020). *Algorithm Design with Haskell*. Cambridge: Cambridge University Press.
