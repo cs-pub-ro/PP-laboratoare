@@ -630,6 +630,8 @@ heightFolder = BSTFolder
     }
 ```
 
+Spre deosebire de funcția `height`, care poate fi implementată cu `foldBST`, dar **nu** și cu `fold`, o funcție care calculează **suma** cheilor dintr-un arbore poate fi implementată utilizând **oricare** dintre cele două funcții. Motivul este că determinarea sumei poate **ignora** fără probleme structura internă a arborelui, și poate opera la fel de bine direct pe **liniarizarea** sa.
+
 Din cele prezentate mai sus, pare necesară adaptarea explicită a mecanismului de reducere pentru fiecare nou tip de structură (listă, arbore binar etc.). Din fericire, este posibilă definirea în Haskell a unui mecanism universal, astfel încât funcțiile de reducere, ca `fold` și `foldBST`, precum și operatori ca `(<+>)`, `(>.>)` și `(<.>)` să aibă o definiție **unică**, independentă de structură! Nu vom dezvolta această idee, întrucât necesită mecanisme mai avansate de limbaj.
 
 ## Dualismul proprietate-definiție
