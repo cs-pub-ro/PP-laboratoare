@@ -1,7 +1,7 @@
 # Haskell: Raționamente funcționale
 
 - Data publicării: 12.05.2026
-- Data ultimei modificări: 12.05.2026
+- Data ultimei modificări: 15.05.2026
 
 ## Obiective
 
@@ -331,7 +331,19 @@ Generalizând demersul de ER realizat asupra funcției `sumLength` în secțiune
 (foldr f a xs, foldr g b xs) = foldr (\x (acc1, acc2) -> (f x acc1, g x acc2)) (a, b) xs
 ```
 
-Să vedem cum putem **automatiza** procesul de asamblare a funcțiilor binare și a acumulatorilor inițiali în vederea rescrierii cu un singur `foldr` în loc de două. Având în vedere că un `foldr` este caracterizat de cele două componente, definim mai întâi un tip de date care le încapsulează: `Folder a b` include acumulatorul inițial și funcția binară drept câmpuri. Observați că tipurile lor corespund tipurilor primilor doi parametri ai lui `foldr`, dar în altă ordine; `a` este tipul elementelor listei, iar `b` este tipul acumulatorului.
+Să vedem cum putem **automatiza** procesul de asamblare a funcțiilor binare și a acumulatorilor inițiali în vederea rescrierii cu un singur `foldr` în loc de două. În primul rând, să ne amintim originea tipurilor parametrilor aplicației `foldr f acc` pe liste. Acestea sunt obținute plecând de la tipurile **constructorilor de date** ai tipului `[a]`, și **înlocuind** aparițiile recursive ale tipului `[a]` însuși cu tipul `b` al acumulatorului:
+
+```haskell
+(:) :: a -> [a] -> [a]
+=>
+ f  :: a ->  b  ->  b
+
+[]  :: [a]
+=>
+acc :: b
+```
+
+Astfel, putem defini un tip de date care încapsulează cei doi parametri: `Folder a b` include acumulatorul inițial și funcția binară drept câmpuri. Observați că tipurile lor corespund tipurilor primilor doi parametri ai lui `foldr`, dar în altă ordine; `a` este tipul elementelor listei, iar `b` este tipul acumulatorului. Numele `foldNull` și `foldCons` surprind corespondența cu cei doi constructori de date, `[]` și `(:)`, ai tipului `[a]`:
 
 ```haskell
 data Folder a b = Folder
@@ -357,6 +369,14 @@ fold folder = foldr (foldCons folder) (foldNull folder)
 ```
 
 Constrângerea `Foldable t` este impusă de utilizarea lui `foldr` în implementarea lui `fold`. Prin urmare, deși discuția a fost purtată asupra listelor, mecanismul poate funcționa pentru **orice** instanță de `Foldable`.
+
+De reținut că `foldr` surprinde într-adevăr transformări compoziționale, așa cum susține proprietatea de universalitate, dar **exact** transformările compoziționale pe vederea **liniară** asupra structurilor, **nu** orice transformare compozițională. Mai precis,
+
+```haskell
+foldr f acc struct = foldr f acc (toList struct)
+```
+
+unde primul `foldr` se realizează direct pe structura `Foldable`, iar al doilea, pe lista rezultată prin liniarizarea conținutului. Vom vedea mai jos cu putem surprinde orice transformări compoziționale și pe structuri **strict mai complexe** decât listele (de exemplu, arborii binari).
 
 ### Reduceri independente
 
@@ -553,23 +573,9 @@ height (BSTNod elem left right) = 1 + max (height left) (height right)
 
 observăm că este **compozițională** (`left` și `right` contribuie doar prin imaginea lor sub `height`, iar `height` nu este aplicată pe alți parametri în afară de cei doi subarbori)!
 
-Din păcate, dacă încercăm să o implementăm cu `foldr`, ne dăm seama că **nu reușim**. Care este problema? `foldr` expune o vedere **liniară** asupra arborelui, și, pe baza unui singur acumulator, **nu** putem distinge între informația provenită din subarborele stâng și cea provenită din subarborele drept, așa cum necesită calculul înălțimii.
+Din păcate, dacă încercăm să o implementăm cu `foldr`, ne dăm seama că **nu reușim**. Care este problema? `foldr` expune o vedere **liniară** asupra arborelui, și, pe baza unui singur acumulator, **nu** putem distinge între informația provenită din subarborele stâng și cea provenită din subarborele drept, așa cum necesită calculul înălțimii (vedeți discuția de mai sus despre limitările lui `foldr`). Acest lucru înseamnă că, deși mecanismul bazat pe `Folder` și `fold` de mai sus **poate** fi aplicat și asupra arborilor, întrucât `BST` este instanță de `Foldable`, **nici el** nu ne poate ajuta în implementarea oricărei transformări compoziționale pe aceștia.
 
-Concluzia este că `foldr` surprinde într-adevăr transformări compoziționale, așa cum susține proprietatea de universalitate, dar **numai** transformările compoziționale pe vederea **liniară** asupra structurilor, **nu** orice transformare compozițională. Mai precis, `foldr f acc tree = foldr f acc (toList tree)`, unde primul `foldr` se realizează direct pe arbore, iar al doilea, pe lista rezultată prin liniarizarea conținutului. Acest lucru înseamnă că, deși mecanismul bazat pe `Folder` și `fold` de mai sus **poate** fi aplicat și asupra arborilor, întrucât `BST` este instanță de `Foldable`, **nici el** nu ne poate ajuta pentru orice transformare compozițională pe aceștia.
-
-Din fericire, putem surprinde orice transformare compozițională pe arbori adaptând mecanismul bazat pe `Folder` din secțiunea anterioară. Cum putem defini un `BSTFolder`? Răspunsul transpare odată ce înțelegem mai bine originea tipurilor parametrilor aplicației `foldr f acc` pe liste. Acestea sunt obținute plecând de la tipurile constructorilor de date ai tipului `[a]`, și înlocuind aparițiile recursive ale tipului `[a]` însuși cu tipul `b` al acumulatorului:
-
-```haskell
-(:) :: a -> [a] -> [a]
-=>
- f  :: a ->  b  ->  b
-
-[]  :: [a]
-=>
-acc :: b
-```
-
-Dacă oglindim prodeceul de mai sus asupra arborilor, obținem:
+Din fericire, putem surprinde orice transformare compozițională pe arbori adaptând mecanismul bazat pe `Folder` și `fold` din secțiunea anterioară. Cum putem defini un `BSTFolder`? Răspunsul se obține oglindind în cazul arborilor procedeul de rescriere a tipurilor demonstrat mai sus asupra listelor. De data aceasta, trebuie să pornim de la tipurile **constructorilor de date** ai tipului `BST a` și să **înlocuim** aparițiile recursive ale tipului `BST a` însuși cu tipul `b` al acumulatorului:
 
 ```haskell
 BSTNil  :: BST a
@@ -590,7 +596,9 @@ data BSTFolder a b = BSTFolder
     }
 ```
 
-Dacă flexibilizăm tipul pentru a permite reduceri semidepdendente, analog `Folder`, obținem definiția finală:
+Ca și în cazul listelor, numele `foldNil` și `foldNod` reflectă numele celor doi constructori de date, `BSTNil` și `BSTNod`, ai tipului `BST a`. De asemenea, observăm că `foldNod` primește acum **doi acumulatori** de tipul `b`, câte unul aferent **fiecărui subarbore**, conducând la o **expresivitate superioară** lui `foldr`.
+
+Dacă **flexibilizăm** tipul pentru a permite reduceri semidepdendente, analog `Folder`, obținem definiția finală:
 
 ```haskell
 data BSTFolder a b c = BSTFolder

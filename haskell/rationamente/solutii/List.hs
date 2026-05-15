@@ -1,4 +1,4 @@
-module List () where
+module List where
 
 -- Ascundem cele două funcții predefinite, pentru a le putea redefini noi înșine
 import Prelude hiding (sum, length)
@@ -108,5 +108,5 @@ steepMean = fold ((sumFolder <+> lengthFolder) >.> steepMeanFolder)
 steepMeanFolder :: (Ord a, Fractional a) => Folder a ((a, Int), Bool) Bool
 steepMeanFolder = Folder
     { foldNull = True
-    , foldCons = \x ((s, l), stp) -> x > s / fromIntegral l && stp
+    , foldCons = \x ((s, l), stp) -> l == 0 || x > s / fromIntegral l && stp
     }
